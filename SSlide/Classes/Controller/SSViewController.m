@@ -7,6 +7,7 @@
 //
 
 #import "SSViewController.h"
+#import <RestKit/RestKit.h>
 
 @interface SSViewController ()
 

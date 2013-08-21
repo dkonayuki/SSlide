@@ -8,8 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		3009B6485BA1436BAC1BA6F5 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E2702BF3BD1401A8049CA77 /* libPods.a */; };
+		DC70E57817C49B49004633F2 /* SSTopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC70E57717C49B49004633F2 /* SSTopViewController.m */; };
+		DC70E57B17C49BCD004633F2 /* SSTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC70E57A17C49BCD004633F2 /* SSTopView.m */; };
 		DCC0BAF917C493ED009FF1FD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCC0BAF817C493ED009FF1FD /* UIKit.framework */; };
-		DCC0BAFB17C493ED009FF1FD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCC0BAFA17C493ED009FF1FD /* Foundation.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		DCC0BAFB17C493ED009FF1FD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCC0BAFA17C493ED009FF1FD /* Foundation.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		DCC0BAFD17C493ED009FF1FD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCC0BAFC17C493ED009FF1FD /* CoreGraphics.framework */; };
 		DCC0BB0317C493ED009FF1FD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DCC0BB0117C493ED009FF1FD /* InfoPlist.strings */; };
 		DCC0BB0517C493ED009FF1FD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC0BB0417C493ED009FF1FD /* main.m */; };
@@ -47,6 +49,10 @@
 
 /* Begin PBXFileReference section */
 		7E2702BF3BD1401A8049CA77 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC70E57617C49B49004633F2 /* SSTopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSTopViewController.h; path = Classes/Controller/SSTopViewController.h; sourceTree = "<group>"; };
+		DC70E57717C49B49004633F2 /* SSTopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSTopViewController.m; path = Classes/Controller/SSTopViewController.m; sourceTree = "<group>"; };
+		DC70E57917C49BCD004633F2 /* SSTopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSTopView.h; path = Classes/View/SSTopView.h; sourceTree = "<group>"; };
+		DC70E57A17C49BCD004633F2 /* SSTopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSTopView.m; path = Classes/View/SSTopView.m; sourceTree = "<group>"; };
 		DCC0BAF517C493ED009FF1FD /* SSlide.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SSlide.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCC0BAF817C493ED009FF1FD /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		DCC0BAFA17C493ED009FF1FD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -192,6 +198,8 @@
 			children = (
 				DCC0BB3417C493ED009FF1FD /* SSViewController.h */,
 				DCC0BB3517C493ED009FF1FD /* SSViewController.m */,
+				DC70E57617C49B49004633F2 /* SSTopViewController.h */,
+				DC70E57717C49B49004633F2 /* SSTopViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -201,6 +209,8 @@
 			children = (
 				DCC0BB3117C493ED009FF1FD /* SSView.h */,
 				DCC0BB3217C493ED009FF1FD /* SSView.m */,
+				DC70E57917C49BCD004633F2 /* SSTopView.h */,
+				DC70E57A17C49BCD004633F2 /* SSTopView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -452,6 +462,8 @@
 				DCC0BB3317C493ED009FF1FD /* SSView.m in Sources */,
 				DCC0BB3617C493ED009FF1FD /* SSViewController.m in Sources */,
 				DCC0BB3A17C493ED009FF1FD /* SSDB5.m in Sources */,
+				DC70E57817C49B49004633F2 /* SSTopViewController.m in Sources */,
+				DC70E57B17C49BCD004633F2 /* SSTopView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -517,7 +529,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -540,7 +552,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -553,7 +565,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SSlide/SSlide-Prefix.pch";
 				INFOPLIST_FILE = "SSlide/SSlide-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
@@ -567,7 +579,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SSlide/SSlide-Prefix.pch";
 				INFOPLIST_FILE = "SSlide/SSlide-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
