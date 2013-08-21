@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3009B6485BA1436BAC1BA6F5 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E2702BF3BD1401A8049CA77 /* libPods.a */; };
+		DC48BFD117C51C3D00340FE0 /* SSApi.m in Sources */ = {isa = PBXBuildFile; fileRef = DC48BFD017C51C3D00340FE0 /* SSApi.m */; };
 		DC70E57817C49B49004633F2 /* SSTopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC70E57717C49B49004633F2 /* SSTopViewController.m */; };
 		DC70E57B17C49BCD004633F2 /* SSTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC70E57A17C49BCD004633F2 /* SSTopView.m */; };
 		DCB5A5FA17C4F2970089809C /* SSSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB5A5F917C4F2970089809C /* SSSearchViewController.m */; };
@@ -53,6 +54,8 @@
 
 /* Begin PBXFileReference section */
 		7E2702BF3BD1401A8049CA77 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC48BFCF17C51C3D00340FE0 /* SSApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSApi.h; path = Classes/Api/SSApi.h; sourceTree = "<group>"; };
+		DC48BFD017C51C3D00340FE0 /* SSApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSApi.m; path = Classes/Api/SSApi.m; sourceTree = "<group>"; };
 		DC70E57617C49B49004633F2 /* SSTopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSTopViewController.h; path = Classes/Controller/SSTopViewController.h; sourceTree = "<group>"; };
 		DC70E57717C49B49004633F2 /* SSTopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSTopViewController.m; path = Classes/Controller/SSTopViewController.m; sourceTree = "<group>"; };
 		DC70E57917C49BCD004633F2 /* SSTopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSTopView.h; path = Classes/View/SSTopView.h; sourceTree = "<group>"; };
@@ -129,6 +132,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DC48BFCE17C51BBA00340FE0 /* Api */ = {
+			isa = PBXGroup;
+			children = (
+				DC48BFCF17C51C3D00340FE0 /* SSApi.h */,
+				DC48BFD017C51C3D00340FE0 /* SSApi.m */,
+			);
+			name = Api;
+			sourceTree = "<group>";
+		};
 		DCC0BAEC17C493ED009FF1FD = {
 			isa = PBXGroup;
 			children = (
@@ -189,6 +201,7 @@
 				DCC0BB0E17C493ED009FF1FD /* Controller */,
 				DCC0BB1117C493ED009FF1FD /* View */,
 				DCC0BB1417C493ED009FF1FD /* Model */,
+				DC48BFCE17C51BBA00340FE0 /* Api */,
 				DCC0BB3717C493ED009FF1FD /* Utilities */,
 			);
 			name = Classes;
@@ -490,6 +503,7 @@
 				DCB5A60017C4F6420089809C /* SSPageViewManager.m in Sources */,
 				DCB5A60317C4F7920089809C /* SSSearchView.m in Sources */,
 				DCB5A60617C4F7A20089809C /* SSUserView.m in Sources */,
+				DC48BFD117C51C3D00340FE0 /* SSApi.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
