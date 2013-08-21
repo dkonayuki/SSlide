@@ -1,14 +1,14 @@
 //
-//  SSTopView.m
+//  SSUserView.m
 //  SSlide
 //
 //  Created by iNghia on 8/21/13.
 //  Copyright (c) 2013 S2. All rights reserved.
 //
 
-#import "SSTopView.h"
+#import "SSUserView.h"
 
-@implementation SSTopView
+@implementation SSUserView
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -19,9 +19,9 @@
     return self;
 }
 
-- (void) initView
+- (void)initView
 {
-    self.backgroundColor = [[SSDB5 theme] colorForKey:@"top_view_bg_color"];
+    self.backgroundColor = [[SSDB5 theme] colorForKey:@"user_view_bg_color"];
 }
 
 /*

@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SSTopViewController.h"
+#import "SSPageViewManager.h"
 
 @interface SSAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic) SSTopViewController *topViewController;
+@property (strong, nonatomic) SSPageViewManager *pageViewManager;
 
 @end

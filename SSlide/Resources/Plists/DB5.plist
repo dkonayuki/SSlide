@@ -4,6 +4,14 @@
 <dict>
 	<key>Default</key>
 	<dict>
+		<key>top_view_bg_color</key>
+		<string>008080</string>
+		<key>search_view_bg_color</key>
+		<string>333366</string>
+		<key>user_view_bg_color</key>
+		<string>2B3B4B</string>
+		<key>search_textfield_border_color</key>
+		<string>FFFFFFF</string>
 	</dict>
 </dict>
 </plist>

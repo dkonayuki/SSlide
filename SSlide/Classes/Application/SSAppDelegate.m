@@ -17,8 +17,8 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
-    self.topViewController = [[SSTopViewController alloc] init];
-    self.window.rootViewController = self.topViewController;
+    self.pageViewManager = [[SSPageViewManager alloc] init];
+    self.window.rootViewController = self.pageViewManager.pageViewController;
     [self.window makeKeyAndVisible];
     return YES;
 }

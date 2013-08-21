@@ -1,21 +1,21 @@
 //
-//  SSTopViewController.m
+//  SSSearchViewController.m
 //  SSlide
 //
 //  Created by iNghia on 8/21/13.
 //  Copyright (c) 2013 S2. All rights reserved.
 //
 
-#import "SSTopViewController.h"
-#import "SSTopView.h"
+#import "SSSearchViewController.h"
+#import "SSSearchView.h"
 
-@interface SSTopViewController ()
+@interface SSSearchViewController ()
 
-@property (strong, nonatomic) SSTopView *myView;
+@property (strong, nonatomic) SSSearchView *myView;
 
 @end
 
-@implementation SSTopViewController
+@implementation SSSearchViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -30,7 +30,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    self.myView = [[SSTopView alloc] initWithFrame:self.view.bounds andDelegate:self];
+    self.myView = [[SSSearchView alloc] initWithFrame:self.view.bounds andDelegate:self];
     self.view = self.myView;
 }
 

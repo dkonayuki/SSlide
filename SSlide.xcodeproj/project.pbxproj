@@ -10,6 +10,11 @@
 		3009B6485BA1436BAC1BA6F5 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E2702BF3BD1401A8049CA77 /* libPods.a */; };
 		DC70E57817C49B49004633F2 /* SSTopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC70E57717C49B49004633F2 /* SSTopViewController.m */; };
 		DC70E57B17C49BCD004633F2 /* SSTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC70E57A17C49BCD004633F2 /* SSTopView.m */; };
+		DCB5A5FA17C4F2970089809C /* SSSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB5A5F917C4F2970089809C /* SSSearchViewController.m */; };
+		DCB5A5FD17C4F2C50089809C /* SSUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB5A5FC17C4F2C50089809C /* SSUserViewController.m */; };
+		DCB5A60017C4F6420089809C /* SSPageViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB5A5FF17C4F6420089809C /* SSPageViewManager.m */; };
+		DCB5A60317C4F7920089809C /* SSSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB5A60217C4F7920089809C /* SSSearchView.m */; };
+		DCB5A60617C4F7A20089809C /* SSUserView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB5A60517C4F7A20089809C /* SSUserView.m */; };
 		DCC0BAF917C493ED009FF1FD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCC0BAF817C493ED009FF1FD /* UIKit.framework */; };
 		DCC0BAFB17C493ED009FF1FD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCC0BAFA17C493ED009FF1FD /* Foundation.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		DCC0BAFD17C493ED009FF1FD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCC0BAFC17C493ED009FF1FD /* CoreGraphics.framework */; };
@@ -22,7 +27,6 @@
 		DCC0BB1F17C493ED009FF1FD /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = DCC0BB1E17C493ED009FF1FD /* Default.png */; };
 		DCC0BB2117C493ED009FF1FD /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DCC0BB2017C493ED009FF1FD /* Default@2x.png */; };
 		DCC0BB2317C493ED009FF1FD /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DCC0BB2217C493ED009FF1FD /* Default-568h@2x.png */; };
-		DCC0BB2617C493ED009FF1FD /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = DCC0BB2517C493ED009FF1FD /* .gitignore */; };
 		DCC0BB2917C493ED009FF1FD /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = DCC0BB2817C493ED009FF1FD /* .gitignore */; };
 		DCC0BB2C17C493ED009FF1FD /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = DCC0BB2B17C493ED009FF1FD /* .gitignore */; };
 		DCC0BB2E17C493ED009FF1FD /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = DCC0BB2D17C493ED009FF1FD /* Podfile */; };
@@ -53,6 +57,16 @@
 		DC70E57717C49B49004633F2 /* SSTopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSTopViewController.m; path = Classes/Controller/SSTopViewController.m; sourceTree = "<group>"; };
 		DC70E57917C49BCD004633F2 /* SSTopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSTopView.h; path = Classes/View/SSTopView.h; sourceTree = "<group>"; };
 		DC70E57A17C49BCD004633F2 /* SSTopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSTopView.m; path = Classes/View/SSTopView.m; sourceTree = "<group>"; };
+		DCB5A5F817C4F2970089809C /* SSSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSSearchViewController.h; path = Classes/Controller/SSSearchViewController.h; sourceTree = "<group>"; };
+		DCB5A5F917C4F2970089809C /* SSSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSSearchViewController.m; path = Classes/Controller/SSSearchViewController.m; sourceTree = "<group>"; };
+		DCB5A5FB17C4F2C50089809C /* SSUserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSUserViewController.h; path = Classes/Controller/SSUserViewController.h; sourceTree = "<group>"; };
+		DCB5A5FC17C4F2C50089809C /* SSUserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSUserViewController.m; path = Classes/Controller/SSUserViewController.m; sourceTree = "<group>"; };
+		DCB5A5FE17C4F6420089809C /* SSPageViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSPageViewManager.h; path = Classes/Application/SSPageViewManager.h; sourceTree = "<group>"; };
+		DCB5A5FF17C4F6420089809C /* SSPageViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSPageViewManager.m; path = Classes/Application/SSPageViewManager.m; sourceTree = "<group>"; };
+		DCB5A60117C4F7920089809C /* SSSearchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSSearchView.h; path = Classes/View/SSSearchView.h; sourceTree = "<group>"; };
+		DCB5A60217C4F7920089809C /* SSSearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSSearchView.m; path = Classes/View/SSSearchView.m; sourceTree = "<group>"; };
+		DCB5A60417C4F7A20089809C /* SSUserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSUserView.h; path = Classes/View/SSUserView.h; sourceTree = "<group>"; };
+		DCB5A60517C4F7A20089809C /* SSUserView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSUserView.m; path = Classes/View/SSUserView.m; sourceTree = "<group>"; };
 		DCC0BAF517C493ED009FF1FD /* SSlide.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SSlide.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCC0BAF817C493ED009FF1FD /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		DCC0BAFA17C493ED009FF1FD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -71,7 +85,6 @@
 		DCC0BB1E17C493ED009FF1FD /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = Resources/Images/Background/Default.png; sourceTree = "<group>"; };
 		DCC0BB2017C493ED009FF1FD /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "Resources/Images/Background/Default@2x.png"; sourceTree = "<group>"; };
 		DCC0BB2217C493ED009FF1FD /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "Resources/Images/Background/Default-568h@2x.png"; sourceTree = "<group>"; };
-		DCC0BB2517C493ED009FF1FD /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; name = .gitignore; path = Resources/Plists/.gitignore; sourceTree = "<group>"; };
 		DCC0BB2817C493ED009FF1FD /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; name = .gitignore; path = Resources/Sounds/.gitignore; sourceTree = "<group>"; };
 		DCC0BB2B17C493ED009FF1FD /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; name = .gitignore; path = Resources/Xibs/.gitignore; sourceTree = "<group>"; };
 		DCC0BB2D17C493ED009FF1FD /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
@@ -186,6 +199,8 @@
 			children = (
 				DCC0BB0B17C493ED009FF1FD /* SSAppDelegate.h */,
 				DCC0BB0C17C493ED009FF1FD /* SSAppDelegate.m */,
+				DCB5A5FE17C4F6420089809C /* SSPageViewManager.h */,
+				DCB5A5FF17C4F6420089809C /* SSPageViewManager.m */,
 				DCC0BB0917C493ED009FF1FD /* README.md */,
 				DCC0BB2D17C493ED009FF1FD /* Podfile */,
 				DCC0BB0A17C493ED009FF1FD /* .gitignore */,
@@ -200,6 +215,10 @@
 				DCC0BB3517C493ED009FF1FD /* SSViewController.m */,
 				DC70E57617C49B49004633F2 /* SSTopViewController.h */,
 				DC70E57717C49B49004633F2 /* SSTopViewController.m */,
+				DCB5A5F817C4F2970089809C /* SSSearchViewController.h */,
+				DCB5A5F917C4F2970089809C /* SSSearchViewController.m */,
+				DCB5A5FB17C4F2C50089809C /* SSUserViewController.h */,
+				DCB5A5FC17C4F2C50089809C /* SSUserViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -211,6 +230,10 @@
 				DCC0BB3217C493ED009FF1FD /* SSView.m */,
 				DC70E57917C49BCD004633F2 /* SSTopView.h */,
 				DC70E57A17C49BCD004633F2 /* SSTopView.m */,
+				DCB5A60117C4F7920089809C /* SSSearchView.h */,
+				DCB5A60217C4F7920089809C /* SSSearchView.m */,
+				DCB5A60417C4F7A20089809C /* SSUserView.h */,
+				DCB5A60517C4F7A20089809C /* SSUserView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -257,7 +280,6 @@
 		DCC0BB2417C493ED009FF1FD /* Plists */ = {
 			isa = PBXGroup;
 			children = (
-				DCC0BB2517C493ED009FF1FD /* .gitignore */,
 				DCC0BB2F17C493ED009FF1FD /* DB5.plist */,
 			);
 			name = Plists;
@@ -388,7 +410,6 @@
 				DCC0BB1F17C493ED009FF1FD /* Default.png in Resources */,
 				DCC0BB2117C493ED009FF1FD /* Default@2x.png in Resources */,
 				DCC0BB2317C493ED009FF1FD /* Default-568h@2x.png in Resources */,
-				DCC0BB2617C493ED009FF1FD /* .gitignore in Resources */,
 				DCC0BB2917C493ED009FF1FD /* .gitignore in Resources */,
 				DCC0BB2C17C493ED009FF1FD /* .gitignore in Resources */,
 				DCC0BB2E17C493ED009FF1FD /* Podfile in Resources */,
@@ -464,6 +485,11 @@
 				DCC0BB3A17C493ED009FF1FD /* SSDB5.m in Sources */,
 				DC70E57817C49B49004633F2 /* SSTopViewController.m in Sources */,
 				DC70E57B17C49BCD004633F2 /* SSTopView.m in Sources */,
+				DCB5A5FA17C4F2970089809C /* SSSearchViewController.m in Sources */,
+				DCB5A5FD17C4F2C50089809C /* SSUserViewController.m in Sources */,
+				DCB5A60017C4F6420089809C /* SSPageViewManager.m in Sources */,
+				DCB5A60317C4F7920089809C /* SSSearchView.m in Sources */,
+				DCB5A60617C4F7A20089809C /* SSUserView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
