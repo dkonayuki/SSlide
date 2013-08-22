@@ -74,6 +74,9 @@
 - (void)didSelectedAtIndex:(int)index
 {
     SSSlideshow *selectedSlide = [self.slideArray objectAtIndex:index];
+    if ([selectedSlide extendedInfoIsNil]) {
+        return;
+    }
     self.pageManager = [[SSSlideShowPageManager alloc] initWithSlideshow:selectedSlide];
     [self presentViewController:self.pageManager.pageViewController animated:YES completion:nil];
 }
@@ -100,6 +103,7 @@
                                                 [self.myView.slideTableView reloadData];
                                             }
                                             failure:^(void) {     // TODO: error handling
+  
                                                 NSLog(@"MostViewed ERROR");
                                             }];
 }

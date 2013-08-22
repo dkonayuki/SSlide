@@ -11,6 +11,7 @@
 @interface SSSlideShowView() <UIGestureRecognizerDelegate>
 
 @property (assign, nonatomic) float lastScale;
+@property (assign, nonatomic) BOOL stopPinch;
 
 @end
 
@@ -40,20 +41,35 @@
 
 - (void)pinchGestureAction:(UIPinchGestureRecognizer *)sender
 {
-    NSLog(@"AA");
     switch ([sender state]) {
         case UIGestureRecognizerStateBegan:
             self.lastScale = 1.f;
+            self.stopPinch = NO;
             break;
+        case UIGestureRecognizerStateEnded: {
+            if (self.stopPinch) {
+                break;
+            }
+        }
         case UIGestureRecognizerStateCancelled: {
-            self.lastScale = 1.f;
-            CGAffineTransform currentTransform = self.transform;
-            CGAffineTransform newTransform = CGAffineTransformScale(currentTransform, self.lastScale, self.lastScale);
-            [self setTransform:newTransform];
+            [UIView animateWithDuration:0.5f
+                             animations:^(void){
+                                 CGAffineTransform currentTransform = self.transform;
+                                 currentTransform.a = 1.f;
+                                 currentTransform.d = 1.f;
+                                 [self setTransform:currentTransform];
+                             }
+                             completion:^(BOOL finished) {
+                            }];
+            
         }
             return;
         default:
             break;
+    }
+    
+    if (self.stopPinch) {
+        return;
     }
     
     CGFloat scale = 1.0 - (self.lastScale - [sender scale]);
@@ -64,6 +80,7 @@
     self.lastScale = [sender scale];
     
     if (self.lastScale <= 0.5f) {
+        self.stopPinch = YES;
         [UIView animateWithDuration:0.5f
                          animations:^(void){
                              CGAffineTransform currentTransform = self.transform;
