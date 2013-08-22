@@ -57,12 +57,18 @@
 #pragma mark - SSTopView delegate
 - (NSInteger)numberOfRow
 {
-    return 10;
+    return 1;
 }
 
 - (NSDictionary *)getDataAtIndex:(int)index
 {
-    return nil;
+    NSDictionary *dictionary = @{
+                                 @"thumbnail" : @"abc.jpg",
+                                 @"title" : @"abc",
+                                 @"date" : @"20130822",
+                                 @"author" : @"dkonayuki"
+                                 };
+    return dictionary;
 }
 
 @end

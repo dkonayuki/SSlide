@@ -15,7 +15,6 @@
 
 @end
 
-
 @interface SSTopView : SSView
 
 @end

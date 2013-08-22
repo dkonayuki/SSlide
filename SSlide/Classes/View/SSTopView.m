@@ -37,6 +37,9 @@
                                                                              self.bounds.size.height - topMargin)];
     self.slideTableView.delegate = self;
     self.slideTableView.dataSource = self;
+    self.slideTableView.backgroundColor = [UIColor clearColor];
+    self.slideTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self addSubview:self.slideTableView];
 }
 
 #pragma mark - tableview delegate
@@ -47,7 +50,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *identifier = @"SlideshowCell";
+    static NSString *identifier = @"SlideCell";
     SSSlideCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
         cell = [[SSSlideCell alloc] init];
@@ -58,6 +61,9 @@
     
     return cell;
 }
-
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 110;
+}
 
 @end
