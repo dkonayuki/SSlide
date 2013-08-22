@@ -47,7 +47,7 @@
     return url;
 }
 
-- (void)search_slideshows:(NSString *)params success:(void (^)(NSArray *))success failure:(void (^)())failure
+- (void)searchSlideshows:(NSString *)params success:(void (^)(NSArray *))success failure:(void (^)())failure
 {
     self.slideshowArray = [[NSMutableArray alloc] init];
     self.currentSlideshow = nil;
