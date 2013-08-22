@@ -22,6 +22,11 @@
 
 @implementation SSApi
 
+/**
+ *	Singleton
+ *
+ *	@return	sharedInstance
+ */
 + (SSApi *)sharedInstance
 {
     __strong static SSApi *sharedApi = nil;
@@ -35,18 +40,36 @@
     return sharedApi;
 }
 
-- (NSString *)getApiHash
+/**
+ *	get slideshows by username
+ *
+ *	@param	username
+ */
+- (void)getSlideshowsByUser:(NSString *)username success:(void (^)(NSArray *))success failure:(void (^)())failure
 {
-    NSDate *now = [NSDate date];
-    int ts = [now timeIntervalSince1970];
-    NSString *apikey = [[SSDB5 theme] stringForKey:@"API_KEY"];;
-    NSString *apisecrect = [[SSDB5 theme] stringForKey:@"API_SECRET"];
-    NSString *hashString = [NSString stringWithFormat:@"%@%d", apisecrect, ts];
-    NSString *hash = [hashString sha1];
-    NSString *url = [NSString stringWithFormat:@"api_key=%@&hash=%@&ts=%d", apikey, hash, ts];
-    return url;
+    self.slideshowArray = [[NSMutableArray alloc] init];
+    self.currentSlideshow = nil;
+    NSString *url = [NSString stringWithFormat:@"get_slideshows_by_user?username_for=%@&limit=10&%@", username, [self getApiHash]];
+    [self.client getPath:url
+              parameters:nil
+                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                     NSError *error = nil;
+                     TBXML *tbxml = [TBXML tbxmlWithXMLData:responseObject error:&error];
+                     if (tbxml.rootXMLElement) {
+                         [self traverseSlideshows:tbxml.rootXMLElement];
+                         success(self.slideshowArray);
+                     }
+                 }
+                 failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                     failure();
+                 }];
 }
 
+/**
+ *	search slideshows
+ *
+ *	@param	params
+ */
 - (void)searchSlideshows:(NSString *)params success:(void (^)(NSArray *))success failure:(void (^)())failure
 {
     self.slideshowArray = [[NSMutableArray alloc] init];
@@ -74,6 +97,90 @@
             }];
 }
 
+/**
+ *	get most Viewed Slideshows
+ *
+ *	@param	tag
+ *	@param	page
+ *	@param	itemsPerPage
+ */
+- (void)getMostViewedSlideshows:(NSString *)tag page:(int)page itemsPerPage:(int)itemsPerPage success:(void (^)(NSArray *))success failure:(void (^)())failure
+{
+    NSString *query = [NSString stringWithFormat:@"q=%@&page=%d&items_per_page=%d&sort=mostviewed&what=tag", tag, page, itemsPerPage];
+    [self searchSlideshows:query success:success failure:failure];
+}
+
+/**
+ *	get latest Slideshow
+ *
+ *	@param	tag
+ *	@param	page
+ *	@param	itemsPerPage
+ */
+- (void)getLatestSlideshows:(NSString *)tag page:(int)page itemsPerPage:(int)itemsPerPage success:(void (^)(NSArray *))success failure:(void (^)())failure
+{
+    NSString *query = [NSString stringWithFormat:@"q=%@&page=%d&items_per_page=%d&sort=latest&what=tag", tag, page, itemsPerPage];
+    [self searchSlideshows:query success:success failure:failure];
+}
+
+/**
+ *	check username and password
+ *
+ *	@param	username
+ *	@param	password
+ *
+ *	@return	authenticate result
+ */
+- (void)checkUsernamePassword:(NSString *)username password:(NSString *)password result:(void (^)(BOOL))result
+{
+    NSString *url = [NSString stringWithFormat:@"get_user_leads?username=%@&password=%@&%@", username, password,  [self getApiHash]];
+    [self.client getPath:url
+              parameters:nil
+                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                     NSError *error = nil;
+                     TBXML *tbxml = [TBXML tbxmlWithXMLData:responseObject error:&error];
+                     NSString *rootElementName = [TBXML elementName:tbxml.rootXMLElement];
+                     if (![rootElementName isEqualToString:@"SlideShareServiceError"]) {
+                         result(YES);
+                     }else {
+                         result(NO);
+                     }
+                 }
+                 failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                     result(NO);
+                 }];
+}
+
+/**
+ *	get extended slide info
+ *
+ *	@param	url
+ */
+- (void)getExtendedSlideInfo:(NSString *)url
+{
+    NSString *requestUrl = [NSString stringWithFormat:@"%@?url=%@&format=json", [[SSDB5 theme] stringForKey:@"OEMBED_BASE_URL"], url];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
+    
+    AFJSONRequestOperation *operation =
+    [AFJSONRequestOperation JSONRequestOperationWithRequest:request
+                                                    success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+                                                        NSDictionary *dict = (NSDictionary *)JSON;
+                                                        NSLog(@"OK");
+                                                        NSLog(@"%@", dict);
+                                                    }
+                                                    failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+                                                        NSLog(@"error");
+                                                    }];
+    [operation start];
+}
+
+#pragma mark - private
+
+/**
+ *	trarse xml
+ *
+ *	@param	element	(root element)
+ */
 - (void)traverseSlideshows:(TBXMLElement *)element {
     do {
         // Display the name of the element
@@ -102,6 +209,23 @@
         
         // Obtain next sibling element
     } while ((element = element->nextSibling));
+}
+
+/**
+ *	getApiHash
+ *
+ *	@return	apiHash
+ */
+- (NSString *)getApiHash
+{
+    NSDate *now = [NSDate date];
+    int ts = [now timeIntervalSince1970];
+    NSString *apikey = [[SSDB5 theme] stringForKey:@"API_KEY"];;
+    NSString *apisecrect = [[SSDB5 theme] stringForKey:@"API_SECRET"];
+    NSString *hashString = [NSString stringWithFormat:@"%@%d", apisecrect, ts];
+    NSString *hash = [hashString sha1];
+    NSString *apiHash = [NSString stringWithFormat:@"api_key=%@&hash=%@&ts=%d", apikey, hash, ts];
+    return apiHash;
 }
 
 @end
