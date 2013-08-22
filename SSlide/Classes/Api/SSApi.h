@@ -37,6 +37,24 @@
 - (void)searchSlideshows:(NSString *)params success:(void (^)(NSArray *result))success failure:(void (^)())failure;
 
 /**
+ *	get mostViewed Slideshow
+ *
+ *	@param	tag
+ *	@param	page
+ *	@param	itemsPerPage
+ */
+- (void)getMostViewedSlideshows:(NSString *)tag page:(int)page itemsPerPage:(int)itemsPerPage success:(void (^)(NSArray *result))success failure:(void (^)())failure;
+
+/**
+ *	get lastest Slideshow
+ *
+ *	@param	tag
+ *	@param	page
+ *	@param	itemsPerPage
+ */
+- (void)getLatestSlideshows:(NSString *)tag page:(int)page itemsPerPage:(int)itemsPerPage success:(void (^)(NSArray *result))success failure:(void (^)())failure;
+
+/**
  *	get extended slide info
  *
  *	@param	url

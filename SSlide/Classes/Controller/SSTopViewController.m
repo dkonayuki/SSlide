@@ -48,7 +48,7 @@
                                          NSLog(@"search ERROR");
                                      }];
      */
-    
+    /*
     [[SSApi sharedInstance] getSlideshowsByUser:@"thefoolishman"
                                         success:^(NSArray *result){
                                             NSLog(@"%d", [result count]);
@@ -62,7 +62,7 @@
                                         failure:^(void) {     // TODO: error handling
                                             NSLog(@"search ERROR");
                                         }];
-     
+     */
     /*
     [[SSApi sharedInstance] checkUsernamePassword:@"thefoolishman"
                                          password:@"fasdf"
@@ -75,6 +75,18 @@
                                            }];
      */
     
+    [[SSApi sharedInstance] getMostViewedSlideshows:@"Ruby"
+                                               page:1
+                                       itemsPerPage:10
+                                            success:^(NSArray *result){
+                                                NSLog(@"%d", [result count]);
+                                                for (SSSlideshow *cur in result) {
+                                                    [cur log];
+                                                }
+                                            }
+                                            failure:^(void) {     // TODO: error handling
+                                                NSLog(@"search ERROR");
+                                            }];
 }
 
 - (void)didReceiveMemoryWarning

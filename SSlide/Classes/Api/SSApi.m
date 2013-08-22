@@ -98,6 +98,32 @@
 }
 
 /**
+ *	get most Viewed Slideshows
+ *
+ *	@param	tag
+ *	@param	page
+ *	@param	itemsPerPage
+ */
+- (void)getMostViewedSlideshows:(NSString *)tag page:(int)page itemsPerPage:(int)itemsPerPage success:(void (^)(NSArray *))success failure:(void (^)())failure
+{
+    NSString *query = [NSString stringWithFormat:@"q=%@&page=%d&items_per_page=%d&sort=mostviewed&what=tag", tag, page, itemsPerPage];
+    [self searchSlideshows:query success:success failure:failure];
+}
+
+/**
+ *	get latest Slideshow
+ *
+ *	@param	tag
+ *	@param	page
+ *	@param	itemsPerPage
+ */
+- (void)getLatestSlideshows:(NSString *)tag page:(int)page itemsPerPage:(int)itemsPerPage success:(void (^)(NSArray *))success failure:(void (^)())failure
+{
+    NSString *query = [NSString stringWithFormat:@"q=%@&page=%d&items_per_page=%d&sort=latest&what=tag", tag, page, itemsPerPage];
+    [self searchSlideshows:query success:success failure:failure];
+}
+
+/**
  *	check username and password
  *
  *	@param	username
