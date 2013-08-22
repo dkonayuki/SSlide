@@ -47,6 +47,26 @@
     return url;
 }
 
+- (void)getSlideshowsByUser:(NSString *)username success:(void (^)(NSArray *))success failure:(void (^)())failure
+{
+    self.slideshowArray = [[NSMutableArray alloc] init];
+    self.currentSlideshow = nil;
+    NSString *url = [NSString stringWithFormat:@"get_slideshows_by_user?username_for=%@&limit=10&%@", username, [self getApiHash]];
+    [self.client getPath:url
+              parameters:nil
+                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                     NSError *error = nil;
+                     TBXML *tbxml = [TBXML tbxmlWithXMLData:responseObject error:&error];
+                     if (tbxml.rootXMLElement) {
+                         [self traverseSlideshows:tbxml.rootXMLElement];
+                         success(self.slideshowArray);
+                     }
+                 }
+                 failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                     failure();
+                 }];
+}
+
 - (void)searchSlideshows:(NSString *)params success:(void (^)(NSArray *))success failure:(void (^)())failure
 {
     self.slideshowArray = [[NSMutableArray alloc] init];
