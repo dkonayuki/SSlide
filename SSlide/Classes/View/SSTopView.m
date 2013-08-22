@@ -7,6 +7,14 @@
 //
 
 #import "SSTopView.h"
+#import "SSSlideTableView.h"
+#import "SSSlideCell.h"
+
+@interface SSTopView() <UITableViewDataSource, UITableViewDelegate>
+
+@property (strong, nonatomic) SSSlideTableView *slideTableView;
+
+@end
 
 @implementation SSTopView
 
@@ -22,15 +30,34 @@
 - (void) initView
 {
     self.backgroundColor = [[SSDB5 theme] colorForKey:@"top_view_bg_color"];
+    float topMargin = 50.f;
+    self.slideTableView = [[SSSlideTableView alloc] initWithFrame:CGRectMake(0,
+                                                                             topMargin,
+                                                                             self.bounds.size.width,
+                                                                             self.bounds.size.height - topMargin)];
+    self.slideTableView.delegate = self;
+    self.slideTableView.dataSource = self;
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
+#pragma mark - tableview delegate
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Drawing code
+    return [self.delegate numberOfRow];
 }
-*/
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *identifier = @"SlideshowCell";
+    SSSlideCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    if (!cell) {
+        cell = [[SSSlideCell alloc] init];
+    }
+    
+    NSDictionary *data = [self.delegate getDataAtIndex:indexPath.row];
+    [cell setDataWithDictionary:data];
+    
+    return cell;
+}
+
 
 @end

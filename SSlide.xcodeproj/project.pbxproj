@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3009B6485BA1436BAC1BA6F5 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E2702BF3BD1401A8049CA77 /* libPods.a */; };
+		DC2BCF5917C5AEAB00181774 /* SSSlideTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2BCF5817C5AEAA00181774 /* SSSlideTableView.m */; };
+		DC2BCF5C17C5AECA00181774 /* SSSlideCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2BCF5B17C5AECA00181774 /* SSSlideCell.m */; };
 		DC48BFD117C51C3D00340FE0 /* SSApi.m in Sources */ = {isa = PBXBuildFile; fileRef = DC48BFD017C51C3D00340FE0 /* SSApi.m */; };
 		DC70E57817C49B49004633F2 /* SSTopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC70E57717C49B49004633F2 /* SSTopViewController.m */; };
 		DC70E57B17C49BCD004633F2 /* SSTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC70E57A17C49BCD004633F2 /* SSTopView.m */; };
@@ -54,6 +56,10 @@
 
 /* Begin PBXFileReference section */
 		7E2702BF3BD1401A8049CA77 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC2BCF5717C5AEAA00181774 /* SSSlideTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSSlideTableView.h; path = Classes/View/SSSlideTableView.h; sourceTree = "<group>"; };
+		DC2BCF5817C5AEAA00181774 /* SSSlideTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSSlideTableView.m; path = Classes/View/SSSlideTableView.m; sourceTree = "<group>"; };
+		DC2BCF5A17C5AECA00181774 /* SSSlideCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSSlideCell.h; path = Classes/View/SSSlideCell.h; sourceTree = "<group>"; };
+		DC2BCF5B17C5AECA00181774 /* SSSlideCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSSlideCell.m; path = Classes/View/SSSlideCell.m; sourceTree = "<group>"; };
 		DC48BFCF17C51C3D00340FE0 /* SSApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSApi.h; path = Classes/Api/SSApi.h; sourceTree = "<group>"; };
 		DC48BFD017C51C3D00340FE0 /* SSApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSApi.m; path = Classes/Api/SSApi.m; sourceTree = "<group>"; };
 		DC70E57617C49B49004633F2 /* SSTopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSTopViewController.h; path = Classes/Controller/SSTopViewController.h; sourceTree = "<group>"; };
@@ -248,6 +254,10 @@
 				DCB5A60217C4F7920089809C /* SSSearchView.m */,
 				DCB5A60417C4F7A20089809C /* SSUserView.h */,
 				DCB5A60517C4F7A20089809C /* SSUserView.m */,
+				DC2BCF5717C5AEAA00181774 /* SSSlideTableView.h */,
+				DC2BCF5817C5AEAA00181774 /* SSSlideTableView.m */,
+				DC2BCF5A17C5AECA00181774 /* SSSlideCell.h */,
+				DC2BCF5B17C5AECA00181774 /* SSSlideCell.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -506,6 +516,8 @@
 				DCB5A60617C4F7A20089809C /* SSUserView.m in Sources */,
 				DC48BFD117C51C3D00340FE0 /* SSApi.m in Sources */,
 				DCDDF64817C59CFD0095A299 /* SSSlideshow.m in Sources */,
+				DC2BCF5917C5AEAB00181774 /* SSSlideTableView.m in Sources */,
+				DC2BCF5C17C5AECA00181774 /* SSSlideCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

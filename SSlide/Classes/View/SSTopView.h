@@ -8,6 +8,14 @@
 
 #import "SSView.h"
 
+@protocol SSTopViewDelegate <NSObject>
+
+- (NSInteger)numberOfRow;
+- (NSDictionary *) getDataAtIndex:(int)index;
+
+@end
+
+
 @interface SSTopView : SSView
 
 @end

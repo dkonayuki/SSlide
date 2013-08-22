@@ -11,7 +11,7 @@
 #import "SSApi.h"
 #import "SSSlideshow.h"
 
-@interface SSTopViewController ()
+@interface SSTopViewController () <SSTopViewDelegate>
 
 @property (strong, nonatomic) SSTopView *myView;
 
@@ -52,6 +52,17 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - SSTopView delegate
+- (NSInteger)numberOfRow
+{
+    return 10;
+}
+
+- (NSDictionary *)getDataAtIndex:(int)index
+{
+    return nil;
 }
 
 @end
