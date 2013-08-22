@@ -10,11 +10,13 @@
 #import "SSTopView.h"
 #import "SSApi.h"
 #import "SSSlideshow.h"
+#import "SSSlideShowPageManager.h"
 
 @interface SSTopViewController () <SSTopViewDelegate>
 
 @property (strong, nonatomic) SSTopView *myView;
 @property (strong, nonatomic) NSMutableArray *slideArray;
+@property (strong, nonatomic) SSSlideShowPageManager *pageManager;
 
 @end
 
@@ -54,21 +56,27 @@
                                          NSLog(@"search ERROR");
                                      }];
      */
-    /*
-    [[SSApi sharedInstance] getSlideshowsByUser:@"thefoolishman"
+/*    
+    [[SSApi sharedInstance] getSlideshowsByUser:@"rashmi"
                                         success:^(NSArray *result){
-                                            NSLog(@"%d", [result count]);
-                                            for (SSSlideshow *cur in result) {
-                                                [cur log];
-                                            }
-                                            
-                                            SSSlideshow *firstSlideshow = [result objectAtIndex:0];
-                                            [[SSApi sharedInstance] getExtendedSlideInfo:firstSlideshow.URL];
+                                             self.pageManager = [[SSSlideShowPageManager alloc] initWithSlideshow:[result objectAtIndex:0]];
+                                            dispatch_apply([result count], dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t index) {
+                                                SSSlideshow *slideshow = [result objectAtIndex:index];
+                                                [[SSApi sharedInstance] addExtendedSlideInfo:slideshow];
+                                            });
+                        
                                         }
                                         failure:^(void) {     // TODO: error handling
                                             NSLog(@"search ERROR");
                                         }];
-     */
+    
+    double delayInSeconds = 3.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [self.pageManager refresh];
+        [self presentViewController:self.pageManager.pageViewController animated:YES completion:nil];
+    });
+  */  
     /*
     [[SSApi sharedInstance] checkUsernamePassword:@"thefoolishman"
                                          password:@"fasdf"

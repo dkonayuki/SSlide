@@ -12,3 +12,8 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
 #endif
+
+#define IS_IPHONE (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+#define IS_IPAD (!IS_IPHONE)
+#define IS_WIDESCREEN ([[UIScreen mainScreen] bounds].size.height > 480.f)
+#define IS_IPHONE_5 ( IS_IPHONE && IS_WIDESCREEN )

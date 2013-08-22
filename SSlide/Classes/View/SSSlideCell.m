@@ -38,11 +38,11 @@
 
 - (void)setData:(SSSlideshow *)data
 {
-    [self getThumbnail:[NSURL URLWithString:data.ThumbnailURL]];
+    [self getThumbnail:[NSURL URLWithString:data.thumbnailUrl]];
     self.thumbnail.frame = CGRectMake(10.0f, 10.0f, 100.0f, 100.0f);
-    self.title.text = data.Title;
-    self.date.text = data.Created;
-    self.author.text = data.Username;
+    self.title.text = data.title;
+    self.date.text = data.created;
+    self.author.text = data.username;
 }
 
 - (void)initThumbnail

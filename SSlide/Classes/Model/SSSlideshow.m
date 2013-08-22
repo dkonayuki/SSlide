@@ -9,27 +9,37 @@
 #import "SSSlideshow.h"
 
 @implementation SSSlideshow
-@synthesize ThumbnailURL = mThumbnailUrl;
-@synthesize Created = mCreated;
+@synthesize thumbnailUrl = mThumbnailUrl;
+@synthesize created = mCreated;
+@synthesize slideImageBaseurl = mSlideImageBaseUrl;
 
-- (void)setThumbnailURL:(NSString *)ThumbnailURL
+- (void)setThumbnailUrl:(NSString *)thumbnailUrl
 {
-    mThumbnailUrl = [NSString stringWithFormat:@"http:%@", ThumbnailURL];
+    mThumbnailUrl = [NSString stringWithFormat:@"http:%@", thumbnailUrl];
 }
 
-- (void)setCreated:(NSString *)Created
+- (void)setCreated:(NSString *)created
 {
-    mCreated = Created;
+    mCreated = created;
+}
+
+- (void)setSlideImageBaseurl:(NSString *)slideImageBaseurl
+{
+    mSlideImageBaseUrl = [NSString stringWithFormat:@"http:%@", slideImageBaseurl];
 }
 
 - (void)log
 {
-    NSLog(@"ID: %@", self.ID);
-    NSLog(@"Title: %@", self.Title);
-    NSLog(@"Username: %@", self.Username);
-    NSLog(@"URL: %@", self.URL);
-    NSLog(@"ThumbnailURL: %@", self.ThumbnailURL);
-    NSLog(@"Created: %@", self.Created);
+    NSLog(@"ID: %@", self.slideId);
+    NSLog(@"Title: %@", self.title);
+    NSLog(@"Username: %@", self.username);
+    NSLog(@"URL: %@", self.url);
+    NSLog(@"ThumbnailURL: %@", self.thumbnailUrl);
+    NSLog(@"Created: %@", self.created);
+    NSLog(@"Total slides: %d", self.totalSlides);
+    NSLog(@"Base url: %@", self.slideImageBaseurl);
+    NSLog(@"Base url suffix: %@", self.slideImageBaseurlSuffix);
+    NSLog(@"First page image url: %@", self.firstPageImageUrl);
 }
 
 @end
