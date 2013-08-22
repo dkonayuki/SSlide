@@ -48,18 +48,22 @@
                                          NSLog(@"search ERROR");
                                      }];
      */
-    /*
+    
     [[SSApi sharedInstance] getSlideshowsByUser:@"thefoolishman"
                                         success:^(NSArray *result){
                                             NSLog(@"%d", [result count]);
                                             for (SSSlideshow *cur in result) {
                                                 [cur log];
                                             }
+                                            
+                                            SSSlideshow *firstSlideshow = [result objectAtIndex:0];
+                                            [[SSApi sharedInstance] getExtendedSlideInfo:firstSlideshow.URL];
                                         }
                                         failure:^(void) {     // TODO: error handling
                                             NSLog(@"search ERROR");
                                         }];
-     */
+     
+    /*
     [[SSApi sharedInstance] checkUsernamePassword:@"thefoolishman"
                                          password:@"fasdf"
                                            result:^(BOOL result) {
@@ -69,6 +73,8 @@
                                                    NSLog(@"FAIL");
                                                }
                                            }];
+     */
+    
 }
 
 - (void)didReceiveMemoryWarning

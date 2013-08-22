@@ -37,6 +37,13 @@
 - (void)searchSlideshows:(NSString *)params success:(void (^)(NSArray *result))success failure:(void (^)())failure;
 
 /**
+ *	get extended slide info
+ *
+ *	@param	url
+ */
+- (void)getExtendedSlideInfo:(NSString *)url;
+
+/**
  *	get singleton
  *
  *	@return singleton object
