@@ -13,6 +13,7 @@
 
 - (NSInteger) numberOfRow;
 - (SSSlideshow *) getDataAtIndex:(int)index;
+- (void) didSelectedAtIndex:(int)index;
 - (void) getMoreSlides;
 
 @end

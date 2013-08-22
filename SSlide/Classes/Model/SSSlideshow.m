@@ -42,4 +42,12 @@
     NSLog(@"First page image url: %@", self.firstPageImageUrl);
 }
 
+- (BOOL)extendedInfoIsNil
+{
+    if (self.slideImageBaseurl && self.slideImageBaseurlSuffix) {
+        return NO;
+    }
+    return YES;
+}
+
 @end

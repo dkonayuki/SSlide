@@ -145,6 +145,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DC081B5217C657B200A893C2 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
 		DC48BFCE17C51BBA00340FE0 /* Api */ = {
 			isa = PBXGroup;
 			children = (
@@ -215,6 +222,7 @@
 				DCC0BB1117C493ED009FF1FD /* View */,
 				DCC0BB1417C493ED009FF1FD /* Model */,
 				DC48BFCE17C51BBA00340FE0 /* Api */,
+				DC081B5217C657B200A893C2 /* Extensions */,
 				DCC0BB3717C493ED009FF1FD /* Utilities */,
 			);
 			name = Classes;

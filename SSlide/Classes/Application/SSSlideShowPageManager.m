@@ -7,6 +7,7 @@
 //
 
 #import "SSSlideShowPageManager.h"
+#import "SSApi.h"
 
 @interface SSSlideShowPageManager() <MNPageViewControllerDataSource, MNPageViewControllerDelegate>
 
@@ -25,21 +26,16 @@
     if (self) {
         self.currentSlide = slideshow;
         self.currentPage = 1;
-        self.totalPage = slideshow.totalSlides;
         
         self.pageViewController = [[MNPageViewController alloc] init];
         self.pageViewController.dataSource = self;
         self.pageViewController.delegate = self;
         
+        self.totalPage = self.currentSlide.totalSlides;
         self.currentViewController = [[SSSlideShowViewController alloc] initWithCurrentSlideshow:self.currentSlide pageIndex:self.currentPage];
         self.pageViewController.viewController = self.currentViewController;
     }
     return self;
-}
-
-- (void)refresh
-{
-    self.totalPage = self.currentSlide.totalSlides;
 }
 
 #pragma mark - MNPageViewController datasource

@@ -69,7 +69,7 @@
     SSSlideCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
         cell = [[SSSlideCell alloc] init];
-        //cell.frame = CGRectMake(0, 0, self.bounds.size.width, 110);
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
     SSSlideshow *data = [self.delegate getDataAtIndex:indexPath.row];
@@ -87,14 +87,17 @@
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    
-    
     NSInteger currentOffset = scrollView.contentOffset.y;
     NSInteger maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height;
     
     if (maximumOffset - currentOffset <= -40) {
         [self.delegate getMoreSlides];
     }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self.delegate didSelectedAtIndex:indexPath.row];
 }
 
 @end

@@ -179,7 +179,7 @@
  *
  *	@param	slide
  */
-- (void)addExtendedSlideInfo:(SSSlideshow *)slide
+- (void)addExtendedSlideInfo:(SSSlideshow *)slide result:(void (^)(BOOL))result
 {
     __block SSSlideshow *curSlide = slide;
     NSString *requestUrl = [NSString stringWithFormat:@"%@?url=%@&format=json", [[SSDB5 theme] stringForKey:@"OEMBED_BASE_URL"], slide.url];
@@ -197,10 +197,12 @@
                                                         NSString *firstImageUrl = [NSString stringWithFormat:@"http:%@1%@", curSlide.slideImageBaseurl, curSlide.slideImageBaseurlSuffix];
                                                         curSlide.firstPageImageUrl = firstImageUrl;
                                                        // [curSlide log];
+                                                        result(TRUE);
                                                     }
                                                     failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-                                                        NSLog(@"error");
+                                                        result(FALSE);
                                                     }];
+    
     [operation start];
 }
 

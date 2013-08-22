@@ -22,5 +22,6 @@
 @property (copy, nonatomic) NSString *firstPageImageUrl;
 
 - (void)log;
+- (BOOL)extendedInfoIsNil;
 
 @end

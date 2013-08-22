@@ -8,6 +8,12 @@
 
 #import "SSSlideShowView.h"
 
+@interface SSSlideShowView() <UIGestureRecognizerDelegate>
+
+@property (assign, nonatomic) float lastScale;
+
+@end
+
 @implementation SSSlideShowView
 
 - (id)initWithFrame:(CGRect)frame
@@ -25,14 +31,51 @@
     self.imageView = [[UIImageView alloc] initWithFrame:self.bounds];
     self.imageView.contentMode = UIViewContentModeScaleAspectFit;
     [self addSubview:self.imageView];
+    
+    // pinch gesture
+    UIPinchGestureRecognizer *pinchGes = [[UIPinchGestureRecognizer alloc] initWithTarget:self
+                                                                                   action:@selector(pinchGestureAction:)];
+    [self addGestureRecognizer:pinchGes];
 }
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
+
+- (void)pinchGestureAction:(UIPinchGestureRecognizer *)sender
 {
-    // Drawing code
+    NSLog(@"AA");
+    switch ([sender state]) {
+        case UIGestureRecognizerStateBegan:
+            self.lastScale = 1.f;
+            break;
+        case UIGestureRecognizerStateCancelled: {
+            self.lastScale = 1.f;
+            CGAffineTransform currentTransform = self.transform;
+            CGAffineTransform newTransform = CGAffineTransformScale(currentTransform, self.lastScale, self.lastScale);
+            [self setTransform:newTransform];
+        }
+            return;
+        default:
+            break;
+    }
+    
+    CGFloat scale = 1.0 - (self.lastScale - [sender scale]);
+    
+    CGAffineTransform currentTransform = self.transform;
+    CGAffineTransform newTransform = CGAffineTransformScale(currentTransform, scale, scale);
+    [self setTransform:newTransform];
+    self.lastScale = [sender scale];
+    
+    if (self.lastScale <= 0.5f) {
+        [UIView animateWithDuration:0.5f
+                         animations:^(void){
+                             CGAffineTransform currentTransform = self.transform;
+                             CGAffineTransform newTransform = CGAffineTransformScale(currentTransform, 0.3f, 0.3f);
+                             [self setTransform:newTransform];
+                         }
+                         completion:^(BOOL finished) {
+                             if (finished) {
+                                 [self.delegate dismissView];
+                             }
+                         }];
+    }
 }
-*/
 
 @end

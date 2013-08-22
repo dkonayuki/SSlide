@@ -8,6 +8,12 @@
 
 #import "SSView.h"
 
+@protocol SSSlideShowViewDelegate <NSObject>
+
+- (void)dismissView;
+
+@end
+
 @interface SSSlideShowView : SSView
 
 @property (strong, nonatomic) UIImageView *imageView;

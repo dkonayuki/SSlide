@@ -14,8 +14,7 @@
 @interface SSSlideShowPageManager : NSObject
 
 @property (strong, nonatomic) MNPageViewController *pageViewController;
-- (id)initWithSlideshow:(SSSlideshow *)slideshow;
 
-- (void)refresh;
+- (id)initWithSlideshow:(SSSlideshow *)slideshow;
 
 @end

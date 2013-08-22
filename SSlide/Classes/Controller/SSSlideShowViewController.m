@@ -10,7 +10,7 @@
 #import "SSSlideShowView.h"
 #import <AFNetworking/AFImageRequestOperation.h>
 
-@interface SSSlideShowViewController ()
+@interface SSSlideShowViewController () <SSSlideShowViewDelegate>
 
 @property (strong, nonatomic) SSSlideShowView *myView;
 @property (strong, nonatomic) SSSlideshow *currentSlide;
@@ -46,6 +46,7 @@
     self.myView = [[SSSlideShowView alloc] initWithFrame:self.view.bounds andDelegate:self];
     self.view = self.myView;
     [SVProgressHUD showWithStatus:@"loading"];
+    // load image
     NSString *imageUrl = [NSString stringWithFormat:@"%@%d%@", self.currentSlide.slideImageBaseurl, self.pageIndex, self.currentSlide.slideImageBaseurlSuffix];
     NSLog(@"Image url: %@", imageUrl);
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:imageUrl]];
@@ -62,6 +63,12 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - SSSlideShowView delegate
+- (void)dismissView
+{
+    [self dismissViewControllerAnimated:NO completion:nil];
 }
 
 @end

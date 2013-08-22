@@ -71,6 +71,13 @@
     [self getTopSlideshows];
 }
 
+- (void)didSelectedAtIndex:(int)index
+{
+    SSSlideshow *selectedSlide = [self.slideArray objectAtIndex:index];
+    self.pageManager = [[SSSlideShowPageManager alloc] initWithSlideshow:selectedSlide];
+    [self presentViewController:self.pageManager.pageViewController animated:YES completion:nil];
+}
+
 #pragma mark - private
 - (void)getTopSlideshows
 {
@@ -83,6 +90,12 @@
                                                 if (self.currentPage == 1) {
                                                     [SVProgressHUD dismiss];
                                                 }
+                                                dispatch_apply([result count], dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t index) {
+                                                    SSSlideshow *slideshow = [result objectAtIndex:index];
+                                                    [[SSApi sharedInstance] addExtendedSlideInfo:slideshow result:^(BOOL result) {
+                                                    }];
+                                                });
+
                                                 [self.slideArray addObjectsFromArray:result];
                                                 [self.myView.slideTableView reloadData];
                                             }

@@ -28,7 +28,7 @@
 
 
 - (void)getExtendedSlideInfo:(NSString *)url;
-- (void)addExtendedSlideInfo:(SSSlideshow *)slide;
+- (void)addExtendedSlideInfo:(SSSlideshow *)slide result:(void (^)(BOOL result))result;
 
 /**
  *	get singleton
