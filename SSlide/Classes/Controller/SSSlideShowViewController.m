@@ -14,7 +14,6 @@
 
 @property (strong, nonatomic) SSSlideShowView *myView;
 @property (strong, nonatomic) SSSlideshow *currentSlide;
-@property (assign, nonatomic) NSInteger pageIndex;
 
 @end
 

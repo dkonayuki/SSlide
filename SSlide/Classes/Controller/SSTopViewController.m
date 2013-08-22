@@ -10,7 +10,7 @@
 #import "SSTopView.h"
 #import "SSApi.h"
 #import "SSSlideshow.h"
-#import "SSSlideShowPageManager.h"
+#import "SSSlideShowPageViewController.h"
 
 @interface SSTopViewController () <SSTopViewDelegate>
 
@@ -18,7 +18,7 @@
 @property (strong, nonatomic) NSMutableArray *slideArray;
 @property (assign, nonatomic) NSInteger currentPage;
 
-@property (strong, nonatomic) SSSlideShowPageManager *pageManager;  //TODO : change to singleton
+@property (strong, nonatomic) SSSlideShowPageViewController *pageViewController;
 
 @end
 
@@ -77,8 +77,8 @@
     if ([selectedSlide extendedInfoIsNil]) {
         return;
     }
-    self.pageManager = [[SSSlideShowPageManager alloc] initWithSlideshow:selectedSlide];
-    [self presentViewController:self.pageManager.pageViewController animated:YES completion:nil];
+    self.pageViewController = [[SSSlideShowPageViewController alloc] initWithSlideshow:selectedSlide];
+    [self presentViewController:self.pageViewController animated:YES completion:nil];
 }
 
 #pragma mark - private
