@@ -19,6 +19,13 @@
     return self;
 }
 
+- (void)initView
+{
+    self.backgroundColor = [UIColor whiteColor];
+    self.imageView = [[UIImageView alloc] initWithFrame:self.bounds];
+    self.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    [self addSubview:self.imageView];
+}
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

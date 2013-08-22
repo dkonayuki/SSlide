@@ -11,6 +11,7 @@
 @implementation SSSlideshow
 @synthesize thumbnailUrl = mThumbnailUrl;
 @synthesize created = mCreated;
+@synthesize slideImageBaseurl = mSlideImageBaseUrl;
 
 - (void)setThumbnailUrl:(NSString *)thumbnailUrl
 {
@@ -20,6 +21,11 @@
 - (void)setCreated:(NSString *)created
 {
     mCreated = created;
+}
+
+- (void)setSlideImageBaseurl:(NSString *)slideImageBaseurl
+{
+    mSlideImageBaseUrl = [NSString stringWithFormat:@"http:%@", slideImageBaseurl];
 }
 
 - (void)log

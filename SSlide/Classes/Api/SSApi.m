@@ -196,7 +196,7 @@
                                                         curSlide.slideImageBaseurlSuffix = [dict objectForKey:@"slide_image_baseurl_suffix"];
                                                         NSString *firstImageUrl = [NSString stringWithFormat:@"http:%@1%@", curSlide.slideImageBaseurl, curSlide.slideImageBaseurlSuffix];
                                                         curSlide.firstPageImageUrl = firstImageUrl;
-                                                        [curSlide log];
+                                                       // [curSlide log];
                                                     }
                                                     failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
                                                         NSLog(@"error");

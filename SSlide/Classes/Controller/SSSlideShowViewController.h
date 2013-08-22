@@ -11,6 +11,6 @@
 
 @interface SSSlideShowViewController : SSViewController
 
-@property (strong, nonatomic) SSSlideshow *currentSlide;
+- (id)initWithCurrentSlideshow:(SSSlideshow *)currentSlide pageIndex:(NSInteger)index;
 
 @end

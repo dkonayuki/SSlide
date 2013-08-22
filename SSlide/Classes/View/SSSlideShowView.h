@@ -10,4 +10,6 @@
 
 @interface SSSlideShowView : SSView
 
+@property (strong, nonatomic) UIImageView *imageView;
+
 @end
