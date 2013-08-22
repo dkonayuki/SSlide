@@ -49,7 +49,7 @@
                                      }];
      */
     
-    [[SSApi sharedInstance] getSlideshowsByUser:@"thefoolishman"
+    [[SSApi sharedInstance] getSlideshowsByUser:@"rashmi"
                                         success:^(NSArray *result){
                                             
                                             dispatch_apply([result count], dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t index) {

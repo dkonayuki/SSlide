@@ -33,6 +33,7 @@
     NSLog(@"Total slides: %d", self.totalSlides);
     NSLog(@"Base url: %@", self.slideImageBaseurl);
     NSLog(@"Base url suffix: %@", self.slideImageBaseurlSuffix);
+    NSLog(@"First page image url: %@", self.firstPageImageUrl);
 }
 
 @end

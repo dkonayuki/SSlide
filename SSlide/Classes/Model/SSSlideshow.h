@@ -19,6 +19,7 @@
 @property (assign, nonatomic) NSInteger totalSlides;
 @property (copy, nonatomic) NSString *slideImageBaseurl;
 @property (copy, nonatomic) NSString *slideImageBaseurlSuffix;
+@property (copy, nonatomic) NSString *firstPageImageUrl;
 
 - (void)log;
 
