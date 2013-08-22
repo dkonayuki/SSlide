@@ -7,7 +7,6 @@
 //
 
 #import "SSTopView.h"
-#import "SSSlideTableView.h"
 #import "SSSlideCell.h"
 #import "SSSlideshow.h"
 
@@ -40,10 +39,10 @@
 - (void) initSlideTableView
 {
     topMargin = 50.0f;
-    self.slideTableView = [[SSSlideTableView alloc] initWithFrame:CGRectMake(0,
-                                                                             topMargin,
-                                                                             self.bounds.size.width,
-                                                                             self.bounds.size.height - topMargin)];
+    self.slideTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,
+                                                                        topMargin,
+                                                                        self.bounds.size.width,
+                                                                        self.bounds.size.height - topMargin)];
     self.slideTableView.delegate = self;
     self.slideTableView.dataSource = self;
     self.slideTableView.backgroundColor = [UIColor clearColor];
@@ -70,6 +69,7 @@
     SSSlideCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
         cell = [[SSSlideCell alloc] init];
+        //cell.frame = CGRectMake(0, 0, self.bounds.size.width, 110);
     }
     
     SSSlideshow *data = [self.delegate getDataAtIndex:indexPath.row];
@@ -80,6 +80,9 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (IS_IPAD) {
+        return 250;
+    }
     return 110;
 }
 
@@ -88,7 +91,6 @@
     
     NSInteger currentOffset = scrollView.contentOffset.y;
     NSInteger maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height;
-    
     
     if (maximumOffset - currentOffset <= -40) {
         [self.delegate getMoreSlides];

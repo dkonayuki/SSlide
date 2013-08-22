@@ -20,6 +20,10 @@
 		<string>2B3B4B</string>
 		<key>search_textfield_border_color</key>
 		<string>FFFFFFF</string>
+		<key>slide_cell_height_iphone</key>
+		<integer>110</integer>
+		<key>slide_cell_height_ipad</key>
+		<integer>250</integer>
 	</dict>
 </dict>
 </plist>

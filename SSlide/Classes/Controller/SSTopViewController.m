@@ -16,14 +16,13 @@
 
 @property (strong, nonatomic) SSTopView *myView;
 @property (strong, nonatomic) NSMutableArray *slideArray;
-@property (strong, nonatomic) SSSlideShowPageManager *pageManager;
+@property (assign, nonatomic) NSInteger currentPage;
+
+@property (strong, nonatomic) SSSlideShowPageManager *pageManager;  //TODO : change to singleton
 
 @end
 
 @implementation SSTopViewController
-{
-    NSInteger currentPage;
-}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -38,72 +37,15 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    currentPage = 1;
+    self.currentPage = 1;
     self.myView = [[SSTopView alloc] initWithFrame:self.view.bounds andDelegate:self];
     self.view = self.myView;
-    
+    // init slideArray
     self.slideArray = [[NSMutableArray alloc] init];
-    /*
-    NSString *params = @"q=GCD&page=1&items_per_page=10";
-    [[SSApi sharedInstance] searchSlideshows:params
-                                     success:^(NSArray *result){
-                                         NSLog(@"%d", [result count]);
-                                         for (SSSlideshow *cur in result) {
-                                             [cur log];
-                                         }
-                                     }
-                                     failure:^(void) {     // TODO: error handling
-                                         NSLog(@"search ERROR");
-                                     }];
-     */
-/*    
-    [[SSApi sharedInstance] getSlideshowsByUser:@"rashmi"
-                                        success:^(NSArray *result){
-                                             self.pageManager = [[SSSlideShowPageManager alloc] initWithSlideshow:[result objectAtIndex:0]];
-                                            dispatch_apply([result count], dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t index) {
-                                                SSSlideshow *slideshow = [result objectAtIndex:index];
-                                                [[SSApi sharedInstance] addExtendedSlideInfo:slideshow];
-                                            });
-                        
-                                        }
-                                        failure:^(void) {     // TODO: error handling
-                                            NSLog(@"search ERROR");
-                                        }];
-    
-    double delayInSeconds = 3.0;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        [self.pageManager refresh];
-        [self presentViewController:self.pageManager.pageViewController animated:YES completion:nil];
-    });
-  */  
-    /*
-    [[SSApi sharedInstance] checkUsernamePassword:@"thefoolishman"
-                                         password:@"fasdf"
-                                           result:^(BOOL result) {
-                                               if(result) {
-                                                   NSLog(@"OK");
-                                               } else {
-                                                   NSLog(@"FAIL");
-                                               }
-                                           }];
-     */
-    
-    [[SSApi sharedInstance] getMostViewedSlideshows:@"Ruby"
-                                               page:currentPage
-                                       itemsPerPage:10
-                                            success:^(NSArray *result){
-                                                [self.slideArray addObjectsFromArray:result];
-                                               
-                                                /*NSLog(@"%d", [self.slideArray count]);
-                                                for (SSSlideshow *cur in self.slideArray) {
-                                                    [cur log];
-                                                }*/
-                                                [self.myView.slideTableView reloadData];
-                                            }
-                                            failure:^(void) {     // TODO: error handling
-                                                NSLog(@"search ERROR");
-                                            }];
+    // show loading
+    [SVProgressHUD showWithStatus:@"Loading"];
+    // get first slide
+    [self getTopSlideshows];
 }
 
 - (void)didReceiveMemoryWarning
@@ -125,16 +67,27 @@
 
 - (void)getMoreSlides
 {
-    currentPage++;
+    self.currentPage ++;
+    [self getTopSlideshows];
+}
+
+#pragma mark - private
+- (void)getTopSlideshows
+{
+    // TODO: get setting info
     [[SSApi sharedInstance] getMostViewedSlideshows:@"Ruby"
-                                               page:currentPage
+                                               page:self.currentPage
                                        itemsPerPage:10
                                             success:^(NSArray *result){
+                                                // stop loading status
+                                                if (self.currentPage == 1) {
+                                                    [SVProgressHUD dismiss];
+                                                }
                                                 [self.slideArray addObjectsFromArray:result];
                                                 [self.myView.slideTableView reloadData];
                                             }
                                             failure:^(void) {     // TODO: error handling
-                                                NSLog(@"search ERROR");
+                                                NSLog(@"MostViewed ERROR");
                                             }];
 }
 

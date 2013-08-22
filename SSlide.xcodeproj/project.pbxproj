@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		3009B6485BA1436BAC1BA6F5 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E2702BF3BD1401A8049CA77 /* libPods.a */; };
-		DC2BCF5917C5AEAB00181774 /* SSSlideTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2BCF5817C5AEAA00181774 /* SSSlideTableView.m */; };
 		DC2BCF5C17C5AECA00181774 /* SSSlideCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2BCF5B17C5AECA00181774 /* SSSlideCell.m */; };
 		DC2BCF5F17C5DBFE00181774 /* SSSlideShowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2BCF5E17C5DBFE00181774 /* SSSlideShowViewController.m */; };
 		DC2BCF6217C5DC1D00181774 /* SSSlideShowView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2BCF6117C5DC1C00181774 /* SSSlideShowView.m */; };
@@ -59,8 +58,6 @@
 
 /* Begin PBXFileReference section */
 		7E2702BF3BD1401A8049CA77 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		DC2BCF5717C5AEAA00181774 /* SSSlideTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSSlideTableView.h; path = Classes/View/SSSlideTableView.h; sourceTree = "<group>"; };
-		DC2BCF5817C5AEAA00181774 /* SSSlideTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSSlideTableView.m; path = Classes/View/SSSlideTableView.m; sourceTree = "<group>"; };
 		DC2BCF5A17C5AECA00181774 /* SSSlideCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSSlideCell.h; path = Classes/View/SSSlideCell.h; sourceTree = "<group>"; };
 		DC2BCF5B17C5AECA00181774 /* SSSlideCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSSlideCell.m; path = Classes/View/SSSlideCell.m; sourceTree = "<group>"; };
 		DC2BCF5D17C5DBFE00181774 /* SSSlideShowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSSlideShowViewController.h; path = Classes/Controller/SSSlideShowViewController.h; sourceTree = "<group>"; };
@@ -267,8 +264,6 @@
 				DCB5A60217C4F7920089809C /* SSSearchView.m */,
 				DCB5A60417C4F7A20089809C /* SSUserView.h */,
 				DCB5A60517C4F7A20089809C /* SSUserView.m */,
-				DC2BCF5717C5AEAA00181774 /* SSSlideTableView.h */,
-				DC2BCF5817C5AEAA00181774 /* SSSlideTableView.m */,
 				DC2BCF5A17C5AECA00181774 /* SSSlideCell.h */,
 				DC2BCF5B17C5AECA00181774 /* SSSlideCell.m */,
 				DC2BCF6017C5DC1C00181774 /* SSSlideShowView.h */,
@@ -531,7 +526,6 @@
 				DCB5A60617C4F7A20089809C /* SSUserView.m in Sources */,
 				DC48BFD117C51C3D00340FE0 /* SSApi.m in Sources */,
 				DCDDF64817C59CFD0095A299 /* SSSlideshow.m in Sources */,
-				DC2BCF5917C5AEAB00181774 /* SSSlideTableView.m in Sources */,
 				DC2BCF5C17C5AECA00181774 /* SSSlideCell.m in Sources */,
 				DC2BCF5F17C5DBFE00181774 /* SSSlideShowViewController.m in Sources */,
 				DC2BCF6217C5DC1D00181774 /* SSSlideShowView.m in Sources */,

@@ -13,8 +13,10 @@
 
 @interface SSSlideCell()
 
-@property (nonatomic, strong) UIImageView *thumbnail;
-@property (nonatomic, strong) UILabel *title, *date, *author;
+@property (strong, nonatomic) UIImageView *thumbnail;
+@property (strong, nonatomic) UILabel *title;
+@property (strong, nonatomic) UILabel *date;
+@property (strong, nonatomic) UILabel *author;
 
 @end
 
@@ -29,65 +31,60 @@
     return self;
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
+- (id)init {
+    self = [super init];
+    if (self) {
+        
+        float cellHeight = IS_IPAD ? [[SSDB5 theme] floatForKey:@"slide_cell_height_ipad"] : [[SSDB5 theme] floatForKey:@"slide_cell_height_iphone"];
+        float cellWidth = IS_IPAD ? 680.f : 320.f;
+        
+        float topMargin = 0.f;
+        float height = cellHeight - 2*topMargin;
+        float width = height;
+        float leftMargin = 30.f;
+        self.thumbnail = [[UIImageView alloc] initWithFrame:CGRectMake(leftMargin, topMargin, width, height)];
+        self.thumbnail.contentMode = UIViewContentModeScaleAspectFit;
+        [self addSubview:self.thumbnail];
+        
+        leftMargin += height + 30.f;
+        width = cellWidth = leftMargin;
+        
+        self.title = [[UILabel alloc] initWithFrame:CGRectMake(leftMargin, 20.0f, width, 20.0f)];
+        [self addSubview:self.title];
+        self.title.backgroundColor = [UIColor clearColor];
+        self.title.numberOfLines = 0;
+        self.title.adjustsFontSizeToFitWidth = NO;
+        self.title.font = [UIFont systemFontOfSize:20];
+        
+        self.date = [[UILabel alloc] initWithFrame:CGRectMake(leftMargin, 50.0f, width, 20.0f)];
+        [self addSubview:self.date];
+        self.date.backgroundColor = [UIColor clearColor];
+        self.date.font = [UIFont systemFontOfSize:14];
+        
+        self.author = [[UILabel alloc] initWithFrame:CGRectMake(leftMargin, 80.0f, width, 20.0f)];
+        [self addSubview:self.author];
+        self.author.backgroundColor = [UIColor clearColor];
+        self.author.font = [UIFont systemFontOfSize:14];
+        
+        self.contentView.backgroundColor = [UIColor clearColor];
+    }
+    return self;
 }
 
+#pragma mark - setData
 - (void)setData:(SSSlideshow *)data
 {
     [self getThumbnail:[NSURL URLWithString:data.thumbnailUrl]];
-    self.thumbnail.frame = CGRectMake(10.0f, 10.0f, 100.0f, 100.0f);
     self.title.text = data.title;
     self.date.text = data.created;
     self.author.text = data.username;
 }
 
-- (void)initThumbnail
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
-    self.thumbnail = [[UIImageView alloc] init];
-    [self addSubview:self.thumbnail];
-    self.thumbnail.backgroundColor = [UIColor clearColor];
-}
-
-- (void)initTitle
-{
-    self.title = [[UILabel alloc] initWithFrame:CGRectMake(120.0f, 20.0f, 180.0f, 20.0f)];
-    [self addSubview:self.title];
-    self.title.backgroundColor = [UIColor clearColor];
-    self.title.numberOfLines = 0;
-    self.title.adjustsFontSizeToFitWidth = NO;
-    self.title.font = [UIFont systemFontOfSize:20];
-}
-
-- (void)initDate
-{
-    self.date = [[UILabel alloc] initWithFrame:CGRectMake(120.0f, 50.0f, 180.0f, 20.0f)];
-    [self addSubview:self.date];
-    self.date.backgroundColor = [UIColor clearColor];
-    self.date.font = [UIFont systemFontOfSize:14];
-}
-
-- (void)initAuthor
-{
-    self.author = [[UILabel alloc] initWithFrame:CGRectMake(120.0f, 80.0f, 180.0f, 20.0f)];
-    [self addSubview:self.author];
-    self.author.backgroundColor = [UIColor clearColor];
-    self.author.font = [UIFont systemFontOfSize:14];
-}
-
-- (id)init {
-    self = [super init];
-    if (self) {
-        [self initThumbnail];
-        [self initTitle];
-        [self initDate];
-        [self initAuthor];
-        self.contentView.backgroundColor = [UIColor clearColor];
-    }
-    return self;
+    [super setSelected:selected animated:animated];
+    
+    // Configure the view for the selected state
 }
 
 - (void)getThumbnail:(NSURL *)url{
