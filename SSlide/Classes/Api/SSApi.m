@@ -8,8 +8,17 @@
 
 #import "SSApi.h"
 #import <NSString-Hashes/NSString+Hashes.h>
-#import <XMLDictionary/XMLDictionary.h>
+#import <TBXML/TBXML.h>
+#import <TBXML+NSDictionary/TBXML+NSDictionary.h>
 #import "SSDB5.h"
+#import "SSSlideshow.h"
+
+@interface SSApi()
+
+@property (strong, nonatomic) NSMutableArray *slideshowArray;
+@property (strong, nonatomic) SSSlideshow *currentSlideshow;
+
+@end
 
 @implementation SSApi
 
@@ -38,18 +47,61 @@
     return url;
 }
 
-- (void)search_slideshows:(NSString *)params success:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
+- (void)search_slideshows:(NSString *)params success:(void (^)(NSArray *))success failure:(void (^)())failure
 {
+    self.slideshowArray = [[NSMutableArray alloc] init];
+    self.currentSlideshow = nil;
     NSString *url = [NSString stringWithFormat:@"search_slideshows?%@&%@", params, [self getApiHash]];
     [self.client getPath:url
               parameters:nil
             success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                NSDictionary *dictionary = [NSDictionary dictionaryWithXMLData:responseObject];
-                success(operation, dictionary);
+                NSError *error = nil;
+//                NSDictionary *dict = [TBXML dictionaryWithXMLData:responseObject error:&error];
+//                if (!error) {
+//                    NSArray *slideshows = [dict objectForKey:@"Slideshow"];
+//                    NSLog(@"%d: ", [slideshows count]);
+//                } else {  // error handling
+//                    NSLog(@"parsing ERROR");
+//                }
+                TBXML *tbxml = [TBXML tbxmlWithXMLData:responseObject error:&error];
+                if (tbxml.rootXMLElement) {
+                    [self traverseSlideshows:tbxml.rootXMLElement];
+                    success(self.slideshowArray);
+                }
             }
             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                failure(operation, error);
+                failure();
             }];
+}
+
+- (void)traverseSlideshows:(TBXMLElement *)element {
+    do {
+        // Display the name of the element
+        NSString *elementName = [TBXML elementName:element];
+        //NSLog(@"%@", elementName);
+        if ([elementName isEqualToString:@"Slideshow"]) {
+            self.currentSlideshow = [[SSSlideshow alloc] init];
+        } else if ([elementName isEqualToString:@"ID"]) {
+            self.currentSlideshow.ID = [TBXML textForElement:element];
+        } else if ([elementName isEqualToString:@"Title"]) {
+            self.currentSlideshow.Title = [TBXML textForElement:element];
+        } else if ([elementName isEqualToString:@"Username"]) {
+            self.currentSlideshow.Username = [TBXML textForElement:element];
+        } else if ([elementName isEqualToString:@"URL"]) {
+            self.currentSlideshow.URL = [TBXML textForElement:element];
+        } else if ([elementName isEqualToString:@"ThumbnailURL"]) {
+            self.currentSlideshow.ThumbnailURL = [TBXML textForElement:element];
+        } else if ([elementName isEqualToString:@"Created"]) {
+            self.currentSlideshow.Created = [TBXML textForElement:element];
+            [self.slideshowArray addObject:self.currentSlideshow];
+        }
+        
+        // if the element has child elements, process them
+        if (element->firstChild)
+            [self traverseSlideshows:element->firstChild];
+        
+        // Obtain next sibling element
+    } while ((element = element->nextSibling));
 }
 
 @end

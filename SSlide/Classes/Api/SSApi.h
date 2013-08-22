@@ -15,9 +15,7 @@
 @property (strong, nonatomic) AFHTTPClient *client;
 
 
-- (void)search_slideshows:(NSString *)params
-                  success:(void (^)(AFHTTPRequestOperation *, id))success
-                  failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure;
+- (void)search_slideshows:(NSString *)params success:(void (^)(NSArray *result))success failure:(void (^)())failure;
 
 + (SSApi *)sharedInstance;
 

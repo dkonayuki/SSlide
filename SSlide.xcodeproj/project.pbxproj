@@ -22,7 +22,6 @@
 		DCC0BB0317C493ED009FF1FD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DCC0BB0117C493ED009FF1FD /* InfoPlist.strings */; };
 		DCC0BB0517C493ED009FF1FD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC0BB0417C493ED009FF1FD /* main.m */; };
 		DCC0BB0D17C493ED009FF1FD /* SSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC0BB0C17C493ED009FF1FD /* SSAppDelegate.m */; };
-		DCC0BB1617C493ED009FF1FD /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = DCC0BB1517C493ED009FF1FD /* .gitignore */; };
 		DCC0BB1B17C493ED009FF1FD /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DCC0BB1A17C493ED009FF1FD /* Icon.png */; };
 		DCC0BB1D17C493ED009FF1FD /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DCC0BB1C17C493ED009FF1FD /* Icon@2x.png */; };
 		DCC0BB1F17C493ED009FF1FD /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = DCC0BB1E17C493ED009FF1FD /* Default.png */; };
@@ -40,6 +39,7 @@
 		DCC0BB4417C493EE009FF1FD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCC0BAFA17C493ED009FF1FD /* Foundation.framework */; };
 		DCC0BB4C17C493EE009FF1FD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DCC0BB4A17C493EE009FF1FD /* InfoPlist.strings */; };
 		DCC0BB4F17C493EE009FF1FD /* SSlideTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC0BB4E17C493EE009FF1FD /* SSlideTests.m */; };
+		DCDDF64817C59CFD0095A299 /* SSSlideshow.m in Sources */ = {isa = PBXBuildFile; fileRef = DCDDF64717C59CFD0095A299 /* SSSlideshow.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,7 +82,6 @@
 		DCC0BB0A17C493ED009FF1FD /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; name = .gitignore; path = ../.gitignore; sourceTree = "<group>"; };
 		DCC0BB0B17C493ED009FF1FD /* SSAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SSAppDelegate.h; path = Classes/Application/SSAppDelegate.h; sourceTree = "<group>"; };
 		DCC0BB0C17C493ED009FF1FD /* SSAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = SSAppDelegate.m; path = Classes/Application/SSAppDelegate.m; sourceTree = "<group>"; };
-		DCC0BB1517C493ED009FF1FD /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; name = .gitignore; path = Classes/Model/.gitignore; sourceTree = "<group>"; };
 		DCC0BB1A17C493ED009FF1FD /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = Resources/Images/Background/Icon.png; sourceTree = "<group>"; };
 		DCC0BB1C17C493ED009FF1FD /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "Resources/Images/Background/Icon@2x.png"; sourceTree = "<group>"; };
 		DCC0BB1E17C493ED009FF1FD /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = Resources/Images/Background/Default.png; sourceTree = "<group>"; };
@@ -104,6 +103,8 @@
 		DCC0BB4B17C493EE009FF1FD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		DCC0BB4D17C493EE009FF1FD /* SSlideTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSlideTests.h; sourceTree = "<group>"; };
 		DCC0BB4E17C493EE009FF1FD /* SSlideTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SSlideTests.m; sourceTree = "<group>"; };
+		DCDDF64617C59CFD0095A299 /* SSSlideshow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSSlideshow.h; path = Classes/Model/SSSlideshow.h; sourceTree = "<group>"; };
+		DCDDF64717C59CFD0095A299 /* SSSlideshow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSSlideshow.m; path = Classes/Model/SSSlideshow.m; sourceTree = "<group>"; };
 		EFFA65580FCF476BA4AB7419 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -254,7 +255,8 @@
 		DCC0BB1417C493ED009FF1FD /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				DCC0BB1517C493ED009FF1FD /* .gitignore */,
+				DCDDF64617C59CFD0095A299 /* SSSlideshow.h */,
+				DCDDF64717C59CFD0095A299 /* SSSlideshow.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -417,7 +419,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				DCC0BB0317C493ED009FF1FD /* InfoPlist.strings in Resources */,
-				DCC0BB1617C493ED009FF1FD /* .gitignore in Resources */,
 				DCC0BB1B17C493ED009FF1FD /* Icon.png in Resources */,
 				DCC0BB1D17C493ED009FF1FD /* Icon@2x.png in Resources */,
 				DCC0BB1F17C493ED009FF1FD /* Default.png in Resources */,
@@ -504,6 +505,7 @@
 				DCB5A60317C4F7920089809C /* SSSearchView.m in Sources */,
 				DCB5A60617C4F7A20089809C /* SSUserView.m in Sources */,
 				DC48BFD117C51C3D00340FE0 /* SSApi.m in Sources */,
+				DCDDF64817C59CFD0095A299 /* SSSlideshow.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
