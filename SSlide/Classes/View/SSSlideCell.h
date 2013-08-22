@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SSSlideshow.h"
 
 @interface SSSlideCell : UITableViewCell
 
-- (void)setDataWithDictionary:(NSDictionary *)data;
+- (void)setData:(SSSlideshow *)data;
 
 @end

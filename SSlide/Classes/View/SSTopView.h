@@ -7,14 +7,19 @@
 //
 
 #import "SSView.h"
+#import "SSSlideshow.h"
+#import "SSSlideTableView.h"
 
 @protocol SSTopViewDelegate <NSObject>
 
 - (NSInteger)numberOfRow;
-- (NSDictionary *) getDataAtIndex:(int)index;
+- (SSSlideshow *) getDataAtIndex:(int)index;
+- (void)getMoreSlides;
 
 @end
 
 @interface SSTopView : SSView
+
+@property (strong, nonatomic) SSSlideTableView *slideTableView;
 
 @end

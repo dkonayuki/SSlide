@@ -8,6 +8,8 @@
 
 #import "SSSlideCell.h"
 #import "SSDB5.h"
+#import "SSSlideshow.h"
+#import <AFNetworking/AFImageRequestOperation.h>
 
 @interface SSSlideCell()
 
@@ -34,29 +36,67 @@
     // Configure the view for the selected state
 }
 
-- (void)setDataWithDictionary:(NSDictionary *)data
+- (void)setData:(SSSlideshow *)data
 {
-    self.thumbnail = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[data objectForKey:@"thumbnail"]]];
+    [self getThumbnail:[NSURL URLWithString:data.ThumbnailURL]];
     self.thumbnail.frame = CGRectMake(10.0f, 10.0f, 100.0f, 100.0f);
-    self.title.text = [data objectForKey:@"title"];
-    self.date.text = [data objectForKey:@"date"];
-    self.author.text = [data objectForKey:@"author"];
+    self.title.text = data.Title;
+    self.date.text = data.Created;
+    self.author.text = data.Username;
+}
+
+- (void)initThumbnail
+{
+    self.thumbnail = [[UIImageView alloc] init];
+    [self addSubview:self.thumbnail];
+    self.thumbnail.backgroundColor = [UIColor clearColor];
+}
+
+- (void)initTitle
+{
+    self.title = [[UILabel alloc] initWithFrame:CGRectMake(120.0f, 20.0f, 180.0f, 20.0f)];
+    [self addSubview:self.title];
+    self.title.backgroundColor = [UIColor clearColor];
+    self.title.numberOfLines = 0;
+    self.title.adjustsFontSizeToFitWidth = NO;
+    self.title.font = [UIFont systemFontOfSize:20];
+}
+
+- (void)initDate
+{
+    self.date = [[UILabel alloc] initWithFrame:CGRectMake(120.0f, 50.0f, 180.0f, 20.0f)];
+    [self addSubview:self.date];
+    self.date.backgroundColor = [UIColor clearColor];
+    self.date.font = [UIFont systemFontOfSize:14];
+}
+
+- (void)initAuthor
+{
+    self.author = [[UILabel alloc] initWithFrame:CGRectMake(120.0f, 80.0f, 180.0f, 20.0f)];
+    [self addSubview:self.author];
+    self.author.backgroundColor = [UIColor clearColor];
+    self.author.font = [UIFont systemFontOfSize:14];
 }
 
 - (id)init {
     self = [super init];
     if (self) {
-        self.thumbnail = [[UIImageView alloc] init];
-        self.title = [[UILabel alloc] initWithFrame:CGRectMake(100.0f, 20.0f, 100.0f, 20.0f)];
-        self.date = [[UILabel alloc] initWithFrame:CGRectMake(100.0f, 50.0f, 100.0f, 20.0f)];
-        self.author = [[UILabel alloc] initWithFrame:CGRectMake(100.0f, 80.0f, 100.0f, 20.0f)];
-        [self addSubview:self.thumbnail];
-        [self addSubview:self.title];
-        [self addSubview:self.date];
-        [self addSubview:self.author];
+        [self initThumbnail];
+        [self initTitle];
+        [self initDate];
+        [self initAuthor];
         self.contentView.backgroundColor = [UIColor clearColor];
     }
     return self;
+}
+
+- (void)getThumbnail:(NSURL *)url{
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    AFImageRequestOperation *operation = [AFImageRequestOperation imageRequestOperationWithRequest:request success:^(UIImage *image) {
+        self.thumbnail.image = image;
+    }];
+                                          
+    [operation start];
 }
 
 @end

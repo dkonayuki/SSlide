@@ -9,14 +9,16 @@
 #import "SSTopView.h"
 #import "SSSlideTableView.h"
 #import "SSSlideCell.h"
+#import "SSSlideshow.h"
 
 @interface SSTopView() <UITableViewDataSource, UITableViewDelegate>
-
-@property (strong, nonatomic) SSSlideTableView *slideTableView;
 
 @end
 
 @implementation SSTopView
+{
+    float topMargin;
+}
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -27,10 +29,17 @@
     return self;
 }
 
-- (void) initView
+- (void) initTopTitle
 {
-    self.backgroundColor = [[SSDB5 theme] colorForKey:@"top_view_bg_color"];
-    float topMargin = 50.f;
+    UILabel *topTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, topMargin)];
+    topTitle.text = @"SSlide";
+    [topTitle setTextAlignment:NSTextAlignmentCenter];
+    [self addSubview:topTitle];
+}
+
+- (void) initSlideTableView
+{
+    topMargin = 50.0f;
     self.slideTableView = [[SSSlideTableView alloc] initWithFrame:CGRectMake(0,
                                                                              topMargin,
                                                                              self.bounds.size.width,
@@ -40,6 +49,13 @@
     self.slideTableView.backgroundColor = [UIColor clearColor];
     self.slideTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self addSubview:self.slideTableView];
+}
+
+- (void) initView
+{
+    self.backgroundColor = [[SSDB5 theme] colorForKey:@"top_view_bg_color"];
+    [self initSlideTableView];
+    [self initTopTitle];
 }
 
 #pragma mark - tableview delegate
@@ -56,14 +72,27 @@
         cell = [[SSSlideCell alloc] init];
     }
     
-    NSDictionary *data = [self.delegate getDataAtIndex:indexPath.row];
-    [cell setDataWithDictionary:data];
+    SSSlideshow *data = [self.delegate getDataAtIndex:indexPath.row];
+    [cell setData:data];
     
     return cell;
 }
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 110;
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    
+    
+    NSInteger currentOffset = scrollView.contentOffset.y;
+    NSInteger maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height;
+    
+    
+    if (maximumOffset - currentOffset <= -40) {
+        [self.delegate getMoreSlides];
+    }
 }
 
 @end

@@ -14,10 +14,14 @@
 @interface SSTopViewController () <SSTopViewDelegate>
 
 @property (strong, nonatomic) SSTopView *myView;
+@property (strong, nonatomic) NSMutableArray *slideArray;
 
 @end
 
 @implementation SSTopViewController
+{
+    NSInteger currentPage;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -32,9 +36,11 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    currentPage = 1;
     self.myView = [[SSTopView alloc] initWithFrame:self.view.bounds andDelegate:self];
     self.view = self.myView;
     
+    self.slideArray = [[NSMutableArray alloc] init];
     /*
     NSString *params = @"q=GCD&page=1&items_per_page=10";
     [[SSApi sharedInstance] searchSlideshows:params
@@ -76,13 +82,16 @@
      */
     
     [[SSApi sharedInstance] getMostViewedSlideshows:@"Ruby"
-                                               page:1
+                                               page:currentPage
                                        itemsPerPage:10
                                             success:^(NSArray *result){
-                                                NSLog(@"%d", [result count]);
-                                                for (SSSlideshow *cur in result) {
+                                                [self.slideArray addObjectsFromArray:result];
+                                               
+                                                /*NSLog(@"%d", [self.slideArray count]);
+                                                for (SSSlideshow *cur in self.slideArray) {
                                                     [cur log];
-                                                }
+                                                }*/
+                                                [self.myView.slideTableView reloadData];
                                             }
                                             failure:^(void) {     // TODO: error handling
                                                 NSLog(@"search ERROR");
@@ -98,18 +107,27 @@
 #pragma mark - SSTopView delegate
 - (NSInteger)numberOfRow
 {
-    return 1;
+    return self.slideArray.count;
 }
 
-- (NSDictionary *)getDataAtIndex:(int)index
+- (SSSlideshow *)getDataAtIndex:(int)index
 {
-    NSDictionary *dictionary = @{
-                                 @"thumbnail" : @"abc.jpg",
-                                 @"title" : @"abc",
-                                 @"date" : @"20130822",
-                                 @"author" : @"dkonayuki"
-                                 };
-    return dictionary;
+    return [self.slideArray objectAtIndex:index];
+}
+
+- (void)getMoreSlides
+{
+    currentPage++;
+    [[SSApi sharedInstance] getMostViewedSlideshows:@"Ruby"
+                                               page:currentPage
+                                       itemsPerPage:10
+                                            success:^(NSArray *result){
+                                                [self.slideArray addObjectsFromArray:result];
+                                                [self.myView.slideTableView reloadData];
+                                            }
+                                            failure:^(void) {     // TODO: error handling
+                                                NSLog(@"search ERROR");
+                                            }];
 }
 
 @end
