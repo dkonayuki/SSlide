@@ -10,12 +10,15 @@
 
 @interface SSSlideshow : NSObject
 
-@property (copy, nonatomic) NSString *ID;
-@property (copy, nonatomic) NSString *Title;
-@property (copy, nonatomic) NSString *Username;
-@property (copy, nonatomic) NSString *URL;
-@property (copy, nonatomic) NSString *ThumbnailURL;
-@property (copy, nonatomic) NSString *Created;
+@property (copy, nonatomic) NSString *slideId;
+@property (copy, nonatomic) NSString *title;
+@property (copy, nonatomic) NSString *username;
+@property (copy, nonatomic) NSString *url;
+@property (copy, nonatomic) NSString *thumbnailUrl;
+@property (copy, nonatomic) NSString *created;
+@property (assign, nonatomic) NSInteger totalSlides;
+@property (copy, nonatomic) NSString *slideImageBaseurl;
+@property (copy, nonatomic) NSString *slideImageBaseurlSuffix;
 
 - (void)log;
 

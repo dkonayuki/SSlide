@@ -174,6 +174,34 @@
     [operation start];
 }
 
+/**
+ *	add Extended Slide info
+ *
+ *	@param	slide
+ */
+- (void)addExtendedSlideInfo:(SSSlideshow *)slide
+{
+    __block SSSlideshow *curSlide = slide;
+    NSString *requestUrl = [NSString stringWithFormat:@"%@?url=%@&format=json", [[SSDB5 theme] stringForKey:@"OEMBED_BASE_URL"], slide.url];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
+    
+    AFJSONRequestOperation *operation =
+    [AFJSONRequestOperation JSONRequestOperationWithRequest:request
+                                                    success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+                                                        NSDictionary *dict = (NSDictionary *)JSON;
+                                                        NSString *totalSlides = (NSString *)[dict objectForKey:@"total_slides"];
+                                                        
+                                                        curSlide.totalSlides = [totalSlides integerValue];
+                                                        curSlide.slideImageBaseurl = [dict objectForKey:@"slide_image_baseurl"];
+                                                        curSlide.slideImageBaseurlSuffix = [dict objectForKey:@"slide_image_baseurl_suffix"];
+                                                        [curSlide log];
+                                                    }
+                                                    failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+                                                        NSLog(@"error");
+                                                    }];
+    [operation start];
+}
+
 #pragma mark - private
 
 /**
@@ -189,17 +217,17 @@
         if ([elementName isEqualToString:@"Slideshow"]) {
             self.currentSlideshow = [[SSSlideshow alloc] init];
         } else if ([elementName isEqualToString:@"ID"]) {
-            self.currentSlideshow.ID = [TBXML textForElement:element];
+            self.currentSlideshow.slideId = [TBXML textForElement:element];
         } else if ([elementName isEqualToString:@"Title"]) {
-            self.currentSlideshow.Title = [TBXML textForElement:element];
+            self.currentSlideshow.title = [TBXML textForElement:element];
         } else if ([elementName isEqualToString:@"Username"]) {
-            self.currentSlideshow.Username = [TBXML textForElement:element];
+            self.currentSlideshow.username = [TBXML textForElement:element];
         } else if ([elementName isEqualToString:@"URL"]) {
-            self.currentSlideshow.URL = [TBXML textForElement:element];
+            self.currentSlideshow.url = [TBXML textForElement:element];
         } else if ([elementName isEqualToString:@"ThumbnailURL"]) {
-            self.currentSlideshow.ThumbnailURL = [TBXML textForElement:element];
+            self.currentSlideshow.thumbnailUrl = [TBXML textForElement:element];
         } else if ([elementName isEqualToString:@"Created"]) {
-            self.currentSlideshow.Created = [TBXML textForElement:element];
+            self.currentSlideshow.created = [TBXML textForElement:element];
             [self.slideshowArray addObject:self.currentSlideshow];
         }
         
