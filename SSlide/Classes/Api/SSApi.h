@@ -14,9 +14,33 @@
 @property (strong, nonatomic) NSURL *baseURL;
 @property (strong, nonatomic) AFHTTPClient *client;
 
+/**
+ *	check username and password
+ *
+ *	@param	username
+ *	@param	password
+ */
+- (void)checkUsernamePassword:(NSString *)username password:(NSString *)password result:(void (^)(BOOL result))result;
+
+/**
+ *	get slideshows by user
+ *
+ *	@param	username
+ */
 - (void)getSlideshowsByUser:(NSString *)username success:(void (^)(NSArray *result))success failure:(void (^)())failure;
+
+/**
+ *	search slideshows
+ *
+ *	@param	params
+ */
 - (void)searchSlideshows:(NSString *)params success:(void (^)(NSArray *result))success failure:(void (^)())failure;
 
+/**
+ *	get singleton
+ *
+ *	@return singleton object
+ */
 + (SSApi *)sharedInstance;
 
 @end
