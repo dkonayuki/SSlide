@@ -4,6 +4,10 @@
 <dict>
 	<key>Default</key>
 	<dict>
+		<key>page_top_margin</key>
+		<integer>50</integer>
+		<key>search_textfield_height</key>
+		<integer>25</integer>
 		<key>API_BASE_URL</key>
 		<string>https://www.slideshare.net/api/2/</string>
 		<key>OEMBED_BASE_URL</key>

@@ -10,14 +10,14 @@
 #import "SSSlideCell.h"
 #import "SSSlideshow.h"
 
-@interface SSTopView() <UITableViewDataSource, UITableViewDelegate>
+@interface SSTopView()
+
+@property (nonatomic) float topMargin;
 
 @end
 
 @implementation SSTopView
-{
-    float topMargin;
-}
+
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -30,81 +30,28 @@
 
 - (void) initTopTitle
 {
-    UILabel *topTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, topMargin)];
+    UILabel *topTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, self.topMargin)];
     topTitle.text = @"SSlide";
     [topTitle setTextAlignment:NSTextAlignmentCenter];
     [self addSubview:topTitle];
 }
 
-- (void) initSlideTableView
+- (void) initSlideListView
 {
-    topMargin = 50.0f;
-    self.slideTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,
-                                                                        topMargin,
+    self.topMargin = [[SSDB5 theme]floatForKey:@"page_top_margin"];
+    self.slideListView = [[SSSlideListView alloc] initWithFrame:CGRectMake(0,
+                                                                        self.topMargin,
                                                                         self.bounds.size.width,
-                                                                        self.bounds.size.height - topMargin)];
-    self.slideTableView.delegate = self;
-    self.slideTableView.dataSource = self;
-    self.slideTableView.backgroundColor = [UIColor clearColor];
-    self.slideTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [self addSubview:self.slideTableView];
+                                                                        self.bounds.size.height - self.topMargin)];
+    self.slideListView.delegate = self.delegate;
+    [self addSubview:self.slideListView];
 }
 
 - (void) initView
 {
     self.backgroundColor = [[SSDB5 theme] colorForKey:@"top_view_bg_color"];
-    [self initSlideTableView];
+    [self initSlideListView];
     [self initTopTitle];
-}
-
-#pragma mark - tableview delegate
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return [self.delegate numberOfRow];
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *identifier = @"SlideCell";
-    SSSlideCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    if (!cell) {
-        cell = [[SSSlideCell alloc] init];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    }
-    
-    SSSlideshow *data = [self.delegate getDataAtIndex:indexPath.row];
-    [cell setData:data];
-    
-    return cell;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (IS_IPAD)
-    {
-        return [[SSDB5 theme] floatForKey:@"slide_cell_height_ipad"];
-    }
-    return [[SSDB5 theme] floatForKey:@"slide_cell_height_iphone"];
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    NSInteger currentOffset = scrollView.contentOffset.y;
-    NSInteger maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height;
-    NSInteger diffOffset = 600;
-    if (IS_IPAD)
-    {
-        diffOffset *= 2.2;
-    }
-    
-    if (maximumOffset - currentOffset <= diffOffset)
-    {
-        [self.delegate getMoreSlides];
-    }
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [self.delegate didSelectedAtIndex:indexPath.row];
 }
 
 @end

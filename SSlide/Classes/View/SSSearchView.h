@@ -7,7 +7,21 @@
 //
 
 #import "SSView.h"
+#import "SSSlideshow.h"
+#import "SSSlideListView.h"
+
+@protocol SSSearchViewDelegate <NSObject>
+
+- (void)searchText:(NSString *)text firstTime:(BOOL)fTime;
+
+@end
 
 @interface SSSearchView : SSView
+
+@property (strong, nonatomic) UITextField *searchTextField;
+@property (strong, nonatomic) SSSlideListView *slideListView;
+
+- (void) initSlideListView;
+- (void) moveToTop;
 
 @end

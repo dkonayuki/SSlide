@@ -13,7 +13,7 @@
 #import "SSSlideShowPageViewController.h"
 #import <UIViewController+MJPopupViewController.h>
 
-@interface SSTopViewController () <SSTopViewDelegate, SSSlideShowPageViewControllerDelegate>
+@interface SSTopViewController () <SSSlideListViewDelegate, SSSlideShowPageViewControllerDelegate>
 
 @property (strong, nonatomic) SSTopView *myView;
 @property (strong, nonatomic) NSMutableArray *slideArray;
@@ -56,7 +56,7 @@
 }
 
 #pragma mark - SSTopView delegate
-- (NSInteger)numberOfRow
+- (NSInteger)numberOfRows
 {
     return self.slideArray.count;
 }
@@ -107,7 +107,7 @@
                                                 });
 
                                                 [self.slideArray addObjectsFromArray:result];
-                                                [self.myView.slideTableView reloadData];
+                                                [self.myView.slideListView.slideTableView reloadData];
                                             }
                                             failure:^(void) {     // TODO: error handling
   
