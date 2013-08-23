@@ -30,7 +30,7 @@
 {
     self.backgroundColor = [[SSDB5 theme] colorForKey:@"search_view_bg_color"];
     self.searchTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width * 0.8f, 50.f)];
-    self.searchTextField.center = self.center;
+    self.searchTextField.center = CGPointMake(self.center.x, self.bounds.size.height/4);
     self.searchTextField.layer.cornerRadius = 4.5f;
     self.searchTextField.layer.borderColor = [[SSDB5 theme] colorForKey:@"search_textfield_border_color"].CGColor;
     self.searchTextField.layer.borderWidth = 1.f;
