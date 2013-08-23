@@ -40,6 +40,9 @@
     NSLog(@"URL: %@", self.url);
     NSLog(@"ThumbnailURL: %@", self.thumbnailUrl);
     NSLog(@"Created: %@", self.created);
+    NSLog(@"Num Download: %d", self.numDownloads);
+    NSLog(@"Num Views: %d", self.numViews);
+    NSLog(@"Num Favorites: %d", self.numFavorites);
     NSLog(@"Total slides: %d", self.totalSlides);
     NSLog(@"Base url: %@", self.slideImageBaseurl);
     NSLog(@"Base url suffix: %@", self.slideImageBaseurlSuffix);

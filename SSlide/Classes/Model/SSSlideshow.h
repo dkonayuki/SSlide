@@ -16,6 +16,9 @@
 @property (copy, nonatomic) NSString *url;
 @property (copy, nonatomic) NSString *thumbnailUrl;
 @property (copy, nonatomic) NSString *created;
+@property (assign, nonatomic) NSInteger numDownloads;
+@property (assign, nonatomic) NSInteger numViews;
+@property (assign, nonatomic) NSInteger numFavorites;
 @property (assign, nonatomic) NSInteger totalSlides;
 @property (copy, nonatomic) NSString *slideImageBaseurl;
 @property (copy, nonatomic) NSString *slideImageBaseurlSuffix;

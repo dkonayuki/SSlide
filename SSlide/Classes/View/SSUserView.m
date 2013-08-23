@@ -23,15 +23,24 @@
 - (void)initView
 {
     self.backgroundColor = [[SSDB5 theme] colorForKey:@"user_view_bg_color"];
+    
+    // segmented control
+    float topMargin = 100.f;
+    float leftMargin = self.bounds.size.width/5.f;
+    float width = self.bounds.size.width - 2*leftMargin;
+    float height = 50.f;
+    
+    AKSegmentedControl *segmentedControl = [[AKSegmentedControl alloc] initWithFrame:CGRectMake(leftMargin, topMargin, width, height)];
+    [segmentedControl addTarget:self action:@selector(segmentedControlValueChanged:) forControlEvents:UIControlEventValueChanged];
+    
+    [segmentedControl setContentEdgeInsets:UIEdgeInsetsMake(2.0, 2.0, 3.0, 2.0)];
+    // Setting the behavior mode of the control
+    [segmentedControl setSegmentedControlMode:AKSegmentedControlModeSticky];
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
+- (void)segmentedControlValueChanged:(id)sender
 {
-    // Drawing code
+    
 }
-*/
 
 @end
