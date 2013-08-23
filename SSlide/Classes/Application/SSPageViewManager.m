@@ -67,10 +67,12 @@
 
 #pragma mark - MNPageViewController delegate
 - (void)mn_pageViewController:(MNPageViewController *)pageViewController willPageToViewController:(SSViewController *)viewController withRatio:(CGFloat)ratio {
+    [viewController.view endEditing:YES];
     // change alpha of view
 }
 
 - (void)mn_pageViewController:(MNPageViewController *)pageViewController willPageFromViewController:(SSViewController *)viewController withRatio:(CGFloat)ratio {
+    [viewController.view endEditing:YES];
     // change alpha of view
 }
 

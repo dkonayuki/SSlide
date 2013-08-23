@@ -10,10 +10,13 @@
 #import "SSUserView.h"
 #import "SSSettingsViewController.h"
 #import <UIViewController+MJPopupViewController.h>
+#import "SSApi.h"
 
-@interface SSUserViewController () <SSUserViewDelegate>
+@interface SSUserViewController () <SSUserViewDelegate, SSSlideListViewDelegate>
 
 @property (strong, nonatomic) SSUserView *myView;
+@property (strong, nonatomic) NSMutableArray *slideArray;
+@property (assign, nonatomic) NSInteger currentPage;
 
 @end
 
@@ -34,6 +37,12 @@
 	// Do any additional setup after loading the view.
     self.myView = [[SSUserView alloc] initWithFrame:self.view.bounds andDelegate:self];
     self.view = self.myView;
+    // init slideArray
+    self.slideArray = [[NSMutableArray alloc] init];
+    self.currentPage = 1;
+    // show loading
+    [SVProgressHUD showWithStatus:@"Loading"];
+    [self getUserSlideshows];
     
     /*
      [[SSApi sharedInstance] getSlideshowsByUser:@"rashmi"
@@ -89,6 +98,48 @@
 {
     SSSettingsViewController *settingsViewController = [[SSSettingsViewController alloc] init];
     [self presentPopupViewController:settingsViewController animationType:MJPopupViewAnimationSlideBottomBottom];
+}
+
+#pragma mark - SSTopView delegate
+- (NSInteger)numberOfRows
+{
+    return self.slideArray.count;
+}
+
+- (SSSlideshow *)getDataAtIndex:(int)index
+{
+    return [self.slideArray objectAtIndex:index];
+}
+
+- (void)getMoreSlides
+{
+    self.currentPage ++;
+    [self getUserSlideshows];
+}
+
+- (void)didSelectedAtIndex:(int)index
+{
+}
+
+- (void)closePopup
+{
+    [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationFade];
+}
+
+#pragma mark - private
+- (void)getUserSlideshows
+{
+    // TODO: get setting info
+    [[SSApi sharedInstance] getSlideshowsByUser:@"rashmi"
+                                        success:^(NSArray *result){
+                                            self.currentPage++;
+                                            [self.slideArray addObjectsFromArray:result];
+                                            [self.myView.slideListView.slideTableView reloadData];
+                                            [SVProgressHUD dismiss];
+                                        }
+                                        failure:^(void) {     // TODO: error handling
+                                            NSLog(@"search ERROR");
+                                        }];
 }
 
 @end

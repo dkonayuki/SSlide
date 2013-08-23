@@ -7,6 +7,7 @@
 //
 
 #import "SSView.h"
+#import "SSSlideListView.h"
 
 @protocol SSUserViewDelegate <NSObject>
 
@@ -16,5 +17,7 @@
 @end
 
 @interface SSUserView : SSView
+
+@property (strong, nonatomic) SSSlideListView *slideListView;
 
 @end

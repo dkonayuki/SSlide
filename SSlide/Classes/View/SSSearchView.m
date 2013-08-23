@@ -32,7 +32,7 @@
 {
     self.backgroundColor = [[SSDB5 theme] colorForKey:@"search_view_bg_color"];
     self.searchTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width * 0.8f, [[SSDB5 theme] floatForKey:@"search_textfield_height"])];
-    self.searchTextField.center = CGPointMake(self.center.x, self.bounds.size.height/4);
+    self.searchTextField.center = CGPointMake(self.center.x, self.bounds.size.height/3);
     self.searchTextField.backgroundColor = [UIColor whiteColor];
     self.searchTextField.delegate = self;
     [self addSubview:self.searchTextField];

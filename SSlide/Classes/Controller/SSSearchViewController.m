@@ -10,9 +10,10 @@
 #import "SSSearchView.h"
 #import "SSApi.h"
 #import "SSSlideshow.h"
+#import <UIViewController+MJPopupViewController.h>
 #import "SSSlideShowPageViewController.h"
 
-@interface SSSearchViewController () <SSSearchViewDelegate, SSSlideListViewDelegate>
+@interface SSSearchViewController () <SSSearchViewDelegate, SSSlideListViewDelegate, SSSlideShowPageViewControllerDelegate>
 
 @property (strong, nonatomic) SSSearchView *myView;
 @property (strong, nonatomic) NSMutableArray *slideArray;
@@ -93,9 +94,20 @@
                                       }];
 }
 
+- (void)closePopup
+{
+    [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationFade];
+}
+
 - (void)didSelectedAtIndex:(int)index
 {
- 
+    SSSlideshow *selectedSlide = [self.slideArray objectAtIndex:index];
+    if ([selectedSlide extendedInfoIsNil]) {
+        return;
+    }
+    self.pageViewController = [[SSSlideShowPageViewController alloc] initWithSlideshow:selectedSlide andDelegate:self];
+    [self presentPopupViewController:self.pageViewController animationType:MJPopupViewAnimationFade];
+    //[self presentViewController:self.pageViewController animated:YES completion:nil];
 }
 
 - (NSInteger)numberOfRows

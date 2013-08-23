@@ -25,7 +25,7 @@
     self.backgroundColor = [[SSDB5 theme] colorForKey:@"user_view_bg_color"];
     
     // segmented control
-    float topMargin = 100.f;
+    float topMargin = [[SSDB5 theme]floatForKey:@"page_top_margin"];
     float leftMargin = self.bounds.size.width/5.f;
     float width = self.bounds.size.width - 2*leftMargin;
     float height = 37.f;
@@ -89,6 +89,16 @@
     //settingsBtn.backgroundColor = [UIColor whiteColor];
     [settingsBtn addTarget:self action:@selector(settingsBtnPressed) forControlEvents:UIControlEventTouchDown];
     [self addSubview:settingsBtn];
+    
+    //SlideListView
+    topMargin += 50.f;
+    self.slideListView = [[SSSlideListView alloc] initWithFrame:CGRectMake(0,
+                                                                           topMargin,
+                                                                           self.bounds.size.width,
+                                                                           self.bounds.size.height - topMargin)];
+    self.slideListView.delegate = self.delegate;
+    [self addSubview:self.slideListView];
+
 }
 
 - (void)segmentedControlValueChanged:(id)sender
