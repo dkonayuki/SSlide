@@ -8,18 +8,10 @@
 
 #import "SSView.h"
 #import "SSSlideshow.h"
-
-@protocol SSTopViewDelegate <NSObject>
-
-- (NSInteger) numberOfRow;
-- (SSSlideshow *) getDataAtIndex:(int)index;
-- (void) didSelectedAtIndex:(int)index;
-- (void) getMoreSlides;
-
-@end
+#import "SSSlideListView.h"
 
 @interface SSTopView : SSView
 
-@property (strong, nonatomic) UITableView *slideTableView;
+@property (strong, nonatomic) SSSlideListView *slideListView;
 
 @end

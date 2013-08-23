@@ -12,7 +12,7 @@
 #import "SSSlideshow.h"
 #import "SSSlideShowPageViewController.h"
 
-@interface SSTopViewController () <SSTopViewDelegate>
+@interface SSTopViewController () <SSSlideListViewDelegate>
 
 @property (strong, nonatomic) SSTopView *myView;
 @property (strong, nonatomic) NSMutableArray *slideArray;
@@ -55,7 +55,7 @@
 }
 
 #pragma mark - SSTopView delegate
-- (NSInteger)numberOfRow
+- (NSInteger)numberOfRows
 {
     return self.slideArray.count;
 }
@@ -100,7 +100,7 @@
                                                 });
 
                                                 [self.slideArray addObjectsFromArray:result];
-                                                [self.myView.slideTableView reloadData];
+                                                [self.myView.slideListView.slideTableView reloadData];
                                             }
                                             failure:^(void) {     // TODO: error handling
   
