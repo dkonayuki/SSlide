@@ -7,6 +7,7 @@
 //
 
 #import "SSUserView.h"
+#import <AKSegmentedControl/AKSegmentedControl.h>
 
 @implementation SSUserView
 
