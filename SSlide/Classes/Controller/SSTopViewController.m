@@ -11,8 +11,9 @@
 #import "SSApi.h"
 #import "SSSlideshow.h"
 #import "SSSlideShowPageViewController.h"
+#import <UIViewController+MJPopupViewController.h>
 
-@interface SSTopViewController () <SSTopViewDelegate>
+@interface SSTopViewController () <SSTopViewDelegate, SSSlideShowPageViewControllerDelegate>
 
 @property (strong, nonatomic) SSTopView *myView;
 @property (strong, nonatomic) NSMutableArray *slideArray;
@@ -77,8 +78,14 @@
     if ([selectedSlide extendedInfoIsNil]) {
         return;
     }
-    self.pageViewController = [[SSSlideShowPageViewController alloc] initWithSlideshow:selectedSlide];
-    [self presentViewController:self.pageViewController animated:YES completion:nil];
+    self.pageViewController = [[SSSlideShowPageViewController alloc] initWithSlideshow:selectedSlide andDelegate:self];
+    [self presentPopupViewController:self.pageViewController animationType:MJPopupViewAnimationFade];
+    //[self presentViewController:self.pageViewController animated:YES completion:nil];
+}
+
+- (void)closePopup
+{
+    [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationFade];
 }
 
 #pragma mark - private

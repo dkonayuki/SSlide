@@ -81,10 +81,10 @@
     
     if (self.lastScale <= 0.5f) {
         self.stopPinch = YES;
-        [UIView animateWithDuration:0.5f
+        [UIView animateWithDuration:0.3f
                          animations:^(void){
                              CGAffineTransform currentTransform = self.transform;
-                             CGAffineTransform newTransform = CGAffineTransformScale(currentTransform, 0.3f, 0.3f);
+                             CGAffineTransform newTransform = CGAffineTransformScale(currentTransform, 0.2f, 0.2f);
                              [self setTransform:newTransform];
                          }
                          completion:^(BOOL finished) {

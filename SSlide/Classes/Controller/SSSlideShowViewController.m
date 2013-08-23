@@ -28,10 +28,11 @@
     return self;
 }
 
-- (id)initWithCurrentSlideshow:(SSSlideshow *)currentSlide pageIndex:(NSInteger)index
+- (id)initWithCurrentSlideshow:(SSSlideshow *)currentSlide pageIndex:(NSInteger)index andDelegate:(id)delegate
 {
     self = [super init];
     if (self) {
+        self.delegate = delegate;
         self.currentSlide = currentSlide;
         self.pageIndex = index;
     }
@@ -67,7 +68,8 @@
 #pragma mark - SSSlideShowView delegate
 - (void)dismissView
 {
-    [self dismissViewControllerAnimated:NO completion:nil];
+    [self.delegate closePopup];
+    //[self dismissViewControllerAnimated:NO completion:nil];
 }
 
 @end
