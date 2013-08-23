@@ -9,10 +9,18 @@
 #import "SSViewController.h"
 #import "SSSlideShowViewController.h"
 
+@protocol SSSlideShowPageViewControllerDelegate <NSObject>
+
+- (void)closePopup;
+
+@end
+
 @interface SSSlideShowPageViewController : SSViewController <UIPageViewControllerDataSource>
 
 @property (strong, nonatomic) UIPageViewController *pageController;
+@property (weak, nonatomic) id delegate;
 
-- (id)initWithSlideshow:(SSSlideshow *)slideshow;
+- (id)initWithSlideshow:(SSSlideshow *)slideshow andDelegate:(id)delegate;
+
 
 @end

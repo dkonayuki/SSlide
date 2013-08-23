@@ -8,6 +8,13 @@
 
 #import "SSView.h"
 
+@protocol SSUserViewDelegate <NSObject>
+
+- (void)segmentedControlChangedDel:(NSUInteger)index;
+- (void)settingsBtnPressedDel;
+
+@end
+
 @interface SSUserView : SSView
 
 @end

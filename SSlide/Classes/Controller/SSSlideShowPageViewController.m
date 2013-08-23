@@ -8,7 +8,7 @@
 
 #import "SSSlideShowPageViewController.h"
 
-@interface SSSlideShowPageViewController ()
+@interface SSSlideShowPageViewController () <SSSlideSHowViewControllerDelegate>
 
 @property (strong, nonatomic) SSSlideshow *currentSlide;
 @property (assign, nonatomic) NSInteger totalPage;
@@ -26,10 +26,11 @@
     return self;
 }
 
-- (id)initWithSlideshow:(SSSlideshow *)slideshow
+- (id)initWithSlideshow:(SSSlideshow *)slideshow andDelegate:(id)delegate
 {
     self = [super init];
     if (self) {
+        self.delegate = delegate;
         self.currentSlide = slideshow;
         self.totalPage = self.currentSlide.totalSlides;
     }
@@ -64,7 +65,7 @@
 
 - (SSSlideShowViewController *)viewControllerAtIndex:(NSUInteger)index
 {
-    SSSlideShowViewController *slideShowViewController = [[SSSlideShowViewController alloc] initWithCurrentSlideshow:self.currentSlide pageIndex:index];
+    SSSlideShowViewController *slideShowViewController = [[SSSlideShowViewController alloc] initWithCurrentSlideshow:self.currentSlide pageIndex:index andDelegate:self];
     return slideShowViewController;
 }
 
@@ -86,8 +87,14 @@
     if (index == self.totalPage + 1) {
         return nil;
     }
-    
+
     return [self viewControllerAtIndex:index];
+}
+
+
+- (void)closePopup
+{
+    [self.delegate closePopup];
 }
 
 @end

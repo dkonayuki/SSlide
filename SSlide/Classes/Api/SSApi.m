@@ -49,7 +49,7 @@
 {
     self.slideshowArray = [[NSMutableArray alloc] init];
     self.currentSlideshow = nil;
-    NSString *url = [NSString stringWithFormat:@"get_slideshows_by_user?username_for=%@&limit=10&%@", username, [self getApiHash]];
+    NSString *url = [NSString stringWithFormat:@"get_slideshows_by_user?detailed=1&username_for=%@&limit=10&%@", username, [self getApiHash]];
     [self.client getPath:url
               parameters:nil
                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -76,7 +76,7 @@
     NSLog(@"paramsEncoding: %@", paramsEncoding);
     self.slideshowArray = [[NSMutableArray alloc] init];
     self.currentSlideshow = nil;
-    NSString *url = [NSString stringWithFormat:@"search_slideshows?%@&%@", paramsEncoding, [self getApiHash]];
+    NSString *url = [NSString stringWithFormat:@"search_slideshows?detailed=1&%@&%@", paramsEncoding, [self getApiHash]];
     [self.client getPath:url
               parameters:nil
             success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -234,7 +234,16 @@
             self.currentSlideshow.thumbnailUrl = [TBXML textForElement:element];
         } else if ([elementName isEqualToString:@"Created"]) {
             self.currentSlideshow.created = [TBXML textForElement:element];
+        } else if ([elementName isEqualToString:@"NumDownloads"]) {
+            self.currentSlideshow.numDownloads = [[TBXML textForElement:element] integerValue];
+        } else if ([elementName isEqualToString:@"NumViews"]) {
+            self.currentSlideshow.numViews = [[TBXML textForElement:element] integerValue];
+        } else if ([elementName isEqualToString:@"NumFavorites"]) {
+            self.currentSlideshow.numFavorites = [[TBXML textForElement:element] integerValue];
+        }else if ([elementName isEqualToString:@"NumSlides"]) {
+            self.currentSlideshow.totalSlides = [[TBXML textForElement:element] integerValue];
             [self.slideshowArray addObject:self.currentSlideshow];
+            [self.currentSlideshow log];
         }
         
         // if the element has child elements, process them

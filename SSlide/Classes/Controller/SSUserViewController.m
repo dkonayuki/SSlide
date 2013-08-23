@@ -8,8 +8,10 @@
 
 #import "SSUserViewController.h"
 #import "SSUserView.h"
+#import "SSSettingsViewController.h"
+#import <UIViewController+MJPopupViewController.h>
 
-@interface SSUserViewController ()
+@interface SSUserViewController () <SSUserViewDelegate>
 
 @property (strong, nonatomic) SSUserView *myView;
 
@@ -75,6 +77,18 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - SSUserViewDelegate
+- (void)segmentedControlChangedDel:(NSUInteger)index
+{
+    
+}
+
+- (void)settingsBtnPressedDel
+{
+    SSSettingsViewController *settingsViewController = [[SSSettingsViewController alloc] init];
+    [self presentPopupViewController:settingsViewController animationType:MJPopupViewAnimationSlideBottomBottom];
 }
 
 @end
