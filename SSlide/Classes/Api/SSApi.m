@@ -72,9 +72,11 @@
  */
 - (void)searchSlideshows:(NSString *)params success:(void (^)(NSArray *))success failure:(void (^)())failure
 {
+    NSString *paramsEncoding = [params stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSLog(@"paramsEncoding: %@", paramsEncoding);
     self.slideshowArray = [[NSMutableArray alloc] init];
     self.currentSlideshow = nil;
-    NSString *url = [NSString stringWithFormat:@"search_slideshows?%@&%@", params, [self getApiHash]];
+    NSString *url = [NSString stringWithFormat:@"search_slideshows?%@&%@", paramsEncoding, [self getApiHash]];
     [self.client getPath:url
               parameters:nil
             success:^(AFHTTPRequestOperation *operation, id responseObject) {

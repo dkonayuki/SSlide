@@ -20,7 +20,11 @@
 
 - (void)setCreated:(NSString *)created
 {
-    mCreated = created;
+    NSArray *comp = [created componentsSeparatedByString:@" "];
+    NSString *date = [comp objectAtIndex:2];
+    NSString *month = [comp objectAtIndex:1];
+    NSString *year = [comp objectAtIndex:5];
+    mCreated = [NSString stringWithFormat:@"%@ %@ %@", date, month, year];
 }
 
 - (void)setSlideImageBaseurl:(NSString *)slideImageBaseurl

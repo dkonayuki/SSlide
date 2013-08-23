@@ -8,6 +8,7 @@
 
 #import "SSSearchViewController.h"
 #import "SSSearchView.h"
+#import "SSApi.h"
 
 @interface SSSearchViewController ()
 
@@ -32,21 +33,20 @@
 	// Do any additional setup after loading the view.
     self.myView = [[SSSearchView alloc] initWithFrame:self.view.bounds andDelegate:self];
     self.view = self.myView;
-    
     /*
-     NSString *params = @"q=GCD&page=1&items_per_page=10";
-     [[SSApi sharedInstance] searchSlideshows:params
-     success:^(NSArray *result){
-     NSLog(@"%d", [result count]);
-     for (SSSlideshow *cur in result) {
-     [cur log];
-     }
-     }
-     failure:^(void) {     // TODO: error handling
-     NSLog(@"search ERROR");
-     }];
+    NSLog(@"Search");
+     NSString *params = @"q=objective c&page=1&items_per_page=10";
+    [[SSApi sharedInstance] searchSlideshows:params
+                                     success:^(NSArray *result){
+                                         NSLog(@"%d", [result count]);
+                                         for (SSSlideshow *cur in result) {
+                                             [cur log];
+                                         }
+                                     }
+                                     failure:^(void) {     // TODO: error handling
+                                         NSLog(@"search ERROR");
+                                     }];
      */
-
 }
 
 - (void)didReceiveMemoryWarning
