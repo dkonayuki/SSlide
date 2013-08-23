@@ -9,6 +9,8 @@
 #import "SSSettingsViewController.h"
 #import "SSSettingsView.h"
 #import "SSApi.h"
+#import "SSAppData.h"
+#import "SSUser.h"
 
 @interface SSSettingsViewController () <SSSettingsViewDelegate>
 
@@ -46,10 +48,16 @@
 #pragma mark - SSSetingsViewDelegate
 - (void)loginActionDel
 {
+    NSString *username = @"thefoolishman";
+    NSString *password = @"pass";
+    
     [SVProgressHUD showWithStatus:@"checking"];
-    [[SSApi sharedInstance] checkUsernamePassword:@"thefoolishman" password:@"pass" result:^(BOOL result) {
+    [[SSApi sharedInstance] checkUsernamePassword:username password:password result:^(BOOL result) {
         if (result) {
             NSLog(@"Login ok");
+            SSUser *newUser = [[SSUser alloc] initWith:username password:password];
+            [[SSAppData sharedInstance] setCurrentUser:newUser];
+            [SSAppData saveAppData];
             [SVProgressHUD showSuccessWithStatus:@"OK"];
         } else {
             NSLog(@"Login fail");

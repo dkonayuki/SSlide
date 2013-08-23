@@ -11,6 +11,7 @@
 @protocol SSSlideShowViewDelegate <NSObject>
 
 - (void)dismissView;
+- (void)downloadCurrentSlide;
 
 @end
 

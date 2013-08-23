@@ -72,4 +72,15 @@
     //[self dismissViewControllerAnimated:NO completion:nil];
 }
 
+- (void)downloadCurrentSlide
+{
+    if (![self.currentSlide checkIsDownloaded]) {
+        [self.currentSlide download:^(BOOL result){
+            [SVProgressHUD showSuccessWithStatus:@"OK"];
+        }];
+    } else {
+        [SVProgressHUD showErrorWithStatus:@"Already exists!"];
+    }
+}
+
 @end

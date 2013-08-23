@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface SSSlideshow : NSObject
+@interface SSSlideshow : NSObject <NSCoding>
 
 @property (copy, nonatomic) NSString *slideId;
 @property (copy, nonatomic) NSString *title;
@@ -24,7 +24,15 @@
 @property (copy, nonatomic) NSString *slideImageBaseurlSuffix;
 @property (copy, nonatomic) NSString *firstPageImageUrl;
 
+- (id)initWithDefaultData;
+
 - (void)log;
 - (BOOL)extendedInfoIsNil;
+
+- (BOOL)checkIsDownloaded;
+
+- (void)download:(void (^)(BOOL result))result;
+- (NSString *)remoteUrlOfImageAtPage:(NSUInteger)index;
+- (NSString *)localUrlOfImageAtPage:(NSUInteger)index;
 
 @end

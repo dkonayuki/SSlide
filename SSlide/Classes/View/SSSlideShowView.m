@@ -37,6 +37,17 @@
     UIPinchGestureRecognizer *pinchGes = [[UIPinchGestureRecognizer alloc] initWithTarget:self
                                                                                    action:@selector(pinchGestureAction:)];
     [self addGestureRecognizer:pinchGes];
+    
+    UIButton *downloadBtn = [[UIButton alloc] initWithFrame:CGRectMake(100, 100, 100, 50)];
+    [downloadBtn setTitle:@"Download" forState:UIControlStateNormal];
+    downloadBtn.backgroundColor = [UIColor greenSeaColor];
+    [downloadBtn addTarget:self action:@selector(downloadBtnPressed:) forControlEvents:UIControlEventTouchDown];
+    [self addSubview:downloadBtn];
+}
+
+- (void)downloadBtnPressed:(id)sender
+{
+    [self.delegate downloadCurrentSlide];
 }
 
 - (void)pinchGestureAction:(UIPinchGestureRecognizer *)sender
