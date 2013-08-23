@@ -42,7 +42,7 @@
         float topMargin = 0.f;
         float height = cellHeight - 2*topMargin;
         float width = height;
-        float leftMargin = 15.f;
+        float leftMargin = 10.f;
         if (IS_IPAD)
         {
             leftMargin = leftMargin * 2.2;
@@ -52,30 +52,31 @@
         [self addSubview:self.thumbnail];
         
         leftMargin = leftMargin * 2 + width;
-        width = cellWidth = leftMargin;
-        topMargin = 15.f;
+        width = cellWidth - leftMargin;
+        topMargin = 10.f;
         height = 20.f;
-        titleFontSize = 20.f;
-        detailsFontSize = 14.f;
+        titleFontSize = 14.f;
+        detailsFontSize = 12.f;
         if (IS_IPAD)
         {
             topMargin = topMargin * 2.2;
             height = height * 2.2;
-            titleFontSize = titleFontSize * 2.2;
-            detailsFontSize = detailsFontSize *2.2;
+            titleFontSize = titleFontSize * 1.5;
+            detailsFontSize = detailsFontSize * 1.5;
         }
         
         self.title = [[UILabel alloc] initWithFrame:CGRectMake(leftMargin, topMargin, width, height)];
         [self addSubview:self.title];
         self.title.backgroundColor = [UIColor clearColor];
-        self.title.numberOfLines = 0;
+        self.title.numberOfLines = 2;
         self.title.adjustsFontSizeToFitWidth = NO;
         self.title.font = [UIFont systemFontOfSize:titleFontSize];
+        self.title.lineBreakMode = NSLineBreakByWordWrapping;
         
-        topMargin += 20.f;
+        topMargin += 40.f;
         if (IS_IPAD)
         {
-            topMargin += 20.f;
+            topMargin += 50.f;
         }
         self.date = [[UILabel alloc] initWithFrame:CGRectMake(leftMargin, topMargin, width, height)];
         [self addSubview:self.date];
@@ -85,7 +86,7 @@
         topMargin += 20.f;
         if (IS_IPAD)
         {
-            topMargin += 20.f;
+            topMargin += 30.f;
         }
         self.author = [[UILabel alloc] initWithFrame:CGRectMake(leftMargin, topMargin, width, height)];
         [self addSubview:self.author];
@@ -101,6 +102,13 @@
 - (void)setData:(SSSlideshow *)data
 {
     [self getThumbnail:[NSURL URLWithString:data.thumbnailUrl]];
+    CGSize maximumLabelSize = CGSizeMake(self.title.frame.size.width, NSIntegerMax);
+    
+    CGSize expectedLabelSize = [data.title sizeWithFont:self.title.font constrainedToSize:maximumLabelSize lineBreakMode:self.title.lineBreakMode];
+    CGRect newFrame = self.title.frame;
+    newFrame.size.height = expectedLabelSize.height;
+    
+    self.title.frame = newFrame;
     self.title.text = data.title;
     self.date.text = data.created;
     self.author.text = data.username;

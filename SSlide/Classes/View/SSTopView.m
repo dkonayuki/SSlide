@@ -80,17 +80,24 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (IS_IPAD) {
-        return 250;
+    if (IS_IPAD)
+    {
+        return [[SSDB5 theme] floatForKey:@"slide_cell_height_ipad"];
     }
-    return 110;
+    return [[SSDB5 theme] floatForKey:@"slide_cell_height_iphone"];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
     NSInteger currentOffset = scrollView.contentOffset.y;
     NSInteger maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height;
+    NSInteger diffOffset = 600;
+    if (IS_IPAD)
+    {
+        diffOffset *= 2.2;
+    }
     
-    if (maximumOffset - currentOffset <= -40) {
+    if (maximumOffset - currentOffset <= diffOffset)
+    {
         [self.delegate getMoreSlides];
     }
 }
