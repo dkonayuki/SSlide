@@ -9,6 +9,10 @@
 #import "SSUserView.h"
 #import <AKSegmentedControl/AKSegmentedControl.h>
 
+@interface SSUserView()
+
+@end
+
 @implementation SSUserView
 
 - (id)initWithFrame:(CGRect)frame
@@ -26,6 +30,10 @@
     
     // segmented control
     float topMargin = [[SSDB5 theme]floatForKey:@"page_top_margin"];
+    if (IS_IPAD)
+    {
+        topMargin *= 2.2;
+    }
     float leftMargin = self.bounds.size.width/5.f;
     float width = self.bounds.size.width - 2*leftMargin;
     float height = 37.f;

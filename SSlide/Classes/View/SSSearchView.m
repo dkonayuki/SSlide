@@ -30,14 +30,26 @@
 
 - (void)initView
 {
+    self.topMargin = [[SSDB5 theme] floatForKey:@"page_top_margin"];
+    if (IS_IPAD) {
+        self.topMargin *= 2.2;
+    }
+    float height = [[SSDB5 theme] floatForKey:@"search_textfield_height"];
+    float fontSize = 14;
+    if (IS_IPAD)
+    {
+        height *= 2.2;
+        fontSize *= 2.2;
+    }
     self.backgroundColor = [[SSDB5 theme] colorForKey:@"search_view_bg_color"];
-    self.searchTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width * 0.8f, [[SSDB5 theme] floatForKey:@"search_textfield_height"])];
+    self.searchTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width * 0.8f, height)];
     self.searchTextField.center = CGPointMake(self.center.x, self.bounds.size.height/3);
     self.searchTextField.backgroundColor = [UIColor whiteColor];
     self.searchTextField.delegate = self;
+    self.searchTextField.font = [UIFont systemFontOfSize:fontSize];
+    self.searchTextField.textAlignment = NSTextAlignmentCenter;
     [self addSubview:self.searchTextField];
     self.didMove = FALSE;
-    self.topMargin = 10.f;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -60,11 +72,10 @@
 {
     if (!self.slideListView)
     {
-        float topMargin = [[SSDB5 theme] floatForKey:@"page_top_margin"];
         self.slideListView = [[SSSlideListView alloc] initWithFrame:CGRectMake(0,
-                                                                        topMargin,
+                                                                        self.topMargin,
                                                                         self.bounds.size.width,
-                                                                        self.bounds.size.height - topMargin)];
+                                                                        self.bounds.size.height - self.topMargin)];
         self.slideListView.delegate = self.delegate;
         [self addSubview:self.slideListView];
     }
@@ -74,10 +85,15 @@
 {
     if (!self.didMove)
     {
+        float topMargin = 10.f;
+        if (IS_IPAD)
+        {
+            topMargin *= 2.2;
+        }
         self.didMove = TRUE;
         [UIView beginAnimations:nil context:nil];
         [UIView setAnimationDuration:0.5];
-        self.searchTextField.center = CGPointMake(self.bounds.size.width/2, self.topMargin + [[SSDB5 theme] floatForKey:@"search_textfield_height"]/2);
+        self.searchTextField.center = CGPointMake(self.bounds.size.width/2, topMargin + [[SSDB5 theme] floatForKey:@"search_textfield_height"]/2);
         [UIView commitAnimations];
     }
 }
