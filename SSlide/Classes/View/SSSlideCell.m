@@ -37,34 +37,60 @@
         
         float cellHeight = IS_IPAD ? [[SSDB5 theme] floatForKey:@"slide_cell_height_ipad"] : [[SSDB5 theme] floatForKey:@"slide_cell_height_iphone"];
         float cellWidth = IS_IPAD ? 680.f : 320.f;
-        
+        float titleFontSize;
+        float detailsFontSize;
         float topMargin = 0.f;
         float height = cellHeight - 2*topMargin;
         float width = height;
-        float leftMargin = 30.f;
+        float leftMargin = 15.f;
+        if (IS_IPAD)
+        {
+            leftMargin = leftMargin * 2.2;
+        }
         self.thumbnail = [[UIImageView alloc] initWithFrame:CGRectMake(leftMargin, topMargin, width, height)];
         self.thumbnail.contentMode = UIViewContentModeScaleAspectFit;
         [self addSubview:self.thumbnail];
         
-        leftMargin += height + 30.f;
+        leftMargin = leftMargin * 2 + width;
         width = cellWidth = leftMargin;
+        topMargin = 15.f;
+        height = 20.f;
+        titleFontSize = 20.f;
+        detailsFontSize = 14.f;
+        if (IS_IPAD)
+        {
+            topMargin = topMargin * 2.2;
+            height = height * 2.2;
+            titleFontSize = titleFontSize * 2.2;
+            detailsFontSize = detailsFontSize *2.2;
+        }
         
-        self.title = [[UILabel alloc] initWithFrame:CGRectMake(leftMargin, 20.0f, width, 20.0f)];
+        self.title = [[UILabel alloc] initWithFrame:CGRectMake(leftMargin, topMargin, width, height)];
         [self addSubview:self.title];
         self.title.backgroundColor = [UIColor clearColor];
         self.title.numberOfLines = 0;
         self.title.adjustsFontSizeToFitWidth = NO;
-        self.title.font = [UIFont systemFontOfSize:20];
+        self.title.font = [UIFont systemFontOfSize:titleFontSize];
         
-        self.date = [[UILabel alloc] initWithFrame:CGRectMake(leftMargin, 50.0f, width, 20.0f)];
+        topMargin += 20.f;
+        if (IS_IPAD)
+        {
+            topMargin += 20.f;
+        }
+        self.date = [[UILabel alloc] initWithFrame:CGRectMake(leftMargin, topMargin, width, height)];
         [self addSubview:self.date];
         self.date.backgroundColor = [UIColor clearColor];
-        self.date.font = [UIFont systemFontOfSize:14];
+        self.date.font = [UIFont systemFontOfSize:detailsFontSize];
         
-        self.author = [[UILabel alloc] initWithFrame:CGRectMake(leftMargin, 80.0f, width, 20.0f)];
+        topMargin += 20.f;
+        if (IS_IPAD)
+        {
+            topMargin += 20.f;
+        }
+        self.author = [[UILabel alloc] initWithFrame:CGRectMake(leftMargin, topMargin, width, height)];
         [self addSubview:self.author];
         self.author.backgroundColor = [UIColor clearColor];
-        self.author.font = [UIFont systemFontOfSize:14];
+        self.author.font = [UIFont systemFontOfSize:detailsFontSize];
         
         self.contentView.backgroundColor = [UIColor clearColor];
     }
