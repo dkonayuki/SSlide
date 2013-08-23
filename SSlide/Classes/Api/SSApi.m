@@ -221,7 +221,7 @@
         NSString *elementName = [TBXML elementName:element];
         //NSLog(@"%@", elementName);
         if ([elementName isEqualToString:@"Slideshow"]) {
-            self.currentSlideshow = [[SSSlideshow alloc] init];
+            self.currentSlideshow = [[SSSlideshow alloc] initWithDefaultData];
         } else if ([elementName isEqualToString:@"ID"]) {
             self.currentSlideshow.slideId = [TBXML textForElement:element];
         } else if ([elementName isEqualToString:@"Title"]) {
