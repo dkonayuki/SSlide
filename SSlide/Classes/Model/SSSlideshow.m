@@ -9,6 +9,7 @@
 #import "SSSlideshow.h"
 #import <AFNetworking/AFImageRequestOperation.h>
 #import "SSAppData.h"
+#import <NSString-HTML/NSString+HTML.h>
 
 @interface SSSlideshow()
 
@@ -86,6 +87,11 @@
         self.isDownloaded = NO;
     }
     return self;
+}
+
+- (void)setTitle:(NSString *)title
+{
+    mTitle = [title kv_decodeHTMLCharacterEntities];
 }
 
 - (void)setThumbnailUrl:(NSString *)thumbnailUrl
