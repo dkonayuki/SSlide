@@ -29,7 +29,10 @@
 - (void)initView
 {
     self.backgroundColor = [UIColor whiteColor];
-    self.imageView = [[UIImageView alloc] initWithFrame:self.bounds];
+    CGRect imageRect = CGRectMake(0, 0, self.bounds.size.height, self.bounds.size.width);
+    self.imageView = [[UIImageView alloc] initWithFrame:imageRect];
+    self.imageView.transform = CGAffineTransformMakeRotation(M_PI_2);
+    self.imageView.center = CGPointMake(self.center.x, self.center.y);
     self.imageView.contentMode = UIViewContentModeScaleAspectFit;
     [self addSubview:self.imageView];
     
@@ -37,17 +40,6 @@
     UIPinchGestureRecognizer *pinchGes = [[UIPinchGestureRecognizer alloc] initWithTarget:self
                                                                                    action:@selector(pinchGestureAction:)];
     [self addGestureRecognizer:pinchGes];
-    
-    UIButton *downloadBtn = [[UIButton alloc] initWithFrame:CGRectMake(100, 100, 100, 50)];
-    [downloadBtn setTitle:@"Download" forState:UIControlStateNormal];
-    downloadBtn.backgroundColor = [UIColor greenSeaColor];
-    [downloadBtn addTarget:self action:@selector(downloadBtnPressed:) forControlEvents:UIControlEventTouchDown];
-    [self addSubview:downloadBtn];
-}
-
-- (void)downloadBtnPressed:(id)sender
-{
-    [self.delegate downloadCurrentSlide];
 }
 
 - (void)pinchGestureAction:(UIPinchGestureRecognizer *)sender
@@ -96,6 +88,7 @@
                          animations:^(void){
                              CGAffineTransform currentTransform = self.transform;
                              CGAffineTransform newTransform = CGAffineTransformScale(currentTransform, 0.2f, 0.2f);
+                             newTransform = CGAffineTransformRotate(newTransform, -M_PI_2);
                              [self setTransform:newTransform];
                          }
                          completion:^(BOOL finished) {

@@ -7,12 +7,14 @@
 //
 
 #import "SSSlideShowPageViewController.h"
+#import "SSSlideShowControlView.h"
 #import "SSApi.h"
 
-@interface SSSlideShowPageViewController () <SSSlideSHowViewControllerDelegate>
+@interface SSSlideShowPageViewController () <SSSlideSHowViewControllerDelegate, SSSlideSHowViewControllerDelegate>
 
 @property (strong, nonatomic) SSSlideshow *currentSlide;
 @property (assign, nonatomic) NSInteger totalPage;
+@property (strong, nonatomic) SSSlideShowControlView *controlView;
 
 @end
 
@@ -66,6 +68,14 @@
     [self addChildViewController:self.pageController];
     [[self view] addSubview:[self.pageController view]];
     [self.pageController didMoveToParentViewController:self];
+    
+    // control view
+    float cH = [[SSDB5 theme] floatForKey:@"slide_control_view_height"];
+    CGRect rect = CGRectMake(0, 0, cH, self.view.bounds.size.width);
+    self.controlView = [[SSSlideShowControlView alloc] initWithFrame:rect andDelegate:self];
+    self.controlView.transform = CGAffineTransformMakeRotation(M_PI_2);
+    self.controlView.center = CGPointMake(self.view.bounds.size.width*3/2, cH/2);
+    [self.view addSubview:self.controlView];
 }
 
 - (void)didReceiveMemoryWarning
@@ -80,6 +90,7 @@
     return slideShowViewController;
 }
 
+#pragma mark - UIPageViewControllerDataSource
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController {
     
     NSUInteger index = [(SSSlideShowViewController *)viewController pageIndex];
@@ -102,10 +113,48 @@
     return [self viewControllerAtIndex:index];
 }
 
-
+#pragma mark - SSSlideShowViewControllerDelegate
 - (void)closePopup
 {
     [self.delegate closePopup];
+}
+
+- (void)showControlView
+{
+    [UIView animateWithDuration:0.85f
+                     animations:^(void) {
+                         float cH = [[SSDB5 theme] floatForKey:@"slide_control_view_height"];
+                         self.controlView.center = CGPointMake(self.view.bounds.size.width/2, cH/2);
+                     }
+                     completion:^(BOOL finished) {
+                        
+                     }];
+}
+
+- (void)hideControlView
+{
+    NSLog(@"hide control view");
+    [UIView animateWithDuration:0.5f
+                     animations:^(void) {
+                         float cH = [[SSDB5 theme] floatForKey:@"slide_control_view_height"];
+                         self.controlView.center = CGPointMake(self.view.bounds.size.width*3/2, cH/2);
+                     }
+                     completion:^(BOOL finished) {
+                         
+                     }];
+}
+
+- (void)downloadCurrentSlide
+{
+    if (![self.currentSlide checkIsDownloaded]) {
+        [self.currentSlide download:^(float percent) {
+            NSLog(@"download: %f", percent);
+        } completion:^(BOOL result){
+            [SVProgressHUD showSuccessWithStatus:@"OK"];
+        }];
+    } else {
+        [SVProgressHUD showErrorWithStatus:@"Already exists!"];
+    }
 }
 
 @end

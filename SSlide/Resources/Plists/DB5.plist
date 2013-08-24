@@ -30,6 +30,8 @@
 		<integer>250</integer>
 		<key>slide_num_in_page</key>
 		<integer>7</integer>
+		<key>slide_control_view_height</key>
+		<integer>150</integer>
 	</dict>
 </dict>
 </plist>

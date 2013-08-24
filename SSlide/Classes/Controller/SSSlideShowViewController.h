@@ -12,6 +12,8 @@
 @protocol SSSlideSHowViewControllerDelegate <NSObject>
 
 - (void)closePopup;
+- (void)showControlView;
+- (void)hideControlView;
 
 @end
 

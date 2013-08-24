@@ -33,6 +33,7 @@
 		DC2BCF5C17C5AECA00181774 /* SSSlideCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2BCF5B17C5AECA00181774 /* SSSlideCell.m */; };
 		DC2BCF5F17C5DBFE00181774 /* SSSlideShowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2BCF5E17C5DBFE00181774 /* SSSlideShowViewController.m */; };
 		DC2BCF6217C5DC1D00181774 /* SSSlideShowView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2BCF6117C5DC1C00181774 /* SSSlideShowView.m */; };
+		DC38D0CC17C8ADD10013CAD6 /* SSSlideShowControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC38D0CB17C8ADD10013CAD6 /* SSSlideShowControlView.m */; };
 		DC48BFD117C51C3D00340FE0 /* SSApi.m in Sources */ = {isa = PBXBuildFile; fileRef = DC48BFD017C51C3D00340FE0 /* SSApi.m */; };
 		DC70E57817C49B49004633F2 /* SSTopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC70E57717C49B49004633F2 /* SSTopViewController.m */; };
 		DC70E57B17C49BCD004633F2 /* SSTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC70E57A17C49BCD004633F2 /* SSTopView.m */; };
@@ -113,6 +114,8 @@
 		DC2BCF5E17C5DBFE00181774 /* SSSlideShowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSSlideShowViewController.m; path = Classes/Controller/SSSlideShowViewController.m; sourceTree = "<group>"; };
 		DC2BCF6017C5DC1C00181774 /* SSSlideShowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSSlideShowView.h; path = Classes/View/SSSlideShowView.h; sourceTree = "<group>"; };
 		DC2BCF6117C5DC1C00181774 /* SSSlideShowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSSlideShowView.m; path = Classes/View/SSSlideShowView.m; sourceTree = "<group>"; };
+		DC38D0CA17C8ADD10013CAD6 /* SSSlideShowControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSSlideShowControlView.h; path = Classes/View/SSSlideShowControlView.h; sourceTree = "<group>"; };
+		DC38D0CB17C8ADD10013CAD6 /* SSSlideShowControlView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSSlideShowControlView.m; path = Classes/View/SSSlideShowControlView.m; sourceTree = "<group>"; };
 		DC48BFCF17C51C3D00340FE0 /* SSApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSApi.h; path = Classes/Api/SSApi.h; sourceTree = "<group>"; };
 		DC48BFD017C51C3D00340FE0 /* SSApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSApi.m; path = Classes/Api/SSApi.m; sourceTree = "<group>"; };
 		DC70E57617C49B49004633F2 /* SSTopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSTopViewController.h; path = Classes/Controller/SSTopViewController.h; sourceTree = "<group>"; };
@@ -347,6 +350,8 @@
 				DCB5A60517C4F7A20089809C /* SSUserView.m */,
 				DC2BCF5A17C5AECA00181774 /* SSSlideCell.h */,
 				DC2BCF5B17C5AECA00181774 /* SSSlideCell.m */,
+				DC38D0CA17C8ADD10013CAD6 /* SSSlideShowControlView.h */,
+				DC38D0CB17C8ADD10013CAD6 /* SSSlideShowControlView.m */,
 				DC2BCF6017C5DC1C00181774 /* SSSlideShowView.h */,
 				DC2BCF6117C5DC1C00181774 /* SSSlideShowView.m */,
 				435C124617C731FD001FAA8E /* SSSlideListView.h */,
@@ -641,6 +646,7 @@
 				DC05A02517C73541000EE26F /* SSAppData.m in Sources */,
 				DC05A02817C73581000EE26F /* SSUser.m in Sources */,
 				DC0C758717C8907000BD9C58 /* SSRootViewController.m in Sources */,
+				DC38D0CC17C8ADD10013CAD6 /* SSSlideShowControlView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

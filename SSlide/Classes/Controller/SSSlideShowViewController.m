@@ -62,6 +62,15 @@
                                                           }];
         [operation start];
     }
+    
+    // add swipe gesture to show control view
+    UISwipeGestureRecognizer *swipeLeftRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeLeftAction)];
+    [swipeLeftRecognizer setDirection:UISwipeGestureRecognizerDirectionLeft];
+    [self.myView addGestureRecognizer:swipeLeftRecognizer];
+    
+    UISwipeGestureRecognizer *swipeRightRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeRightAction)];
+    [swipeRightRecognizer setDirection:UISwipeGestureRecognizerDirectionRight];
+    [self.myView addGestureRecognizer:swipeRightRecognizer];
 }
 
 - (void)didReceiveMemoryWarning
@@ -70,24 +79,23 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)swipeLeftAction
+{
+    NSLog(@"left swipe");
+    [self.delegate showControlView];
+}
+
+- (void)swipeRightAction
+{
+    NSLog(@"Right swipe");
+    [self.delegate hideControlView];
+}
+
 #pragma mark - SSSlideShowView delegate
 - (void)dismissView
 {
     [self.delegate closePopup];
     //[self dismissViewControllerAnimated:NO completion:nil];
-}
-
-- (void)downloadCurrentSlide
-{
-    if (![self.currentSlide checkIsDownloaded]) {
-        [self.currentSlide download:^(float percent) {
-            NSLog(@"download: %f", percent);
-        } completion:^(BOOL result){
-            [SVProgressHUD showSuccessWithStatus:@"OK"];
-        }];
-    } else {
-        [SVProgressHUD showErrorWithStatus:@"Already exists!"];
-    }
 }
 
 @end
