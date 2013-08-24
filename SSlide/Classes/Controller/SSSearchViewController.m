@@ -13,7 +13,7 @@
 #import <UIViewController+MJPopupViewController.h>
 #import "SSSlideShowPageViewController.h"
 
-@interface SSSearchViewController () <SSSearchViewDelegate, SSSlideListViewDelegate, SSSlideShowPageViewControllerDelegate>
+@interface SSSearchViewController () <SSSearchViewDelegate, SSSlideListViewDelegate, SSSlideShowPageViewControllerDelegate, UIScrollViewDelegate>
 
 @property (strong, nonatomic) SSSearchView *myView;
 @property (strong, nonatomic) NSMutableArray *slideArray;
@@ -76,12 +76,13 @@
                                           if (!isSame)
                                           {
                                               [self.slideArray removeAllObjects];
-                                              [self.myView.slideListView.slideTableView setContentOffset:CGPointZero animated:YES];
+                                              [self.myView.slideListView.slideTableView setContentOffset:CGPointZero animated:NO];
                                           }
                                           [self.slideArray addObjectsFromArray:result];
                                           [self.myView initSlideListView];
                                           [self.myView.slideListView.slideTableView reloadData];
-                                          /*
+                                          
+                                            /*
                                            NSLog(@"%d", [self.slideArray count]);
                                            for (SSSlideshow *cur in self.slideArray) {
                                             [cur log];
@@ -97,6 +98,11 @@
 - (void)closePopup
 {
     [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationFade];
+}
+
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
+{
+    
 }
 
 - (void)didSelectedAtIndex:(int)index

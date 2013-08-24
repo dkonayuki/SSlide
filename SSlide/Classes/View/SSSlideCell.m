@@ -39,21 +39,23 @@
         float cellWidth = IS_IPAD ? 680.f : 320.f;
         float titleFontSize;
         float detailsFontSize;
-        float topMargin = 0.f;
-        float height = cellHeight - 2*topMargin;
-        float width = height;
+        float topMargin = 5.f;
+        float height = cellHeight - 2*topMargin - 20.f;
+        float width = 100.f;
         float leftMargin = 10.f;
         if (IS_IPAD)
         {
             leftMargin = leftMargin * 2.2;
+            topMargin *= 2.2;
+            width *= 2.2;
         }
         self.thumbnail = [[UIImageView alloc] initWithFrame:CGRectMake(leftMargin, topMargin, width, height)];
-        self.thumbnail.contentMode = UIViewContentModeScaleAspectFit;
+        self.thumbnail.contentMode = UIViewContentModeScaleToFill;
         [self addSubview:self.thumbnail];
         
         leftMargin = leftMargin * 2 + width;
         width = cellWidth - leftMargin;
-        topMargin = 10.f;
+        topMargin = 5.f;
         height = 20.f;
         titleFontSize = 14.f;
         detailsFontSize = 12.f;
@@ -69,7 +71,7 @@
         [self addSubview:self.title];
         self.title.backgroundColor = [UIColor clearColor];
         self.title.numberOfLines = 2;
-        self.title.adjustsFontSizeToFitWidth = NO;
+        //self.title.adjustsFontSizeToFitWidth = NO;
         self.title.font = [UIFont systemFontOfSize:titleFontSize];
         self.title.lineBreakMode = NSLineBreakByWordWrapping;
         
@@ -102,12 +104,12 @@
 - (void)setData:(SSSlideshow *)data
 {
     [self getThumbnail:[NSURL URLWithString:data.thumbnailUrl]];
-    CGSize maximumLabelSize = CGSizeMake(self.title.frame.size.width, NSIntegerMax);
-    
-    CGSize expectedLabelSize = [data.title sizeWithFont:self.title.font constrainedToSize:maximumLabelSize lineBreakMode:self.title.lineBreakMode];
+    CGSize size = [data.title sizeWithFont:self.title.font
+                         constrainedToSize:CGSizeMake(self.title.bounds.size.width,
+                                                      2 * self.title.font.lineHeight)
+                             lineBreakMode:self.title.lineBreakMode];
     CGRect newFrame = self.title.frame;
-    newFrame.size.height = expectedLabelSize.height;
-    
+    newFrame.size.height = size.height;
     self.title.frame = newFrame;
     self.title.text = data.title;
     self.date.text = data.created;
