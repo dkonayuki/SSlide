@@ -18,6 +18,7 @@
 
 @property (strong, nonatomic) SSUserView *myView;
 @property (strong, nonatomic) NSMutableArray *slideArray;
+@property (assign, nonatomic) BOOL isDownloadedMode;
 @property (assign, nonatomic) NSInteger currentPage;
 @property (strong, nonatomic) SSSlideShowPageViewController *pageViewController;
 
@@ -40,12 +41,10 @@
 	// Do any additional setup after loading the view.
     self.myView = [[SSUserView alloc] initWithFrame:self.view.bounds andDelegate:self];
     self.view = self.myView;
-    // init slideArray
-    self.slideArray = [[NSMutableArray alloc] init];
+    
     self.currentPage = 1;
-    // show loading
-    [SVProgressHUD showWithStatus:@"Loading"];
-    [self getUserSlideshows];
+    self.isDownloadedMode = YES;
+    [self getDownloadedSlideshows];
 }
 
 - (void)didReceiveMemoryWarning
@@ -58,8 +57,13 @@
 - (void)segmentedControlChangedDel:(NSUInteger)index
 {
     if (index == 0) {
-        self.slideArray = [[SSAppData sharedInstance] downloadedSlides];
-        [self.myView.slideListView.slideTableView reloadData];
+        self.isDownloadedMode = YES;
+        [self getDownloadedSlideshows];
+    } else {
+        self.isDownloadedMode = NO;
+        // init slideArray
+        self.slideArray = [[NSMutableArray alloc] init];
+        [self getUserSlideshows];
     }
 }
 
@@ -82,6 +86,9 @@
 
 - (void)getMoreSlides
 {
+    if (self.isDownloadedMode) {
+        return;
+    }
     self.currentPage ++;
     [self getUserSlideshows];
 }
@@ -104,17 +111,27 @@
 #pragma mark - private
 - (void)getUserSlideshows
 {
+    // show loading
+    [SVProgressHUD showWithStatus:@"Loading"];
     // TODO: get setting info
     [[SSApi sharedInstance] getSlideshowsByUser:@"rashmi"
                                         success:^(NSArray *result){
-                                            self.currentPage++;
-                                            [self.slideArray addObjectsFromArray:result];
-                                            [self.myView.slideListView.slideTableView reloadData];
+                                            if (!self.isDownloadedMode) {
+                                                self.currentPage++;
+                                                [self.slideArray addObjectsFromArray:result];
+                                                [self.myView.slideListView.slideTableView reloadData];
+                                            }
                                             [SVProgressHUD dismiss];
                                         }
                                         failure:^(void) {     // TODO: error handling
                                             NSLog(@"search ERROR");
                                         }];
+}
+
+- (void)getDownloadedSlideshows
+{
+    self.slideArray = [[SSAppData sharedInstance] downloadedSlides];
+    [self.myView.slideListView.slideTableView reloadData];
 }
 
 @end
