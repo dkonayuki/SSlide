@@ -69,7 +69,7 @@
     [self.myView moveToTop];
 
     [SVProgressHUD showWithStatus:@"Loading"];
-     NSString *params = [NSString stringWithFormat:@"q=%@&page=%d&items_per_page=10", text, self.currentPage];
+     NSString *params = [NSString stringWithFormat:@"q=%@&page=%d&items_per_page=%d", text, self.currentPage, [[SSDB5 theme] integerForKey:@"slide_num_in_page"]];
      [[SSApi sharedInstance] searchSlideshows:params
                                       success:^(NSArray *result){
                                           [SVProgressHUD dismiss];

@@ -94,7 +94,7 @@
     // TODO: get setting info
     [[SSApi sharedInstance] getMostViewedSlideshows:@"Ruby"
                                                page:self.currentPage
-                                       itemsPerPage:10
+                                       itemsPerPage:[[SSDB5 theme] integerForKey:@"slide_num_in_page"]
                                             success:^(NSArray *result){
                                                 // stop loading status
                                                 if (self.currentPage == 1) {
