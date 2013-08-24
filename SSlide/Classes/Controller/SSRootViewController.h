@@ -1,20 +1,20 @@
 //
-//  SSPageViewManager.h
+//  SSRootViewController.h
 //  SSlide
 //
-//  Created by iNghia on 8/21/13.
+//  Created by iNghia on 8/24/13.
 //  Copyright (c) 2013 S2. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import <MNPageViewController/MNPageViewController.h>
+#import "SSViewController.h"
 #import "SSTopViewController.h"
 #import "SSSearchViewController.h"
 #import "SSUserViewController.h"
+#import <MNPageViewController/MNPageViewController.h>
 
-@interface SSPageViewManager : NSObject
+@interface SSRootViewController : SSViewController <MNPageViewControllerDataSource, MNPageViewControllerDelegate>
 
-@property (strong, nonatomic) MNPageViewController *pageViewController;
+@property (nonatomic, strong) MNPageViewController *pageViewController;
 @property (strong, nonatomic) SSTopViewController  *topViewController;
 @property (strong, nonatomic) SSUserViewController *userViewController;
 @property (strong, nonatomic) SSSearchViewController *searchViewController;

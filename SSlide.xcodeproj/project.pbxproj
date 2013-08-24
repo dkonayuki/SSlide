@@ -8,10 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		3009B6485BA1436BAC1BA6F5 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E2702BF3BD1401A8049CA77 /* libPods.a */; };
+		435C124817C731FE001FAA8E /* SSSlideListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 435C124717C731FE001FAA8E /* SSSlideListView.m */; };
 		DC05A02517C73541000EE26F /* SSAppData.m in Sources */ = {isa = PBXBuildFile; fileRef = DC05A02417C73541000EE26F /* SSAppData.m */; };
 		DC05A02817C73581000EE26F /* SSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = DC05A02717C73581000EE26F /* SSUser.m */; };
-		435C124817C731FE001FAA8E /* SSSlideListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 435C124717C731FE001FAA8E /* SSSlideListView.m */; };
 		DC081B5517C666F800A893C2 /* SSSlideShowPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC081B5417C666F800A893C2 /* SSSlideShowPageViewController.m */; };
+		DC0C758717C8907000BD9C58 /* SSRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC0C758617C8907000BD9C58 /* SSRootViewController.m */; };
 		DC1104F817C6FF0B00833997 /* download-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DC1104E817C6FF0B00833997 /* download-icon.png */; };
 		DC1104F917C6FF0B00833997 /* download-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC1104E917C6FF0B00833997 /* download-icon@2x.png */; };
 		DC1104FA17C6FF0B00833997 /* my-slides-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DC1104EA17C6FF0B00833997 /* my-slides-icon.png */; };
@@ -37,7 +38,6 @@
 		DC70E57B17C49BCD004633F2 /* SSTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC70E57A17C49BCD004633F2 /* SSTopView.m */; };
 		DCB5A5FA17C4F2970089809C /* SSSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB5A5F917C4F2970089809C /* SSSearchViewController.m */; };
 		DCB5A5FD17C4F2C50089809C /* SSUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB5A5FC17C4F2C50089809C /* SSUserViewController.m */; };
-		DCB5A60017C4F6420089809C /* SSPageViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB5A5FF17C4F6420089809C /* SSPageViewManager.m */; };
 		DCB5A60317C4F7920089809C /* SSSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB5A60217C4F7920089809C /* SSSearchView.m */; };
 		DCB5A60617C4F7A20089809C /* SSUserView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB5A60517C4F7A20089809C /* SSUserView.m */; };
 		DCC0BAF917C493ED009FF1FD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCC0BAF817C493ED009FF1FD /* UIKit.framework */; };
@@ -87,6 +87,8 @@
 		DC05A02717C73581000EE26F /* SSUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSUser.m; path = Classes/Model/SSUser.m; sourceTree = "<group>"; };
 		DC081B5317C666F700A893C2 /* SSSlideShowPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSSlideShowPageViewController.h; path = Classes/Controller/SSSlideShowPageViewController.h; sourceTree = "<group>"; };
 		DC081B5417C666F800A893C2 /* SSSlideShowPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSSlideShowPageViewController.m; path = Classes/Controller/SSSlideShowPageViewController.m; sourceTree = "<group>"; };
+		DC0C758517C8907000BD9C58 /* SSRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSRootViewController.h; path = Classes/Controller/SSRootViewController.h; sourceTree = "<group>"; };
+		DC0C758617C8907000BD9C58 /* SSRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSRootViewController.m; path = Classes/Controller/SSRootViewController.m; sourceTree = "<group>"; };
 		DC1104E817C6FF0B00833997 /* download-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-icon.png"; sourceTree = "<group>"; };
 		DC1104E917C6FF0B00833997 /* download-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-icon@2x.png"; sourceTree = "<group>"; };
 		DC1104EA17C6FF0B00833997 /* my-slides-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "my-slides-icon.png"; sourceTree = "<group>"; };
@@ -121,8 +123,6 @@
 		DCB5A5F917C4F2970089809C /* SSSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSSearchViewController.m; path = Classes/Controller/SSSearchViewController.m; sourceTree = "<group>"; };
 		DCB5A5FB17C4F2C50089809C /* SSUserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSUserViewController.h; path = Classes/Controller/SSUserViewController.h; sourceTree = "<group>"; };
 		DCB5A5FC17C4F2C50089809C /* SSUserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSUserViewController.m; path = Classes/Controller/SSUserViewController.m; sourceTree = "<group>"; };
-		DCB5A5FE17C4F6420089809C /* SSPageViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSPageViewManager.h; path = Classes/Application/SSPageViewManager.h; sourceTree = "<group>"; };
-		DCB5A5FF17C4F6420089809C /* SSPageViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSPageViewManager.m; path = Classes/Application/SSPageViewManager.m; sourceTree = "<group>"; };
 		DCB5A60117C4F7920089809C /* SSSearchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSSearchView.h; path = Classes/View/SSSearchView.h; sourceTree = "<group>"; };
 		DCB5A60217C4F7920089809C /* SSSearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSSearchView.m; path = Classes/View/SSSearchView.m; sourceTree = "<group>"; };
 		DCB5A60417C4F7A20089809C /* SSUserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSUserView.h; path = Classes/View/SSUserView.h; sourceTree = "<group>"; };
@@ -304,8 +304,6 @@
 			children = (
 				DCC0BB0B17C493ED009FF1FD /* SSAppDelegate.h */,
 				DCC0BB0C17C493ED009FF1FD /* SSAppDelegate.m */,
-				DCB5A5FE17C4F6420089809C /* SSPageViewManager.h */,
-				DCB5A5FF17C4F6420089809C /* SSPageViewManager.m */,
 				DCC0BB0917C493ED009FF1FD /* README.md */,
 				DCC0BB2D17C493ED009FF1FD /* Podfile */,
 				DCC0BB0A17C493ED009FF1FD /* .gitignore */,
@@ -318,6 +316,8 @@
 			children = (
 				DCC0BB3417C493ED009FF1FD /* SSViewController.h */,
 				DCC0BB3517C493ED009FF1FD /* SSViewController.m */,
+				DC0C758517C8907000BD9C58 /* SSRootViewController.h */,
+				DC0C758617C8907000BD9C58 /* SSRootViewController.m */,
 				DC70E57617C49B49004633F2 /* SSTopViewController.h */,
 				DC70E57717C49B49004633F2 /* SSTopViewController.m */,
 				DCB5A5F817C4F2970089809C /* SSSearchViewController.h */,
@@ -627,7 +627,6 @@
 				DC70E57B17C49BCD004633F2 /* SSTopView.m in Sources */,
 				DCB5A5FA17C4F2970089809C /* SSSearchViewController.m in Sources */,
 				DCB5A5FD17C4F2C50089809C /* SSUserViewController.m in Sources */,
-				DCB5A60017C4F6420089809C /* SSPageViewManager.m in Sources */,
 				DCB5A60317C4F7920089809C /* SSSearchView.m in Sources */,
 				DCB5A60617C4F7A20089809C /* SSUserView.m in Sources */,
 				DC48BFD117C51C3D00340FE0 /* SSApi.m in Sources */,
@@ -641,6 +640,7 @@
 				DCD300A117C708F600908CC9 /* SSSettingsView.m in Sources */,
 				DC05A02517C73541000EE26F /* SSAppData.m in Sources */,
 				DC05A02817C73581000EE26F /* SSUser.m in Sources */,
+				DC0C758717C8907000BD9C58 /* SSRootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,34 +1,55 @@
 //
-//  SSPageViewManager.m
+//  SSRootViewController.m
 //  SSlide
 //
-//  Created by iNghia on 8/21/13.
+//  Created by iNghia on 8/24/13.
 //  Copyright (c) 2013 S2. All rights reserved.
 //
 
-#import "SSPageViewManager.h"
+#import "SSRootViewController.h"
 
-@interface SSPageViewManager() <MNPageViewControllerDataSource, MNPageViewControllerDelegate>
+@interface SSRootViewController ()
 
 @end
 
-@implementation SSPageViewManager
+@implementation SSRootViewController
 
-- (id)init
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super init];
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.pageViewController = [[MNPageViewController alloc] init];
-        self.pageViewController.dataSource = self;
-        self.pageViewController.delegate = self;
-        // create top viewcontroler
-        self.topViewController = [[SSTopViewController alloc] init];
-        // set as current viewcontroller
-        self.pageViewController.viewController = self.topViewController;
+        // Custom initialization
     }
     return self;
 }
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+	// Do any additional setup after loading the view.
+    self.pageViewController = [[MNPageViewController alloc] init];
+    
+    self.pageViewController.delegate = self;
+    self.pageViewController.dataSource = self;
+    
+    // create top viewcontroler
+    self.topViewController = [[SSTopViewController alloc] init];
+    self.pageViewController.viewController = self.topViewController;
+    
+    [self addChildViewController:self.pageViewController];
+    [self.view addSubview:self.pageViewController.view];
+    [self.pageViewController didMoveToParentViewController:self];
+    // remove space
+    CGRect pageViewRect = self.view.bounds;
+    pageViewRect = CGRectInset(pageViewRect, 0.f, 0.f);
+    self.pageViewController.view.frame = pageViewRect;
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
 
 #pragma mark - MNPageViewController datasource
 - (UIViewController *)mn_pageViewController:(MNPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
@@ -67,12 +88,13 @@
 
 #pragma mark - MNPageViewController delegate
 - (void)mn_pageViewController:(MNPageViewController *)pageViewController willPageToViewController:(SSViewController *)viewController withRatio:(CGFloat)ratio {
-    [viewController.view endEditing:YES];
     // change alpha of view
 }
 
 - (void)mn_pageViewController:(MNPageViewController *)pageViewController willPageFromViewController:(SSViewController *)viewController withRatio:(CGFloat)ratio {
-    [viewController.view endEditing:YES];
+    if (ratio >= 0.9f && [viewController isKindOfClass:[SSSearchViewController class]]) {
+        [viewController.view endEditing:YES];
+    }
     // change alpha of view
 }
 

@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SSPageViewManager.h"
+#import "SSRootViewController.h"
 
 @interface SSAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic) SSPageViewManager *pageViewManager;
+@property (strong, nonatomic) SSRootViewController *rootViewController;
 
 @end
