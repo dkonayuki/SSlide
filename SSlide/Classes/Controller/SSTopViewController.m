@@ -75,12 +75,8 @@
 - (void)didSelectedAtIndex:(int)index
 {
     SSSlideshow *selectedSlide = [self.slideArray objectAtIndex:index];
-    if ([selectedSlide extendedInfoIsNil]) {
-        return;
-    }
     self.pageViewController = [[SSSlideShowPageViewController alloc] initWithSlideshow:selectedSlide andDelegate:self];
     [self presentPopupViewController:self.pageViewController animationType:MJPopupViewAnimationFade];
-    //[self presentViewController:self.pageViewController animated:YES completion:nil];
 }
 
 - (void)closePopup
@@ -100,12 +96,13 @@
                                                 if (self.currentPage == 1) {
                                                     [SVProgressHUD dismiss];
                                                 }
+                                                /*
                                                 dispatch_apply([result count], dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t index) {
                                                     SSSlideshow *slideshow = [result objectAtIndex:index];
                                                     [[SSApi sharedInstance] addExtendedSlideInfo:slideshow result:^(BOOL result) {
                                                     }];
                                                 });
-
+                                                */
                                                 [self.slideArray addObjectsFromArray:result];
                                                 [self.myView.slideListView.slideTableView reloadData];
                                             }

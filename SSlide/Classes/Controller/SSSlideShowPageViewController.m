@@ -7,6 +7,7 @@
 //
 
 #import "SSSlideShowPageViewController.h"
+#import "SSApi.h"
 
 @interface SSSlideShowPageViewController () <SSSlideSHowViewControllerDelegate>
 
@@ -37,7 +38,6 @@
     return self;
 }
 
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -47,6 +47,17 @@
     self.pageController.dataSource = self;
     [[self.pageController view] setFrame:[[self view] bounds]];
     
+    if (![self.currentSlide checkIsDownloaded] && [self.currentSlide extendedInfoIsNil]) {
+        [[SSApi sharedInstance] addExtendedSlideInfo:self.currentSlide result:^(BOOL result) {
+            [self initViewController];
+        }];
+    } else {
+        [self initViewController];
+    }
+}
+
+- (void)initViewController
+{
     SSSlideShowViewController *initialViewController = [self viewControllerAtIndex:1];
     NSArray *viewControllers = [NSArray arrayWithObject:initialViewController];
     

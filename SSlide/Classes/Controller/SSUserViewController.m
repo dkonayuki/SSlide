@@ -99,9 +99,6 @@
 - (void)didSelectedAtIndex:(int)index
 {
     SSSlideshow *selectedSlide = [self.slideArray objectAtIndex:index];
-//    if ([selectedSlide extendedInfoIsNil]) {
-//        return;
-//    }
     self.pageViewController = [[SSSlideShowPageViewController alloc] initWithSlideshow:selectedSlide andDelegate:self];
     [self presentPopupViewController:self.pageViewController animationType:MJPopupViewAnimationFade];
 }

@@ -81,13 +81,6 @@
                                           [self.slideArray addObjectsFromArray:result];
                                           [self.myView initSlideListView];
                                           [self.myView.slideListView.slideTableView reloadData];
-                                          
-                                            /*
-                                           NSLog(@"%d", [self.slideArray count]);
-                                           for (SSSlideshow *cur in self.slideArray) {
-                                            [cur log];
-                                           }
-                                           */
                                       }
                                       failure:^(void) {     // TODO: error handling
                                           NSLog(@"search ERROR");
@@ -108,12 +101,8 @@
 - (void)didSelectedAtIndex:(int)index
 {
     SSSlideshow *selectedSlide = [self.slideArray objectAtIndex:index];
-    if ([selectedSlide extendedInfoIsNil]) {
-        return;
-    }
     self.pageViewController = [[SSSlideShowPageViewController alloc] initWithSlideshow:selectedSlide andDelegate:self];
     [self presentPopupViewController:self.pageViewController animationType:MJPopupViewAnimationFade];
-    //[self presentViewController:self.pageViewController animated:YES completion:nil];
 }
 
 - (NSInteger)numberOfRows
