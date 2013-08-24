@@ -10,6 +10,7 @@
 #import <AFNetworking/AFImageRequestOperation.h>
 #import "SSAppData.h"
 #import <NSString-HTML/NSString+HTML.h>
+#import "SSApi.h"
 
 @interface SSSlideshow()
 
@@ -154,7 +155,7 @@
     return [NSString stringWithFormat:@"%@/%d.png", self.localBasePath, index];
 }
 
-- (void)download:(void (^)(BOOL))result
+- (void)download:(void (^)(float))progress completion:(void (^)(BOOL))completion
 {
     NSString *directory = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
     NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -168,46 +169,29 @@
     
     self.localBasePath = folderPath;
     
-    // download image
-    /*
-    dispatch_apply(self.totalSlides, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t index) {
-        int pageNum = index + 1;
-        NSString *filePath = [NSString stringWithFormat:@"%@/%d.png", folderPath, pageNum];
-        NSString *url = [self remoteUrlImageAtPage:pageNum];
+    NSMutableArray *operationsArray = [NSMutableArray array];
+    for (int i = 1; i <= self.totalSlides; i++) {
+        NSString *filePath = [self localUrlOfImageAtPage:i];
+        NSString *url = [self remoteUrlOfImageAtPage:i];
         NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
         AFImageRequestOperation *operation =
         [AFImageRequestOperation imageRequestOperationWithRequest:request
                                                           success:^(UIImage *image) {
                                                               [UIImagePNGRepresentation(image) writeToFile:filePath atomically:YES];
                                                           }];
-        [operation start];
-    });
-    */
-    
-    dispatch_queue_t queue = dispatch_get_global_queue(0,0);
-    dispatch_group_t group = dispatch_group_create();
-    
-    for (int i = 1; i <= self.totalSlides; i++) {
-        dispatch_group_async(group,queue,^{
-            NSString *filePath = [self localUrlOfImageAtPage:i];
-            NSString *url = [self remoteUrlOfImageAtPage:i];
-            NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
-            AFImageRequestOperation *operation =
-            [AFImageRequestOperation imageRequestOperationWithRequest:request
-                                                              success:^(UIImage *image) {
-                                                                  [UIImagePNGRepresentation(image) writeToFile:filePath atomically:YES];
-                                                              }];
-            [operation start];
-        });
+        [operationsArray addObject:operation];
     }
     
-    dispatch_group_notify(group,queue,^{
-        NSLog(@"Download finished");
-        self.isDownloaded = YES;
-        [[SSAppData sharedInstance].downloadedSlides addObject:self];
-        [SSAppData saveAppData];
-        result(YES);
-    });
+    [[[SSApi sharedInstance] client]  enqueueBatchOfHTTPRequestOperations:operationsArray
+                                                            progressBlock:^(NSUInteger numberOfFinishedOperations, NSUInteger totalNumberOfOperations) {
+                                                                float per = (float)numberOfFinishedOperations/(float)totalNumberOfOperations;
+                                                                progress(per);
+                                        } completionBlock:^(NSArray *operations) {
+                                            self.isDownloaded = YES;
+                                            [[SSAppData sharedInstance].downloadedSlides addObject:self];
+                                            [SSAppData saveAppData];
+                                            completion(YES);
+                                        }];
 }
 
 @end

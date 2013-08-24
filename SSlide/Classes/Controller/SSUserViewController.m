@@ -11,12 +11,15 @@
 #import "SSSettingsViewController.h"
 #import <UIViewController+MJPopupViewController.h>
 #import "SSApi.h"
+#import "SSAppData.h"
+#import "SSSlideShowPageViewController.h"
 
 @interface SSUserViewController () <SSUserViewDelegate, SSSlideListViewDelegate>
 
 @property (strong, nonatomic) SSUserView *myView;
 @property (strong, nonatomic) NSMutableArray *slideArray;
 @property (assign, nonatomic) NSInteger currentPage;
+@property (strong, nonatomic) SSSlideShowPageViewController *pageViewController;
 
 @end
 
@@ -43,43 +46,6 @@
     // show loading
     [SVProgressHUD showWithStatus:@"Loading"];
     [self getUserSlideshows];
-    
-    /*
-     [[SSApi sharedInstance] getSlideshowsByUser:@"rashmi"
-     success:^(NSArray *result){
-     self.pageManager = [[SSSlideShowPageManager alloc] initWithSlideshow:[result objectAtIndex:0]];
-     dispatch_apply([result count], dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t index) {
-     SSSlideshow *slideshow = [result objectAtIndex:index];
-     [[SSApi sharedInstance] addExtendedSlideInfo:slideshow];
-     });
-     
-     }
-     failure:^(void) {     // TODO: error handling
-     NSLog(@"search ERROR");
-     }];
-     
-     double delayInSeconds = 3.0;
-     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-     [self.pageManager refresh];
-     [self presentViewController:self.pageManager.pageViewController animated:YES completion:nil];
-     });
-     */
-    
-    
-    /*
-     [[SSApi sharedInstance] checkUsernamePassword:@"thefoolishman"
-     password:@"fasdf"
-     result:^(BOOL result) {
-     if(result) {
-     NSLog(@"OK");
-     } else {
-     NSLog(@"FAIL");
-     }
-     }];
-     */
-
-
 }
 
 - (void)didReceiveMemoryWarning
@@ -91,7 +57,10 @@
 #pragma mark - SSUserViewDelegate
 - (void)segmentedControlChangedDel:(NSUInteger)index
 {
-    
+    if (index == 0) {
+        self.slideArray = [[SSAppData sharedInstance] downloadedSlides];
+        [self.myView.slideListView.slideTableView reloadData];
+    }
 }
 
 - (void)settingsBtnPressedDel
@@ -119,6 +88,12 @@
 
 - (void)didSelectedAtIndex:(int)index
 {
+    SSSlideshow *selectedSlide = [self.slideArray objectAtIndex:index];
+//    if ([selectedSlide extendedInfoIsNil]) {
+//        return;
+//    }
+    self.pageViewController = [[SSSlideShowPageViewController alloc] initWithSlideshow:selectedSlide andDelegate:self];
+    [self presentPopupViewController:self.pageViewController animationType:MJPopupViewAnimationFade];
 }
 
 - (void)closePopup

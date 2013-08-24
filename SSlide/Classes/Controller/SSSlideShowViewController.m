@@ -45,18 +45,23 @@
 	// Do any additional setup after loading the view.
     self.myView = [[SSSlideShowView alloc] initWithFrame:self.view.bounds andDelegate:self];
     self.view = self.myView;
-    [SVProgressHUD showWithStatus:@"loading"];
-    // load image
-    NSString *imageUrl = [NSString stringWithFormat:@"%@%d%@", self.currentSlide.slideImageBaseurl, self.pageIndex, self.currentSlide.slideImageBaseurlSuffix];
-    NSLog(@"Image url: %@", imageUrl);
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:imageUrl]];
-    AFImageRequestOperation *operation =
-    [AFImageRequestOperation imageRequestOperationWithRequest:request
-                                                      success:^(UIImage *image) {
-                                                          self.myView.imageView.image = image;
-                                                          [SVProgressHUD dismiss];
-                                                      }];
-    [operation start];
+    
+    if ([self.currentSlide checkIsDownloaded]) {
+        self.myView.imageView.image = [UIImage imageWithContentsOfFile:[self.currentSlide localUrlOfImageAtPage:self.pageIndex]];
+    } else {
+        [SVProgressHUD showWithStatus:@"loading"];
+        // load image
+        NSString *imageUrl = [NSString stringWithFormat:@"%@%d%@", self.currentSlide.slideImageBaseurl, self.pageIndex, self.currentSlide.slideImageBaseurlSuffix];
+        NSLog(@"Image url: %@", imageUrl);
+        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:imageUrl]];
+        AFImageRequestOperation *operation =
+        [AFImageRequestOperation imageRequestOperationWithRequest:request
+                                                          success:^(UIImage *image) {
+                                                              self.myView.imageView.image = image;
+                                                              [SVProgressHUD dismiss];
+                                                          }];
+        [operation start];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -75,7 +80,9 @@
 - (void)downloadCurrentSlide
 {
     if (![self.currentSlide checkIsDownloaded]) {
-        [self.currentSlide download:^(BOOL result){
+        [self.currentSlide download:^(float percent) {
+            NSLog(@"download: %f", percent);
+        } completion:^(BOOL result){
             [SVProgressHUD showSuccessWithStatus:@"OK"];
         }];
     } else {

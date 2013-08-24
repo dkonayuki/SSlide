@@ -66,4 +66,14 @@
     }
 }
 
+- (NSArray *)mySlides
+{
+    NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(SSSlideshow *evaluatedObj, NSDictionary *bind) {
+        return [evaluatedObj.username isEqualToString:@"thefoolishman"];
+    }];
+    NSArray *downloaded = [self.downloadedSlides copy];
+    NSArray *result = [downloaded filteredArrayUsingPredicate:predicate];
+    return result;
+}
+
 @end

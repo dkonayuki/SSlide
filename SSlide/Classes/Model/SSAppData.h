@@ -15,6 +15,8 @@
 @property (strong, nonatomic) SSUser *currentUser;
 @property (strong, nonatomic) NSMutableArray *downloadedSlides;
 
+- (NSArray *)mySlides;
+
 + (SSAppData *)sharedInstance;
 + (void)saveAppData;
 

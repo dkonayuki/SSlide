@@ -31,7 +31,8 @@
 
 - (BOOL)checkIsDownloaded;
 
-- (void)download:(void (^)(BOOL result))result;
+- (void)download:(void (^)(float percent))progress completion:(void (^)(BOOL result))completion;
+
 - (NSString *)remoteUrlOfImageAtPage:(NSUInteger)index;
 - (NSString *)localUrlOfImageAtPage:(NSUInteger)index;
 
