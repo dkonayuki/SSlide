@@ -18,7 +18,7 @@
 
 - (void)checkUsernamePassword:(NSString *)username password:(NSString *)password result:(void (^)(BOOL result))result;
 
-- (void)getSlideshowsByUser:(NSString *)username success:(void (^)(NSArray *result))success failure:(void (^)())failure;
+- (void)getSlideshowsByUser:(NSString *)username page:(int)page success:(void (^)(NSArray *result))success failure:(void (^)())failure;
 
 - (void)searchSlideshows:(NSString *)params success:(void (^)(NSArray *result))success failure:(void (^)())failure;
 

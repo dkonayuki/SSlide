@@ -28,6 +28,8 @@
 		<integer>110</integer>
 		<key>slide_cell_height_ipad</key>
 		<integer>250</integer>
+		<key>slide_num_in_page</key>
+		<integer>7</integer>
 	</dict>
 </dict>
 </plist>

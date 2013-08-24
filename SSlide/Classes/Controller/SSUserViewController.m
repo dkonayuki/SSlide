@@ -20,6 +20,7 @@
 @property (strong, nonatomic) NSMutableArray *slideArray;
 @property (assign, nonatomic) BOOL isDownloadedMode;
 @property (assign, nonatomic) NSInteger currentPage;
+@property (assign, nonatomic) BOOL endOfSlidesList;
 @property (strong, nonatomic) SSSlideShowPageViewController *pageViewController;
 
 @end
@@ -43,6 +44,8 @@
     self.view = self.myView;
     
     self.currentPage = 1;
+    self.endOfSlidesList = NO;
+    
     self.isDownloadedMode = YES;
     [self getDownloadedSlideshows];
 }
@@ -86,7 +89,7 @@
 
 - (void)getMoreSlides
 {
-    if (self.isDownloadedMode) {
+    if (self.isDownloadedMode || self.endOfSlidesList) {
         return;
     }
     self.currentPage ++;
@@ -115,11 +118,16 @@
     [SVProgressHUD showWithStatus:@"Loading"];
     // TODO: get setting info
     [[SSApi sharedInstance] getSlideshowsByUser:@"rashmi"
+                                           page:self.currentPage
                                         success:^(NSArray *result){
                                             if (!self.isDownloadedMode) {
-                                                self.currentPage++;
                                                 [self.slideArray addObjectsFromArray:result];
                                                 [self.myView.slideListView.slideTableView reloadData];
+                                                if ([result count] < [[SSDB5 theme] integerForKey:@"slide_num_in_page"]){
+                                                    self.endOfSlidesList = YES;
+                                                } else {
+                                                    self.currentPage ++;
+                                                }
                                             }
                                             [SVProgressHUD dismiss];
                                         }

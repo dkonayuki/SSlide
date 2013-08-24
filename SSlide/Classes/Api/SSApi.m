@@ -45,11 +45,13 @@
  *
  *	@param	username
  */
-- (void)getSlideshowsByUser:(NSString *)username success:(void (^)(NSArray *))success failure:(void (^)())failure
+- (void)getSlideshowsByUser:(NSString *)username page:(int)page success:(void (^)(NSArray *))success failure:(void (^)())failure
 {
     self.slideshowArray = [[NSMutableArray alloc] init];
     self.currentSlideshow = nil;
-    NSString *url = [NSString stringWithFormat:@"get_slideshows_by_user?detailed=1&username_for=%@&limit=10&%@", username, [self getApiHash]];
+    int itemsInPage = [[SSDB5 theme] integerForKey:@"slide_num_in_page"];
+    int offset = itemsInPage*(page-1);
+    NSString *url = [NSString stringWithFormat:@"get_slideshows_by_user?detailed=1&username_for=%@&limit=%d&offset=%d&%@", username, itemsInPage, offset, [self getApiHash]];
     [self.client getPath:url
               parameters:nil
                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
