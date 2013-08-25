@@ -49,6 +49,7 @@
     self.pageController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationVertical options:nil];
     
     self.pageController.dataSource = self;
+    self.pageController.delegate = self;
     [[self.pageController view] setFrame:[[self view] bounds]];
     
     if (![self.currentSlide checkIsDownloaded] && [self.currentSlide extendedInfoIsNil]) {
@@ -131,6 +132,29 @@
     return [self viewControllerAtIndex:index];
 }
 
+- (void)gotoPage:(int)pageNum
+{
+    SSSlideShowViewController *curentViewController = [self viewControllerAtIndex:pageNum];
+    
+    NSArray *viewControllers = [NSArray arrayWithObject:curentViewController];
+    
+    [self.pageController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+}
+
+#pragma mark - UIPageViewController delegate
+- (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
+{
+    if (completed) {
+        SSSlideShowViewController *currentViewController = [[pageViewController viewControllers] lastObject];
+        int pageNum = currentViewController.pageIndex;
+        NSLog(@"new page: %d", pageNum);
+        NSNumber *pn = [NSNumber numberWithInt:pageNum];
+        NSDictionary *mesg = @{@"username": @"nghialv",
+                               @"pagenum": pn};
+        [self.fayeClient sendMessage:mesg onChannel:@"/slide1"];
+    }
+}
+
 #pragma mark - SSSlideShowViewControllerDelegate
 - (void)closePopup
 {
@@ -204,19 +228,25 @@
 - (void)messageReceived:(NSDictionary *)messageDict channel:(NSString *)channel
 {
     NSLog(@"messageReceived %@ channel %@",messageDict, channel);
+    //int pageNum = [((NSNumber *)[messageDict objectForKey:@"pagenum"]) intValue];
+    //[self gotoPage:pageNum];
 }
+
 - (void)connectionFailed
 {
     NSLog(@"Connection Failed");
 }
+
 - (void)didSubscribeToChannel:(NSString *)channel
 {
     NSLog(@"didSubscribeToChannel %@", channel);
 }
+
 - (void)didUnsubscribeFromChannel:(NSString *)channel
 {
     NSLog(@"didUnsubscribeFromChannel %@", channel);
 }
+
 - (void)fayeClientError:(NSError *)error
 {
     NSLog(@"fayeClientError %@", error);
