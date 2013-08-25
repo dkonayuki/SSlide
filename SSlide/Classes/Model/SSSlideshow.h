@@ -24,7 +24,11 @@
 @property (copy, nonatomic) NSString *slideImageBaseurlSuffix;
 @property (copy, nonatomic) NSString *firstPageImageUrl;
 
+@property (copy, nonatomic) NSString *channel;
+
 - (id)initWithDefaultData;
+
+- (void)setNormalCreated:(NSString *)created;
 
 - (void)log;
 - (BOOL)extendedInfoIsNil;

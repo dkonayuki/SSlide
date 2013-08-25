@@ -69,23 +69,61 @@
     [self.myView moveToTop];
 
     [SVProgressHUD showWithStatus:@"Loading"];
-     NSString *params = [NSString stringWithFormat:@"q=%@&page=%d&items_per_page=%d", text, self.currentPage, [[SSDB5 theme] integerForKey:@"slide_num_in_page"]];
-     [[SSApi sharedInstance] searchSlideshows:params
-                                      success:^(NSArray *result){
-                                          [SVProgressHUD dismiss];
-                                          if (!isSame)
-                                          {
-                                              [self.slideArray removeAllObjects];
-                                              [self.myView.slideListView.slideTableView setContentOffset:CGPointZero animated:NO];
-                                          }
-                                          [self.slideArray addObjectsFromArray:result];
-                                          [self.myView initSlideListView];
-                                          [self.myView.slideListView.slideTableView reloadData];
-                                      }
-                                      failure:^(void) {     // TODO: error handling
-                                          NSLog(@"search ERROR");
-                                          [SVProgressHUD dismiss];
-                                      }];
+    
+    if ([text hasPrefix:@"#"]) {
+        NSString *searchText = [text substringFromIndex:1];
+        NSString *requestUrl = [NSString stringWithFormat:@"%@/streaming/search?username=%@", [[SSDB5 theme] stringForKey:@"SS_SERVER_BASE_URL"], searchText];
+        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
+        
+        AFJSONRequestOperation *operation =
+        [AFJSONRequestOperation JSONRequestOperationWithRequest:request
+                                                        success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+                                                            [SVProgressHUD dismiss];
+                                                            NSArray *array = (NSArray *)JSON;
+                                                            NSDictionary *result = [array objectAtIndex:0];
+                                                            SSSlideshow *slideshow = [[SSSlideshow alloc] initWithDefaultData];
+                                                            NSLog(@"%@", result);
+                                                            
+                                                            slideshow.username = [result objectForKey:@"username"];
+                                                            slideshow.title = [result objectForKey:@"title"];
+                                                            slideshow.thumbnailUrl = [result objectForKey:@"thumbnailUrl"];
+                                                            [slideshow setNormalCreated:[result objectForKey:@"created"]];
+                                                            slideshow.numViews = [((NSNumber *)[result objectForKey:@"numViews"]) intValue];
+                                                            slideshow.numDownloads = [((NSNumber *)[result objectForKey:@"numDownloads"]) intValue];
+                                                            slideshow.numFavorites = [((NSNumber *)[result objectForKey:@"numFavarites"]) intValue];
+                                                            slideshow.channel = [result objectForKey:@"channel"];
+                                                            
+                                                            [self.slideArray removeAllObjects];
+                                                            [self.myView.slideListView.slideTableView setContentOffset:CGPointZero animated:NO];
+                                                            [self.slideArray addObject:slideshow];
+                                                            [self.myView initSlideListView];
+                                                            [self.myView.slideListView.slideTableView reloadData];
+                                                        }
+                                                        failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+                                                            [SVProgressHUD dismiss];
+                                                            NSLog(@"Fail");
+                                                        }];
+        
+        [operation start];
+    } else {
+        NSString *params = [NSString stringWithFormat:@"q=%@&page=%d&items_per_page=%d", text, self.currentPage, [[SSDB5 theme] integerForKey:@"slide_num_in_page"]];
+        [[SSApi sharedInstance] searchSlideshows:params
+                                         success:^(NSArray *result){
+                                             [SVProgressHUD dismiss];
+                                             if (!isSame)
+                                             {
+                                                 [self.slideArray removeAllObjects];
+                                                 [self.myView.slideListView.slideTableView setContentOffset:CGPointZero animated:NO];
+                                             }
+                                             [self.slideArray addObjectsFromArray:result];
+                                             [self.myView initSlideListView];
+                                             [self.myView.slideListView.slideTableView reloadData];
+                                         }
+                                         failure:^(void) {     // TODO: error handling
+                                             NSLog(@"search ERROR");
+                                             [SVProgressHUD dismiss];
+                                         }];
+    }
 }
 
 - (void)closePopup

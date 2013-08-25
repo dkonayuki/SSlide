@@ -109,6 +109,11 @@
     mCreated = [NSString stringWithFormat:@"%@ %@ %@", date, month, year];
 }
 
+- (void)setNormalCreated:(NSString *)created
+{
+    mCreated = created;
+}
+
 - (void)setSlideImageBaseurl:(NSString *)slideImageBaseurl
 {
     mSlideImageBaseurl = [NSString stringWithFormat:@"http:%@", slideImageBaseurl];

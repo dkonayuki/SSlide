@@ -11,6 +11,7 @@
 #import "FayeClient.h"
 #import "SSAppData.h"
 #import "SSApi.h"
+#import <AFNetworking/AFHTTPClient.h>
 
 @interface SSSlideShowPageViewController () <SSSlideSHowViewControllerDelegate, SSSlideShowControlViewDelegate, FayeClientDelegate>
 
@@ -18,6 +19,7 @@
 @property (assign, nonatomic) NSInteger totalPage;
 @property (strong, nonatomic) SSSlideShowControlView *controlView;
 @property (strong, nonatomic) FayeClient *fayeClient;
+@property (strong, nonatomic) NSString *channel;
 
 @end
 
@@ -80,8 +82,37 @@
     self.controlView.transform = CGAffineTransformMakeRotation(M_PI_2);
     self.controlView.center = CGPointMake(self.view.bounds.size.width*3/2, cH/2);
     [self.view addSubview:self.controlView];
+}
+
+- (void)startStreaming 
+{
+    NSString *curUsername = [SSAppData sharedInstance].currentUser.username;
+    self.channel = [NSString stringWithFormat:@"/%@/%@", curUsername, self.currentSlide.slideId];
     
-    [self startFaye];
+    AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[[SSDB5 theme] stringForKey:@"SS_SERVER_BASE_URL"]]];
+    [client registerHTTPOperationClass:[AFJSONRequestOperation class]];
+    [client setDefaultHeader:@"Accept" value:@"application/json"];
+    
+    NSString *url = [NSString stringWithFormat:@"streaming/create"];
+    NSDictionary *params = @{@"username": curUsername,
+                             @"channel": self.channel,
+                             @"title": self.currentSlide.title,
+                             @"thumbnailUrl": self.currentSlide.thumbnailUrl,
+                             @"created": self.currentSlide.created,
+                             @"numViews": [NSNumber numberWithInt:self.currentSlide.numViews],
+                             @"numDownloads": [NSNumber numberWithInt:self.currentSlide.numDownloads],
+                             @"numFavorites": [NSNumber numberWithInt:self.currentSlide.numFavorites]};
+
+    [client postPath:url
+          parameters:params
+             success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                 NSDictionary *dict = (NSDictionary *)responseObject;
+                 NSLog(@"%@", dict);
+                 [self startFaye];
+             }
+             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                 NSLog(@"error");
+             }];
 }
 
 - (void)startFaye
@@ -205,7 +236,12 @@
 
 - (void)startStreamingCurrentSlideDel
 {
-    [self.fayeClient sendMessage:@{@"nghiaiphone" : @"Hello World!"} onChannel:@"/slide1"];
+    if (self.currentSlide.channel) {
+        [self startFaye];
+    } else {
+        [self startStreaming];
+    }
+    //[self.fayeClient sendMessage:@{@"nghiaiphone" : @"Hello World!"} onChannel:@"/slide1"];
 }
 
 #pragma mark - Faye Client Delegate
