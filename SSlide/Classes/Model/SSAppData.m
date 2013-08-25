@@ -25,6 +25,12 @@
         if ([fileManager fileExistsAtPath:filePath]) {
             sharedSSAppData.currentUser = [NSKeyedUnarchiver unarchiveObjectWithFile:filePath];
             NSLog(@"OK! Data has been loaded from .dat file");
+        } else {
+            if (IS_IPAD) {
+                sharedSSAppData.currentUser = [[SSUser alloc] initWith:@"s2team" password:@"sslide"];
+            } else {
+                sharedSSAppData.currentUser = [[SSUser alloc] initWith:@"thefoolishman" password:@"hehe"];
+            }
         }
         
         // load downloaded slide data

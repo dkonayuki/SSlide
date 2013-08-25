@@ -114,7 +114,9 @@
     // show loading
     [SVProgressHUD showWithStatus:@"Loading"];
     // TODO: get setting info
-    [[SSApi sharedInstance] getSlideshowsByUser:@"rashmi"
+    NSString *currentUsername = [SSAppData sharedInstance].currentUser.username;
+    NSLog(@"current username: %@", currentUsername);
+    [[SSApi sharedInstance] getSlideshowsByUser:currentUsername
                                            page:self.currentPage
                                         success:^(NSArray *result){
                                             if (!self.isDownloadedMode) {

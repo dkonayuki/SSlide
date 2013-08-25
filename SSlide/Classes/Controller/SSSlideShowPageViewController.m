@@ -8,8 +8,9 @@
 
 #import "SSSlideShowPageViewController.h"
 #import "SSSlideShowControlView.h"
-#import "SSApi.h"
 #import "FayeClient.h"
+#import "SSAppData.h"
+#import "SSApi.h"
 
 @interface SSSlideShowPageViewController () <SSSlideSHowViewControllerDelegate, SSSlideShowControlViewDelegate, FayeClientDelegate>
 
@@ -88,7 +89,6 @@
     self.fayeClient = [[FayeClient alloc] initWithURLString:[[SSDB5 theme] stringForKey:@"FAYE_BASE_URL"] channel:@"/slide1"];
     self.fayeClient.delegate = self;
     [self.fayeClient connectToServer];
-
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -149,9 +149,13 @@
         int pageNum = currentViewController.pageIndex;
         NSLog(@"new page: %d", pageNum);
         NSNumber *pn = [NSNumber numberWithInt:pageNum];
-        NSDictionary *mesg = @{@"username": @"nghialv",
-                               @"pagenum": pn};
-        [self.fayeClient sendMessage:mesg onChannel:@"/slide1"];
+        
+        SSUser *currentUser = [[SSAppData sharedInstance] currentUser];
+        if ([currentUser.username isEqualToString:@"s2team"]) {
+            NSDictionary *mesg = @{@"username": currentUser.username,
+                                   @"pagenum": pn};
+            [self.fayeClient sendMessage:mesg onChannel:@"/slide1"];
+        }
     }
 }
 
@@ -228,8 +232,12 @@
 - (void)messageReceived:(NSDictionary *)messageDict channel:(NSString *)channel
 {
     NSLog(@"messageReceived %@ channel %@",messageDict, channel);
-    //int pageNum = [((NSNumber *)[messageDict objectForKey:@"pagenum"]) intValue];
-    //[self gotoPage:pageNum];
+    NSString *username = [messageDict objectForKey:@"username"];
+    NSString *curUsername = [SSAppData sharedInstance].currentUser.username;
+    if (![username isEqualToString:curUsername]) {
+        int pageNum = [((NSNumber *)[messageDict objectForKey:@"pagenum"]) intValue];
+        [self gotoPage:pageNum];
+    }
 }
 
 - (void)connectionFailed
