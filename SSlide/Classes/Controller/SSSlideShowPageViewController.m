@@ -11,7 +11,7 @@
 #import "SSApi.h"
 #import "FayeClient.h"
 
-@interface SSSlideShowPageViewController () <SSSlideSHowViewControllerDelegate, SSSlideSHowViewControllerDelegate, FayeClientDelegate>
+@interface SSSlideShowPageViewController () <SSSlideSHowViewControllerDelegate, SSSlideShowControlViewDelegate, FayeClientDelegate>
 
 @property (strong, nonatomic) SSSlideshow *currentSlide;
 @property (assign, nonatomic) NSInteger totalPage;
@@ -162,9 +162,8 @@
                      }];
 }
 
-- (void)downloadCurrentSlide
+- (void)downloadCurrentSlideDel
 {
-    /*
     if (![self.currentSlide checkIsDownloaded]) {
         [self.currentSlide download:^(float percent) {
             NSLog(@"download: %f", percent);
@@ -174,7 +173,10 @@
     } else {
         [SVProgressHUD showErrorWithStatus:@"Already exists!"];
     }
-     */
+}
+
+- (void)startStreamingCurrentSlideDel
+{
     [self.fayeClient sendMessage:@{@"nghiaiphone" : @"Hello World!"} onChannel:@"/slide1"];
 }
 

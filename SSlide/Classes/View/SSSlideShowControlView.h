@@ -10,7 +10,8 @@
 
 @protocol SSSlideShowControlViewDelegate <NSObject>
 
-- (void)downloadCurrentSlide;
+- (void)downloadCurrentSlideDel;
+- (void)startStreamingCurrentSlideDel;
 
 @end
 
