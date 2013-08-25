@@ -9,12 +9,14 @@
 #import "SSSlideShowPageViewController.h"
 #import "SSSlideShowControlView.h"
 #import "SSApi.h"
+#import "FayeClient.h"
 
-@interface SSSlideShowPageViewController () <SSSlideSHowViewControllerDelegate, SSSlideSHowViewControllerDelegate>
+@interface SSSlideShowPageViewController () <SSSlideSHowViewControllerDelegate, SSSlideSHowViewControllerDelegate, FayeClientDelegate>
 
 @property (strong, nonatomic) SSSlideshow *currentSlide;
 @property (assign, nonatomic) NSInteger totalPage;
 @property (strong, nonatomic) SSSlideShowControlView *controlView;
+@property (strong, nonatomic) FayeClient *fayeClient;
 
 @end
 
@@ -76,6 +78,22 @@
     self.controlView.transform = CGAffineTransformMakeRotation(M_PI_2);
     self.controlView.center = CGPointMake(self.view.bounds.size.width*3/2, cH/2);
     [self.view addSubview:self.controlView];
+    
+    [self startFaye];
+}
+
+- (void)startFaye
+{
+    self.fayeClient = [[FayeClient alloc] initWithURLString:[[SSDB5 theme] stringForKey:@"FAYE_BASE_URL"] channel:@"/slide1"];
+    self.fayeClient.delegate = self;
+    [self.fayeClient connectToServer];
+
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self.fayeClient disconnectFromServer];
 }
 
 - (void)didReceiveMemoryWarning
@@ -146,6 +164,7 @@
 
 - (void)downloadCurrentSlide
 {
+    /*
     if (![self.currentSlide checkIsDownloaded]) {
         [self.currentSlide download:^(float percent) {
             NSLog(@"download: %f", percent);
@@ -155,6 +174,50 @@
     } else {
         [SVProgressHUD showErrorWithStatus:@"Already exists!"];
     }
+     */
+    [self.fayeClient sendMessage:@{@"nghiaiphone" : @"Hello World!"} onChannel:@"/slide1"];
+}
+
+#pragma mark - Faye Client Delegate
+- (void)connectedToServer
+{
+    NSLog(@"Connected to server");
+}
+
+- (void)disconnectedFromServer
+{
+    NSLog(@"Disconnected from server");
+}
+
+- (void)subscriptionFailedWithError:(NSString *)error
+{
+    NSLog(@"Subscription did fail: %@", error);
+}
+
+- (void)subscribedToChannel:(NSString *)channel
+{
+    NSLog(@"Subscribed to channel: %@", channel);
+}
+
+- (void)messageReceived:(NSDictionary *)messageDict channel:(NSString *)channel
+{
+    NSLog(@"messageReceived %@ channel %@",messageDict, channel);
+}
+- (void)connectionFailed
+{
+    NSLog(@"Connection Failed");
+}
+- (void)didSubscribeToChannel:(NSString *)channel
+{
+    NSLog(@"didSubscribeToChannel %@", channel);
+}
+- (void)didUnsubscribeFromChannel:(NSString *)channel
+{
+    NSLog(@"didUnsubscribeFromChannel %@", channel);
+}
+- (void)fayeClientError:(NSError *)error
+{
+    NSLog(@"fayeClientError %@", error);
 }
 
 @end

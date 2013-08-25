@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		3009B6485BA1436BAC1BA6F5 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E2702BF3BD1401A8049CA77 /* libPods.a */; };
 		435C124817C731FE001FAA8E /* SSSlideListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 435C124717C731FE001FAA8E /* SSSlideListView.m */; };
+		DC01E00E17C9CC440096254A /* FayeClient.m in Sources */ = {isa = PBXBuildFile; fileRef = DC01E00517C9CC440096254A /* FayeClient.m */; };
+		DC01E00F17C9CC440096254A /* FayeMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = DC01E00717C9CC440096254A /* FayeMessage.m */; };
+		DC01E01017C9CC440096254A /* NSObject+PropertySupport.m in Sources */ = {isa = PBXBuildFile; fileRef = DC01E00917C9CC440096254A /* NSObject+PropertySupport.m */; };
+		DC01E01117C9CC440096254A /* NSObject+Serialize.m in Sources */ = {isa = PBXBuildFile; fileRef = DC01E00B17C9CC440096254A /* NSObject+Serialize.m */; };
+		DC01E01217C9CC440096254A /* NSString+InflectionSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = DC01E00D17C9CC440096254A /* NSString+InflectionSupport.m */; };
 		DC05A02517C73541000EE26F /* SSAppData.m in Sources */ = {isa = PBXBuildFile; fileRef = DC05A02417C73541000EE26F /* SSAppData.m */; };
 		DC05A02817C73581000EE26F /* SSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = DC05A02717C73581000EE26F /* SSUser.m */; };
 		DC081B5517C666F800A893C2 /* SSSlideShowPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC081B5417C666F800A893C2 /* SSSlideShowPageViewController.m */; };
@@ -82,6 +87,16 @@
 		435C124617C731FD001FAA8E /* SSSlideListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSSlideListView.h; path = Classes/View/SSSlideListView.h; sourceTree = "<group>"; };
 		435C124717C731FE001FAA8E /* SSSlideListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSSlideListView.m; path = Classes/View/SSSlideListView.m; sourceTree = "<group>"; };
 		7E2702BF3BD1401A8049CA77 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC01E00417C9CC440096254A /* FayeClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FayeClient.h; path = Classes/Utilities/FayeClient.h; sourceTree = "<group>"; };
+		DC01E00517C9CC440096254A /* FayeClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FayeClient.m; path = Classes/Utilities/FayeClient.m; sourceTree = "<group>"; };
+		DC01E00617C9CC440096254A /* FayeMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FayeMessage.h; path = Classes/Utilities/FayeMessage.h; sourceTree = "<group>"; };
+		DC01E00717C9CC440096254A /* FayeMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FayeMessage.m; path = Classes/Utilities/FayeMessage.m; sourceTree = "<group>"; };
+		DC01E00817C9CC440096254A /* NSObject+PropertySupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+PropertySupport.h"; path = "Classes/Utilities/NSObject+PropertySupport.h"; sourceTree = "<group>"; };
+		DC01E00917C9CC440096254A /* NSObject+PropertySupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+PropertySupport.m"; path = "Classes/Utilities/NSObject+PropertySupport.m"; sourceTree = "<group>"; };
+		DC01E00A17C9CC440096254A /* NSObject+Serialize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+Serialize.h"; path = "Classes/Utilities/NSObject+Serialize.h"; sourceTree = "<group>"; };
+		DC01E00B17C9CC440096254A /* NSObject+Serialize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+Serialize.m"; path = "Classes/Utilities/NSObject+Serialize.m"; sourceTree = "<group>"; };
+		DC01E00C17C9CC440096254A /* NSString+InflectionSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+InflectionSupport.h"; path = "Classes/Utilities/NSString+InflectionSupport.h"; sourceTree = "<group>"; };
+		DC01E00D17C9CC440096254A /* NSString+InflectionSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+InflectionSupport.m"; path = "Classes/Utilities/NSString+InflectionSupport.m"; sourceTree = "<group>"; };
 		DC05A02317C73541000EE26F /* SSAppData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSAppData.h; path = Classes/Model/SSAppData.h; sourceTree = "<group>"; };
 		DC05A02417C73541000EE26F /* SSAppData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSAppData.m; path = Classes/Model/SSAppData.m; sourceTree = "<group>"; };
 		DC05A02617C73581000EE26F /* SSUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSUser.h; path = Classes/Model/SSUser.h; sourceTree = "<group>"; };
@@ -434,6 +449,16 @@
 		DCC0BB3717C493ED009FF1FD /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				DC01E00417C9CC440096254A /* FayeClient.h */,
+				DC01E00517C9CC440096254A /* FayeClient.m */,
+				DC01E00617C9CC440096254A /* FayeMessage.h */,
+				DC01E00717C9CC440096254A /* FayeMessage.m */,
+				DC01E00817C9CC440096254A /* NSObject+PropertySupport.h */,
+				DC01E00917C9CC440096254A /* NSObject+PropertySupport.m */,
+				DC01E00A17C9CC440096254A /* NSObject+Serialize.h */,
+				DC01E00B17C9CC440096254A /* NSObject+Serialize.m */,
+				DC01E00C17C9CC440096254A /* NSString+InflectionSupport.h */,
+				DC01E00D17C9CC440096254A /* NSString+InflectionSupport.m */,
 				DCC0BB3817C493ED009FF1FD /* SSDB5.h */,
 				DCC0BB3917C493ED009FF1FD /* SSDB5.m */,
 			);
@@ -647,6 +672,11 @@
 				DC05A02817C73581000EE26F /* SSUser.m in Sources */,
 				DC0C758717C8907000BD9C58 /* SSRootViewController.m in Sources */,
 				DC38D0CC17C8ADD10013CAD6 /* SSSlideShowControlView.m in Sources */,
+				DC01E00E17C9CC440096254A /* FayeClient.m in Sources */,
+				DC01E00F17C9CC440096254A /* FayeMessage.m in Sources */,
+				DC01E01017C9CC440096254A /* NSObject+PropertySupport.m in Sources */,
+				DC01E01117C9CC440096254A /* NSObject+Serialize.m in Sources */,
+				DC01E01217C9CC440096254A /* NSString+InflectionSupport.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

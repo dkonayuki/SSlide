@@ -12,6 +12,8 @@
 		<string>https://www.slideshare.net/api/2/</string>
 		<key>OEMBED_BASE_URL</key>
 		<string>http://www.slideshare.net/api/oembed/2</string>
+		<key>FAYE_BASE_URL</key>
+		<string>ws://192.168.3.57:9292/faye</string>
 		<key>API_KEY</key>
 		<string>nzpqg0UU</string>
 		<key>API_SECRET</key>
