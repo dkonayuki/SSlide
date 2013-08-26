@@ -34,8 +34,10 @@
 		<integer>250</integer>
 		<key>slide_num_in_page</key>
 		<integer>7</integer>
-		<key>slide_control_view_height</key>
+		<key>slide_control_view_height_ipad</key>
 		<integer>150</integer>
+		<key>slide_control_view_height_iphone</key>
+		<integer>70</integer>
 	</dict>
 </dict>
 </plist>

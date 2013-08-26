@@ -21,6 +21,7 @@
 @property (strong, nonatomic) FayeClient *fayeClient;
 @property (strong, nonatomic) NSString *channel;
 @property (assign, nonatomic) BOOL isMaster;
+@property (assign, nonatomic) BOOL isStreaming;
 
 @end
 
@@ -48,6 +49,7 @@
         }else {
             self.isMaster = YES;
         }
+        self.isStreaming = NO;
     }
     return self;
 }
@@ -85,11 +87,11 @@
     [self.pageController didMoveToParentViewController:self];
     
     // control view
-    float cH = [[SSDB5 theme] floatForKey:@"slide_control_view_height"];
-    CGRect rect = CGRectMake(0, 0, cH, self.view.bounds.size.width);
+    float cW = IS_IPAD ? [[SSDB5 theme] floatForKey:@"slide_control_view_height_ipad"] : [[SSDB5 theme] floatForKey:@"slide_control_view_height_iphone"];
+    CGRect rect = CGRectMake(self.view.bounds.size.width - cW, 0, self.view.bounds.size.height, cW);
     self.controlView = [[SSSlideShowControlView alloc] initWithFrame:rect andDelegate:self];
     self.controlView.transform = CGAffineTransformMakeRotation(M_PI_2);
-    self.controlView.center = CGPointMake(self.view.bounds.size.width*3/2, cH/2);
+    self.controlView.center = CGPointMake(self.view.bounds.size.width + cW/2, self.view.center.y);
     [self.view addSubview:self.controlView];
 }
 
@@ -139,6 +141,10 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    if (!self.isStreaming) {
+        return;
+    }
+    
     [self.fayeClient disconnectFromServer];
     
     if (self.isMaster) {
@@ -234,10 +240,10 @@
 
 - (void)showControlView
 {
-    [UIView animateWithDuration:0.85f
+    [UIView animateWithDuration:0.5f
                      animations:^(void) {
-                         float cH = [[SSDB5 theme] floatForKey:@"slide_control_view_height"];
-                         self.controlView.center = CGPointMake(self.view.bounds.size.width/2, cH/2);
+                         float cW = IS_IPAD ? [[SSDB5 theme] floatForKey:@"slide_control_view_height_ipad"] : [[SSDB5 theme] floatForKey:@"slide_control_view_height_iphone"];
+                         self.controlView.center = CGPointMake(self.view.bounds.size.width - cW/2, self.view.center.y);
                      }
                      completion:^(BOOL finished) {
                         
@@ -247,10 +253,10 @@
 - (void)hideControlView
 {
     NSLog(@"hide control view");
-    [UIView animateWithDuration:0.5f
+    [UIView animateWithDuration:0.35f
                      animations:^(void) {
-                         float cH = [[SSDB5 theme] floatForKey:@"slide_control_view_height"];
-                         self.controlView.center = CGPointMake(self.view.bounds.size.width*3/2, cH/2);
+                         float cW = IS_IPAD ? [[SSDB5 theme] floatForKey:@"slide_control_view_height_ipad"] : [[SSDB5 theme] floatForKey:@"slide_control_view_height_iphone"];
+                         self.controlView.center = CGPointMake(self.view.bounds.size.width + cW/2, self.view.center.y);
                      }
                      completion:^(BOOL finished) {
                          
@@ -284,6 +290,7 @@
 {
     NSLog(@"Connected to server");
     NSString *mes = self.isMaster ? @"Publish: OK" : @"Subscribe: OK";
+    self.isStreaming = YES;
     [SVProgressHUD showSuccessWithStatus:mes];
 }
 

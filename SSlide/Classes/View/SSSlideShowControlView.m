@@ -23,16 +23,19 @@
 {
     self.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.5];
     
-    float btnWidth = 100.f;
-    float leftMargin = (self.bounds.size.width - btnWidth)/2;
+    float btnWidth = IS_IPAD ? 100.f : 50.f;
+    float topMargin = (self.bounds.size.height - btnWidth)/2;
+    float leftMargin = 100.f;
     
-    UIButton *streamingBtn = [[UIButton alloc] initWithFrame:CGRectMake(leftMargin, 150.f, btnWidth, btnWidth)];
+    UIButton *streamingBtn = [[UIButton alloc] initWithFrame:CGRectMake(leftMargin, topMargin, btnWidth, btnWidth)];
     [streamingBtn setTitle:@"Streaming" forState:UIControlStateNormal];
     streamingBtn.backgroundColor = [UIColor greenSeaColor];
     [streamingBtn addTarget:self action:@selector(streamingBtnPressed:) forControlEvents:UIControlEventTouchDown];
     [self addSubview:streamingBtn];
     
-    UIButton *downloadBtn = [[UIButton alloc] initWithFrame:CGRectMake(leftMargin, 400, btnWidth, btnWidth)];
+    leftMargin += 200.f;
+    
+    UIButton *downloadBtn = [[UIButton alloc] initWithFrame:CGRectMake(leftMargin, topMargin, btnWidth, btnWidth)];
     [downloadBtn setTitle:@"Download" forState:UIControlStateNormal];
     downloadBtn.backgroundColor = [UIColor greenSeaColor];
     [downloadBtn addTarget:self action:@selector(downloadBtnPressed:) forControlEvents:UIControlEventTouchDown];
