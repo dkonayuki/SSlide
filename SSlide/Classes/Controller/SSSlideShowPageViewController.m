@@ -20,6 +20,8 @@
 @property (strong, nonatomic) SSSlideShowControlView *controlView;
 @property (strong, nonatomic) FayeClient *fayeClient;
 @property (strong, nonatomic) NSString *channel;
+@property (assign, nonatomic) BOOL isMaster;
+@property (assign, nonatomic) BOOL isStreaming;
 
 @end
 
@@ -41,6 +43,13 @@
         self.delegate = delegate;
         self.currentSlide = slideshow;
         self.totalPage = self.currentSlide.totalSlides;
+        if (self.currentSlide.channel) {
+            self.channel = self.currentSlide.channel;
+            self.isMaster = NO;
+        }else {
+            self.isMaster = YES;
+        }
+        self.isStreaming = NO;
     }
     return self;
 }
@@ -54,6 +63,8 @@
     self.pageController.dataSource = self;
     self.pageController.delegate = self;
     [[self.pageController view] setFrame:[[self view] bounds]];
+    
+    [self.currentSlide log];
     
     if (![self.currentSlide checkIsDownloaded] && [self.currentSlide extendedInfoIsNil]) {
         [[SSApi sharedInstance] addExtendedSlideInfo:self.currentSlide result:^(BOOL result) {
@@ -76,11 +87,11 @@
     [self.pageController didMoveToParentViewController:self];
     
     // control view
-    float cH = [[SSDB5 theme] floatForKey:@"slide_control_view_height"];
-    CGRect rect = CGRectMake(0, 0, cH, self.view.bounds.size.width);
+    float cW = IS_IPAD ? [[SSDB5 theme] floatForKey:@"slide_control_view_height_ipad"] : [[SSDB5 theme] floatForKey:@"slide_control_view_height_iphone"];
+    CGRect rect = CGRectMake(self.view.bounds.size.width - cW, 0, self.view.bounds.size.height, cW);
     self.controlView = [[SSSlideShowControlView alloc] initWithFrame:rect andDelegate:self];
     self.controlView.transform = CGAffineTransformMakeRotation(M_PI_2);
-    self.controlView.center = CGPointMake(self.view.bounds.size.width*3/2, cH/2);
+    self.controlView.center = CGPointMake(self.view.bounds.size.width + cW/2, self.view.center.y);
     [self.view addSubview:self.controlView];
 }
 
@@ -101,8 +112,12 @@
                              @"created": self.currentSlide.created,
                              @"numViews": [NSNumber numberWithInt:self.currentSlide.numViews],
                              @"numDownloads": [NSNumber numberWithInt:self.currentSlide.numDownloads],
-                             @"numFavorites": [NSNumber numberWithInt:self.currentSlide.numFavorites]};
-
+                             @"numFavorites": [NSNumber numberWithInt:self.currentSlide.numFavorites],
+                             @"totalSlides": [NSNumber numberWithInt:self.currentSlide.totalSlides],
+                             @"slideImageBaseurl": self.currentSlide.slideImageBaseurl,
+                             @"slideImageBaseurlSuffix": self.currentSlide.slideImageBaseurlSuffix,
+                             @"firstPageImageUrl": self.currentSlide.firstPageImageUrl};
+    
     [client postPath:url
           parameters:params
              success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -117,15 +132,42 @@
 
 - (void)startFaye
 {
-    self.fayeClient = [[FayeClient alloc] initWithURLString:[[SSDB5 theme] stringForKey:@"FAYE_BASE_URL"] channel:@"/slide1"];
+    self.fayeClient = [[FayeClient alloc] initWithURLString:[[SSDB5 theme] stringForKey:@"FAYE_BASE_URL"] channel:self.channel];
     self.fayeClient.delegate = self;
     [self.fayeClient connectToServer];
+    //[self.fayeClient sendMessage:@{@"nghiaiphone" : @"Hello World!"} onChannel:@"/slide1"];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    if (!self.isStreaming) {
+        return;
+    }
+    
     [self.fayeClient disconnectFromServer];
+    
+    if (self.isMaster) {
+        NSString *curUsername = [SSAppData sharedInstance].currentUser.username;
+        
+        AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[[SSDB5 theme] stringForKey:@"SS_SERVER_BASE_URL"]]];
+        [client registerHTTPOperationClass:[AFJSONRequestOperation class]];
+        [client setDefaultHeader:@"Accept" value:@"application/json"];
+        
+        NSString *url = [NSString stringWithFormat:@"streaming/remove"];
+        NSDictionary *params = @{@"username": curUsername,
+                                 @"channel": self.channel};
+        
+        [client postPath:url
+              parameters:params
+                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                     NSDictionary *dict = (NSDictionary *)responseObject;
+                     NSLog(@"%@", dict);
+                 }
+                 failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                     NSLog(@"error");
+                 }];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -181,11 +223,11 @@
         NSLog(@"new page: %d", pageNum);
         NSNumber *pn = [NSNumber numberWithInt:pageNum];
         
-        SSUser *currentUser = [[SSAppData sharedInstance] currentUser];
-        if ([currentUser.username isEqualToString:@"s2team"]) {
+        if (self.isMaster) {
+            SSUser *currentUser = [[SSAppData sharedInstance] currentUser];
             NSDictionary *mesg = @{@"username": currentUser.username,
                                    @"pagenum": pn};
-            [self.fayeClient sendMessage:mesg onChannel:@"/slide1"];
+            [self.fayeClient sendMessage:mesg onChannel:self.channel];
         }
     }
 }
@@ -198,10 +240,10 @@
 
 - (void)showControlView
 {
-    [UIView animateWithDuration:0.85f
+    [UIView animateWithDuration:0.5f
                      animations:^(void) {
-                         float cH = [[SSDB5 theme] floatForKey:@"slide_control_view_height"];
-                         self.controlView.center = CGPointMake(self.view.bounds.size.width/2, cH/2);
+                         float cW = IS_IPAD ? [[SSDB5 theme] floatForKey:@"slide_control_view_height_ipad"] : [[SSDB5 theme] floatForKey:@"slide_control_view_height_iphone"];
+                         self.controlView.center = CGPointMake(self.view.bounds.size.width - cW/2, self.view.center.y);
                      }
                      completion:^(BOOL finished) {
                         
@@ -211,10 +253,10 @@
 - (void)hideControlView
 {
     NSLog(@"hide control view");
-    [UIView animateWithDuration:0.5f
+    [UIView animateWithDuration:0.35f
                      animations:^(void) {
-                         float cH = [[SSDB5 theme] floatForKey:@"slide_control_view_height"];
-                         self.controlView.center = CGPointMake(self.view.bounds.size.width*3/2, cH/2);
+                         float cW = IS_IPAD ? [[SSDB5 theme] floatForKey:@"slide_control_view_height_ipad"] : [[SSDB5 theme] floatForKey:@"slide_control_view_height_iphone"];
+                         self.controlView.center = CGPointMake(self.view.bounds.size.width + cW/2, self.view.center.y);
                      }
                      completion:^(BOOL finished) {
                          
@@ -236,23 +278,26 @@
 
 - (void)startStreamingCurrentSlideDel
 {
-    if (self.currentSlide.channel) {
+    if (!self.isMaster) {
         [self startFaye];
     } else {
         [self startStreaming];
     }
-    //[self.fayeClient sendMessage:@{@"nghiaiphone" : @"Hello World!"} onChannel:@"/slide1"];
 }
 
 #pragma mark - Faye Client Delegate
 - (void)connectedToServer
 {
     NSLog(@"Connected to server");
+    NSString *mes = self.isMaster ? @"Publish: OK" : @"Subscribe: OK";
+    self.isStreaming = YES;
+    [SVProgressHUD showSuccessWithStatus:mes];
 }
 
 - (void)disconnectedFromServer
 {
     NSLog(@"Disconnected from server");
+    [SVProgressHUD showErrorWithStatus:@"Disconnected"];
 }
 
 - (void)subscriptionFailedWithError:(NSString *)error

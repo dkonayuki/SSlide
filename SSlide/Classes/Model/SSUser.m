@@ -11,7 +11,7 @@
 @implementation SSUser
 @synthesize username = mUsername;
 @synthesize password = mPassword;
-@synthesize tags;
+@synthesize tags = mTags;
 
 - (id)initWith:(NSString *)username password:(NSString *)password
 {
@@ -19,6 +19,7 @@
     if (self) {
         self.username = username;
         self.password = password;
+        self.tags = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -28,6 +29,7 @@
     if(self = [super init]) {
         mUsername = [aDecoder decodeObjectForKey:@"mUsername"];
         mPassword = [aDecoder decodeObjectForKey:@"mPassword"];
+        mTags = [aDecoder decodeObjectForKey:@"mTags"];
     }
     return self;
 }
@@ -36,6 +38,7 @@
 {
     [aCoder encodeObject:mUsername forKey:@"mUsername"];
     [aCoder encodeObject:mPassword forKey:@"mPassword"];
+    [aCoder encodeObject:mTags forKey:@"mTags"];
 }
 
 @end

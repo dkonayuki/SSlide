@@ -109,14 +109,24 @@
     mCreated = [NSString stringWithFormat:@"%@ %@ %@", date, month, year];
 }
 
+- (void)setSlideImageBaseurl:(NSString *)slideImageBaseurl
+{
+    mSlideImageBaseurl = [NSString stringWithFormat:@"http:%@", slideImageBaseurl];
+}
+
 - (void)setNormalCreated:(NSString *)created
 {
     mCreated = created;
 }
 
-- (void)setSlideImageBaseurl:(NSString *)slideImageBaseurl
+- (void)setNormalThumbnailUrl:(NSString *)thumbnailUrl
 {
-    mSlideImageBaseurl = [NSString stringWithFormat:@"http:%@", slideImageBaseurl];
+    mThumbnailUrl = thumbnailUrl;
+}
+
+- (void)setNormalSlideImageBaseurl:(NSString *)slideImageBaseurl
+{
+    mSlideImageBaseurl = slideImageBaseurl;
 }
 
 - (void)log
