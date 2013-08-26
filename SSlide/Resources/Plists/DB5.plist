@@ -4,6 +4,10 @@
 <dict>
 	<key>Default</key>
 	<dict>
+		<key>login_label</key>
+		<string>LogIn</string>
+		<key>tags_label</key>
+		<string>Tags</string>
 		<key>page_top_margin</key>
 		<integer>50</integer>
 		<key>search_textfield_height</key>
