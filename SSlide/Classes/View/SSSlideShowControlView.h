@@ -12,9 +12,13 @@
 
 - (void)downloadCurrentSlideDel;
 - (void)startStreamingCurrentSlideDel;
+- (BOOL)isMasterDel;
 
 @end
 
 @interface SSSlideShowControlView : SSView
+
+- (void)setDownloadProgress:(float)percent;
+- (void)setFinishDownload;
 
 @end

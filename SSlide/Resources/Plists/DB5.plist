@@ -42,6 +42,10 @@
 		<integer>150</integer>
 		<key>slide_control_view_height_iphone</key>
 		<integer>70</integer>
+		<key>download_progress_color</key>
+		<string>4689FF</string>
+		<key>download_track_color</key>
+		<string>D9E5FF</string>
 	</dict>
 </dict>
 </plist>

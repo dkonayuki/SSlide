@@ -94,6 +94,10 @@
                 if (tbxml.rootXMLElement) {
                     [self traverseSlideshows:tbxml.rootXMLElement];
                     success(self.slideshowArray);
+                    NSLog(@"FROM HERE");
+                    for (SSSlideshow *s in self.slideshowArray) {
+                        [s log];
+                    }
                 }
             }
             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
