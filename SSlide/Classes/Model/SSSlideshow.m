@@ -16,6 +16,7 @@
 
 @property (assign, nonatomic) BOOL isDownloaded;
 @property (copy, nonatomic) NSString *localBasePath;
+@property (assign) NSUInteger downloadedNum;
 
 @end
 
@@ -184,8 +185,19 @@
     
     self.localBasePath = folderPath;
     
+    self.downloadedNum = 0;
+    [self downloadPart:0 pregress:progress completion:completion];
+}
+            
+- (void)downloadPart:(int)fromPart pregress:(void (^)(float))progress completion:(void (^)(BOOL))completion
+{
+    int numItemsAsync = 15;
+    int from = fromPart * numItemsAsync + 1;
+    int to = MIN(from + numItemsAsync, self.totalSlides + 1);
+    
     NSMutableArray *operationsArray = [NSMutableArray array];
-    for (int i = 1; i <= self.totalSlides; i++) {
+    
+    for (int i = from; i < to; i++) {
         NSString *filePath = [self localUrlOfImageAtPage:i];
         NSString *url = [self remoteUrlOfImageAtPage:i];
         NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
@@ -199,14 +211,23 @@
     
     [[[SSApi sharedInstance] client]  enqueueBatchOfHTTPRequestOperations:operationsArray
                                                             progressBlock:^(NSUInteger numberOfFinishedOperations, NSUInteger totalNumberOfOperations) {
-                                                                float per = (float)numberOfFinishedOperations/(float)totalNumberOfOperations;
+                                                                int downloaded = numberOfFinishedOperations + self.downloadedNum;
+                                                                float per = (float)downloaded/(float)self.totalSlides;
                                                                 progress(per);
-                                        } completionBlock:^(NSArray *operations) {
-                                            self.isDownloaded = YES;
-                                            [[SSAppData sharedInstance].downloadedSlides addObject:self];
-                                            [SSAppData saveAppData];
-                                            completion(YES);
-                                        }];
+                                                            } completionBlock:^(NSArray *operations) {
+                                                                self.downloadedNum += [operations count];
+                                                                NSLog(@"finish: %d, %d, %d", [operations count], self.downloadedNum, self.totalSlides);
+                                                                NSLog(@"part = %d", fromPart);
+                                                                if (self.downloadedNum >= self.totalSlides) {
+                                                                    self.isDownloaded = YES;
+                                                                    [[SSAppData sharedInstance].downloadedSlides addObject:self];
+                                                                    [SSAppData saveAppData];
+                                                                    completion(YES);
+                                                                } else {
+                                                                    [self downloadPart:(fromPart + 1) pregress:progress completion:completion];
+                                                                }
+                                                            }];
 }
+
 
 @end
