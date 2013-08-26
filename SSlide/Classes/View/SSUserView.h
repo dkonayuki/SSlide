@@ -12,7 +12,7 @@
 @protocol SSUserViewDelegate <NSObject>
 
 - (void)segmentedControlChangedDel:(NSUInteger)index;
-- (void)settingsBtnPressedDel;
+- (void)showSettingsView;
 
 @end
 

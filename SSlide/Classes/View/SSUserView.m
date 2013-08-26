@@ -88,16 +88,6 @@
     [segmentedControl setSelectedIndex:0];
     [self addSubview:segmentedControl];
     
-    // setting btn
-    float rightMargin = 10.f;
-    width = 40.f;
-    leftMargin = self.bounds.size.width - rightMargin*2 - width;
-    UIButton *settingsBtn = [[UIButton alloc] initWithFrame:CGRectMake(leftMargin, topMargin, width, width)];
-    [settingsBtn setImage:[UIImage imageNamed:@"settings-icon.png"] forState:UIControlStateNormal];
-    //settingsBtn.backgroundColor = [UIColor whiteColor];
-    [settingsBtn addTarget:self action:@selector(settingsBtnPressed) forControlEvents:UIControlEventTouchDown];
-    [self addSubview:settingsBtn];
-    
     //SlideListView
     topMargin += 50.f;
     self.slideListView = [[SSSlideListView alloc] initWithFrame:CGRectMake(0,
@@ -106,18 +96,23 @@
                                                                            self.bounds.size.height - topMargin)];
     self.slideListView.delegate = self.delegate;
     [self addSubview:self.slideListView];
+    
+    // add swipe gesture to show control view
+    UISwipeGestureRecognizer *swipeRightRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeRightAction)];
+    [swipeRightRecognizer setDirection:UISwipeGestureRecognizerDirectionDown];
+    [self addGestureRecognizer:swipeRightRecognizer];
+}
 
+- (void)swipeRightAction
+{
+    NSLog(@"Right swipe");
+    [self.delegate showSettingsView];
 }
 
 - (void)segmentedControlValueChanged:(id)sender
 {
     AKSegmentedControl *segmentedControl = (AKSegmentedControl *)sender;
     [self.delegate segmentedControlChangedDel:[[segmentedControl selectedIndexes] firstIndex]];
-}
-
-- (void)settingsBtnPressed
-{
-    [self.delegate settingsBtnPressedDel];
 }
 
 @end

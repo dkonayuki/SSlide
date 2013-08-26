@@ -10,4 +10,6 @@
 
 @interface SSUserViewController : SSViewController
 
+- (void)showSettingsView;
+
 @end

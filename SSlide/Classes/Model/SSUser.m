@@ -11,6 +11,7 @@
 @implementation SSUser
 @synthesize username = mUsername;
 @synthesize password = mPassword;
+@synthesize tags;
 
 - (id)initWith:(NSString *)username password:(NSString *)password
 {

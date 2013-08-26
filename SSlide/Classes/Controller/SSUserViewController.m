@@ -22,6 +22,7 @@
 @property (assign, nonatomic) NSInteger currentPage;
 @property (assign, nonatomic) BOOL endOfSlidesList;
 @property (strong, nonatomic) SSSlideShowPageViewController *pageViewController;
+@property (strong, nonatomic) SSSettingsViewController *settingsViewController;
 
 @end
 
@@ -70,10 +71,16 @@
     }
 }
 
-- (void)settingsBtnPressedDel
+- (void)showSettingsView
 {
-    SSSettingsViewController *settingsViewController = [[SSSettingsViewController alloc] init];
-    [self presentPopupViewController:settingsViewController animationType:MJPopupViewAnimationSlideBottomBottom];
+    if (!self.settingsViewController)
+    {
+        self.settingsViewController = [[SSSettingsViewController alloc] init];
+    }
+    @synchronized(self)
+    {
+        [self presentPopupViewController:self.settingsViewController animationType:MJPopupViewAnimationSlideLeftLeft];
+    }
 }
 
 #pragma mark - SSTopView delegate
