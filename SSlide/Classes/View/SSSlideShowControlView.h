@@ -18,4 +18,7 @@
 
 @interface SSSlideShowControlView : SSView
 
+- (void)setDownloadProgress:(float)percent;
+- (void)setFinishDownload;
+
 @end

@@ -135,7 +135,6 @@
     self.fayeClient = [[FayeClient alloc] initWithURLString:[[SSDB5 theme] stringForKey:@"FAYE_BASE_URL"] channel:self.channel];
     self.fayeClient.delegate = self;
     [self.fayeClient connectToServer];
-    //[self.fayeClient sendMessage:@{@"nghiaiphone" : @"Hello World!"} onChannel:@"/slide1"];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -273,8 +272,10 @@
     if (![self.currentSlide checkIsDownloaded]) {
         [self.currentSlide download:^(float percent) {
             NSLog(@"download: %f", percent);
+            [self.controlView setDownloadProgress:percent];
         } completion:^(BOOL result){
             [SVProgressHUD showSuccessWithStatus:@"OK"];
+            [self.controlView setFinishDownload];
         }];
     } else {
         [SVProgressHUD showErrorWithStatus:@"Already exists!"];
