@@ -140,6 +140,28 @@
 {
     [super viewWillDisappear:animated];
     [self.fayeClient disconnectFromServer];
+    
+    if (self.isMaster) {
+        NSString *curUsername = [SSAppData sharedInstance].currentUser.username;
+        
+        AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[[SSDB5 theme] stringForKey:@"SS_SERVER_BASE_URL"]]];
+        [client registerHTTPOperationClass:[AFJSONRequestOperation class]];
+        [client setDefaultHeader:@"Accept" value:@"application/json"];
+        
+        NSString *url = [NSString stringWithFormat:@"streaming/remove"];
+        NSDictionary *params = @{@"username": curUsername,
+                                 @"channel": self.channel};
+        
+        [client postPath:url
+              parameters:params
+                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                     NSDictionary *dict = (NSDictionary *)responseObject;
+                     NSLog(@"%@", dict);
+                 }
+                 failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                     NSLog(@"error");
+                 }];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -195,8 +217,8 @@
         NSLog(@"new page: %d", pageNum);
         NSNumber *pn = [NSNumber numberWithInt:pageNum];
         
-        SSUser *currentUser = [[SSAppData sharedInstance] currentUser];
-        if ([currentUser.username isEqualToString:@"s2team"]) {
+        if (self.isMaster) {
+            SSUser *currentUser = [[SSAppData sharedInstance] currentUser];
             NSDictionary *mesg = @{@"username": currentUser.username,
                                    @"pagenum": pn};
             [self.fayeClient sendMessage:mesg onChannel:self.channel];
@@ -261,11 +283,14 @@
 - (void)connectedToServer
 {
     NSLog(@"Connected to server");
+    NSString *mes = self.isMaster ? @"Publish: OK" : @"Subscribe: OK";
+    [SVProgressHUD showSuccessWithStatus:mes];
 }
 
 - (void)disconnectedFromServer
 {
     NSLog(@"Disconnected from server");
+    [SVProgressHUD showErrorWithStatus:@"Disconnected"];
 }
 
 - (void)subscriptionFailedWithError:(NSString *)error
