@@ -12,6 +12,7 @@
 
 @property (copy, nonatomic) NSString *username;
 @property (copy, nonatomic) NSString *password;
+@property (strong, nonatomic) NSMutableArray *tags;
 
 - (id)initWith:(NSString *)username password:(NSString *)password;
 
