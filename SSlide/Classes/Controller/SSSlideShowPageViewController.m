@@ -20,6 +20,7 @@
 @property (strong, nonatomic) SSSlideShowControlView *controlView;
 @property (strong, nonatomic) FayeClient *fayeClient;
 @property (strong, nonatomic) NSString *channel;
+@property (assign, nonatomic) BOOL isMaster;
 
 @end
 
@@ -41,6 +42,12 @@
         self.delegate = delegate;
         self.currentSlide = slideshow;
         self.totalPage = self.currentSlide.totalSlides;
+        if (self.currentSlide.channel) {
+            self.channel = self.currentSlide.channel;
+            self.isMaster = NO;
+        }else {
+            self.isMaster = YES;
+        }
     }
     return self;
 }
@@ -54,6 +61,8 @@
     self.pageController.dataSource = self;
     self.pageController.delegate = self;
     [[self.pageController view] setFrame:[[self view] bounds]];
+    
+    [self.currentSlide log];
     
     if (![self.currentSlide checkIsDownloaded] && [self.currentSlide extendedInfoIsNil]) {
         [[SSApi sharedInstance] addExtendedSlideInfo:self.currentSlide result:^(BOOL result) {
@@ -101,8 +110,12 @@
                              @"created": self.currentSlide.created,
                              @"numViews": [NSNumber numberWithInt:self.currentSlide.numViews],
                              @"numDownloads": [NSNumber numberWithInt:self.currentSlide.numDownloads],
-                             @"numFavorites": [NSNumber numberWithInt:self.currentSlide.numFavorites]};
-
+                             @"numFavorites": [NSNumber numberWithInt:self.currentSlide.numFavorites],
+                             @"totalSlides": [NSNumber numberWithInt:self.currentSlide.totalSlides],
+                             @"slideImageBaseurl": self.currentSlide.slideImageBaseurl,
+                             @"slideImageBaseurlSuffix": self.currentSlide.slideImageBaseurlSuffix,
+                             @"firstPageImageUrl": self.currentSlide.firstPageImageUrl};
+    
     [client postPath:url
           parameters:params
              success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -117,9 +130,10 @@
 
 - (void)startFaye
 {
-    self.fayeClient = [[FayeClient alloc] initWithURLString:[[SSDB5 theme] stringForKey:@"FAYE_BASE_URL"] channel:@"/slide1"];
+    self.fayeClient = [[FayeClient alloc] initWithURLString:[[SSDB5 theme] stringForKey:@"FAYE_BASE_URL"] channel:self.channel];
     self.fayeClient.delegate = self;
     [self.fayeClient connectToServer];
+    //[self.fayeClient sendMessage:@{@"nghiaiphone" : @"Hello World!"} onChannel:@"/slide1"];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -185,7 +199,7 @@
         if ([currentUser.username isEqualToString:@"s2team"]) {
             NSDictionary *mesg = @{@"username": currentUser.username,
                                    @"pagenum": pn};
-            [self.fayeClient sendMessage:mesg onChannel:@"/slide1"];
+            [self.fayeClient sendMessage:mesg onChannel:self.channel];
         }
     }
 }
@@ -236,12 +250,11 @@
 
 - (void)startStreamingCurrentSlideDel
 {
-    if (self.currentSlide.channel) {
+    if (!self.isMaster) {
         [self startFaye];
     } else {
         [self startStreaming];
     }
-    //[self.fayeClient sendMessage:@{@"nghiaiphone" : @"Hello World!"} onChannel:@"/slide1"];
 }
 
 #pragma mark - Faye Client Delegate

@@ -29,6 +29,8 @@
 - (id)initWithDefaultData;
 
 - (void)setNormalCreated:(NSString *)created;
+- (void)setNormalThumbnailUrl:(NSString *)thumbnailUrl;
+- (void)setNormalSlideImageBaseurl:(NSString *)slideImageBaseurl;
 
 - (void)log;
 - (BOOL)extendedInfoIsNil;

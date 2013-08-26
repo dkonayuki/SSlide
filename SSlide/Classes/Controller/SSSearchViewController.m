@@ -86,11 +86,15 @@
                                                             
                                                             slideshow.username = [result objectForKey:@"username"];
                                                             slideshow.title = [result objectForKey:@"title"];
-                                                            slideshow.thumbnailUrl = [result objectForKey:@"thumbnailUrl"];
+                                                            [slideshow setNormalThumbnailUrl:[result objectForKey:@"thumbnailUrl"]];
                                                             [slideshow setNormalCreated:[result objectForKey:@"created"]];
                                                             slideshow.numViews = [((NSNumber *)[result objectForKey:@"numViews"]) intValue];
                                                             slideshow.numDownloads = [((NSNumber *)[result objectForKey:@"numDownloads"]) intValue];
                                                             slideshow.numFavorites = [((NSNumber *)[result objectForKey:@"numFavarites"]) intValue];
+                                                            slideshow.totalSlides = [((NSNumber *)[result objectForKey:@"totalSlides"]) intValue];
+                                                            [slideshow setNormalSlideImageBaseurl:[result objectForKey:@"slideImageBaseurl"]];
+                                                            slideshow.slideImageBaseurlSuffix = [result objectForKey:@"slideImageBaseurlSuffix"];
+                                                            slideshow.firstPageImageUrl = [result objectForKey:@"firstPageImageUrl"];
                                                             slideshow.channel = [result objectForKey:@"channel"];
                                                             
                                                             [self.slideArray removeAllObjects];
