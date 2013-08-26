@@ -40,6 +40,10 @@
 		DC2BCF6217C5DC1D00181774 /* SSSlideShowView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2BCF6117C5DC1C00181774 /* SSSlideShowView.m */; };
 		DC38D0CC17C8ADD10013CAD6 /* SSSlideShowControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC38D0CB17C8ADD10013CAD6 /* SSSlideShowControlView.m */; };
 		DC48BFD117C51C3D00340FE0 /* SSApi.m in Sources */ = {isa = PBXBuildFile; fileRef = DC48BFD017C51C3D00340FE0 /* SSApi.m */; };
+		DC56EEDA17CB2497005866B2 /* publish_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DC56EED617CB2497005866B2 /* publish_icon.png */; };
+		DC56EEDB17CB2497005866B2 /* publish_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC56EED717CB2497005866B2 /* publish_icon@2x.png */; };
+		DC56EEDC17CB2497005866B2 /* subscribe_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DC56EED817CB2497005866B2 /* subscribe_icon.png */; };
+		DC56EEDD17CB2497005866B2 /* subscribe_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC56EED917CB2497005866B2 /* subscribe_icon@2x.png */; };
 		DC70E57817C49B49004633F2 /* SSTopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC70E57717C49B49004633F2 /* SSTopViewController.m */; };
 		DC70E57B17C49BCD004633F2 /* SSTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC70E57A17C49BCD004633F2 /* SSTopView.m */; };
 		DCB5A5FA17C4F2970089809C /* SSSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB5A5F917C4F2970089809C /* SSSearchViewController.m */; };
@@ -133,6 +137,10 @@
 		DC38D0CB17C8ADD10013CAD6 /* SSSlideShowControlView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSSlideShowControlView.m; path = Classes/View/SSSlideShowControlView.m; sourceTree = "<group>"; };
 		DC48BFCF17C51C3D00340FE0 /* SSApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSApi.h; path = Classes/Api/SSApi.h; sourceTree = "<group>"; };
 		DC48BFD017C51C3D00340FE0 /* SSApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSApi.m; path = Classes/Api/SSApi.m; sourceTree = "<group>"; };
+		DC56EED617CB2497005866B2 /* publish_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = publish_icon.png; sourceTree = "<group>"; };
+		DC56EED717CB2497005866B2 /* publish_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "publish_icon@2x.png"; sourceTree = "<group>"; };
+		DC56EED817CB2497005866B2 /* subscribe_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = subscribe_icon.png; sourceTree = "<group>"; };
+		DC56EED917CB2497005866B2 /* subscribe_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "subscribe_icon@2x.png"; sourceTree = "<group>"; };
 		DC70E57617C49B49004633F2 /* SSTopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSTopViewController.h; path = Classes/Controller/SSTopViewController.h; sourceTree = "<group>"; };
 		DC70E57717C49B49004633F2 /* SSTopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSTopViewController.m; path = Classes/Controller/SSTopViewController.m; sourceTree = "<group>"; };
 		DC70E57917C49BCD004633F2 /* SSTopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSTopView.h; path = Classes/View/SSTopView.h; sourceTree = "<group>"; };
@@ -248,6 +256,18 @@
 				DC48BFD017C51C3D00340FE0 /* SSApi.m */,
 			);
 			name = Api;
+			sourceTree = "<group>";
+		};
+		DC56EECF17CB1DB5005866B2 /* slideshow_screen */ = {
+			isa = PBXGroup;
+			children = (
+				DC56EED617CB2497005866B2 /* publish_icon.png */,
+				DC56EED717CB2497005866B2 /* publish_icon@2x.png */,
+				DC56EED817CB2497005866B2 /* subscribe_icon.png */,
+				DC56EED917CB2497005866B2 /* subscribe_icon@2x.png */,
+			);
+			name = slideshow_screen;
+			path = Resources/Images/slideshow_screen;
 			sourceTree = "<group>";
 		};
 		DCC0BAEC17C493ED009FF1FD = {
@@ -404,6 +424,7 @@
 		DCC0BB1817C493ED009FF1FD /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				DC56EECF17CB1DB5005866B2 /* slideshow_screen */,
 				DC1104E717C6FF0B00833997 /* user_screen */,
 				DCC0BB1917C493ED009FF1FD /* Background */,
 			);
@@ -584,6 +605,10 @@
 				DC11050517C6FF0B00833997 /* segmented-separator@2x.png in Resources */,
 				DC11050617C6FF0B00833997 /* settings-icon.png in Resources */,
 				DC11050717C6FF0B00833997 /* settings-icon@2x.png in Resources */,
+				DC56EEDA17CB2497005866B2 /* publish_icon.png in Resources */,
+				DC56EEDB17CB2497005866B2 /* publish_icon@2x.png in Resources */,
+				DC56EEDC17CB2497005866B2 /* subscribe_icon.png in Resources */,
+				DC56EEDD17CB2497005866B2 /* subscribe_icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

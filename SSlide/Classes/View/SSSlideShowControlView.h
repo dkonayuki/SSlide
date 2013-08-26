@@ -12,6 +12,7 @@
 
 - (void)downloadCurrentSlideDel;
 - (void)startStreamingCurrentSlideDel;
+- (BOOL)isMasterDel;
 
 @end
 

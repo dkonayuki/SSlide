@@ -7,6 +7,7 @@
 //
 
 #import "SSSlideShowControlView.h"
+#import <KAProgressLabel/KAProgressLabel.h>
 
 @implementation SSSlideShowControlView
 
@@ -28,8 +29,12 @@
     float leftMargin = 100.f;
     
     UIButton *streamingBtn = [[UIButton alloc] initWithFrame:CGRectMake(leftMargin, topMargin, btnWidth, btnWidth)];
-    [streamingBtn setTitle:@"Streaming" forState:UIControlStateNormal];
-    streamingBtn.backgroundColor = [UIColor greenSeaColor];
+    //[streamingBtn setTitle:@"Streaming" forState:UIControlStateNormal];
+    if ([self.delegate isMasterDel]) {
+        [streamingBtn setBackgroundImage:[UIImage imageNamed:@"publish_icon.png"] forState:UIControlStateNormal];
+    } else {
+        [streamingBtn setBackgroundImage:[UIImage imageNamed:@"subscribe_icon.png"] forState:UIControlStateNormal];
+    }
     [streamingBtn addTarget:self action:@selector(streamingBtnPressed:) forControlEvents:UIControlEventTouchDown];
     [self addSubview:streamingBtn];
     
@@ -40,6 +45,17 @@
     downloadBtn.backgroundColor = [UIColor greenSeaColor];
     [downloadBtn addTarget:self action:@selector(downloadBtnPressed:) forControlEvents:UIControlEventTouchDown];
     [self addSubview:downloadBtn];
+    
+    leftMargin += 200.f;
+    KAProgressLabel *downloadProgress = [[KAProgressLabel alloc] initWithFrame:CGRectMake(leftMargin, topMargin, btnWidth, btnWidth)];
+    [downloadProgress setProgressColor:[[SSDB5 theme] colorForKey:@"download_progress_color"]];
+    [downloadProgress setTrackColor:[[SSDB5 theme] colorForKey:@"download_track_color"]];
+    [downloadProgress setFillColor:[UIColor whiteColor]];
+    [downloadProgress setBackgroundColor:[UIColor clearColor]];
+    [downloadProgress setBorderWidth:15.f];
+    [downloadProgress setProgress:0.25f];
+    [downloadProgress setText:@"     25%"];
+    [self addSubview:downloadProgress];
 }
 
 - (void)streamingBtnPressed:(id)sender

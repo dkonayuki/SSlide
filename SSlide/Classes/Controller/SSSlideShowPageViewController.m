@@ -238,6 +238,11 @@
     [self.delegate closePopup];
 }
 
+- (BOOL)isMasterDel
+{
+    return self.isMaster;
+}
+
 - (void)showControlView
 {
     [UIView animateWithDuration:0.5f
