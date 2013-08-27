@@ -41,7 +41,7 @@
     }
     UIImageView *titleBackground = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, self.topMargin)];
     titleBackground.backgroundColor = [[SSDB5 theme] colorForKey:@"app_title_color"];
-    UIImage *title = [UIImage imageNamed: @"appName.png"];
+    UIImage *title = [UIImage imageNamed: @"appname.png"];
     
     UIImageView *titleView = [[UIImageView alloc] initWithFrame:CGRectMake(
                     (self.bounds.size.width - width)/2,
