@@ -83,21 +83,10 @@
               parameters:nil
             success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 NSError *error = nil;
-//                NSDictionary *dict = [TBXML dictionaryWithXMLData:responseObject error:&error];
-//                if (!error) {
-//                    NSArray *slideshows = [dict objectForKey:@"Slideshow"];
-//                    NSLog(@"%d: ", [slideshows count]);
-//                } else {  // error handling
-//                    NSLog(@"parsing ERROR");
-//                }
                 TBXML *tbxml = [TBXML tbxmlWithXMLData:responseObject error:&error];
                 if (tbxml.rootXMLElement) {
                     [self traverseSlideshows:tbxml.rootXMLElement];
                     success(self.slideshowArray);
-                    NSLog(@"FROM HERE");
-                    //for (SSSlideshow *s in self.slideshowArray) {
-                    //    [s log];
-                    //}
                 }
             }
             failure:^(AFHTTPRequestOperation *operation, NSError *error) {

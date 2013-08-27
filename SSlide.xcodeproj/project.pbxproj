@@ -49,6 +49,10 @@
 		DC3A4A6617CC38CE00133DDF /* MNPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3A4A6317CC38CE00133DDF /* MNPageViewController.m */; };
 		DC3A4A6717CC38CE00133DDF /* MNQueuingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3A4A6517CC38CE00133DDF /* MNQueuingScrollView.m */; };
 		DC4830A717CC776B00193354 /* appname.png in Resources */ = {isa = PBXBuildFile; fileRef = DC4830A617CC776B00193354 /* appname.png */; };
+		DC4830AC17CC807E00193354 /* login_password.png in Resources */ = {isa = PBXBuildFile; fileRef = DC4830A817CC807E00193354 /* login_password.png */; };
+		DC4830AD17CC807E00193354 /* login_password@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC4830A917CC807E00193354 /* login_password@2x.png */; };
+		DC4830AE17CC807E00193354 /* login_username.png in Resources */ = {isa = PBXBuildFile; fileRef = DC4830AA17CC807E00193354 /* login_username.png */; };
+		DC4830AF17CC807E00193354 /* login_username@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC4830AB17CC807E00193354 /* login_username@2x.png */; };
 		DC48BFD117C51C3D00340FE0 /* SSApi.m in Sources */ = {isa = PBXBuildFile; fileRef = DC48BFD017C51C3D00340FE0 /* SSApi.m */; };
 		DC56EEDA17CB2497005866B2 /* publish_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DC56EED617CB2497005866B2 /* publish_icon.png */; };
 		DC56EEDB17CB2497005866B2 /* publish_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC56EED717CB2497005866B2 /* publish_icon@2x.png */; };
@@ -161,6 +165,10 @@
 		DC3A4A6417CC38CE00133DDF /* MNQueuingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNQueuingScrollView.h; path = Classes/Utilities/MNQueuingScrollView.h; sourceTree = "<group>"; };
 		DC3A4A6517CC38CE00133DDF /* MNQueuingScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNQueuingScrollView.m; path = Classes/Utilities/MNQueuingScrollView.m; sourceTree = "<group>"; };
 		DC4830A617CC776B00193354 /* appname.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appname.png; sourceTree = "<group>"; };
+		DC4830A817CC807E00193354 /* login_password.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login_password.png; sourceTree = "<group>"; };
+		DC4830A917CC807E00193354 /* login_password@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login_password@2x.png"; sourceTree = "<group>"; };
+		DC4830AA17CC807E00193354 /* login_username.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login_username.png; sourceTree = "<group>"; };
+		DC4830AB17CC807E00193354 /* login_username@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login_username@2x.png"; sourceTree = "<group>"; };
 		DC48BFCF17C51C3D00340FE0 /* SSApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSApi.h; path = Classes/Api/SSApi.h; sourceTree = "<group>"; };
 		DC48BFD017C51C3D00340FE0 /* SSApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSApi.m; path = Classes/Api/SSApi.m; sourceTree = "<group>"; };
 		DC56EED617CB2497005866B2 /* publish_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = publish_icon.png; sourceTree = "<group>"; };
@@ -288,6 +296,10 @@
 		DC1104E717C6FF0B00833997 /* user_screen */ = {
 			isa = PBXGroup;
 			children = (
+				DC4830A817CC807E00193354 /* login_password.png */,
+				DC4830A917CC807E00193354 /* login_password@2x.png */,
+				DC4830AA17CC807E00193354 /* login_username.png */,
+				DC4830AB17CC807E00193354 /* login_username@2x.png */,
 				DC1104E817C6FF0B00833997 /* download-icon.png */,
 				DC1104E917C6FF0B00833997 /* download-icon@2x.png */,
 				DC1104EA17C6FF0B00833997 /* my-slides-icon.png */,
@@ -688,6 +700,10 @@
 				43357C8317CC6088007CD24D /* Quicksand.otf in Resources */,
 				43357C8417CC6088007CD24D /* VBAMASH.TTF in Resources */,
 				DC4830A717CC776B00193354 /* appname.png in Resources */,
+				DC4830AC17CC807E00193354 /* login_password.png in Resources */,
+				DC4830AD17CC807E00193354 /* login_password@2x.png in Resources */,
+				DC4830AE17CC807E00193354 /* login_username.png in Resources */,
+				DC4830AF17CC807E00193354 /* login_username@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

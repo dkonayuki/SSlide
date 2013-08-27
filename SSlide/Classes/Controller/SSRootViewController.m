@@ -93,7 +93,7 @@
 
 - (void)mn_pageViewController:(MNPageViewController *)pageViewController willPageFromViewController:(SSViewController *)viewController withRatio:(CGFloat)ratio {
     // hide keyboad
-    if (ratio > [[SSDB5 theme] floatForKey:@"page_view_one_threshold"]
+    if (abs(ratio) > [[SSDB5 theme] floatForKey:@"page_view_one_threshold"]
         && [viewController isKindOfClass:[SSSearchViewController class]])
     {
         [viewController.view endEditing:YES];
