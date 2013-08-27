@@ -146,10 +146,11 @@
         if (IS_IPAD)
         {
             topMargin += 20.f;
-            height *= 2.2;
+            height *= 2;
         }
         //bar
         UIImageView *bar = [[UIImageView alloc] initWithFrame:CGRectMake(leftMargin, topMargin, width, height)];
+        bar.alpha = 0.6f;
         [bar setImage:[UIImage imageNamed:@"bar.png"]];
         [self addSubview:bar];
         topMargin += 5.f;
@@ -166,10 +167,11 @@
         //number of views
         UIImageView *view = [[UIImageView alloc] initWithFrame:CGRectMake(leftMargin, topMargin, subWidth, height)];
         [view setImage:[UIImage imageNamed:@"view.png"]];
+        view.alpha = 0.5f;
         view.contentMode = UIViewContentModeScaleAspectFit;
         [self addSubview:view];
         self.viewsNumber = [[UILabel alloc] initWithFrame:CGRectMake(leftMargin + subWidth + subMargin, topMargin, width / 3 - subWidth, height)];
-        self.viewsNumber.textColor = [[SSDB5 theme] colorForKey:@"slide_details_color"];
+        self.viewsNumber.textColor = [[SSDB5 theme] colorForKey:@"slide_title_color"];
         self.viewsNumber.font = [UIFont fontWithName:@"Candara" size:detailsFontSize];
         self.viewsNumber.backgroundColor = [UIColor clearColor];
         [self addSubview:self.viewsNumber];
@@ -177,21 +179,23 @@
         //number of likes
         UIImageView *like = [[UIImageView alloc] initWithFrame:CGRectMake(leftMargin + width/3, topMargin, subWidth, height)];
         [like setImage:[UIImage imageNamed:@"like.png"]];
+        like.alpha = 0.5f;
         like.contentMode = UIViewContentModeScaleAspectFit;
         [self addSubview:like];
         self.likesNumber = [[UILabel alloc] initWithFrame:CGRectMake(leftMargin + width/3 + subWidth + subMargin, topMargin, width / 3 - subWidth, height)];
-        self.likesNumber.textColor = [[SSDB5 theme] colorForKey:@"slide_details_color"];
+        self.likesNumber.textColor = [[SSDB5 theme] colorForKey:@"slide_title_color"];
         self.likesNumber.font = [UIFont fontWithName:@"Candara" size:detailsFontSize];
         self.likesNumber.backgroundColor = [UIColor clearColor];
         [self addSubview:self.likesNumber];
 
         //number of downloads
         UIImageView *download = [[UIImageView alloc] initWithFrame:CGRectMake(leftMargin + width*2/3, topMargin, subWidth, height)];
+        download.alpha = 0.5f;
         [download setImage:[UIImage imageNamed:@"downloadcell.png"]];
         download.contentMode = UIViewContentModeScaleAspectFit;
         [self addSubview:download];
         self.downloadsNumber = [[UILabel alloc] initWithFrame:CGRectMake(leftMargin + width*2/3 + subWidth + subMargin, topMargin, width / 3 - subWidth, height)];
-        self.downloadsNumber.textColor = [[SSDB5 theme] colorForKey:@"slide_details_color"];
+        self.downloadsNumber.textColor = [[SSDB5 theme] colorForKey:@"slide_title_color"];
         self.downloadsNumber.font = [UIFont fontWithName:@"Candara" size:detailsFontSize];
         self.downloadsNumber.backgroundColor = [UIColor clearColor];
         [self addSubview:self.downloadsNumber];

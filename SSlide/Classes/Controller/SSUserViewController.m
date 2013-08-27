@@ -86,7 +86,7 @@
 - (NSString *)getUsernameDel
 {
     SSUser *curUser = [SSAppData sharedInstance].currentUser;
-    NSString *username = curUser ? curUser.username : @"hi, ...";
+    NSString *username = curUser ? curUser.username : @"howdy!";
     return  username;
 }
 
