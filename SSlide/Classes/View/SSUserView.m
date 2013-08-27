@@ -8,6 +8,7 @@
 
 #import "SSUserView.h"
 #import <AKSegmentedControl/AKSegmentedControl.h>
+#import <QuartzCore/QuartzCore.h>
 
 @interface SSUserView()
 
@@ -26,7 +27,7 @@
 
 - (void)initView
 {
-    self.backgroundColor = [[SSDB5 theme] colorForKey:@"user_view_bg_color"];
+    self.backgroundColor = [UIColor clearColor];
     float topMargin = IS_IPAD ? [[SSDB5 theme]floatForKey:@"page_top_margin_ipad"] : [[SSDB5 theme]floatForKey:@"page_top_margin_iphone"];
     
     /** username label **/
