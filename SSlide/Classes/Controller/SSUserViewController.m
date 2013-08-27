@@ -57,6 +57,18 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)showSettingsView
+{
+    if (!self.settingsViewController)
+    {
+        self.settingsViewController = [[SSSettingsViewController alloc] init];
+    }
+    @synchronized(self)
+    {
+        [self presentPopupViewController:self.settingsViewController animationType:MJPopupViewAnimationSlideLeftLeft];
+    }
+}
+
 #pragma mark - SSUserViewDelegate
 - (void)segmentedControlChangedDel:(NSUInteger)index
 {
@@ -71,16 +83,11 @@
     }
 }
 
-- (void)showSettingsView
+- (NSString *)getUsernameDel
 {
-    if (!self.settingsViewController)
-    {
-        self.settingsViewController = [[SSSettingsViewController alloc] init];
-    }
-    @synchronized(self)
-    {
-        [self presentPopupViewController:self.settingsViewController animationType:MJPopupViewAnimationSlideLeftLeft];
-    }
+    SSUser *curUser = [SSAppData sharedInstance].currentUser;
+    NSString *username = curUser ? curUser.username : @"hi, ...";
+    return  username;
 }
 
 #pragma mark - SSTopView delegate

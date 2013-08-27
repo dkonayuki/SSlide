@@ -62,6 +62,18 @@
 		<string>4689FF</string>
 		<key>download_track_color</key>
 		<string>D9E5FF</string>
+		<key>page_view_one_threshold</key>
+		<real>0.9</real>
+		<key>page_view_left_threshold_iphone</key>
+		<real>-0.2</real>
+		<key>page_view_left_threshold_ipad</key>
+		<real>-0.08</real>
+		<key>user_screen_segmented_normal_color</key>
+		<string>AFAA8F</string>
+		<key>user_screen_segmented_height_ipad</key>
+		<string>50</string>
+		<key>user_screen_segmented_height_iphone</key>
+		<string>37</string>
 	</dict>
 </dict>
 </plist>

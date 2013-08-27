@@ -38,12 +38,6 @@
 		DC1104FB17C6FF0B00833997 /* my-slides-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC1104EB17C6FF0B00833997 /* my-slides-icon@2x.png */; };
 		DC1104FC17C6FF0B00833997 /* segmented-bg-pressed-center.png in Resources */ = {isa = PBXBuildFile; fileRef = DC1104EC17C6FF0B00833997 /* segmented-bg-pressed-center.png */; };
 		DC1104FD17C6FF0B00833997 /* segmented-bg-pressed-center@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC1104ED17C6FF0B00833997 /* segmented-bg-pressed-center@2x.png */; };
-		DC1104FE17C6FF0B00833997 /* segmented-bg-pressed-left.png in Resources */ = {isa = PBXBuildFile; fileRef = DC1104EE17C6FF0B00833997 /* segmented-bg-pressed-left.png */; };
-		DC1104FF17C6FF0B00833997 /* segmented-bg-pressed-left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC1104EF17C6FF0B00833997 /* segmented-bg-pressed-left@2x.png */; };
-		DC11050017C6FF0B00833997 /* segmented-bg-pressed-right.png in Resources */ = {isa = PBXBuildFile; fileRef = DC1104F017C6FF0B00833997 /* segmented-bg-pressed-right.png */; };
-		DC11050117C6FF0B00833997 /* segmented-bg-pressed-right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC1104F117C6FF0B00833997 /* segmented-bg-pressed-right@2x.png */; };
-		DC11050217C6FF0B00833997 /* segmented-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = DC1104F217C6FF0B00833997 /* segmented-bg.png */; };
-		DC11050317C6FF0B00833997 /* segmented-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC1104F317C6FF0B00833997 /* segmented-bg@2x.png */; };
 		DC11050417C6FF0B00833997 /* segmented-separator.png in Resources */ = {isa = PBXBuildFile; fileRef = DC1104F417C6FF0B00833997 /* segmented-separator.png */; };
 		DC11050517C6FF0B00833997 /* segmented-separator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC1104F517C6FF0B00833997 /* segmented-separator@2x.png */; };
 		DC11050617C6FF0B00833997 /* settings-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DC1104F617C6FF0B00833997 /* settings-icon.png */; };
@@ -53,6 +47,8 @@
 		DC2BCF5F17C5DBFE00181774 /* SSSlideShowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2BCF5E17C5DBFE00181774 /* SSSlideShowViewController.m */; };
 		DC2BCF6217C5DC1D00181774 /* SSSlideShowView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2BCF6117C5DC1C00181774 /* SSSlideShowView.m */; };
 		DC38D0CC17C8ADD10013CAD6 /* SSSlideShowControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC38D0CB17C8ADD10013CAD6 /* SSSlideShowControlView.m */; };
+		DC3A4A6617CC38CE00133DDF /* MNPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3A4A6317CC38CE00133DDF /* MNPageViewController.m */; };
+		DC3A4A6717CC38CE00133DDF /* MNQueuingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3A4A6517CC38CE00133DDF /* MNQueuingScrollView.m */; };
 		DC48BFD117C51C3D00340FE0 /* SSApi.m in Sources */ = {isa = PBXBuildFile; fileRef = DC48BFD017C51C3D00340FE0 /* SSApi.m */; };
 		DC56EEDA17CB2497005866B2 /* publish_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DC56EED617CB2497005866B2 /* publish_icon.png */; };
 		DC56EEDB17CB2497005866B2 /* publish_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC56EED717CB2497005866B2 /* publish_icon@2x.png */; };
@@ -147,12 +143,6 @@
 		DC1104EB17C6FF0B00833997 /* my-slides-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "my-slides-icon@2x.png"; sourceTree = "<group>"; };
 		DC1104EC17C6FF0B00833997 /* segmented-bg-pressed-center.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "segmented-bg-pressed-center.png"; sourceTree = "<group>"; };
 		DC1104ED17C6FF0B00833997 /* segmented-bg-pressed-center@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "segmented-bg-pressed-center@2x.png"; sourceTree = "<group>"; };
-		DC1104EE17C6FF0B00833997 /* segmented-bg-pressed-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "segmented-bg-pressed-left.png"; sourceTree = "<group>"; };
-		DC1104EF17C6FF0B00833997 /* segmented-bg-pressed-left@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "segmented-bg-pressed-left@2x.png"; sourceTree = "<group>"; };
-		DC1104F017C6FF0B00833997 /* segmented-bg-pressed-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "segmented-bg-pressed-right.png"; sourceTree = "<group>"; };
-		DC1104F117C6FF0B00833997 /* segmented-bg-pressed-right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "segmented-bg-pressed-right@2x.png"; sourceTree = "<group>"; };
-		DC1104F217C6FF0B00833997 /* segmented-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "segmented-bg.png"; sourceTree = "<group>"; };
-		DC1104F317C6FF0B00833997 /* segmented-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "segmented-bg@2x.png"; sourceTree = "<group>"; };
 		DC1104F417C6FF0B00833997 /* segmented-separator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "segmented-separator.png"; sourceTree = "<group>"; };
 		DC1104F517C6FF0B00833997 /* segmented-separator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "segmented-separator@2x.png"; sourceTree = "<group>"; };
 		DC1104F617C6FF0B00833997 /* settings-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settings-icon.png"; sourceTree = "<group>"; };
@@ -167,6 +157,10 @@
 		DC2BCF6117C5DC1C00181774 /* SSSlideShowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSSlideShowView.m; path = Classes/View/SSSlideShowView.m; sourceTree = "<group>"; };
 		DC38D0CA17C8ADD10013CAD6 /* SSSlideShowControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSSlideShowControlView.h; path = Classes/View/SSSlideShowControlView.h; sourceTree = "<group>"; };
 		DC38D0CB17C8ADD10013CAD6 /* SSSlideShowControlView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSSlideShowControlView.m; path = Classes/View/SSSlideShowControlView.m; sourceTree = "<group>"; };
+		DC3A4A6217CC38CE00133DDF /* MNPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNPageViewController.h; path = Classes/Utilities/MNPageViewController.h; sourceTree = "<group>"; };
+		DC3A4A6317CC38CE00133DDF /* MNPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNPageViewController.m; path = Classes/Utilities/MNPageViewController.m; sourceTree = "<group>"; };
+		DC3A4A6417CC38CE00133DDF /* MNQueuingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNQueuingScrollView.h; path = Classes/Utilities/MNQueuingScrollView.h; sourceTree = "<group>"; };
+		DC3A4A6517CC38CE00133DDF /* MNQueuingScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNQueuingScrollView.m; path = Classes/Utilities/MNQueuingScrollView.m; sourceTree = "<group>"; };
 		DC48BFCF17C51C3D00340FE0 /* SSApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSApi.h; path = Classes/Api/SSApi.h; sourceTree = "<group>"; };
 		DC48BFD017C51C3D00340FE0 /* SSApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSApi.m; path = Classes/Api/SSApi.m; sourceTree = "<group>"; };
 		DC56EED617CB2497005866B2 /* publish_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = publish_icon.png; sourceTree = "<group>"; };
@@ -300,12 +294,6 @@
 				DC1104EB17C6FF0B00833997 /* my-slides-icon@2x.png */,
 				DC1104EC17C6FF0B00833997 /* segmented-bg-pressed-center.png */,
 				DC1104ED17C6FF0B00833997 /* segmented-bg-pressed-center@2x.png */,
-				DC1104EE17C6FF0B00833997 /* segmented-bg-pressed-left.png */,
-				DC1104EF17C6FF0B00833997 /* segmented-bg-pressed-left@2x.png */,
-				DC1104F017C6FF0B00833997 /* segmented-bg-pressed-right.png */,
-				DC1104F117C6FF0B00833997 /* segmented-bg-pressed-right@2x.png */,
-				DC1104F217C6FF0B00833997 /* segmented-bg.png */,
-				DC1104F317C6FF0B00833997 /* segmented-bg@2x.png */,
 				DC1104F417C6FF0B00833997 /* segmented-separator.png */,
 				DC1104F517C6FF0B00833997 /* segmented-separator@2x.png */,
 				DC1104F617C6FF0B00833997 /* settings-icon.png */,
@@ -549,6 +537,10 @@
 		DCC0BB3717C493ED009FF1FD /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				DC3A4A6217CC38CE00133DDF /* MNPageViewController.h */,
+				DC3A4A6317CC38CE00133DDF /* MNPageViewController.m */,
+				DC3A4A6417CC38CE00133DDF /* MNQueuingScrollView.h */,
+				DC3A4A6517CC38CE00133DDF /* MNQueuingScrollView.m */,
 				DC01E00417C9CC440096254A /* FayeClient.h */,
 				DC01E00517C9CC440096254A /* FayeClient.m */,
 				DC01E00617C9CC440096254A /* FayeMessage.h */,
@@ -674,12 +666,6 @@
 				DC1104FB17C6FF0B00833997 /* my-slides-icon@2x.png in Resources */,
 				DC1104FC17C6FF0B00833997 /* segmented-bg-pressed-center.png in Resources */,
 				DC1104FD17C6FF0B00833997 /* segmented-bg-pressed-center@2x.png in Resources */,
-				DC1104FE17C6FF0B00833997 /* segmented-bg-pressed-left.png in Resources */,
-				DC1104FF17C6FF0B00833997 /* segmented-bg-pressed-left@2x.png in Resources */,
-				DC11050017C6FF0B00833997 /* segmented-bg-pressed-right.png in Resources */,
-				DC11050117C6FF0B00833997 /* segmented-bg-pressed-right@2x.png in Resources */,
-				DC11050217C6FF0B00833997 /* segmented-bg.png in Resources */,
-				DC11050317C6FF0B00833997 /* segmented-bg@2x.png in Resources */,
 				DC11050417C6FF0B00833997 /* segmented-separator.png in Resources */,
 				DC11050517C6FF0B00833997 /* segmented-separator@2x.png in Resources */,
 				DC11050617C6FF0B00833997 /* settings-icon.png in Resources */,
@@ -797,6 +783,8 @@
 				DC01E01217C9CC440096254A /* NSString+InflectionSupport.m in Sources */,
 				43E2D6B917CB3F5200BB59A6 /* SSTag.m in Sources */,
 				43E2D6BC17CB50EA00BB59A6 /* SSTagAdd.m in Sources */,
+				DC3A4A6617CC38CE00133DDF /* MNPageViewController.m in Sources */,
+				DC3A4A6717CC38CE00133DDF /* MNQueuingScrollView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -12,7 +12,7 @@
 @protocol SSUserViewDelegate <NSObject>
 
 - (void)segmentedControlChangedDel:(NSUInteger)index;
-- (void)showSettingsView;
+- (NSString *)getUsernameDel;
 
 @end
 

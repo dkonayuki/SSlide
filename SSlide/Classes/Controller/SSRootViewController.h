@@ -10,7 +10,7 @@
 #import "SSTopViewController.h"
 #import "SSSearchViewController.h"
 #import "SSUserViewController.h"
-#import <MNPageViewController/MNPageViewController.h>
+#import "MNPageViewController.h"
 
 @interface SSRootViewController : SSViewController <MNPageViewControllerDataSource, MNPageViewControllerDelegate>
 
