@@ -92,8 +92,23 @@
 }
 
 - (void)mn_pageViewController:(MNPageViewController *)pageViewController willPageFromViewController:(SSViewController *)viewController withRatio:(CGFloat)ratio {
-    if (ratio >= 0.9f && [viewController isKindOfClass:[SSSearchViewController class]]) {
+    // hide keyboad
+    if (ratio > [[SSDB5 theme] floatForKey:@"page_view_one_threshold"]
+        && [viewController isKindOfClass:[SSSearchViewController class]])
+    {
         [viewController.view endEditing:YES];
+    }
+    // show setting view
+    static BOOL leftScrolling = NO;
+    if ([viewController isKindOfClass:[SSUserViewController class]]) {
+        float left = IS_IPAD ? [[SSDB5 theme] floatForKey:@"page_view_left_threshold_ipad"] : [[SSDB5 theme] floatForKey:@"page_view_left_threshold_iphone"];
+        if (ratio < left) {
+            leftScrolling = YES;
+        }
+        if (leftScrolling && ratio > [[SSDB5 theme] floatForKey:@"page_view_one_threshold"]) {
+            leftScrolling = NO;
+            [self.userViewController showSettingsView];
+        }
     }
     // change alpha of view
 }

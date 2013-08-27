@@ -41,6 +41,8 @@
 		DC2BCF5F17C5DBFE00181774 /* SSSlideShowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2BCF5E17C5DBFE00181774 /* SSSlideShowViewController.m */; };
 		DC2BCF6217C5DC1D00181774 /* SSSlideShowView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2BCF6117C5DC1C00181774 /* SSSlideShowView.m */; };
 		DC38D0CC17C8ADD10013CAD6 /* SSSlideShowControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC38D0CB17C8ADD10013CAD6 /* SSSlideShowControlView.m */; };
+		DC3A4A6617CC38CE00133DDF /* MNPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3A4A6317CC38CE00133DDF /* MNPageViewController.m */; };
+		DC3A4A6717CC38CE00133DDF /* MNQueuingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3A4A6517CC38CE00133DDF /* MNQueuingScrollView.m */; };
 		DC48BFD117C51C3D00340FE0 /* SSApi.m in Sources */ = {isa = PBXBuildFile; fileRef = DC48BFD017C51C3D00340FE0 /* SSApi.m */; };
 		DC56EEDA17CB2497005866B2 /* publish_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DC56EED617CB2497005866B2 /* publish_icon.png */; };
 		DC56EEDB17CB2497005866B2 /* publish_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC56EED717CB2497005866B2 /* publish_icon@2x.png */; };
@@ -143,6 +145,10 @@
 		DC2BCF6117C5DC1C00181774 /* SSSlideShowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSSlideShowView.m; path = Classes/View/SSSlideShowView.m; sourceTree = "<group>"; };
 		DC38D0CA17C8ADD10013CAD6 /* SSSlideShowControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSSlideShowControlView.h; path = Classes/View/SSSlideShowControlView.h; sourceTree = "<group>"; };
 		DC38D0CB17C8ADD10013CAD6 /* SSSlideShowControlView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSSlideShowControlView.m; path = Classes/View/SSSlideShowControlView.m; sourceTree = "<group>"; };
+		DC3A4A6217CC38CE00133DDF /* MNPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNPageViewController.h; path = Classes/Utilities/MNPageViewController.h; sourceTree = "<group>"; };
+		DC3A4A6317CC38CE00133DDF /* MNPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNPageViewController.m; path = Classes/Utilities/MNPageViewController.m; sourceTree = "<group>"; };
+		DC3A4A6417CC38CE00133DDF /* MNQueuingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNQueuingScrollView.h; path = Classes/Utilities/MNQueuingScrollView.h; sourceTree = "<group>"; };
+		DC3A4A6517CC38CE00133DDF /* MNQueuingScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNQueuingScrollView.m; path = Classes/Utilities/MNQueuingScrollView.m; sourceTree = "<group>"; };
 		DC48BFCF17C51C3D00340FE0 /* SSApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSApi.h; path = Classes/Api/SSApi.h; sourceTree = "<group>"; };
 		DC48BFD017C51C3D00340FE0 /* SSApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSApi.m; path = Classes/Api/SSApi.m; sourceTree = "<group>"; };
 		DC56EED617CB2497005866B2 /* publish_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = publish_icon.png; sourceTree = "<group>"; };
@@ -486,6 +492,10 @@
 		DCC0BB3717C493ED009FF1FD /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				DC3A4A6217CC38CE00133DDF /* MNPageViewController.h */,
+				DC3A4A6317CC38CE00133DDF /* MNPageViewController.m */,
+				DC3A4A6417CC38CE00133DDF /* MNQueuingScrollView.h */,
+				DC3A4A6517CC38CE00133DDF /* MNQueuingScrollView.m */,
 				DC01E00417C9CC440096254A /* FayeClient.h */,
 				DC01E00517C9CC440096254A /* FayeClient.m */,
 				DC01E00617C9CC440096254A /* FayeMessage.h */,
@@ -722,6 +732,8 @@
 				DC01E01217C9CC440096254A /* NSString+InflectionSupport.m in Sources */,
 				43E2D6B917CB3F5200BB59A6 /* SSTag.m in Sources */,
 				43E2D6BC17CB50EA00BB59A6 /* SSTagAdd.m in Sources */,
+				DC3A4A6617CC38CE00133DDF /* MNPageViewController.m in Sources */,
+				DC3A4A6717CC38CE00133DDF /* MNQueuingScrollView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

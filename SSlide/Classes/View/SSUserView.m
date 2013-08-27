@@ -96,17 +96,6 @@
                                                                            self.bounds.size.height - topMargin)];
     self.slideListView.delegate = self.delegate;
     [self addSubview:self.slideListView];
-    
-    // add swipe gesture to show control view
-    UISwipeGestureRecognizer *swipeRightRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeRightAction)];
-    [swipeRightRecognizer setDirection:UISwipeGestureRecognizerDirectionDown];
-    [self addGestureRecognizer:swipeRightRecognizer];
-}
-
-- (void)swipeRightAction
-{
-    NSLog(@"Right swipe");
-    [self.delegate showSettingsView];
 }
 
 - (void)segmentedControlValueChanged:(id)sender

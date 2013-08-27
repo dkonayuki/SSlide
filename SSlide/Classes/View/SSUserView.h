@@ -12,7 +12,6 @@
 @protocol SSUserViewDelegate <NSObject>
 
 - (void)segmentedControlChangedDel:(NSUInteger)index;
-- (void)showSettingsView;
 
 @end
 
