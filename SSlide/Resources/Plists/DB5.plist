@@ -58,6 +58,14 @@
 		<string>50</string>
 		<key>user_screen_segmented_height_iphone</key>
 		<string>37</string>
+		<key>username_textfield_color</key>
+		<string>80C861</string>
+		<key>password_textfield_color</key>
+		<string>56C3BE</string>
+		<key>login_button_color</key>
+		<string>FB4A56</string>
+		<key>tag_bg_color</key>
+		<string>17B28C</string>
 	</dict>
 </dict>
 </plist>

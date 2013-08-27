@@ -7,6 +7,7 @@
 //
 
 #import "SSTagAdd.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface SSTagAdd()
 @property (strong, nonatomic) UITextField *tagField;
@@ -45,20 +46,14 @@
     CGRect myFrame = self.frame;
     myFrame.size.width = width + 30.f;
     self.frame = myFrame;
+    self.layer.borderColor = [[SSDB5 theme] colorForKey:@"tag_bg_color"].CGColor;
+    self.layer.borderWidth = 1.f;
 }
 
-- (IBAction)addTag:(id)sender
+- (void)addTag:(id)sender
 {
     [self.delegate addTag:self.tagField.text];
+    [self.tagField setText:@""];
 }
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
 
 @end

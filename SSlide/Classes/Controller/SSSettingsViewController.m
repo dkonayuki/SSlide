@@ -31,8 +31,10 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    float leftMargin = self.view.bounds.size.width / 10.f;
-    float topMargin = self.view.bounds.size.height / 12.f;
+    float wR = IS_IPAD ? 5.f : 10.f;
+    
+    float leftMargin = self.view.bounds.size.width / wR;
+    float topMargin = self.view.bounds.size.height / wR;
     float width = self.view.bounds.size.width - 2*leftMargin;
     float height = self.view.bounds.size.height - 2*topMargin;
     SSSettingsView *myView = [[SSSettingsView alloc] initWithFrame:CGRectMake(leftMargin, topMargin, width, height) andDelegate:self];

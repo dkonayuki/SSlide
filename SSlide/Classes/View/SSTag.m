@@ -7,6 +7,7 @@
 //
 
 #import "SSTag.h"
+#import <QuartzCore/QuartzCore.h>
 
 @implementation SSTag
 
@@ -26,7 +27,7 @@
     float topMargin = 0;
     float leftMargin = 0;
     float width = 100.f;
-    float height = 30.f;
+    float height = 50.f;
     if (self)
     {
         //tag label
@@ -45,6 +46,8 @@
     CGRect myFrame = self.frame;
     myFrame.size.width = width + 30.f;
     self.frame = myFrame;
+    self.layer.borderColor = [[SSDB5 theme] colorForKey:@"tag_bg_color"].CGColor;
+    self.layer.borderWidth = 1.f;
     return self;
 }
 
@@ -52,13 +55,5 @@
 {
     
 }
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
 
 @end

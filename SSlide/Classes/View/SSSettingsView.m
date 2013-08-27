@@ -12,13 +12,16 @@
 #import "SSTag.h"
 #import "SSTagAdd.h"
 
-@interface SSSettingsView() <SSTagAddDelegate>
+@interface SSSettingsView() <SSTagAddDelegate, UITextFieldDelegate>
+
 @property (strong, nonatomic) NSMutableArray *tags;
 @property (assign, nonatomic) float tagTopMargin;
 @property (assign, nonatomic) float tagLeftMargin;
 @property (assign, nonatomic) float width;
 @property (assign, nonatomic) float height;
 @property (strong, nonatomic) SSTagAdd *tagAdd;
+@property (assign, nonatomic) CGPoint originViewCenter;
+
 @end
 
 @implementation SSSettingsView
@@ -36,7 +39,7 @@
 {
     // self
     self.backgroundColor = [UIColor whiteColor];
-    self.layer.cornerRadius = 4.f;
+    self.layer.cornerRadius = IS_IPAD ? 10.f : 5.f;
     
     //tags label
     self.width = self.bounds.size.width;
@@ -49,8 +52,8 @@
     tagsLabel.textAlignment = NSTextAlignmentCenter;
     [self addSubview:tagsLabel];
     
+    
     topMargin += 40.f;
-        
     //init tags
     self.tagTopMargin = topMargin;
     self.tagLeftMargin = leftMargin;
@@ -86,7 +89,7 @@
 
     
     //login label
-    topMargin += 180.f;
+    topMargin += 125.f;
     UILabel *loginLabel = [[UILabel alloc] initWithFrame:CGRectMake(leftMargin, topMargin, self.width, self.height)];
     loginLabel.text = [[SSDB5 theme]stringForKey:@"login_label"];
     loginLabel.textAlignment = NSTextAlignmentCenter;
@@ -96,30 +99,34 @@
     topMargin += 50.f;
     UITextField *usernameField = [[UITextField alloc] initWithFrame:CGRectMake(leftMargin, topMargin, self.width, self.height)];
     usernameField.textColor = [UIColor whiteColor];
-    usernameField.backgroundColor = [UIColor greenColor];
+    usernameField.backgroundColor = [[SSDB5 theme] colorForKey:@"username_textfield_color"];
+    usernameField.placeholder = @"Username";
     [usernameField resignFirstResponder];
+    usernameField.delegate = self;
     [self addSubview:usernameField];
     
     //login password
-    topMargin += 50.f;
+    topMargin += self.height;
     UITextField *passwordField = [[UITextField alloc] initWithFrame:CGRectMake(leftMargin, topMargin, self.width, self.height)];
     passwordField.textColor = [UIColor whiteColor];
-    passwordField.backgroundColor = [UIColor greenColor];
+    passwordField.backgroundColor = [[SSDB5 theme] colorForKey:@"password_textfield_color"];
     passwordField.secureTextEntry = YES;
+    passwordField.placeholder = @"Password";
     [passwordField resignFirstResponder];
+    passwordField.delegate = self;
     [self addSubview:passwordField];
     
     // login btn
-    
     topMargin += 50.f;
     UIButton *authenticateBtn = [[UIButton alloc] initWithFrame:CGRectMake(leftMargin, topMargin, self.width, self.height)];
     [authenticateBtn setTitle:@"Login" forState:UIControlStateNormal];
     authenticateBtn.tag = 1;
-    authenticateBtn.backgroundColor = [UIColor greenSeaColor];
-    authenticateBtn.layer.cornerRadius = 2.f;
+    authenticateBtn.backgroundColor = [[SSDB5 theme] colorForKey:@"login_button_color"];
     [authenticateBtn addTarget:self action:@selector(authenticateBtnPressed:) forControlEvents:UIControlEventTouchDown];
     
     [self addSubview:authenticateBtn];
+    
+    self.originViewCenter = self.center;
 }
 
 - (void) addTag:(NSString *)name;
@@ -137,8 +144,7 @@
             self.tagLeftMargin = tagView.frame.size.width + 5.f;
             self.tagTopMargin += self.height;
         }
-        else
-        {
+        else {
             self.tagLeftMargin += tagView.frame.size.width + 5.f;
         }
         [self addSubview:tagView];
@@ -170,6 +176,28 @@
     } else {
         [self.delegate logoutActionDel];
     }
+    [self closeKeyboardAndExit];
+}
+
+#pragma mark - UITextField delegate
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    [UIView animateWithDuration:0.5f
+                     animations:^(void) {
+                         float dy = IS_IPAD ? 120.f : 200.f;
+                         self.center = CGPointMake(self.originViewCenter.x, self.originViewCenter.y - dy);
+                     }
+                     completion:nil];
+}
+
+- (void)closeKeyboardAndExit
+{
+    [self endEditing:YES];
+    [UIView animateWithDuration:0.5f
+                     animations:^(void) {
+                         self.center = self.originViewCenter;
+                     }
+                     completion:nil];
 }
 
 @end
