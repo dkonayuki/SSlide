@@ -28,12 +28,19 @@
 {
     self.backgroundColor = [[SSDB5 theme] colorForKey:@"user_view_bg_color"];
     
-    // segmented control
     float topMargin = [[SSDB5 theme]floatForKey:@"page_top_margin"];
     if (IS_IPAD)
     {
         topMargin *= 2.2;
     }
+    
+    UILabel *usernameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, topMargin)];
+    usernameLabel.textAlignment = NSTextAlignmentCenter;
+    [usernameLabel setText:[self.delegate getUsernameDel]];
+    //TODO: set font, color
+    [self addSubview:usernameLabel];
+    
+    // segmented control
     float leftMargin = self.bounds.size.width/5.f;
     float width = self.bounds.size.width - 2*leftMargin;
     float height = 37.f;
