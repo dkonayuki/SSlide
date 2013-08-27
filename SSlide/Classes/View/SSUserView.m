@@ -39,6 +39,7 @@
     usernameLabel.textAlignment = NSTextAlignmentCenter;
     [usernameLabel setText:[self.delegate getUsernameDel]];
     //TODO: set font, color
+    usernameLabel.backgroundColor = [[SSDB5 theme] colorForKey:@"app_title_color"];
     [self addSubview:usernameLabel];
     
     /** segmented control **/

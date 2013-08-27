@@ -63,11 +63,6 @@
 
 - (void) initView
 {
-    for (NSString *familyName in [UIFont familyNames]) {
-        for (NSString *fontName in [UIFont fontNamesForFamilyName:familyName]) {
-            NSLog(@"%@", fontName);
-        }
-    }
     self.topMargin = [[SSDB5 theme]floatForKey:@"page_top_margin"];
     if (IS_IPAD)
     {
