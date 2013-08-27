@@ -49,7 +49,7 @@
     if ([self.currentSlide checkIsDownloaded]) {
         self.myView.imageView.image = [UIImage imageWithContentsOfFile:[self.currentSlide localUrlOfImageAtPage:self.pageIndex]];
     } else {
-        [SVProgressHUD showWithStatus:@"loading"];
+        [SVProgressHUD showWithStatus:@"Loading"];
         // load image
         NSString *imageUrl = [NSString stringWithFormat:@"%@%d%@", self.currentSlide.slideImageBaseurl, self.pageIndex, self.currentSlide.slideImageBaseurlSuffix];
         NSLog(@"Image url: %@", imageUrl);

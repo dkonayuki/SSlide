@@ -238,7 +238,7 @@
         }else if ([elementName isEqualToString:@"NumSlides"]) {
             self.currentSlideshow.totalSlides = [[TBXML textForElement:element] integerValue];
             [self.slideshowArray addObject:self.currentSlideshow];
-            [self.currentSlideshow log];
+            //[self.currentSlideshow log];
         }
         
         // if the element has child elements, process them
