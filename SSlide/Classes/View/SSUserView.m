@@ -27,6 +27,11 @@
 
 - (void)initView
 {
+    float usernameSize = 17.f;
+    if (IS_IPAD)
+    {
+        usernameSize *= 2.2;
+    }
     self.backgroundColor = [UIColor clearColor];
     float topMargin = IS_IPAD ? [[SSDB5 theme]floatForKey:@"page_top_margin_ipad"] : [[SSDB5 theme]floatForKey:@"page_top_margin_iphone"];
     
@@ -34,7 +39,8 @@
     UILabel *usernameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, topMargin)];
     usernameLabel.textAlignment = NSTextAlignmentCenter;
     [usernameLabel setText:[self.delegate getUsernameDel]];
-    //TODO: set font, color
+    usernameLabel.font = [UIFont fontWithName:[[SSDB5 theme] stringForKey:@"quicksand_font"] size:usernameSize];
+    usernameLabel.textColor = [[SSDB5 theme] colorForKey:@"username_color"];
     usernameLabel.backgroundColor = [[SSDB5 theme] colorForKey:@"app_title_color"];
     [self addSubview:usernameLabel];
     
@@ -54,15 +60,13 @@
     // Setting the separator image
     [segmentedControl setSeparatorImage:[UIImage imageNamed:@"segmented-separator.png"]];
     
-    UIImage *hightlighImage = [UIImage imageNamed:@"segmented-bg-pressed-center.png"];
-
     // download btn
     UIButton *downloadedBtn = [[UIButton alloc] init];
     UIImage *downloadedBtnImageNormal = [UIImage imageNamed:@"download-icon.png"];
     
-    [downloadedBtn setBackgroundImage:hightlighImage forState:UIControlStateHighlighted];
-    [downloadedBtn setBackgroundImage:hightlighImage forState:UIControlStateSelected];
-    [downloadedBtn setBackgroundImage:hightlighImage forState:(UIControlStateHighlighted|UIControlStateSelected)];
+    [downloadedBtn setBackgroundImage:[self imageFromColor:[[SSDB5 theme] colorForKey:@"user_screen_segmented_pressed_color"]] forState:UIControlStateHighlighted];
+    [downloadedBtn setBackgroundImage:[self imageFromColor:[[SSDB5 theme] colorForKey:@"user_screen_segmented_pressed_color"]] forState:UIControlStateSelected];
+    [downloadedBtn setBackgroundImage:[self imageFromColor:[[SSDB5 theme] colorForKey:@"user_screen_segmented_pressed_color"]] forState:(UIControlStateHighlighted|UIControlStateSelected)];
     
     [downloadedBtn setImage:downloadedBtnImageNormal forState:UIControlStateNormal];
     [downloadedBtn setImage:downloadedBtnImageNormal forState:UIControlStateSelected];
@@ -73,9 +77,9 @@
     UIButton *mySlidesBtn = [[UIButton alloc] init];
     UIImage *mySlidesBtnImageNormal = [UIImage imageNamed:@"my-slides-icon.png"];
     
-    [mySlidesBtn setBackgroundImage:hightlighImage forState:UIControlStateHighlighted];
-    [mySlidesBtn setBackgroundImage:hightlighImage forState:UIControlStateSelected];
-    [mySlidesBtn setBackgroundImage:hightlighImage forState:(UIControlStateHighlighted|UIControlStateSelected)];
+    [mySlidesBtn setBackgroundImage:[self imageFromColor:[[SSDB5 theme] colorForKey:@"user_screen_segmented_pressed_color"]] forState:UIControlStateHighlighted];
+    [mySlidesBtn setBackgroundImage:[self imageFromColor:[[SSDB5 theme] colorForKey:@"user_screen_segmented_pressed_color"]] forState:UIControlStateSelected];
+    [mySlidesBtn setBackgroundImage:[self imageFromColor:[[SSDB5 theme] colorForKey:@"user_screen_segmented_pressed_color"]] forState:(UIControlStateHighlighted|UIControlStateSelected)];
     
     [mySlidesBtn setImage:mySlidesBtnImageNormal forState:UIControlStateNormal];
     [mySlidesBtn setImage:mySlidesBtnImageNormal forState:UIControlStateSelected];
@@ -90,13 +94,29 @@
     
     
     /** SlideListView **/
-    topMargin += 50.f;
+    topMargin += height + 10.f;
+    if (IS_IPAD)
+    {
+        topMargin += 10.f;
+    }
     self.slideListView = [[SSSlideListView alloc] initWithFrame:CGRectMake(0,
                                                                            topMargin,
                                                                            self.bounds.size.width,
                                                                            self.bounds.size.height - topMargin)];
     self.slideListView.delegate = self.delegate;
     [self addSubview:self.slideListView];
+}
+
+- (UIImage *) imageFromColor:(UIColor *)color {
+    CGRect rect = CGRectMake(0, 0, 1, 1);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    //  [[UIColor colorWithRed:222./255 green:227./255 blue: 229./255 alpha:1] CGColor]) ;
+    CGContextFillRect(context, rect);
+    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return img;
 }
 
 - (void)segmentedControlValueChanged:(id)sender

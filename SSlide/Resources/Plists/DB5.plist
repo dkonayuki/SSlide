@@ -4,6 +4,8 @@
 <dict>
 	<key>Default</key>
 	<dict>
+		<key>username_color</key>
+		<string>ffffff</string>
 		<key>quicksand_font</key>
 		<string>QuicksandBold-Regular</string>
 		<key>candara_font</key>
@@ -72,8 +74,10 @@
 		<real>-0.08</real>
 		<key>user_screen_segmented_normal_color</key>
 		<string>AFAA8F</string>
+		<key>user_screen_segmented_pressed_color</key>
+		<string>d9d9c7</string>
 		<key>user_screen_segmented_height_ipad</key>
-		<string>50</string>
+		<string>76</string>
 		<key>user_screen_segmented_height_iphone</key>
 		<string>37</string>
 		<key>username_textfield_color</key>
