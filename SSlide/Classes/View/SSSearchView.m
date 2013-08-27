@@ -14,6 +14,7 @@
 
 @property (nonatomic) float topMargin;
 @property (nonatomic) BOOL didMove;
+@property (strong, nonatomic) UIImageView *searchBG;
 
 @end
 
@@ -41,7 +42,11 @@
         height *= 2.2;
         fontSize *= 2.2;
     }
-    self.backgroundColor = [[SSDB5 theme] colorForKey:@"search_view_bg_color"];
+    self.searchBG = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width,  self.topMargin)];
+    self.searchBG.backgroundColor =  [[SSDB5 theme] colorForKey:@"app_title_color"];
+    self.searchBG.center = CGPointMake(self.center.x, self.bounds.size.height/3);
+    
+    [self addSubview:self.searchBG];
     self.searchTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width * 0.8f, height)];
     self.searchTextField.center = CGPointMake(self.center.x, self.bounds.size.height/3);
     self.searchTextField.backgroundColor = [UIColor whiteColor];
@@ -85,15 +90,11 @@
 {
     if (!self.didMove)
     {
-        float topMargin = 10.f;
-        if (IS_IPAD)
-        {
-            topMargin *= 2.2;
-        }
         self.didMove = TRUE;
         [UIView beginAnimations:nil context:nil];
         [UIView setAnimationDuration:0.5];
-        self.searchTextField.center = CGPointMake(self.bounds.size.width/2, topMargin + [[SSDB5 theme] floatForKey:@"search_textfield_height"]/2);
+        self.searchBG.center = CGPointMake(self.bounds.size.width/2, self.topMargin/2);
+        self.searchTextField.center = CGPointMake(self.bounds.size.width/2, self.topMargin/2);
         [UIView commitAnimations];
     }
 }

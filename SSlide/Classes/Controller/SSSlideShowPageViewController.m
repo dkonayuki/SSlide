@@ -222,7 +222,7 @@
         NSLog(@"new page: %d", pageNum);
         NSNumber *pn = [NSNumber numberWithInt:pageNum];
         
-        if (self.isMaster) {
+        if (self.isMaster && self.isStreaming) {
             SSUser *currentUser = [[SSAppData sharedInstance] currentUser];
             NSDictionary *mesg = @{@"username": currentUser.username,
                                    @"pagenum": pn};

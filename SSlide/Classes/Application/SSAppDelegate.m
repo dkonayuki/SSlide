@@ -20,8 +20,19 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor whiteColor];
-    
+    if (IS_IPAD)
+    {
+        self.window.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bgipad.png"]];
+    }
+    else if (IS_IPHONE_5)
+    {
+        self.window.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bgip5.png"]];
+
+    }
+    else
+    {
+        self.window.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
+    }
     self.rootViewController = [[SSRootViewController alloc] init];
     self.window.rootViewController = self.rootViewController;
     

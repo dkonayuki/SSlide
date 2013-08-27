@@ -31,15 +31,24 @@
 - (void) initTopTitle
 {
     float fontSize = 14;
+    float width = 100.f;
+    float height = 31.f;
     if (IS_IPAD)
     {
         fontSize *= 2.2;
+        width *= 2.2;
+        height *= 2.2;
     }
-    UILabel *topTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, self.topMargin)];
-    topTitle.text = @"SSlide";
-    topTitle.font = [UIFont systemFontOfSize:fontSize];
-    [topTitle setTextAlignment:NSTextAlignmentCenter];
-    [self addSubview:topTitle];
+    UIImageView *titleBackground = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, self.topMargin)];
+    titleBackground.backgroundColor = [[SSDB5 theme] colorForKey:@"app_title_color"];
+    UIImage *title = [UIImage imageNamed: @"appName.png"];
+    
+    UIImageView *titleView = [[UIImageView alloc] initWithFrame:CGRectMake(
+                    (self.bounds.size.width - width)/2,
+                    (self.topMargin - height)/2, width, height)];
+    [titleView setImage:title];
+    [self addSubview:titleBackground];
+    [self addSubview:titleView];
 }
 
 - (void) initSlideListView
@@ -54,12 +63,17 @@
 
 - (void) initView
 {
+    for (NSString *familyName in [UIFont familyNames]) {
+        for (NSString *fontName in [UIFont fontNamesForFamilyName:familyName]) {
+            NSLog(@"%@", fontName);
+        }
+    }
     self.topMargin = [[SSDB5 theme]floatForKey:@"page_top_margin"];
     if (IS_IPAD)
     {
         self.topMargin *= 2.2;
     }
-    self.backgroundColor = [[SSDB5 theme] colorForKey:@"top_view_bg_color"];
+    self.backgroundColor = [UIColor clearColor];
     [self initSlideListView];
     [self initTopTitle];
 }

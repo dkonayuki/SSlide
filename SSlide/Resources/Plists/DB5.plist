@@ -4,12 +4,28 @@
 <dict>
 	<key>Default</key>
 	<dict>
+		<key>quicksand_font</key>
+		<string>QuicksandBold-Regular</string>
+		<key>candara_font</key>
+		<string>Candara</string>
+		<key>bahama_font</key>
+		<string>NVTBahamasHeavyBold</string>
+		<key>slide_details_color</key>
+		<string>959595</string>
+		<key>slide_title_color</key>
+		<string>636363</string>
+		<key>thumbnail_bg_color</key>
+		<string>ffffff</string>
+		<key>app_title_color</key>
+		<string>e67263</string>
+		<key>cell_bg_color</key>
+		<string>eaeaea</string>
 		<key>login_label</key>
 		<string>LogIn</string>
 		<key>tags_label</key>
 		<string>Tags</string>
 		<key>page_top_margin</key>
-		<integer>50</integer>
+		<integer>55</integer>
 		<key>search_textfield_height</key>
 		<integer>25</integer>
 		<key>API_BASE_URL</key>
@@ -33,9 +49,9 @@
 		<key>search_textfield_border_color</key>
 		<string>FFFFFFF</string>
 		<key>slide_cell_height_iphone</key>
-		<integer>110</integer>
+		<integer>95</integer>
 		<key>slide_cell_height_ipad</key>
-		<integer>250</integer>
+		<integer>210</integer>
 		<key>slide_num_in_page</key>
 		<integer>7</integer>
 		<key>slide_control_view_height_ipad</key>
