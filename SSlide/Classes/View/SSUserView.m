@@ -34,26 +34,22 @@
         topMargin *= 2.2;
     }
     
+    /** username label **/
     UILabel *usernameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, topMargin)];
     usernameLabel.textAlignment = NSTextAlignmentCenter;
     [usernameLabel setText:[self.delegate getUsernameDel]];
     //TODO: set font, color
     [self addSubview:usernameLabel];
     
-    // segmented control
-    float leftMargin = self.bounds.size.width/5.f;
+    /** segmented control **/
+    float leftMargin = 0;
     float width = self.bounds.size.width - 2*leftMargin;
-    float height = 37.f;
+    float height = IS_IPAD ? [[SSDB5 theme] floatForKey:@"user_screen_segmented_height_ipad"] : [[SSDB5 theme] floatForKey:@"user_screen_segmented_height_iphone"];
     
     AKSegmentedControl *segmentedControl = [[AKSegmentedControl alloc] initWithFrame:CGRectMake(leftMargin, topMargin, width, height)];
     [segmentedControl addTarget:self action:@selector(segmentedControlValueChanged:) forControlEvents:UIControlEventValueChanged];
-    
-    // Setting the resizable background image
-    UIImage *backgroundImage = [[UIImage imageNamed:@"segmented-bg.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(10.0, 10.0, 10.0, 10.0)];
-    [segmentedControl setBackgroundImage:backgroundImage];
-    
-    // Setting the content edge insets to adapte to you design
-    [segmentedControl setContentEdgeInsets:UIEdgeInsetsMake(2.0, 2.0, 3.0, 2.0)];
+
+    segmentedControl.backgroundColor = [[SSDB5 theme] colorForKey:@"user_screen_segmented_normal_color"];
     
     // Setting the behavior mode of the control
     [segmentedControl setSegmentedControlMode:AKSegmentedControlModeSticky];
@@ -61,17 +57,16 @@
     // Setting the separator image
     [segmentedControl setSeparatorImage:[UIImage imageNamed:@"segmented-separator.png"]];
     
-    UIImage *buttonBackgroundImagePressedLeft = [[UIImage imageNamed:@"segmented-bg-pressed-left.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0, 4.0, 0.0, 1.0)];
-    UIImage *buttonBackgroundImagePressedCenter = [[UIImage imageNamed:@"segmented-bg-pressed-center.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0, 4.0, 0.0, 1.0)];
-    
+    UIImage *hightlighImage = [UIImage imageNamed:@"segmented-bg-pressed-center.png"];
+
     // download btn
     UIButton *downloadedBtn = [[UIButton alloc] init];
     UIImage *downloadedBtnImageNormal = [UIImage imageNamed:@"download-icon.png"];
     
-    [downloadedBtn setImageEdgeInsets:UIEdgeInsetsMake(0.0, 0.0, 0.0, 5.0)];
-    [downloadedBtn setBackgroundImage:buttonBackgroundImagePressedLeft forState:UIControlStateHighlighted];
-    [downloadedBtn setBackgroundImage:buttonBackgroundImagePressedLeft forState:UIControlStateSelected];
-    [downloadedBtn setBackgroundImage:buttonBackgroundImagePressedLeft forState:(UIControlStateHighlighted|UIControlStateSelected)];
+    [downloadedBtn setBackgroundImage:hightlighImage forState:UIControlStateHighlighted];
+    [downloadedBtn setBackgroundImage:hightlighImage forState:UIControlStateSelected];
+    [downloadedBtn setBackgroundImage:hightlighImage forState:(UIControlStateHighlighted|UIControlStateSelected)];
+    
     [downloadedBtn setImage:downloadedBtnImageNormal forState:UIControlStateNormal];
     [downloadedBtn setImage:downloadedBtnImageNormal forState:UIControlStateSelected];
     [downloadedBtn setImage:downloadedBtnImageNormal forState:UIControlStateHighlighted];
@@ -81,21 +76,23 @@
     UIButton *mySlidesBtn = [[UIButton alloc] init];
     UIImage *mySlidesBtnImageNormal = [UIImage imageNamed:@"my-slides-icon.png"];
     
-    [mySlidesBtn setBackgroundImage:buttonBackgroundImagePressedCenter forState:UIControlStateHighlighted];
-    [mySlidesBtn setBackgroundImage:buttonBackgroundImagePressedCenter forState:UIControlStateSelected];
-    [mySlidesBtn setBackgroundImage:buttonBackgroundImagePressedCenter forState:(UIControlStateHighlighted|UIControlStateSelected)];
+    [mySlidesBtn setBackgroundImage:hightlighImage forState:UIControlStateHighlighted];
+    [mySlidesBtn setBackgroundImage:hightlighImage forState:UIControlStateSelected];
+    [mySlidesBtn setBackgroundImage:hightlighImage forState:(UIControlStateHighlighted|UIControlStateSelected)];
+    
     [mySlidesBtn setImage:mySlidesBtnImageNormal forState:UIControlStateNormal];
     [mySlidesBtn setImage:mySlidesBtnImageNormal forState:UIControlStateSelected];
     [mySlidesBtn setImage:mySlidesBtnImageNormal forState:UIControlStateHighlighted];
     [mySlidesBtn setImage:mySlidesBtnImageNormal forState:(UIControlStateHighlighted|UIControlStateSelected)];
+
     
     // Setting the UIButtons used in the segmented control
-    [segmentedControl setButtonsArray:@[downloadedBtn, mySlidesBtn]];
-    
+    [segmentedControl setButtonsArray:@[downloadedBtn, mySlidesBtn]];    
     [segmentedControl setSelectedIndex:0];
     [self addSubview:segmentedControl];
     
-    //SlideListView
+    
+    /** SlideListView **/
     topMargin += 50.f;
     self.slideListView = [[SSSlideListView alloc] initWithFrame:CGRectMake(0,
                                                                            topMargin,
