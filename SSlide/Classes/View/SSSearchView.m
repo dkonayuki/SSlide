@@ -31,10 +31,8 @@
 
 - (void)initView
 {
-    self.topMargin = [[SSDB5 theme] floatForKey:@"page_top_margin"];
-    if (IS_IPAD) {
-        self.topMargin *= 2.2;
-    }
+    self.topMargin = IS_IPAD ? [[SSDB5 theme]floatForKey:@"page_top_margin_ipad"] : [[SSDB5 theme]floatForKey:@"page_top_margin_iphone"];
+    
     float height = [[SSDB5 theme] floatForKey:@"search_textfield_height"];
     float fontSize = 14;
     if (IS_IPAD)

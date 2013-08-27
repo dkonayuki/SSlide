@@ -93,21 +93,13 @@
                                        itemsPerPage:[[SSDB5 theme] integerForKey:@"slide_num_in_page"]
                                             success:^(NSArray *result){
                                                 // stop loading status
-                                                if (self.currentPage == 1) {
-                                                    [SVProgressHUD dismiss];
-                                                }
-                                                /*
-                                                dispatch_apply([result count], dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t index) {
-                                                    SSSlideshow *slideshow = [result objectAtIndex:index];
-                                                    [[SSApi sharedInstance] addExtendedSlideInfo:slideshow result:^(BOOL result) {
-                                                    }];
-                                                });
-                                                */
+                                                [SVProgressHUD dismiss];
+                                                
                                                 [self.slideArray addObjectsFromArray:result];
                                                 [self.myView.slideListView.slideTableView reloadData];
                                             }
                                             failure:^(void) {     // TODO: error handling
-  
+                                                [SVProgressHUD dismiss];
                                                 NSLog(@"MostViewed ERROR");
                                             }];
 }

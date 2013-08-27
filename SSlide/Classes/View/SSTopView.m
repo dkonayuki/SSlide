@@ -12,8 +12,6 @@
 
 @interface SSTopView()
 
-@property (nonatomic) float topMargin;
-
 @end
 
 @implementation SSTopView
@@ -28,49 +26,35 @@
     return self;
 }
 
-- (void) initTopTitle
-{
-    float fontSize = 14;
-    float width = 100.f;
-    float height = 31.f;
-    if (IS_IPAD)
-    {
-        fontSize *= 2.2;
-        width *= 2.2;
-        height *= 2.2;
-    }
-    UIImageView *titleBackground = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, self.topMargin)];
-    titleBackground.backgroundColor = [[SSDB5 theme] colorForKey:@"app_title_color"];
-    UIImage *title = [UIImage imageNamed: @"appname.png"];
-    
-    UIImageView *titleView = [[UIImageView alloc] initWithFrame:CGRectMake(
-                    (self.bounds.size.width - width)/2,
-                    (self.topMargin - height)/2, width, height)];
-    [titleView setImage:title];
-    [self addSubview:titleBackground];
-    [self addSubview:titleView];
-}
-
-- (void) initSlideListView
-{
-    self.slideListView = [[SSSlideListView alloc] initWithFrame:CGRectMake(0,
-                                                                        self.topMargin,
-                                                                        self.bounds.size.width,
-                                                                        self.bounds.size.height - self.topMargin)];
-    self.slideListView.delegate = self.delegate;
-    [self addSubview:self.slideListView];
-}
-
 - (void) initView
 {
-    self.topMargin = [[SSDB5 theme]floatForKey:@"page_top_margin"];
-    if (IS_IPAD)
-    {
-        self.topMargin *= 2.2;
-    }
+    float topMargin = IS_IPAD ? [[SSDB5 theme]floatForKey:@"page_top_margin_ipad"] : [[SSDB5 theme]floatForKey:@"page_top_margin_iphone"];
     self.backgroundColor = [UIColor clearColor];
-    [self initSlideListView];
-    [self initTopTitle];
+    
+    [self initSlideListView:topMargin];
+ 
+    float width = IS_IPAD ? 100.f * 1.8f : 100.f;
+    float height = IS_IPAD ? 31.f * 1.8f : 31.f;
+
+    UIView *titleBackground = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, topMargin)];
+    titleBackground.backgroundColor = [[SSDB5 theme] colorForKey:@"app_title_color"];
+    UIImageView *titleImage = [[UIImageView alloc] initWithFrame:CGRectMake((self.bounds.size.width - width)/2,
+                                                                            (topMargin - height)/2,
+                                                                            width,
+                                                                            height)];
+    titleImage.image = [UIImage imageNamed:@"appname.png"];
+    [titleBackground addSubview:titleImage];
+    [self addSubview:titleBackground];
+}
+
+- (void) initSlideListView:(float) topMargin
+{
+    self.slideListView = [[SSSlideListView alloc] initWithFrame:CGRectMake(0,
+                                                                        topMargin,
+                                                                        self.bounds.size.width,
+                                                                        self.bounds.size.height - topMargin)];
+    self.slideListView.delegate = self.delegate;
+    [self addSubview:self.slideListView];
 }
 
 @end
