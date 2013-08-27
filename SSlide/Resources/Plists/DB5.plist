@@ -24,8 +24,10 @@
 		<string>LogIn</string>
 		<key>tags_label</key>
 		<string>Tags</string>
-		<key>page_top_margin</key>
+		<key>page_top_margin_iphone</key>
 		<integer>55</integer>
+		<key>page_top_margin_ipad</key>
+		<integer>90</integer>
 		<key>search_textfield_height</key>
 		<integer>25</integer>
 		<key>API_BASE_URL</key>

@@ -27,12 +27,7 @@
 - (void)initView
 {
     self.backgroundColor = [[SSDB5 theme] colorForKey:@"user_view_bg_color"];
-    
-    float topMargin = [[SSDB5 theme]floatForKey:@"page_top_margin"];
-    if (IS_IPAD)
-    {
-        topMargin *= 2.2;
-    }
+    float topMargin = IS_IPAD ? [[SSDB5 theme]floatForKey:@"page_top_margin_ipad"] : [[SSDB5 theme]floatForKey:@"page_top_margin_iphone"];
     
     /** username label **/
     UILabel *usernameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, topMargin)];
