@@ -4,6 +4,12 @@
 <dict>
 	<key>Default</key>
 	<dict>
+		<key>searchbar_text_color</key>
+		<string>636363</string>
+		<key>searchbar_plate</key>
+		<string>Search</string>
+		<key>searchbar_bg_color</key>
+		<string>ffffff</string>
 		<key>username_color</key>
 		<string>ffffff</string>
 		<key>quicksand_font</key>
@@ -21,7 +27,7 @@
 		<key>app_title_color</key>
 		<string>e67263</string>
 		<key>cell_bg_color</key>
-		<string>eaeaea</string>
+		<string>f7f7f7</string>
 		<key>login_label</key>
 		<string>LogIn</string>
 		<key>tags_label</key>

@@ -21,7 +21,7 @@
 @property (strong, nonatomic) UILabel *viewsNumber;
 @property (strong, nonatomic) UILabel *likesNumber;
 @property (strong, nonatomic) UILabel *downloadsNumber;
-
+@property (strong, nonatomic) UIImageView *cellBg;
 
 @end
 
@@ -53,10 +53,10 @@
             topMargin *= 2.2;
             width += 90.f;
         }
-        UIImageView *cellBg = [[UIImageView alloc] initWithFrame:CGRectMake(leftMargin, topMargin, width, height)];
-        cellBg.backgroundColor = [[SSDB5 theme] colorForKey:@"cell_bg_color"];
-        [self addSubview:cellBg];
-        CALayer *layer = [cellBg layer];
+        self.cellBg = [[UIImageView alloc] initWithFrame:CGRectMake(leftMargin, topMargin, width, height)];
+        self.cellBg.backgroundColor = [[SSDB5 theme] colorForKey:@"cell_bg_color"];
+        [self addSubview:self.cellBg];
+        CALayer *layer = [self.cellBg layer];
         [layer setMasksToBounds:YES];
         if (IS_IPAD)
         {
@@ -215,6 +215,15 @@
     self.viewsNumber.text = [NSString stringWithFormat:@"%d", data.numViews];
     self.likesNumber.text = [NSString stringWithFormat:@"%d", data.numFavorites];
     self.downloadsNumber.text = [NSString stringWithFormat:@"%d", data.numFavorites];
+    if (data.checkIsDownloaded)
+    {
+        float width = (IS_IPAD) ? 40.f : 20.f;
+        UIImage *downloaded = [UIImage imageNamed:@"downloaded.png"];
+        UIImageView *downloadedWrap = [[UIImageView alloc] initWithFrame:CGRectMake(self.cellBg.frame.size.width - width, self.cellBg.frame.size.height - width, width, width)];
+        [downloadedWrap setImage:downloaded];
+        //downloadedWrap.backgroundColor = [UIColor clearColor];
+        [self.cellBg addSubview:downloadedWrap];
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
