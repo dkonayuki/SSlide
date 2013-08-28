@@ -110,6 +110,8 @@
 		<integer>18</integer>
 		<key>setting_label_font_size_ipad</key>
 		<integer>30</integer>
+		<key>default_username</key>
+		<string>defaultuser</string>
 	</dict>
 </dict>
 </plist>

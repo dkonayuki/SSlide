@@ -7,6 +7,7 @@
 //
 
 #import "SSUser.h"
+#import "SSDB5.h"
 
 @implementation SSUser
 @synthesize username = mUsername;
@@ -19,6 +20,17 @@
     if (self) {
         self.username = username;
         self.password = password;
+        self.tags = [[NSMutableArray alloc] init];
+    }
+    return self;
+}
+
+- (id)initDefaultUser
+{
+    self = [super init];
+    if (self) {
+        self.username = [[SSDB5 theme] stringForKey:@"defaul_username"];
+        self.password = nil;
         self.tags = [[NSMutableArray alloc] init];
     }
     return self;

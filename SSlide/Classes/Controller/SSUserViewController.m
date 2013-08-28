@@ -63,10 +63,7 @@
     {
         self.settingsViewController = [[SSSettingsViewController alloc] init];
     }
-    @synchronized(self)
-    {
-        [self presentPopupViewController:self.settingsViewController animationType:MJPopupViewAnimationSlideLeftLeft];
-    }
+    [self presentPopupViewController:self.settingsViewController animationType:MJPopupViewAnimationSlideLeftLeft];
 }
 
 #pragma mark - SSUserViewDelegate
@@ -85,9 +82,7 @@
 
 - (NSString *)getUsernameDel
 {
-    SSUser *curUser = [SSAppData sharedInstance].currentUser;
-    NSString *username = curUser ? curUser.username : @"howdy!";
-    return  username;
+    return [SSAppData sharedInstance].currentUser.username;
 }
 
 #pragma mark - SSTopView delegate

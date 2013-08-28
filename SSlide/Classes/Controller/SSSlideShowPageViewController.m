@@ -97,6 +97,12 @@
 
 - (void)startStreaming 
 {
+    // checklogin
+    if (![[SSAppData sharedInstance] isLogined]) {
+        [SVProgressHUD showErrorWithStatus:@"Please login!"];
+        return;
+    }
+    
     NSString *curUsername = [SSAppData sharedInstance].currentUser.username;
     self.channel = [NSString stringWithFormat:@"/%@/%@", curUsername, self.currentSlide.slideId];
     
