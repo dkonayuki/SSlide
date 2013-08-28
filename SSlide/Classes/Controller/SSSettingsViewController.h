@@ -8,6 +8,16 @@
 
 #import "SSViewController.h"
 
+@protocol SSSettingsViewControllerDelegate <NSObject>
+
+- (void)reloadSettingsDataDel;
+
+@end
+
 @interface SSSettingsViewController : SSViewController
+
+- (id)initWithDelegate:(id)delegate;
+
+@property (weak, nonatomic) id delegate;
 
 @end

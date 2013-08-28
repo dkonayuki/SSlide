@@ -30,6 +30,15 @@
     return self;
 }
 
+- (id)initWithDelegate:(id)delegate
+{
+    self = [super init];
+    if (self) {
+        self.delegate = delegate;
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -62,6 +71,8 @@
             [SSAppData saveAppData];
             [SVProgressHUD showSuccessWithStatus:@"OK"];
             [self.myView refreshPosition];
+            // update user settings
+            [self.delegate reloadSettingsDataDel];
         } else {
             NSLog(@"Login fail");
             [SVProgressHUD showErrorWithStatus:@"Error"];
@@ -74,6 +85,8 @@
     [SSAppData sharedInstance].currentUser = [[SSUser alloc] initDefaultUser];
     [SSAppData saveAppData];
     [self.myView refreshPosition];
+    // update user settings
+    [self.delegate reloadSettingsDataDel];
 }
 
 - (BOOL)isLogined

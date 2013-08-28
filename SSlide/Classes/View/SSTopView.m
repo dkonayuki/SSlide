@@ -52,8 +52,8 @@
     self.slideListView = [[SSSlideListView alloc] initWithFrame:CGRectMake(0,
                                                                         topMargin,
                                                                         self.bounds.size.width,
-                                                                        self.bounds.size.height - topMargin)];
-    self.slideListView.delegate = self.delegate;
+                                                                        self.bounds.size.height - topMargin)
+                                                    andDelegate:self.delegate];
     [self addSubview:self.slideListView];
 }
 

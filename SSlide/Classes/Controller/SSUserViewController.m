@@ -14,7 +14,7 @@
 #import "SSAppData.h"
 #import "SSSlideShowPageViewController.h"
 
-@interface SSUserViewController () <SSUserViewDelegate, SSSlideListViewDelegate, SSSlideShowPageViewControllerDelegate>
+@interface SSUserViewController () <SSUserViewDelegate, SSSlideListViewDelegate, SSSlideShowPageViewControllerDelegate, SSSettingsViewControllerDelegate>
 
 @property (strong, nonatomic) SSUserView *myView;
 @property (strong, nonatomic) NSMutableArray *slideArray;
@@ -61,7 +61,7 @@
 {
     if (!self.settingsViewController)
     {
-        self.settingsViewController = [[SSSettingsViewController alloc] init];
+        self.settingsViewController = [[SSSettingsViewController alloc] initWithDelegate:self];
     }
     [self presentPopupViewController:self.settingsViewController animationType:MJPopupViewAnimationSlideLeftLeft];
 }
@@ -114,12 +114,18 @@
 
 - (void) reloadSlidesListDel
 {
-    [self.myView.slideListView.slideTableView reloadData];
+    [self.myView.slideListView reloadWithAnimation];
 }
 
 - (void)closePopupDel
 {
     [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationFade];
+}
+
+#pragma mark - SSSetingsViewController delegate
+- (void)reloadSettingsDataDel
+{
+    [self.myView refresh];
 }
 
 #pragma mark - private
@@ -135,7 +141,7 @@
                                         success:^(NSArray *result){
                                             if (!self.isDownloadedMode) {
                                                 [self.slideArray addObjectsFromArray:result];
-                                                [self.myView.slideListView.slideTableView reloadData];
+                                                [self.myView.slideListView reloadWithAnimation];
                                                 if ([result count] < [[SSDB5 theme] integerForKey:@"slide_num_in_page"]){
                                                     self.endOfSlidesList = YES;
                                                 } else {
@@ -152,7 +158,7 @@
 - (void)getDownloadedSlideshows
 {
     self.slideArray = [[SSAppData sharedInstance] downloadedSlides];
-    [self.myView.slideListView.slideTableView reloadData];
+    [self.myView.slideListView reloadWithAnimation];
 }
 
 @end

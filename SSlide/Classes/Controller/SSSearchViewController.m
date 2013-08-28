@@ -51,13 +51,13 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)getMoreSlides
+- (void)getMoreSlides:(void (^)(void))completed
 {
     self.currentPage ++;
-    [self searchText:self.currentText firstTime:FALSE];
+    [self searchText:self.currentText firstTime:FALSE completion:completed];
 }
 
-- (void)searchText:(NSString *)text firstTime:(BOOL)fTime
+- (void)searchText:(NSString *)text firstTime:(BOOL)fTime completion:(void (^)(void))completed
 {
     BOOL isSame = TRUE;
     if (![self.currentText isEqualToString:text] || fTime)
@@ -67,8 +67,10 @@
         self.currentPage = 1;
     }
     [self.myView moveToTop];
-
-    [SVProgressHUD showWithStatus:@"Loading"];
+    
+    if (fTime) {
+        [SVProgressHUD showWithStatus:@"Loading"];
+    }
     
     if ([text hasPrefix:@"#"]) {
         NSString *searchText = [text substringFromIndex:1];
@@ -124,11 +126,13 @@
                                              }
                                              [self.slideArray addObjectsFromArray:result];
                                              [self.myView initSlideListView];
-                                             [self.myView.slideListView.slideTableView reloadData];
+                                             [self.myView.slideListView reloadWithAnimation];
+                                             completed();
                                          }
                                          failure:^(void) {     // TODO: error handling
                                              NSLog(@"search ERROR");
                                              [SVProgressHUD dismiss];
+                                             completed();
                                          }];
     }
 }

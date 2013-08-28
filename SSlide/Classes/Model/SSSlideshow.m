@@ -14,7 +14,7 @@
 
 @interface SSSlideshow()
 
-//@property (assign, nonatomic) BOOL isDownloaded;
+@property (assign, nonatomic) BOOL isDownloaded;
 @property (copy, nonatomic) NSString *localBasePath;
 @property (assign) NSUInteger downloadedNum;
 
@@ -34,8 +34,8 @@
 @synthesize slideImageBaseurl = mSlideImageBaseurl;
 @synthesize slideImageBaseurlSuffix = mSlideImageBaseurlSuffix;
 @synthesize firstPageImageUrl = mFirstPageImageUrl;
-//@synthesize isDownloaded = mIsDownloaded;
 @synthesize localBasePath = mLocalBasePath;
+@synthesize downloadedNum = mIsDownloaded;
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
@@ -55,7 +55,7 @@
         mSlideImageBaseurlSuffix = [aDecoder decodeObjectForKey:@"mSlideImageBaseurlSuffix"];
         mFirstPageImageUrl = [aDecoder decodeObjectForKey:@"mFirstPageImageUrl"];
         
-        //mIsDownloaded = [aDecoder decodeBoolForKey:@"mIsDownloaded"];
+        mIsDownloaded = [aDecoder decodeBoolForKey:@"mIsDownloaded"];
         mLocalBasePath = [aDecoder decodeObjectForKey:@"mLocalBasePath"];
     }
     return self;
@@ -78,7 +78,7 @@
     [aCoder encodeObject:mSlideImageBaseurlSuffix forKey:@"mSlideImageBaseurlSuffix"];
     [aCoder encodeObject:mFirstPageImageUrl forKey:@"mFirstPageImageUrl"];
     
-    //[aCoder encodeBool:mIsDownloaded forKey:@"mIsDownloaded"];
+    [aCoder encodeBool:mIsDownloaded forKey:@"mIsDownloaded"];
     [aCoder encodeObject:mLocalBasePath forKey:@"mLocalBasePath"];
 }
 
@@ -86,7 +86,7 @@
 {
     self = [super init];
     if (self) {
-        //self.isDownloaded = NO;
+        mIsDownloaded = NO;
     }
     return self;
 }
@@ -157,21 +157,17 @@
 
 - (BOOL)checkIsDownloaded
 {
-    NSArray *downloadedSlides = [[SSAppData sharedInstance] downloadedSlides];
-    NSMutableArray *downloadedSlidesID = [[NSMutableArray alloc] init];
-    for (SSSlideshow *slide in downloadedSlides)
-    {
-        [downloadedSlidesID addObject:slide.slideId];
+    return self.isDownloaded;
+}
+
+- (BOOL)checkIsDownloadedAsNew
+{
+    for (SSSlideshow *s in [SSAppData sharedInstance].downloadedSlides) {
+        if ([s.slideId isEqualToString:self.slideId]) {
+            return YES;
+        }
     }
-    NSInteger ind = [downloadedSlidesID indexOfObject:self.slideId];
-    if (ind != NSNotFound)
-    {
-        return YES;
-    }
-    else
-    {
-        return NO;
-    }
+    return NO;
 }
 
 - (NSString *)remoteUrlOfImageAtPage:(NSUInteger)index
@@ -233,6 +229,7 @@
                                                                 NSLog(@"finish: %d, %d, %d", [operations count], self.downloadedNum, self.totalSlides);
                                                                 NSLog(@"part = %d", fromPart);
                                                                 if (self.downloadedNum >= self.totalSlides) {
+                                                                    self.isDownloaded = YES;
                                                                     [[SSAppData sharedInstance].downloadedSlides addObject:self];
                                                                     [SSAppData saveAppData];
                                                                     completion(YES);

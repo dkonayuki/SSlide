@@ -9,6 +9,7 @@
 #import "SSTopViewController.h"
 #import "SSTopView.h"
 #import "SSApi.h"
+#import "SSAppData.h"
 #import "SSSlideshow.h"
 #import "SSSlideShowPageViewController.h"
 #import <UIViewController+MJPopupViewController.h>
@@ -46,7 +47,8 @@
     // show loading
     [SVProgressHUD showWithStatus:@"Loading"];
     // get first slide
-    [self getTopSlideshows];
+    [self getTopSlideshows:^(void) {
+    }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -66,10 +68,10 @@
     return [self.slideArray objectAtIndex:index];
 }
 
-- (void)getMoreSlides
+- (void)getMoreSlides:(void (^)(void))completed
 {
     self.currentPage ++;
-    [self getTopSlideshows];
+    [self getTopSlideshows:completed];
 }
 
 - (void)didSelectedAtIndex:(int)index
@@ -90,20 +92,24 @@
 }
 
 #pragma mark - private
-- (void)getTopSlideshows
+- (void)getTopSlideshows:(void (^)(void))completed
 {
     // TODO: get setting info
-    [[SSApi sharedInstance] getMostViewedSlideshows:@"Ruby"
+    NSMutableArray *tags = [SSAppData sharedInstance].currentUser.tags;
+    NSString *keyword = [tags count] > 0 ? [tags objectAtIndex:0] : [[SSDB5 theme] stringForKey:@"default_tag"];
+    [[SSApi sharedInstance] getMostViewedSlideshows:keyword
                                                page:self.currentPage
                                        itemsPerPage:[[SSDB5 theme] integerForKey:@"slide_num_in_page"]
                                             success:^(NSArray *result){
                                                 // stop loading status
                                                 [SVProgressHUD dismiss];
                                                 [self.slideArray addObjectsFromArray:result];
-                                                [self.myView.slideListView.slideTableView reloadData];
+                                                [self.myView.slideListView reloadWithAnimation];
+                                                completed();
                                             }
                                             failure:^(void) {     // TODO: error handling
                                                 [SVProgressHUD dismiss];
+                                                completed();
                                                 NSLog(@"MostViewed ERROR");
                                             }];
 }
