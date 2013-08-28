@@ -15,6 +15,8 @@
 
 @interface SSSettingsViewController () <SSSettingsViewDelegate, SSTagsListViewDelegate>
 
+@property (strong, nonatomic) SSSettingsView *myView;
+
 @end
 
 @implementation SSSettingsViewController
@@ -38,8 +40,8 @@
     float topMargin = self.view.bounds.size.height / wR;
     float width = self.view.bounds.size.width - 2*leftMargin;
     float height = self.view.bounds.size.height - 2*topMargin;
-    SSSettingsView *myView = [[SSSettingsView alloc] initWithFrame:CGRectMake(leftMargin, topMargin, width, height) andDelegate:self];
-    self.view = myView;
+    self.myView = [[SSSettingsView alloc] initWithFrame:CGRectMake(leftMargin, topMargin, width, height) andDelegate:self];
+    self.view = self.myView;
 }
 
 - (void)didReceiveMemoryWarning
@@ -59,6 +61,7 @@
             [[SSAppData sharedInstance] setCurrentUser:newUser];
             [SSAppData saveAppData];
             [SVProgressHUD showSuccessWithStatus:@"OK"];
+            [self.myView refreshPosition];
         } else {
             NSLog(@"Login fail");
             [SVProgressHUD showErrorWithStatus:@"Error"];
@@ -70,6 +73,7 @@
 {
     [SSAppData sharedInstance].currentUser = nil;
     [SSAppData saveAppData];
+    [self.myView refreshPosition];
 }
 
 - (BOOL)isLogined

@@ -63,10 +63,7 @@
     {
         self.settingsViewController = [[SSSettingsViewController alloc] init];
     }
-    @synchronized(self)
-    {
-        [self presentPopupViewController:self.settingsViewController animationType:MJPopupViewAnimationSlideLeftLeft];
-    }
+    [self presentPopupViewController:self.settingsViewController animationType:MJPopupViewAnimationSlideLeftLeft];
 }
 
 #pragma mark - SSUserViewDelegate

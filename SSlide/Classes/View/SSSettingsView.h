@@ -19,4 +19,6 @@
 
 @interface SSSettingsView : SSView
 
+- (void)refreshPosition;
+
 @end
