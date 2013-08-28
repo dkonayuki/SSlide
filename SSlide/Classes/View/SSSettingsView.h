@@ -12,6 +12,7 @@
 
 - (void)loginActionDel;
 - (void)logoutActionDel;
+- (NSMutableArray *)getTagStringsDel;
 
 @end
 

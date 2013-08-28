@@ -11,8 +11,9 @@
 #import "SSApi.h"
 #import "SSAppData.h"
 #import "SSUser.h"
+#import "SSTagsListView.h"
 
-@interface SSSettingsViewController () <SSSettingsViewDelegate>
+@interface SSSettingsViewController () <SSSettingsViewDelegate, SSTagsListViewDelegate>
 
 @end
 
@@ -71,6 +72,24 @@
 - (void)logoutActionDel
 {
     
+}
+
+- (NSMutableArray *)getTagStringsDel
+{
+    return [SSAppData sharedInstance].currentUser.tags;
+}
+
+#pragma SSTagsListView delegate
+- (void)didAddTag:(NSString *)tag
+{
+    [[SSAppData sharedInstance].currentUser.tags addObject:tag];
+    [SSAppData saveAppData];
+}
+
+- (void)didRemoveTag:(NSString *)tag
+{
+    [[SSAppData sharedInstance].currentUser.tags removeObject:tag];
+    [SSAppData saveAppData];
 }
 
 @end

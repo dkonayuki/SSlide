@@ -20,8 +20,6 @@
 		43357C8317CC6088007CD24D /* Quicksand.otf in Resources */ = {isa = PBXBuildFile; fileRef = 43357C8017CC6088007CD24D /* Quicksand.otf */; };
 		43357C8417CC6088007CD24D /* VBAMASH.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 43357C8117CC6088007CD24D /* VBAMASH.TTF */; };
 		435C124817C731FE001FAA8E /* SSSlideListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 435C124717C731FE001FAA8E /* SSSlideListView.m */; };
-		43E2D6B917CB3F5200BB59A6 /* SSTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 43E2D6B817CB3F5200BB59A6 /* SSTag.m */; };
-		43E2D6BC17CB50EA00BB59A6 /* SSTagAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 43E2D6BB17CB50EA00BB59A6 /* SSTagAdd.m */; };
 		DC01E00E17C9CC440096254A /* FayeClient.m in Sources */ = {isa = PBXBuildFile; fileRef = DC01E00517C9CC440096254A /* FayeClient.m */; };
 		DC01E00F17C9CC440096254A /* FayeMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = DC01E00717C9CC440096254A /* FayeMessage.m */; };
 		DC01E01017C9CC440096254A /* NSObject+PropertySupport.m in Sources */ = {isa = PBXBuildFile; fileRef = DC01E00917C9CC440096254A /* NSObject+PropertySupport.m */; };
@@ -62,6 +60,9 @@
 		DC56EEE117CB266B005866B2 /* download_slide_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC56EEDF17CB266A005866B2 /* download_slide_icon@2x.png */; };
 		DC70E57817C49B49004633F2 /* SSTopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC70E57717C49B49004633F2 /* SSTopViewController.m */; };
 		DC70E57B17C49BCD004633F2 /* SSTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC70E57A17C49BCD004633F2 /* SSTopView.m */; };
+		DC86F8D717CCF92D0029844C /* SSTagsListView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC86F8D617CCF92D0029844C /* SSTagsListView.m */; };
+		DC86F8DA17CCF93F0029844C /* SSTagView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC86F8D917CCF93E0029844C /* SSTagView.m */; };
+		DC86F8DD17CD189E0029844C /* SSAddTagView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC86F8DC17CD189D0029844C /* SSAddTagView.m */; };
 		DCB5A5FA17C4F2970089809C /* SSSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB5A5F917C4F2970089809C /* SSSearchViewController.m */; };
 		DCB5A5FD17C4F2C50089809C /* SSUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB5A5FC17C4F2C50089809C /* SSUserViewController.m */; };
 		DCB5A60317C4F7920089809C /* SSSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB5A60217C4F7920089809C /* SSSearchView.m */; };
@@ -117,10 +118,6 @@
 		43357C8117CC6088007CD24D /* VBAMASH.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = VBAMASH.TTF; sourceTree = "<group>"; };
 		435C124617C731FD001FAA8E /* SSSlideListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSSlideListView.h; path = Classes/View/SSSlideListView.h; sourceTree = "<group>"; };
 		435C124717C731FE001FAA8E /* SSSlideListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSSlideListView.m; path = Classes/View/SSSlideListView.m; sourceTree = "<group>"; };
-		43E2D6B717CB3F5200BB59A6 /* SSTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSTag.h; path = Classes/View/SSTag.h; sourceTree = "<group>"; };
-		43E2D6B817CB3F5200BB59A6 /* SSTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSTag.m; path = Classes/View/SSTag.m; sourceTree = "<group>"; };
-		43E2D6BA17CB50E900BB59A6 /* SSTagAdd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSTagAdd.h; path = Classes/View/SSTagAdd.h; sourceTree = "<group>"; };
-		43E2D6BB17CB50EA00BB59A6 /* SSTagAdd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSTagAdd.m; path = Classes/View/SSTagAdd.m; sourceTree = "<group>"; };
 		7E2702BF3BD1401A8049CA77 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC01E00417C9CC440096254A /* FayeClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FayeClient.h; path = Classes/Utilities/FayeClient.h; sourceTree = "<group>"; };
 		DC01E00517C9CC440096254A /* FayeClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FayeClient.m; path = Classes/Utilities/FayeClient.m; sourceTree = "<group>"; };
@@ -181,6 +178,12 @@
 		DC70E57717C49B49004633F2 /* SSTopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSTopViewController.m; path = Classes/Controller/SSTopViewController.m; sourceTree = "<group>"; };
 		DC70E57917C49BCD004633F2 /* SSTopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSTopView.h; path = Classes/View/SSTopView.h; sourceTree = "<group>"; };
 		DC70E57A17C49BCD004633F2 /* SSTopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSTopView.m; path = Classes/View/SSTopView.m; sourceTree = "<group>"; };
+		DC86F8D517CCF92D0029844C /* SSTagsListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSTagsListView.h; path = Classes/View/SSTagsListView.h; sourceTree = "<group>"; };
+		DC86F8D617CCF92D0029844C /* SSTagsListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSTagsListView.m; path = Classes/View/SSTagsListView.m; sourceTree = "<group>"; };
+		DC86F8D817CCF93E0029844C /* SSTagView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSTagView.h; path = Classes/View/SSTagView.h; sourceTree = "<group>"; };
+		DC86F8D917CCF93E0029844C /* SSTagView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSTagView.m; path = Classes/View/SSTagView.m; sourceTree = "<group>"; };
+		DC86F8DB17CD189D0029844C /* SSAddTagView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSAddTagView.h; path = Classes/View/SSAddTagView.h; sourceTree = "<group>"; };
+		DC86F8DC17CD189D0029844C /* SSAddTagView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSAddTagView.m; path = Classes/View/SSAddTagView.m; sourceTree = "<group>"; };
 		DCB5A5F817C4F2970089809C /* SSSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSSearchViewController.h; path = Classes/Controller/SSSearchViewController.h; sourceTree = "<group>"; };
 		DCB5A5F917C4F2970089809C /* SSSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSSearchViewController.m; path = Classes/Controller/SSSearchViewController.m; sourceTree = "<group>"; };
 		DCB5A5FB17C4F2C50089809C /* SSUserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSUserViewController.h; path = Classes/Controller/SSUserViewController.h; sourceTree = "<group>"; };
@@ -461,10 +464,12 @@
 				435C124717C731FE001FAA8E /* SSSlideListView.m */,
 				DCD3009F17C708F600908CC9 /* SSSettingsView.h */,
 				DCD300A017C708F600908CC9 /* SSSettingsView.m */,
-				43E2D6B717CB3F5200BB59A6 /* SSTag.h */,
-				43E2D6B817CB3F5200BB59A6 /* SSTag.m */,
-				43E2D6BA17CB50E900BB59A6 /* SSTagAdd.h */,
-				43E2D6BB17CB50EA00BB59A6 /* SSTagAdd.m */,
+				DC86F8D517CCF92D0029844C /* SSTagsListView.h */,
+				DC86F8D617CCF92D0029844C /* SSTagsListView.m */,
+				DC86F8D817CCF93E0029844C /* SSTagView.h */,
+				DC86F8D917CCF93E0029844C /* SSTagView.m */,
+				DC86F8DB17CD189D0029844C /* SSAddTagView.h */,
+				DC86F8DC17CD189D0029844C /* SSAddTagView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -797,10 +802,11 @@
 				DC01E01017C9CC440096254A /* NSObject+PropertySupport.m in Sources */,
 				DC01E01117C9CC440096254A /* NSObject+Serialize.m in Sources */,
 				DC01E01217C9CC440096254A /* NSString+InflectionSupport.m in Sources */,
-				43E2D6B917CB3F5200BB59A6 /* SSTag.m in Sources */,
-				43E2D6BC17CB50EA00BB59A6 /* SSTagAdd.m in Sources */,
 				DC3A4A6617CC38CE00133DDF /* MNPageViewController.m in Sources */,
 				DC3A4A6717CC38CE00133DDF /* MNQueuingScrollView.m in Sources */,
+				DC86F8D717CCF92D0029844C /* SSTagsListView.m in Sources */,
+				DC86F8DA17CCF93F0029844C /* SSTagView.m in Sources */,
+				DC86F8DD17CD189E0029844C /* SSAddTagView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

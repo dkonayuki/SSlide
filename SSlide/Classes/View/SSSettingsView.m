@@ -9,17 +9,14 @@
 #import "SSSettingsView.h"
 #import <QuartzCore/QuartzCore.h>
 #import "SSAppData.h"
-#import "SSTag.h"
-#import "SSTagAdd.h"
+#import "SSTagsListView.h"
 
-@interface SSSettingsView() <SSTagAddDelegate, UITextFieldDelegate>
+@interface SSSettingsView() < UITextFieldDelegate>
 
-@property (strong, nonatomic) NSMutableArray *tags;
 @property (assign, nonatomic) float tagTopMargin;
 @property (assign, nonatomic) float tagLeftMargin;
 @property (assign, nonatomic) float width;
 @property (assign, nonatomic) float height;
-@property (strong, nonatomic) SSTagAdd *tagAdd;
 @property (assign, nonatomic) CGPoint originViewCenter;
 
 @end
@@ -52,44 +49,24 @@
     tagsLabel.textAlignment = NSTextAlignmentCenter;
     [self addSubview:tagsLabel];
     
-    
     topMargin += 40.f;
     //init tags
     self.tagTopMargin = topMargin;
     self.tagLeftMargin = leftMargin;
-
-    self.tags = [[NSMutableArray alloc] initWithArray:[[[SSAppData sharedInstance] currentUser] tags]];
-    for (NSString *tag in self.tags)
-    {
-        SSTag *tagView = [[SSTag alloc] initWithFrame:CGRectMake(self.tagLeftMargin, self.tagTopMargin, self.width, self.height) andName:tag];
-        if (self.tagLeftMargin + tagView.frame.size.width + 5.f >= self.width)
-        {
-            CGRect myFrame = tagView.frame;
-            myFrame.origin.y += self.height;
-            myFrame.origin.x = 0;
-            tagView.frame = myFrame;
-            self.tagLeftMargin = tagView.frame.size.width + 5.f;
-            self.tagTopMargin += self.height;
-        }
-        else
-        {
-            self.tagLeftMargin += tagView.frame.size.width + 5.f;
-        }
-        [self addSubview:tagView];
-    }
-    self.tagAdd = [[SSTagAdd alloc] initWithFrame:CGRectMake(self.tagLeftMargin, self.tagTopMargin, self.width, self.height)];
-    if (self.tagLeftMargin + self.tagAdd.frame.size.width + 5.f >= self.width)
-    {
-        CGRect myFrame = self.tagAdd.frame;
-        myFrame.origin.y += self.height;
-        self.tagAdd.frame = myFrame;
-    }
-    self.tagAdd.delegate = self;
-    [self addSubview:self.tagAdd];
-
+    
+    leftMargin = 10.f;
+    float width = self.bounds.size.width - 2*leftMargin;
+    float height = width*2/3;
+    SSTagsListView *listView = [[SSTagsListView alloc] initWithFrame:CGRectMake(leftMargin, topMargin, width, height)
+                                                         andDelegate:self.delegate
+                                                       andTagStrings:[self.delegate getTagStringsDel]];
+    [self addSubview:listView];
+    
+        
+    leftMargin = 0.f;
     
     //login label
-    topMargin += 125.f;
+    topMargin += IS_IPAD ? 300.f : 125.f;
     UILabel *loginLabel = [[UILabel alloc] initWithFrame:CGRectMake(leftMargin, topMargin, self.width, self.height)];
     loginLabel.text = [[SSDB5 theme]stringForKey:@"login_label"];
     loginLabel.textAlignment = NSTextAlignmentCenter;
@@ -127,45 +104,6 @@
     [self addSubview:authenticateBtn];
     
     self.originViewCenter = self.center;
-}
-
-- (void) addTag:(NSString *)name;
-{
-    if ((name != nil) && (![name isEqualToString:@""]))
-    {
-        [self.tags addObject:name];
-        SSTag *tagView = [[SSTag alloc] initWithFrame:CGRectMake(self.tagLeftMargin, self.tagTopMargin, self.width, 40.f) andName:name];
-        if (self.tagLeftMargin + tagView.frame.size.width + 5.f >= self.width)
-        {
-            CGRect myFrame = tagView.frame;
-            myFrame.origin.y += self.height;
-            myFrame.origin.x = 0.f;
-            tagView.frame = myFrame;
-            self.tagLeftMargin = tagView.frame.size.width + 5.f;
-            self.tagTopMargin += self.height;
-        }
-        else {
-            self.tagLeftMargin += tagView.frame.size.width + 5.f;
-        }
-        [self addSubview:tagView];
-        
-       //check add button position
-        if (self.tagLeftMargin + self.tagAdd.frame.size.width + 5.f >= self.width)
-        {
-            CGRect myFrame = self.tagAdd.frame;
-            myFrame.origin.y += self.height;
-            myFrame.origin.x = 0;
-            self.tagTopMargin += self.height;
-            self.tagLeftMargin = 0;
-            self.tagAdd.frame = myFrame;
-        }
-        else
-        {
-            CGRect myFrame = self.tagAdd.frame;
-            myFrame.origin.x += tagView.frame.size.width + 5.f;
-            self.tagAdd.frame = myFrame;
-        }
-    }
 }
 
 - (void)authenticateBtnPressed:(id)sender
