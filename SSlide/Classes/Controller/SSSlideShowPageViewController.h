@@ -11,7 +11,8 @@
 
 @protocol SSSlideShowPageViewControllerDelegate <NSObject>
 
-- (void)closePopup;
+- (void)closePopupDel;
+- (void)reloadSlidesListDel;
 
 @end
 

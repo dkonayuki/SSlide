@@ -116,8 +116,11 @@
 
 - (void)searchText
 {
-    [self.delegate searchText:self.searchTextField.text firstTime:TRUE];
-    [self endEditing:YES];
+    if (self.searchTextField.text && ![self.searchTextField.text isEqualToString:@""])
+    {
+        [self.delegate searchText:self.searchTextField.text firstTime:TRUE];
+        [self endEditing:YES];
+    }
 }
 
 - (void)deleteText
@@ -127,8 +130,11 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    [self.delegate searchText:textField.text firstTime:TRUE];
-    [textField resignFirstResponder];
+    if (self.searchTextField.text && ![self.searchTextField.text isEqualToString:@""])
+    {
+        [self.delegate searchText:textField.text firstTime:TRUE];
+        [textField resignFirstResponder];
+    }
     return YES;
 }
 

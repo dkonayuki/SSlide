@@ -165,16 +165,16 @@
             subMargin *= 2.2;
         }
         //number of views
-        UIImageView *view = [[UIImageView alloc] initWithFrame:CGRectMake(leftMargin, topMargin, subWidth, height)];
-        [view setImage:[UIImage imageNamed:@"view.png"]];
-        view.alpha = 0.5f;
-        view.contentMode = UIViewContentModeScaleAspectFit;
-        [self addSubview:view];
-        self.viewsNumber = [[UILabel alloc] initWithFrame:CGRectMake(leftMargin + subWidth + subMargin, topMargin, width / 3 - subWidth, height)];
-        self.viewsNumber.textColor = [[SSDB5 theme] colorForKey:@"slide_title_color"];
-        self.viewsNumber.font = [UIFont fontWithName:@"Candara" size:detailsFontSize];
-        self.viewsNumber.backgroundColor = [UIColor clearColor];
-        [self addSubview:self.viewsNumber];
+        UIImageView *download = [[UIImageView alloc] initWithFrame:CGRectMake(leftMargin, topMargin, subWidth, height)];
+        [download setImage:[UIImage imageNamed:@"downloadcell.png"]];
+        download.alpha = 0.5f;
+        download.contentMode = UIViewContentModeScaleAspectFit;
+        [self addSubview:download];
+        self.downloadsNumber = [[UILabel alloc] initWithFrame:CGRectMake(leftMargin + subWidth + subMargin, topMargin, width / 3 - subWidth, height)];
+        self.downloadsNumber.textColor = [[SSDB5 theme] colorForKey:@"slide_title_color"];
+        self.downloadsNumber.font = [UIFont fontWithName:@"Candara" size:detailsFontSize];
+        self.downloadsNumber.backgroundColor = [UIColor clearColor];
+        [self addSubview:self.downloadsNumber];
         
         //number of likes
         UIImageView *like = [[UIImageView alloc] initWithFrame:CGRectMake(leftMargin + width/3, topMargin, subWidth, height)];
@@ -189,16 +189,16 @@
         [self addSubview:self.likesNumber];
 
         //number of downloads
-        UIImageView *download = [[UIImageView alloc] initWithFrame:CGRectMake(leftMargin + width*2/3, topMargin, subWidth, height)];
-        download.alpha = 0.5f;
-        [download setImage:[UIImage imageNamed:@"downloadcell.png"]];
-        download.contentMode = UIViewContentModeScaleAspectFit;
-        [self addSubview:download];
-        self.downloadsNumber = [[UILabel alloc] initWithFrame:CGRectMake(leftMargin + width*2/3 + subWidth + subMargin, topMargin, width / 3 - subWidth, height)];
-        self.downloadsNumber.textColor = [[SSDB5 theme] colorForKey:@"slide_title_color"];
-        self.downloadsNumber.font = [UIFont fontWithName:@"Candara" size:detailsFontSize];
-        self.downloadsNumber.backgroundColor = [UIColor clearColor];
-        [self addSubview:self.downloadsNumber];
+        UIImageView *view = [[UIImageView alloc] initWithFrame:CGRectMake(leftMargin + width*2/3, topMargin, subWidth, height)];
+        view.alpha = 0.5f;
+        [view setImage:[UIImage imageNamed:@"view.png"]];
+        view.contentMode = UIViewContentModeScaleAspectFit;
+        [self addSubview:view];
+        self.viewsNumber = [[UILabel alloc] initWithFrame:CGRectMake(leftMargin + width*2/3 + subWidth + subMargin, topMargin, width / 3 - subWidth, height)];
+        self.viewsNumber.textColor = [[SSDB5 theme] colorForKey:@"slide_title_color"];
+        self.viewsNumber.font = [UIFont fontWithName:@"Candara" size:detailsFontSize];
+        self.viewsNumber.backgroundColor = [UIColor clearColor];
+        [self addSubview:self.viewsNumber];
         
         self.contentView.backgroundColor = [UIColor clearColor];
     }

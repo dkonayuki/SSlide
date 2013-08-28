@@ -14,7 +14,7 @@
 #import "SSAppData.h"
 #import "SSSlideShowPageViewController.h"
 
-@interface SSUserViewController () <SSUserViewDelegate, SSSlideListViewDelegate>
+@interface SSUserViewController () <SSUserViewDelegate, SSSlideListViewDelegate, SSSlideShowPageViewControllerDelegate>
 
 @property (strong, nonatomic) SSUserView *myView;
 @property (strong, nonatomic) NSMutableArray *slideArray;
@@ -117,7 +117,12 @@
     [self presentPopupViewController:self.pageViewController animationType:MJPopupViewAnimationFade];
 }
 
-- (void)closePopup
+- (void) reloadSlidesListDel
+{
+    [self.myView.slideListView.slideTableView reloadData];
+}
+
+- (void)closePopupDel
 {
     [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationFade];
 }

@@ -79,7 +79,12 @@
     [self presentPopupViewController:self.pageViewController animationType:MJPopupViewAnimationFade];
 }
 
-- (void)closePopup
+- (void) reloadSlidesListDel
+{
+    [self.myView.slideListView.slideTableView reloadData];
+}
+
+- (void)closePopupDel
 {
     [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationFade];
 }

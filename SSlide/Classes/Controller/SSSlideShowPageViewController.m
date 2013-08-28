@@ -234,7 +234,7 @@
 #pragma mark - SSSlideShowViewControllerDelegate
 - (void)closePopup
 {
-    [self.delegate closePopup];
+    [self.delegate closePopupDel];
 }
 
 - (BOOL)isMasterDel
@@ -271,10 +271,11 @@
 {
     if (![self.currentSlide checkIsDownloaded]) {
         [self.currentSlide download:^(float percent) {
-            NSLog(@"download: %f", percent);
+            //NSLog(@"download: %f", percent);
             [self.controlView setDownloadProgress:percent];
         } completion:^(BOOL result){
             [SVProgressHUD showSuccessWithStatus:@"OK"];
+            [self.delegate reloadSlidesListDel];
             [self.controlView setFinishDownload];
         }];
     } else {
