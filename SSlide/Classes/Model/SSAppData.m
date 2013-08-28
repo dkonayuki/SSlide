@@ -26,7 +26,7 @@
             sharedSSAppData.currentUser = [NSKeyedUnarchiver unarchiveObjectWithFile:filePath];
             NSLog(@"OK! Data has been loaded from .dat file");
         } else {
-            sharedSSAppData.currentUser = [[SSUser alloc] initWith:@"defaultuser" password:nil];
+            sharedSSAppData.currentUser = [[SSUser alloc] initDefaultUser];
         }
         
         // load downloaded slide data

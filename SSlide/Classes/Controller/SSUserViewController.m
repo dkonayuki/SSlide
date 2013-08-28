@@ -82,9 +82,7 @@
 
 - (NSString *)getUsernameDel
 {
-    SSUser *curUser = [SSAppData sharedInstance].currentUser;
-    NSString *username = curUser ? curUser.username : @"howdy!";
-    return  username;
+    return [SSAppData sharedInstance].currentUser.username;
 }
 
 #pragma mark - SSTopView delegate

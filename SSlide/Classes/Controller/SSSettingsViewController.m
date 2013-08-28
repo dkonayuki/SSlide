@@ -71,7 +71,7 @@
 
 - (void)logoutActionDel
 {
-    [SSAppData sharedInstance].currentUser = nil;
+    [SSAppData sharedInstance].currentUser = [[SSUser alloc] initDefaultUser];
     [SSAppData saveAppData];
     [self.myView refreshPosition];
 }

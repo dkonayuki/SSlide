@@ -15,5 +15,6 @@
 @property (strong, nonatomic) NSMutableArray *tags;
 
 - (id)initWith:(NSString *)username password:(NSString *)password;
+- (id)initDefaultUser;
 
 @end
