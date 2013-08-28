@@ -112,6 +112,8 @@
 		<integer>30</integer>
 		<key>default_username</key>
 		<string>defaultuser</string>
+		<key>default_tag</key>
+		<string>Ruby</string>
 	</dict>
 </dict>
 </plist>

@@ -21,6 +21,7 @@
         self.username = username;
         self.password = password;
         self.tags = [[NSMutableArray alloc] init];
+        [self.tags addObject:[[SSDB5 theme] stringForKey:@"default_tag"]];
     }
     return self;
 }
@@ -29,9 +30,10 @@
 {
     self = [super init];
     if (self) {
-        self.username = [[SSDB5 theme] stringForKey:@"defaul_username"];
+        self.username = [[SSDB5 theme] stringForKey:@"default_username"];
         self.password = nil;
         self.tags = [[NSMutableArray alloc] init];
+        [self.tags addObject:[[SSDB5 theme] stringForKey:@"default_tag"]];
     }
     return self;
 }
