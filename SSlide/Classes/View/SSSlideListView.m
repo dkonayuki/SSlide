@@ -72,15 +72,21 @@
         diffOffset *= 2.2;
     }
     
+    static BOOL sLoading = NO;
+    
     if (maximumOffset - currentOffset <= diffOffset)
     {
         UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         [spinner startAnimating];
         spinner.frame = CGRectMake(0, 0, 320, 44);
         self.slideTableView.tableFooterView = spinner;
-        [self.delegate getMoreSlides:^(void) {
-            self.slideTableView.tableFooterView = nil;
-        }];
+        if (!sLoading) {
+            sLoading = YES;
+            [self.delegate getMoreSlides:^(void) {
+                self.slideTableView.tableFooterView = nil;
+                sLoading = NO;
+            }];
+        }
     }
 }
 

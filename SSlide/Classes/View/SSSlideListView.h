@@ -14,6 +14,8 @@
 - (NSInteger) numberOfRows;
 - (SSSlideshow *) getDataAtIndex:(int)index;
 - (void) didSelectedAtIndex:(int)index;
+
+@optional
 - (void) getMoreSlides:(void (^)(void))completed;
 
 @end
