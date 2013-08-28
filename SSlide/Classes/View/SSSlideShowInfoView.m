@@ -46,23 +46,27 @@
 - (void)initView
 {
     float leftMargin = 5.f;
-    float topMargin = 5.f;
+    float topMargin = 12.f;
     float width = 100.f;
     float height = 40.f;
-    float pageWidth = 80.f;
-    
+    float pageWidth = 85.f;
+    float titleFontSize = 16.f;
+    float pageNumberFontSize = 14.f;
+
     if (IS_IPAD)
     {
+        pageNumberFontSize *= 2.2;
+        titleFontSize *= 2.2;
         leftMargin *= 2.2;
         topMargin *= 2.2;
         pageWidth *= 2.2;
         height *= 2.2;
     }
     //title
-    float titleFontSize = 16.f;
-    self.slideTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width, height)];
+    self.slideTitle = [[UILabel alloc] initWithFrame:CGRectMake(leftMargin, topMargin, width, height)];
     self.slideTitle.text = self.title;
     self.slideTitle.backgroundColor = [UIColor clearColor];
+    self.slideTitle.textColor = [[SSDB5 theme] colorForKey:@"info_title_text_color"];
     self.slideTitle.font = [UIFont fontWithName:[[SSDB5 theme] stringForKey:@"quicksand_font"] size:titleFontSize];
     [self.slideTitle sizeToFit];
     
@@ -71,31 +75,52 @@
     UIView *pageNumberBG =[[UIView alloc] initWithFrame:CGRectMake(width - pageWidth, 0, pageWidth, height)];
     pageNumberBG.backgroundColor = [[SSDB5 theme] colorForKey:@"info_pagenumber_bg_color"];
     
+    leftMargin += 5.f;
+    topMargin = 8.f;
+    float pageImageWidth = 15.f;
+    float pageImageHeight = 22.f;
+
+    if (IS_IPAD)
+    {
+        pageImageHeight *= 2.2;
+        pageImageWidth *= 2.2;
+        leftMargin += 5.f;
+        topMargin *= 2.2;
+    }
     //page image
-    float pageImageWidth = 20.f;
-    float pageImageHeight = 30.f;
-    float pageNumberFontSize = 14.f;
     UIImageView *pageImage = [[UIImageView alloc] initWithFrame:CGRectMake(leftMargin, topMargin, pageImageWidth, pageImageHeight)];
     [pageImage setImage:[UIImage imageNamed:@"page.png"]];
     [pageNumberBG addSubview:pageImage];
     
+    leftMargin += 8.f;
+    topMargin = 0.f;
+    if (IS_IPAD)
+    {
+        topMargin *= 2.2;
+        leftMargin += 8.f;
+    }
     //number page
     self.pageNumberLabel = [[UILabel alloc] initWithFrame:CGRectMake(pageImageWidth + leftMargin, topMargin, pageNumberBG.frame.size.width - pageImageWidth - leftMargin, height)];
     self.pageNumberLabel.text = [NSString stringWithFormat:@"%d/%d",1,self.totalPagesNumber];
     self.pageNumberLabel.backgroundColor = [UIColor clearColor];
     self.pageNumberLabel.font = [UIFont fontWithName:[[SSDB5 theme] stringForKey:@"quicksand_font"] size:pageNumberFontSize];
+    self.pageNumberLabel.textColor = [[SSDB5 theme] colorForKey:@"info_page_text_color"];
     [pageNumberBG addSubview:self.pageNumberLabel];
     
     //info background
     self.infoBG = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
     CALayer *layer = [self.infoBG layer];
     [layer setMasksToBounds:YES];
+    [layer setBorderColor:[[SSDB5 theme] colorForKey:@"info_pagenumber_bg_color"].CGColor];
+    layer.masksToBounds = YES;
     if (IS_IPAD)
     {
-        [layer setCornerRadius:4.0];
+        [layer setBorderWidth:2.0];
+        [layer setCornerRadius:8.0];
     } else
     {
-        [layer setCornerRadius:2.0];
+        [layer setBorderWidth:1.0];
+        [layer setCornerRadius:4.0];
     }
     self.infoBG.backgroundColor = [[SSDB5 theme] colorForKey:@"info_bg_color"];
     self.infoBG.center = CGPointMake(self.center.x, self.center.y);

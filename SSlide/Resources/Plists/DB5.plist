@@ -4,8 +4,12 @@
 <dict>
 	<key>Default</key>
 	<dict>
+		<key>info_page_text_color</key>
+		<string>ffffff</string>
+		<key>info_title_text_color</key>
+		<string>513c34</string>
 		<key>info_pagenumber_bg_color</key>
-		<string>97ce68</string>
+		<string>513c34</string>
 		<key>info_bg_color</key>
 		<string>ffffff</string>
 		<key>searchbar_text_color</key>

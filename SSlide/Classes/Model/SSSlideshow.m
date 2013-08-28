@@ -47,6 +47,7 @@
         mThumbnailUrl = [aDecoder decodeObjectForKey:@"mThumbnailUrl"];
         mCreated = [aDecoder decodeObjectForKey:@"mCreated"];
         
+        mTotalSlides = [aDecoder decodeIntegerForKey:@"mTotalSlides"];
         mNumDownloads = [aDecoder decodeIntegerForKey:@"mNumDownloads"];
         mNumViews = [aDecoder decodeIntegerForKey:@"mNumViews"];
         mNumFavorites = [aDecoder decodeIntegerForKey:@"mNumFavorites"];
@@ -70,6 +71,7 @@
     [aCoder encodeObject:mThumbnailUrl forKey:@"mThumbnailUrl"];
     [aCoder encodeObject:mCreated forKey:@"mCreated"];
     
+    [aCoder encodeInteger:mTotalSlides forKey:@"mTotalSlides"];
     [aCoder encodeInteger:mNumDownloads forKey:@"mNumDownloads"];
     [aCoder encodeInteger:mNumViews forKey:@"mNumViews"];
     [aCoder encodeInteger:mNumFavorites forKey:@"mNumFavorites"];

@@ -102,9 +102,8 @@
     //info view
     self.infoView = [[SSSlideShowInfoView alloc] initWithFrame:CGRectMake(0, 0, 100.f, cW) andTitle:self.currentSlide.title andTotalPages:self.currentSlide.totalSlides];
     [self.view addSubview:self.infoView];
-    [self.infoView sizeToFit];
-    self.infoView.transform = CGAffineTransformMakeRotation(M_PI_2);
     //[self.infoView sizeToFit];
+    self.infoView.transform = CGAffineTransformMakeRotation(M_PI_2);
     self.infoView.center = CGPointMake(cW/2, self.view.center.y);
     self.infoView.alpha = 0.f;
 }
