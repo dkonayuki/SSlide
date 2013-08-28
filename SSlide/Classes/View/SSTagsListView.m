@@ -44,19 +44,14 @@
 {
     self.tagViews = [[NSMutableArray alloc] init];
     for (NSString *text in self.tagStrings) {
-        SSTagView *tmp = [[SSTagView alloc] initWithFrame:CGRectMake(0, 0, 100, 50)
-                                              andDelegate:self
-                                                     text:text
-                                                 fontSize:16.f];
-        [self addSubview:tmp];
-        [self.tagViews addObject:tmp];
-        [tmp refresh];
+        [self createNewTag:text];
     }
     
     // addtag
+    float fontSize = IS_IPAD ? [[SSDB5 theme] floatForKey:@"tag_font_size_ipad"] : [[SSDB5 theme] floatForKey:@"tag_font_size_iphone"];
     self.addTagView = [[SSAddTagView alloc] initWithFrame:CGRectMake(0, 0, 100, 50)
                                               andDelegate:self
-                                                 fontSize:16.f];
+                                                 fontSize:fontSize];
     [self addSubview:self.addTagView];
     [self.addTagView refresh];
 
@@ -66,7 +61,7 @@
 - (void)redraw
 {
     float height = self.addTagView.frame.size.height;
-    float margin = 5.f;
+    float margin = IS_IPAD ? [[SSDB5 theme] floatForKey:@"tag_margin_ipad"] : [[SSDB5 theme] floatForKey:@"tag_margin_iphone"];
     float x = margin;
     int row = 0;
     for (SSTagView *tagView in self.tagViews) {
@@ -76,7 +71,7 @@
         }
         CGRect curRect = tagView.frame;
         curRect.origin.x = x;
-        curRect.origin.y = row*(height + 2*margin) + margin;
+        curRect.origin.y = row*(height + margin) + margin;
         tagView.frame = curRect;
         
         x += tagView.bounds.size.width + margin;
@@ -88,7 +83,7 @@
     }
     CGRect curRect = self.addTagView.frame;
     curRect.origin.x = x;
-    curRect.origin.y = row*(height + 2*margin) + margin;
+    curRect.origin.y = row*(height + margin) + margin;
     self.addTagView.frame = curRect;
     
     x += self.addTagView.bounds.size.width + margin;
@@ -112,14 +107,21 @@
 - (void)addTagDel:(NSString *)tagText
 {
     [self.delegate didAddTag:tagText];
-    SSTagView *tmp = [[SSTagView alloc] initWithFrame:CGRectMake(0, 0, 100, 50)
-                                          andDelegate:self
-                                                 text:tagText
-                                             fontSize:16.f];
-    [self addSubview:tmp];
-    [self.tagViews addObject:tmp];
-    [tmp refresh];
+    [self createNewTag:tagText];
     [self redraw];
+}
+
+#pragma mark - private
+- (void)createNewTag:(NSString *)text
+{
+    float fontSize = IS_IPAD ? [[SSDB5 theme] floatForKey:@"tag_font_size_ipad"] : [[SSDB5 theme] floatForKey:@"tag_font_size_iphone"];
+    SSTagView *newTag = [[SSTagView alloc] initWithFrame:CGRectMake(0, 0, 100, 50)
+                                             andDelegate:self
+                                                    text:text
+                                                fontSize:fontSize];
+    [self addSubview:newTag];
+    [self.tagViews addObject:newTag];
+    [newTag refresh];
 }
 
 @end

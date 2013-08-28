@@ -88,6 +88,14 @@
 		<string>FB4A56</string>
 		<key>tag_bg_color</key>
 		<string>17B28C</string>
+		<key>tag_margin_iphone</key>
+		<integer>7</integer>
+		<key>tag_margin_ipad</key>
+		<integer>12</integer>
+		<key>tag_font_size_ipad</key>
+		<integer>28</integer>
+		<key>tag_font_size_iphone</key>
+		<string>16</string>
 	</dict>
 </dict>
 </plist>
