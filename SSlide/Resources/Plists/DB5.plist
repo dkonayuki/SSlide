@@ -23,11 +23,13 @@
 		<key>cell_bg_color</key>
 		<string>eaeaea</string>
 		<key>login_label</key>
-		<string>Login</string>
+		<string>LOGIN</string>
 		<key>logout_label</key>
-		<string>Logout</string>
+		<string>LOGOUT</string>
 		<key>tags_label</key>
-		<string>Tags</string>
+		<string>TAGS</string>
+		<key>setting_label_color</key>
+		<string>585A59</string>
 		<key>page_top_margin_iphone</key>
 		<integer>55</integer>
 		<key>page_top_margin_ipad</key>

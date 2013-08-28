@@ -16,6 +16,7 @@
 @property (strong, nonatomic) NSMutableArray *downloadedSlides;
 
 - (NSArray *)mySlides;
+- (BOOL)isLogined;
 
 + (SSAppData *)sharedInstance;
 + (void)saveAppData;

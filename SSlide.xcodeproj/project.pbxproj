@@ -25,6 +25,7 @@
 		DC01E01017C9CC440096254A /* NSObject+PropertySupport.m in Sources */ = {isa = PBXBuildFile; fileRef = DC01E00917C9CC440096254A /* NSObject+PropertySupport.m */; };
 		DC01E01117C9CC440096254A /* NSObject+Serialize.m in Sources */ = {isa = PBXBuildFile; fileRef = DC01E00B17C9CC440096254A /* NSObject+Serialize.m */; };
 		DC01E01217C9CC440096254A /* NSString+InflectionSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = DC01E00D17C9CC440096254A /* NSString+InflectionSupport.m */; };
+		DC0388D817CDB9DA002100CD /* SSTextFieldView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC0388D717CDB9D9002100CD /* SSTextFieldView.m */; };
 		DC05A02517C73541000EE26F /* SSAppData.m in Sources */ = {isa = PBXBuildFile; fileRef = DC05A02417C73541000EE26F /* SSAppData.m */; };
 		DC05A02817C73581000EE26F /* SSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = DC05A02717C73581000EE26F /* SSUser.m */; };
 		DC081B5517C666F800A893C2 /* SSSlideShowPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC081B5417C666F800A893C2 /* SSSlideShowPageViewController.m */; };
@@ -129,6 +130,8 @@
 		DC01E00B17C9CC440096254A /* NSObject+Serialize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+Serialize.m"; path = "Classes/Utilities/NSObject+Serialize.m"; sourceTree = "<group>"; };
 		DC01E00C17C9CC440096254A /* NSString+InflectionSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+InflectionSupport.h"; path = "Classes/Utilities/NSString+InflectionSupport.h"; sourceTree = "<group>"; };
 		DC01E00D17C9CC440096254A /* NSString+InflectionSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+InflectionSupport.m"; path = "Classes/Utilities/NSString+InflectionSupport.m"; sourceTree = "<group>"; };
+		DC0388D617CDB9D9002100CD /* SSTextFieldView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSTextFieldView.h; path = Classes/View/SSTextFieldView.h; sourceTree = "<group>"; };
+		DC0388D717CDB9D9002100CD /* SSTextFieldView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSTextFieldView.m; path = Classes/View/SSTextFieldView.m; sourceTree = "<group>"; };
 		DC05A02317C73541000EE26F /* SSAppData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSAppData.h; path = Classes/Model/SSAppData.h; sourceTree = "<group>"; };
 		DC05A02417C73541000EE26F /* SSAppData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSAppData.m; path = Classes/Model/SSAppData.m; sourceTree = "<group>"; };
 		DC05A02617C73581000EE26F /* SSUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSUser.h; path = Classes/Model/SSUser.h; sourceTree = "<group>"; };
@@ -464,6 +467,8 @@
 				435C124717C731FE001FAA8E /* SSSlideListView.m */,
 				DCD3009F17C708F600908CC9 /* SSSettingsView.h */,
 				DCD300A017C708F600908CC9 /* SSSettingsView.m */,
+				DC0388D617CDB9D9002100CD /* SSTextFieldView.h */,
+				DC0388D717CDB9D9002100CD /* SSTextFieldView.m */,
 				DC86F8D517CCF92D0029844C /* SSTagsListView.h */,
 				DC86F8D617CCF92D0029844C /* SSTagsListView.m */,
 				DC86F8D817CCF93E0029844C /* SSTagView.h */,
@@ -807,6 +812,7 @@
 				DC86F8D717CCF92D0029844C /* SSTagsListView.m in Sources */,
 				DC86F8DA17CCF93F0029844C /* SSTagView.m in Sources */,
 				DC86F8DD17CD189E0029844C /* SSAddTagView.m in Sources */,
+				DC0388D817CDB9DA002100CD /* SSTextFieldView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
