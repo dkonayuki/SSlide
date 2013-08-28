@@ -70,12 +70,24 @@
 
 - (NSArray *)mySlides
 {
+    /*
     NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(SSSlideshow *evaluatedObj, NSDictionary *bind) {
-        return [evaluatedObj.username isEqualToString:@"thefoolishman"];
+        return [evaluatedObj.username isEqualToString:self.currentUser.username];
     }];
+     */
     NSArray *downloaded = [self.downloadedSlides copy];
-    NSArray *result = [downloaded filteredArrayUsingPredicate:predicate];
-    return result;
+    //NSArray *result = [downloaded filteredArrayUsingPredicate:predicate];
+    return downloaded;
+}
+
+- (SSSlideshow *)getDownloadedSlide:(NSString *)slideId;
+{
+    for (SSSlideshow *s in [SSAppData sharedInstance].downloadedSlides) {
+        if ([s.slideId isEqualToString:slideId]) {
+            return s;
+        }
+    }
+    return nil;
 }
 
 - (BOOL)isLogined

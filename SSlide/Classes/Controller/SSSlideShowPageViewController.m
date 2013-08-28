@@ -41,7 +41,10 @@
     self = [super init];
     if (self) {
         self.delegate = delegate;
-        self.currentSlide = slideshow;
+        self.currentSlide = [[SSAppData sharedInstance] getDownloadedSlide:slideshow.slideId];
+        if(self.currentSlide == nil) {
+            self.currentSlide = slideshow;
+        }
         self.totalPage = self.currentSlide.totalSlides;
         if (self.currentSlide.channel) {
             self.channel = self.currentSlide.channel;
@@ -275,7 +278,7 @@
 
 - (void)downloadCurrentSlideDel
 {
-    if (![self.currentSlide checkIsDownloaded]) {
+    if (![self.currentSlide checkIsDownloadedAsNew]) {
         [self.currentSlide download:^(float percent) {
             //NSLog(@"download: %f", percent);
             [self.controlView setDownloadProgress:percent];

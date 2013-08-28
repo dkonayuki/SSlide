@@ -215,13 +215,12 @@
     self.viewsNumber.text = [NSString stringWithFormat:@"%d", data.numViews];
     self.likesNumber.text = [NSString stringWithFormat:@"%d", data.numFavorites];
     self.downloadsNumber.text = [NSString stringWithFormat:@"%d", data.numFavorites];
-    if (data.checkIsDownloaded)
+    if ([data checkIsDownloadedAsNew])
     {
         float width = (IS_IPAD) ? 40.f : 20.f;
         UIImage *downloaded = [UIImage imageNamed:@"downloaded.png"];
         UIImageView *downloadedWrap = [[UIImageView alloc] initWithFrame:CGRectMake(self.cellBg.frame.size.width - width, self.cellBg.frame.size.height - width, width, width)];
         [downloadedWrap setImage:downloaded];
-        //downloadedWrap.backgroundColor = [UIColor clearColor];
         [self.cellBg addSubview:downloadedWrap];
     }
 }
