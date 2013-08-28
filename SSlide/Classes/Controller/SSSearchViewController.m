@@ -113,7 +113,7 @@
         
         [operation start];
     } else {
-        NSString *params = [NSString stringWithFormat:@"q=%@&page=%d&items_per_page=%d", text, self.currentPage, [[SSDB5 theme] integerForKey:@"slide_num_in_page"]];
+        NSString *params = [NSString stringWithFormat:@"q=%@&page=%d&items_per_page=%d&sort=%@", text, self.currentPage, [[SSDB5 theme] integerForKey:@"slide_num_in_page"], @"mostviewed"];
         [[SSApi sharedInstance] searchSlideshows:params
                                          success:^(NSArray *result){
                                              [SVProgressHUD dismiss];

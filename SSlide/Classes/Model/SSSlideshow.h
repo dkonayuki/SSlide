@@ -23,6 +23,7 @@
 @property (copy, nonatomic) NSString *slideImageBaseurl;
 @property (copy, nonatomic) NSString *slideImageBaseurlSuffix;
 @property (copy, nonatomic) NSString *firstPageImageUrl;
+@property (assign, nonatomic)BOOL checkIsDownloaded;
 
 @property (copy, nonatomic) NSString *channel;
 
@@ -35,7 +36,6 @@
 - (void)log;
 - (BOOL)extendedInfoIsNil;
 
-- (BOOL)checkIsDownloaded;
 
 - (void)download:(void (^)(float percent))progress completion:(void (^)(BOOL result))completion;
 

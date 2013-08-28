@@ -72,6 +72,9 @@
     [downloadedBtn setImage:downloadedBtnImageNormal forState:UIControlStateSelected];
     [downloadedBtn setImage:downloadedBtnImageNormal forState:UIControlStateHighlighted];
     [downloadedBtn setImage:downloadedBtnImageNormal forState:(UIControlStateHighlighted|UIControlStateSelected)];
+    float padding = IS_IPAD ? 16.f : 8.f;
+    downloadedBtn.imageEdgeInsets = UIEdgeInsetsMake(padding, padding, padding, padding);
+    downloadedBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
     
     // my slides btn
     UIButton *mySlidesBtn = [[UIButton alloc] init];
@@ -85,8 +88,9 @@
     [mySlidesBtn setImage:mySlidesBtnImageNormal forState:UIControlStateSelected];
     [mySlidesBtn setImage:mySlidesBtnImageNormal forState:UIControlStateHighlighted];
     [mySlidesBtn setImage:mySlidesBtnImageNormal forState:(UIControlStateHighlighted|UIControlStateSelected)];
+    mySlidesBtn.imageEdgeInsets = UIEdgeInsetsMake(padding, padding, padding, padding);
+    mySlidesBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
 
-    
     // Setting the UIButtons used in the segmented control
     [segmentedControl setButtonsArray:@[downloadedBtn, mySlidesBtn]];    
     [segmentedControl setSelectedIndex:0];
@@ -94,11 +98,7 @@
     
     
     /** SlideListView **/
-    topMargin += height + 10.f;
-    if (IS_IPAD)
-    {
-        topMargin += 10.f;
-    }
+    topMargin += height;
     self.slideListView = [[SSSlideListView alloc] initWithFrame:CGRectMake(0,
                                                                            topMargin,
                                                                            self.bounds.size.width,
