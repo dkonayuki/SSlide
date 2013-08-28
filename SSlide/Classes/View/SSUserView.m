@@ -12,6 +12,8 @@
 
 @interface SSUserView()
 
+@property (strong, nonatomic) UILabel *usernameLabel;
+
 @end
 
 @implementation SSUserView
@@ -36,13 +38,13 @@
     float topMargin = IS_IPAD ? [[SSDB5 theme]floatForKey:@"page_top_margin_ipad"] : [[SSDB5 theme]floatForKey:@"page_top_margin_iphone"];
     
     /** username label **/
-    UILabel *usernameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, topMargin)];
-    usernameLabel.textAlignment = NSTextAlignmentCenter;
-    [usernameLabel setText:[self.delegate getUsernameDel]];
-    usernameLabel.font = [UIFont fontWithName:[[SSDB5 theme] stringForKey:@"quicksand_font"] size:usernameSize];
-    usernameLabel.textColor = [[SSDB5 theme] colorForKey:@"username_color"];
-    usernameLabel.backgroundColor = [[SSDB5 theme] colorForKey:@"app_title_color"];
-    [self addSubview:usernameLabel];
+    self.usernameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, topMargin)];
+    self.usernameLabel.textAlignment = NSTextAlignmentCenter;
+    [self.usernameLabel setText:[self.delegate getUsernameDel]];
+    self.usernameLabel.font = [UIFont fontWithName:[[SSDB5 theme] stringForKey:@"quicksand_font"] size:usernameSize];
+    self.usernameLabel.textColor = [[SSDB5 theme] colorForKey:@"username_color"];
+    self.usernameLabel.backgroundColor = [[SSDB5 theme] colorForKey:@"app_title_color"];
+    [self addSubview:self.usernameLabel];
     
     /** segmented control **/
     float leftMargin = 0;
@@ -105,6 +107,11 @@
                                                                            self.bounds.size.height - topMargin)];
     self.slideListView.delegate = self.delegate;
     [self addSubview:self.slideListView];
+}
+
+- (void)refresh
+{
+    [self.usernameLabel setText:[self.delegate getUsernameDel]];
 }
 
 - (UIImage *) imageFromColor:(UIColor *)color {

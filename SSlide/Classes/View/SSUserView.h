@@ -20,4 +20,6 @@
 
 @property (strong, nonatomic) SSSlideListView *slideListView;
 
+- (void)refresh;
+
 @end

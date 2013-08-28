@@ -14,7 +14,7 @@
 #import "SSAppData.h"
 #import "SSSlideShowPageViewController.h"
 
-@interface SSUserViewController () <SSUserViewDelegate, SSSlideListViewDelegate, SSSlideShowPageViewControllerDelegate>
+@interface SSUserViewController () <SSUserViewDelegate, SSSlideListViewDelegate, SSSlideShowPageViewControllerDelegate, SSSettingsViewControllerDelegate>
 
 @property (strong, nonatomic) SSUserView *myView;
 @property (strong, nonatomic) NSMutableArray *slideArray;
@@ -61,7 +61,7 @@
 {
     if (!self.settingsViewController)
     {
-        self.settingsViewController = [[SSSettingsViewController alloc] init];
+        self.settingsViewController = [[SSSettingsViewController alloc] initWithDelegate:self];
     }
     [self presentPopupViewController:self.settingsViewController animationType:MJPopupViewAnimationSlideLeftLeft];
 }
@@ -120,6 +120,12 @@
 - (void)closePopupDel
 {
     [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationFade];
+}
+
+#pragma mark - SSSetingsViewController delegate
+- (void)reloadSettingsDataDel
+{
+    [self.myView refresh];
 }
 
 #pragma mark - private
