@@ -35,7 +35,7 @@
 @synthesize slideImageBaseurlSuffix = mSlideImageBaseurlSuffix;
 @synthesize firstPageImageUrl = mFirstPageImageUrl;
 @synthesize localBasePath = mLocalBasePath;
-@synthesize downloadedNum = mIsDownloaded;
+@synthesize isDownloaded = mIsDownloaded;
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
@@ -157,7 +157,7 @@
 
 - (BOOL)checkIsDownloaded
 {
-    return self.isDownloaded;
+    return mIsDownloaded;
 }
 
 - (BOOL)checkIsDownloadedAsNew
