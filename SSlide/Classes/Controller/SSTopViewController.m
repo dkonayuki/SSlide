@@ -47,7 +47,8 @@
     // show loading
     [SVProgressHUD showWithStatus:@"Loading"];
     // get first slide
-    [self getTopSlideshows];
+    [self getTopSlideshows:^(void) {
+    }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -67,10 +68,10 @@
     return [self.slideArray objectAtIndex:index];
 }
 
-- (void)getMoreSlides
+- (void)getMoreSlides:(void (^)(void))completed
 {
     self.currentPage ++;
-    [self getTopSlideshows];
+    [self getTopSlideshows:completed];
 }
 
 - (void)didSelectedAtIndex:(int)index
@@ -91,7 +92,7 @@
 }
 
 #pragma mark - private
-- (void)getTopSlideshows
+- (void)getTopSlideshows:(void (^)(void))completed
 {
     // TODO: get setting info
     NSMutableArray *tags = [SSAppData sharedInstance].currentUser.tags;
@@ -102,12 +103,13 @@
                                             success:^(NSArray *result){
                                                 // stop loading status
                                                 [SVProgressHUD dismiss];
-                                                
                                                 [self.slideArray addObjectsFromArray:result];
                                                 [self.myView.slideListView.slideTableView reloadData];
+                                                completed();
                                             }
                                             failure:^(void) {     // TODO: error handling
                                                 [SVProgressHUD dismiss];
+                                                completed();
                                                 NSLog(@"MostViewed ERROR");
                                             }];
 }

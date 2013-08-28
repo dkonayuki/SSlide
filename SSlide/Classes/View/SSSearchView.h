@@ -12,7 +12,7 @@
 
 @protocol SSSearchViewDelegate <NSObject>
 
-- (void)searchText:(NSString *)text firstTime:(BOOL)fTime;
+- (void)searchText:(NSString *)text firstTime:(BOOL)fTime completion:(void (^)(void))completed;
 
 @end
 

@@ -104,8 +104,9 @@
     self.slideListView = [[SSSlideListView alloc] initWithFrame:CGRectMake(0,
                                                                            topMargin,
                                                                            self.bounds.size.width,
-                                                                           self.bounds.size.height - topMargin)];
-    self.slideListView.delegate = self.delegate;
+                                                                           self.bounds.size.height - topMargin)
+                                                    andDelegate:self.delegate];
+    self.slideListView.infiniteLoad = NO;
     [self addSubview:self.slideListView];
 }
 
@@ -119,7 +120,6 @@
     UIGraphicsBeginImageContext(rect.size);
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSetFillColorWithColor(context, [color CGColor]);
-    //  [[UIColor colorWithRed:222./255 green:227./255 blue: 229./255 alpha:1] CGColor]) ;
     CGContextFillRect(context, rect);
     UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();

@@ -15,18 +15,9 @@
 
 @implementation SSSlideListView
 
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-        [self initView];
-    }
-    return self;
-}
-
 - (void) initView
 {
+    self.infiniteLoad = YES;
     self.slideTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,
                                                                         0,
                                                                         self.bounds.size.width,
@@ -70,17 +61,26 @@
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    if (!self.infiniteLoad) {
+        return;
+    }
+    
     NSInteger currentOffset = scrollView.contentOffset.y;
     NSInteger maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height;
     NSInteger diffOffset = 400;
-    if (IS_IPAD)
-    {
+    if (IS_IPAD) {
         diffOffset *= 2.2;
     }
     
     if (maximumOffset - currentOffset <= diffOffset)
     {
-        [self.delegate getMoreSlides];
+        UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        [spinner startAnimating];
+        spinner.frame = CGRectMake(0, 0, 320, 44);
+        self.slideTableView.tableFooterView = spinner;
+        [self.delegate getMoreSlides:^(void) {
+            self.slideTableView.tableFooterView = nil;
+        }];
     }
 }
 

@@ -118,7 +118,7 @@
 {
     if (self.searchTextField.text && ![self.searchTextField.text isEqualToString:@""])
     {
-        [self.delegate searchText:self.searchTextField.text firstTime:TRUE];
+        [self.delegate searchText:self.searchTextField.text firstTime:TRUE completion:^(void) {}];
         [self endEditing:YES];
     }
 }
@@ -132,7 +132,7 @@
 {
     if (self.searchTextField.text && ![self.searchTextField.text isEqualToString:@""])
     {
-        [self.delegate searchText:textField.text firstTime:TRUE];
+        [self.delegate searchText:textField.text firstTime:TRUE completion:^(void){}];
         [textField resignFirstResponder];
     }
     return YES;
@@ -152,10 +152,10 @@
     if (!self.slideListView)
     {
         self.slideListView = [[SSSlideListView alloc] initWithFrame:CGRectMake(0,
-                                                                        self.topMargin,
-                                                                        self.bounds.size.width,
-                                                                        self.bounds.size.height - self.topMargin)];
-        self.slideListView.delegate = self.delegate;
+                                                                               self.topMargin,
+                                                                               self.bounds.size.width,
+                                                                               self.bounds.size.height - self.topMargin)
+                                                        andDelegate:self.delegate];
         [self addSubview:self.slideListView];
     }
 }

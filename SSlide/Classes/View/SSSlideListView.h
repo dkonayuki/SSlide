@@ -14,12 +14,13 @@
 - (NSInteger) numberOfRows;
 - (SSSlideshow *) getDataAtIndex:(int)index;
 - (void) didSelectedAtIndex:(int)index;
-- (void) getMoreSlides;
+- (void) getMoreSlides:(void (^)(void))completed;
 
 @end
 
 @interface SSSlideListView : SSView
 
 @property (strong, nonatomic) UITableView *slideTableView;
+@property (assign, nonatomic) BOOL infiniteLoad;
 
 @end
