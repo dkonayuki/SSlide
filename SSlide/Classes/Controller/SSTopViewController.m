@@ -104,7 +104,7 @@
                                                 // stop loading status
                                                 [SVProgressHUD dismiss];
                                                 [self.slideArray addObjectsFromArray:result];
-                                                [self.myView.slideListView.slideTableView reloadData];
+                                                [self.myView.slideListView reloadWithAnimation];
                                                 completed();
                                             }
                                             failure:^(void) {     // TODO: error handling

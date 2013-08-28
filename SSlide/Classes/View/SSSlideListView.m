@@ -89,4 +89,18 @@
     [self.delegate didSelectedAtIndex:indexPath.row];
 }
 
+#pragma mark
+- (void)reloadWithAnimation
+{
+    [UIView transitionWithView: self.slideTableView
+                      duration: 0.25f
+                       options: UIViewAnimationOptionTransitionNone
+                    animations: ^(void) {
+                        [self.slideTableView reloadData];
+                    }
+                    completion: ^(BOOL isFinished) {
+                    
+                    }];
+}
+
 @end

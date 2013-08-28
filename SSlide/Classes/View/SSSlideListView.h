@@ -23,4 +23,6 @@
 @property (strong, nonatomic) UITableView *slideTableView;
 @property (assign, nonatomic) BOOL infiniteLoad;
 
+- (void)reloadWithAnimation;
+
 @end

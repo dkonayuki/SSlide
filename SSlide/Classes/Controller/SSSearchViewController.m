@@ -126,7 +126,7 @@
                                              }
                                              [self.slideArray addObjectsFromArray:result];
                                              [self.myView initSlideListView];
-                                             [self.myView.slideListView.slideTableView reloadData];
+                                             [self.myView.slideListView reloadWithAnimation];
                                              completed();
                                          }
                                          failure:^(void) {     // TODO: error handling

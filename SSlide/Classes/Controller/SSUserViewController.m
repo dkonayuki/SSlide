@@ -114,7 +114,7 @@
 
 - (void) reloadSlidesListDel
 {
-    [self.myView.slideListView.slideTableView reloadData];
+    [self.myView.slideListView reloadWithAnimation];
 }
 
 - (void)closePopupDel
@@ -141,7 +141,7 @@
                                         success:^(NSArray *result){
                                             if (!self.isDownloadedMode) {
                                                 [self.slideArray addObjectsFromArray:result];
-                                                [self.myView.slideListView.slideTableView reloadData];
+                                                [self.myView.slideListView reloadWithAnimation];
                                                 if ([result count] < [[SSDB5 theme] integerForKey:@"slide_num_in_page"]){
                                                     self.endOfSlidesList = YES;
                                                 } else {
@@ -158,7 +158,7 @@
 - (void)getDownloadedSlideshows
 {
     self.slideArray = [[SSAppData sharedInstance] downloadedSlides];
-    [self.myView.slideListView.slideTableView reloadData];
+    [self.myView.slideListView reloadWithAnimation];
 }
 
 @end
