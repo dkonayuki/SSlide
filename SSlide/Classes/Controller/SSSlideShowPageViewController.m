@@ -8,6 +8,7 @@
 
 #import "SSSlideShowPageViewController.h"
 #import "SSSlideShowControlView.h"
+#import "SSSlideShowInfoView.h"
 #import "FayeClient.h"
 #import "SSAppData.h"
 #import "SSApi.h"
@@ -18,6 +19,7 @@
 @property (strong, nonatomic) SSSlideshow *currentSlide;
 @property (assign, nonatomic) NSInteger totalPage;
 @property (strong, nonatomic) SSSlideShowControlView *controlView;
+@property (strong, nonatomic) SSSlideShowInfoView *infoView;
 @property (strong, nonatomic) FayeClient *fayeClient;
 @property (strong, nonatomic) NSString *channel;
 @property (assign, nonatomic) BOOL isMaster;
@@ -96,6 +98,15 @@
     self.controlView.transform = CGAffineTransformMakeRotation(M_PI_2);
     self.controlView.center = CGPointMake(self.view.bounds.size.width + cW/2, self.view.center.y);
     [self.view addSubview:self.controlView];
+    
+    //info view
+    self.infoView = [[SSSlideShowInfoView alloc] initWithFrame:CGRectMake(0, 0, 100.f, cW) andTitle:self.currentSlide.title andTotalPages:self.currentSlide.totalSlides];
+    [self.view addSubview:self.infoView];
+    [self.infoView sizeToFit];
+    self.infoView.transform = CGAffineTransformMakeRotation(M_PI_2);
+    //[self.infoView sizeToFit];
+    self.infoView.center = CGPointMake(cW/2, self.view.center.y);
+    self.infoView.alpha = 0.f;
 }
 
 - (void)startStreaming 
@@ -230,6 +241,7 @@
         int pageNum = currentViewController.pageIndex;
         NSLog(@"new page: %d", pageNum);
         NSNumber *pn = [NSNumber numberWithInt:pageNum];
+        [self.infoView setPageNumber:pageNum];
         
         if (self.isMaster && self.isStreaming) {
             SSUser *currentUser = [[SSAppData sharedInstance] currentUser];
@@ -249,6 +261,22 @@
 - (BOOL)isMasterDel
 {
     return self.isMaster;
+}
+
+- (void)toogleInfoView
+{
+    if (self.infoView.alpha == 0)
+    {
+        [UIView animateWithDuration:0.5f animations:^(void) {
+            self.infoView.alpha = 1.0;
+        }];
+    }
+    else
+    {
+        [UIView animateWithDuration:0.5f animations:^(void) {
+            self.infoView.alpha = 0;
+        }];    
+    }
 }
 
 - (void)showControlView

@@ -71,6 +71,10 @@
     UISwipeGestureRecognizer *swipeRightRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeRightAction)];
     [swipeRightRecognizer setDirection:UISwipeGestureRecognizerDirectionRight];
     [self.myView addGestureRecognizer:swipeRightRecognizer];
+    
+    //add touch gesture to show info
+    UITapGestureRecognizer *touchRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction)];
+    [self.myView addGestureRecognizer:touchRecognizer];
 }
 
 - (void)didReceiveMemoryWarning
@@ -83,6 +87,11 @@
 {
     NSLog(@"left swipe");
     [self.delegate showControlView];
+}
+
+- (void)tapAction
+{
+    [self.delegate toogleInfoView];
 }
 
 - (void)swipeRightAction
