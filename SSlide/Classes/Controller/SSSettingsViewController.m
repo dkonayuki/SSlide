@@ -11,8 +11,9 @@
 #import "SSApi.h"
 #import "SSAppData.h"
 #import "SSUser.h"
+#import "SSTagsListView.h"
 
-@interface SSSettingsViewController () <SSSettingsViewDelegate>
+@interface SSSettingsViewController () <SSSettingsViewDelegate, SSTagsListViewDelegate>
 
 @end
 
@@ -48,11 +49,8 @@
 }
 
 #pragma mark - SSSetingsViewDelegate
-- (void)loginActionDel
+- (void)loginActionDel:(NSString *)username password:(NSString *)password
 {
-    NSString *username = @"thefoolishman";
-    NSString *password = @"pass";
-    
     [SVProgressHUD showWithStatus:@"checking"];
     [[SSApi sharedInstance] checkUsernamePassword:username password:password result:^(BOOL result) {
         if (result) {
@@ -70,7 +68,31 @@
 
 - (void)logoutActionDel
 {
-    
+    [SSAppData sharedInstance].currentUser = nil;
+    [SSAppData saveAppData];
+}
+
+- (BOOL)isLogined
+{
+    return [[SSAppData sharedInstance] isLogined];
+}
+
+- (NSMutableArray *)getTagStringsDel
+{
+    return [SSAppData sharedInstance].currentUser.tags;
+}
+
+#pragma SSTagsListView delegate
+- (void)didAddTag:(NSString *)tag
+{
+    [[SSAppData sharedInstance].currentUser.tags addObject:tag];
+    [SSAppData saveAppData];
+}
+
+- (void)didRemoveTag:(NSString *)tag
+{
+    [[SSAppData sharedInstance].currentUser.tags removeObject:tag];
+    [SSAppData saveAppData];
 }
 
 @end

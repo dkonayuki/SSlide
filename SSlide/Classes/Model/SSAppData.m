@@ -82,4 +82,9 @@
     return result;
 }
 
+- (BOOL)isLogined
+{
+    return self.currentUser && self.currentUser.username && self.currentUser.password;
+}
+
 @end

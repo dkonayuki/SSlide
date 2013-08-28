@@ -29,9 +29,13 @@
 		<key>cell_bg_color</key>
 		<string>f7f7f7</string>
 		<key>login_label</key>
-		<string>LogIn</string>
+		<string>LOGIN</string>
+		<key>logout_label</key>
+		<string>LOGOUT</string>
 		<key>tags_label</key>
-		<string>Tags</string>
+		<string>TAGS</string>
+		<key>setting_label_color</key>
+		<string>585A59</string>
 		<key>page_top_margin_iphone</key>
 		<integer>55</integer>
 		<key>page_top_margin_ipad</key>
@@ -94,6 +98,18 @@
 		<string>FB4A56</string>
 		<key>tag_bg_color</key>
 		<string>17B28C</string>
+		<key>tag_margin_iphone</key>
+		<integer>7</integer>
+		<key>tag_margin_ipad</key>
+		<integer>12</integer>
+		<key>tag_font_size_ipad</key>
+		<integer>28</integer>
+		<key>tag_font_size_iphone</key>
+		<string>16</string>
+		<key>setting_label_font_size_iphone</key>
+		<integer>18</integer>
+		<key>setting_label_font_size_ipad</key>
+		<integer>30</integer>
 	</dict>
 </dict>
 </plist>

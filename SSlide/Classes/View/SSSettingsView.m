@@ -8,19 +8,14 @@
 
 #import "SSSettingsView.h"
 #import <QuartzCore/QuartzCore.h>
-#import "SSAppData.h"
-#import "SSTag.h"
-#import "SSTagAdd.h"
+#import "SSTagsListView.h"
+#import "SSTextFieldView.h"
 
-@interface SSSettingsView() <SSTagAddDelegate, UITextFieldDelegate>
+@interface SSSettingsView() <SSTextFieldViewDelegate>
 
-@property (strong, nonatomic) NSMutableArray *tags;
-@property (assign, nonatomic) float tagTopMargin;
-@property (assign, nonatomic) float tagLeftMargin;
-@property (assign, nonatomic) float width;
-@property (assign, nonatomic) float height;
-@property (strong, nonatomic) SSTagAdd *tagAdd;
 @property (assign, nonatomic) CGPoint originViewCenter;
+@property (strong, nonatomic) SSTextFieldView *usernameField;
+@property (strong, nonatomic) SSTextFieldView *passwordField;
 
 @end
 
@@ -41,150 +36,90 @@
     self.backgroundColor = [UIColor whiteColor];
     self.layer.cornerRadius = IS_IPAD ? 10.f : 5.f;
     
-    //tags label
-    self.width = self.bounds.size.width;
-    self.height = 40.f;
+    float width = self.bounds.size.width;
+    float height = IS_IPAD ? 60.f : 40.f;
     float leftMargin = 0.f;
     float topMargin = 10.f;
+    float fontSize = IS_IPAD ? [[SSDB5 theme] floatForKey:@"setting_label_font_size_ipad"] : [[SSDB5 theme] floatForKey:@"setting_label_font_size_iphone"];
     
-    UILabel *tagsLabel = [[UILabel alloc] initWithFrame:CGRectMake(leftMargin, topMargin, self.width, self.height)];
+    // tags label
+    UILabel *tagsLabel = [[UILabel alloc] initWithFrame:CGRectMake(leftMargin, topMargin, width, height)];
     tagsLabel.text = [[SSDB5 theme]stringForKey:@"tags_label"];
+    tagsLabel.font = [UIFont fontWithName:[[SSDB5 theme] stringForKey:@"quicksand_font"] size:fontSize];
     tagsLabel.textAlignment = NSTextAlignmentCenter;
+    tagsLabel.textColor = [[SSDB5 theme] colorForKey:@"setting_label_color"];
     [self addSubview:tagsLabel];
     
+    // tags list
+    topMargin += height;
+    leftMargin = 10.f;
+    width = self.bounds.size.width - 2*leftMargin;
+    float tagListHeight = self.bounds.size.height - 5*height - topMargin;
+    SSTagsListView *listView = [[SSTagsListView alloc] initWithFrame:CGRectMake(leftMargin, topMargin, width, tagListHeight)
+                                                         andDelegate:self.delegate
+                                                       andTagStrings:[self.delegate getTagStringsDel]];
+    [self addSubview:listView];
     
-    topMargin += 40.f;
-    //init tags
-    self.tagTopMargin = topMargin;
-    self.tagLeftMargin = leftMargin;
-
-    self.tags = [[NSMutableArray alloc] initWithArray:[[[SSAppData sharedInstance] currentUser] tags]];
-    for (NSString *tag in self.tags)
-    {
-        SSTag *tagView = [[SSTag alloc] initWithFrame:CGRectMake(self.tagLeftMargin, self.tagTopMargin, self.width, self.height) andName:tag];
-        if (self.tagLeftMargin + tagView.frame.size.width + 5.f >= self.width)
-        {
-            CGRect myFrame = tagView.frame;
-            myFrame.origin.y += self.height;
-            myFrame.origin.x = 0;
-            tagView.frame = myFrame;
-            self.tagLeftMargin = tagView.frame.size.width + 5.f;
-            self.tagTopMargin += self.height;
-        }
-        else
-        {
-            self.tagLeftMargin += tagView.frame.size.width + 5.f;
-        }
-        [self addSubview:tagView];
-    }
-    self.tagAdd = [[SSTagAdd alloc] initWithFrame:CGRectMake(self.tagLeftMargin, self.tagTopMargin, self.width, self.height)];
-    if (self.tagLeftMargin + self.tagAdd.frame.size.width + 5.f >= self.width)
-    {
-        CGRect myFrame = self.tagAdd.frame;
-        myFrame.origin.y += self.height;
-        self.tagAdd.frame = myFrame;
-    }
-    self.tagAdd.delegate = self;
-    [self addSubview:self.tagAdd];
-
-    
-    //login label
-    topMargin += 125.f;
-    UILabel *loginLabel = [[UILabel alloc] initWithFrame:CGRectMake(leftMargin, topMargin, self.width, self.height)];
+    // login label
+    leftMargin = 0.f;
+    topMargin = self.bounds.size.height - 5*height;
+    UILabel *loginLabel = [[UILabel alloc] initWithFrame:CGRectMake(leftMargin, topMargin, self.bounds.size.width, height)];
     loginLabel.text = [[SSDB5 theme]stringForKey:@"login_label"];
+    loginLabel.font = [UIFont fontWithName:[[SSDB5 theme] stringForKey:@"quicksand_font"] size:fontSize];
     loginLabel.textAlignment = NSTextAlignmentCenter;
+    loginLabel.textColor = [[SSDB5 theme] colorForKey:@"setting_label_color"];
     [self addSubview:loginLabel];
     
     //login username
-    topMargin += 50.f;
-    UITextField *usernameField = [[UITextField alloc] initWithFrame:CGRectMake(leftMargin, topMargin, self.width, self.height)];
-    usernameField.textColor = [UIColor whiteColor];
-    usernameField.backgroundColor = [[SSDB5 theme] colorForKey:@"username_textfield_color"];
-    usernameField.placeholder = @"Username";
-    [usernameField resignFirstResponder];
-    usernameField.delegate = self;
-    [self addSubview:usernameField];
+    topMargin = self.bounds.size.height - 4*height;
+    self.usernameField = [[SSTextFieldView alloc] initWithFrame:CGRectMake(leftMargin, topMargin, self.bounds.size.width, height)
+                                                       delegate:self
+                                                      imageName:@"login_username.png"
+                                                          color:[[SSDB5 theme] colorForKey:@"username_textfield_color"]
+                                                     isPassword:NO
+                                                    placeholder:@"Username"];
+    [self addSubview:self.usernameField];
     
     //login password
-    topMargin += self.height;
-    UITextField *passwordField = [[UITextField alloc] initWithFrame:CGRectMake(leftMargin, topMargin, self.width, self.height)];
-    passwordField.textColor = [UIColor whiteColor];
-    passwordField.backgroundColor = [[SSDB5 theme] colorForKey:@"password_textfield_color"];
-    passwordField.secureTextEntry = YES;
-    passwordField.placeholder = @"Password";
-    [passwordField resignFirstResponder];
-    passwordField.delegate = self;
-    [self addSubview:passwordField];
+    topMargin = self.bounds.size.height - 3*height;
+    self.passwordField = [[SSTextFieldView alloc] initWithFrame:CGRectMake(leftMargin, topMargin, self.bounds.size.width, height)
+                                                       delegate:self
+                                                      imageName:@"login_password.png"
+                                                          color:[[SSDB5 theme] colorForKey:@"password_textfield_color"]
+                                                     isPassword:YES
+                                                    placeholder:@"Password"];
+    [self addSubview:self.passwordField];
     
     // login btn
-    topMargin += 50.f;
-    UIButton *authenticateBtn = [[UIButton alloc] initWithFrame:CGRectMake(leftMargin, topMargin, self.width, self.height)];
-    [authenticateBtn setTitle:@"Login" forState:UIControlStateNormal];
+    topMargin = self.bounds.size.height - 3*height/2;
+    UIButton *authenticateBtn = [[UIButton alloc] initWithFrame:CGRectMake(leftMargin, topMargin, self.bounds.size.width, height)];
+    [authenticateBtn setTitle:[[SSDB5 theme]stringForKey:@"login_label"] forState:UIControlStateNormal];
     authenticateBtn.tag = 1;
     authenticateBtn.backgroundColor = [[SSDB5 theme] colorForKey:@"login_button_color"];
     [authenticateBtn addTarget:self action:@selector(authenticateBtnPressed:) forControlEvents:UIControlEventTouchDown];
-    
     [self addSubview:authenticateBtn];
     
     self.originViewCenter = self.center;
-}
-
-- (void) addTag:(NSString *)name;
-{
-    if ((name != nil) && (![name isEqualToString:@""]))
-    {
-        [self.tags addObject:name];
-        SSTag *tagView = [[SSTag alloc] initWithFrame:CGRectMake(self.tagLeftMargin, self.tagTopMargin, self.width, 40.f) andName:name];
-        if (self.tagLeftMargin + tagView.frame.size.width + 5.f >= self.width)
-        {
-            CGRect myFrame = tagView.frame;
-            myFrame.origin.y += self.height;
-            myFrame.origin.x = 0.f;
-            tagView.frame = myFrame;
-            self.tagLeftMargin = tagView.frame.size.width + 5.f;
-            self.tagTopMargin += self.height;
-        }
-        else {
-            self.tagLeftMargin += tagView.frame.size.width + 5.f;
-        }
-        [self addSubview:tagView];
-        
-       //check add button position
-        if (self.tagLeftMargin + self.tagAdd.frame.size.width + 5.f >= self.width)
-        {
-            CGRect myFrame = self.tagAdd.frame;
-            myFrame.origin.y += self.height;
-            myFrame.origin.x = 0;
-            self.tagTopMargin += self.height;
-            self.tagLeftMargin = 0;
-            self.tagAdd.frame = myFrame;
-        }
-        else
-        {
-            CGRect myFrame = self.tagAdd.frame;
-            myFrame.origin.x += tagView.frame.size.width + 5.f;
-            self.tagAdd.frame = myFrame;
-        }
-    }
 }
 
 - (void)authenticateBtnPressed:(id)sender
 {
     UIButton *btn = (UIButton *)sender;
     if (btn.tag == 1) {
-        [self.delegate loginActionDel];
+        [self.delegate loginActionDel:[self.usernameField getText]
+                             password:[self.passwordField getText]];
     } else {
         [self.delegate logoutActionDel];
     }
     [self closeKeyboardAndExit];
 }
 
-#pragma mark - UITextField delegate
-- (void)textFieldDidBeginEditing:(UITextField *)textField
+#pragma mark - SSTextFieldView delegate
+- (void)textFieldDidBeginEditingDel
 {
     [UIView animateWithDuration:0.5f
                      animations:^(void) {
-                         float dy = IS_IPAD ? 120.f : 200.f;
+                         float dy = IS_IPAD ? 120.f : 210.f;
                          self.center = CGPointMake(self.originViewCenter.x, self.originViewCenter.y - dy);
                      }
                      completion:nil];

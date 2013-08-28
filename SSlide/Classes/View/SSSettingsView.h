@@ -10,8 +10,10 @@
 
 @protocol SSSettingsViewDelegate <NSObject>
 
-- (void)loginActionDel;
+- (void)loginActionDel:(NSString *)username password:(NSString *)password;
 - (void)logoutActionDel;
+- (BOOL)isLogined;
+- (NSMutableArray *)getTagStringsDel;
 
 @end
 
