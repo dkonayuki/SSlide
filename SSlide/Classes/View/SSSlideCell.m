@@ -60,10 +60,10 @@
         [layer setMasksToBounds:YES];
         if (IS_IPAD)
         {
-            [layer setCornerRadius:4.0];
+            [layer setCornerRadius:6.0];
         } else
         {
-            [layer setCornerRadius:2.0];
+            [layer setCornerRadius:3.0];
         }
         
         leftMargin += 2.f;

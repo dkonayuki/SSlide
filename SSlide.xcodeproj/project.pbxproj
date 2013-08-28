@@ -23,6 +23,7 @@
 		435977DC17CD9A8D00117E2E /* delete_search.png in Resources */ = {isa = PBXBuildFile; fileRef = 435977DA17CD9A8D00117E2E /* delete_search.png */; };
 		435977DD17CD9A8D00117E2E /* search.png in Resources */ = {isa = PBXBuildFile; fileRef = 435977DB17CD9A8D00117E2E /* search.png */; };
 		435977DF17CDCB3B00117E2E /* downloaded.png in Resources */ = {isa = PBXBuildFile; fileRef = 435977DE17CDCB3B00117E2E /* downloaded.png */; };
+		435977E217CDEACE00117E2E /* SSSlideShowInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 435977E117CDEACD00117E2E /* SSSlideShowInfoView.m */; };
 		435C124817C731FE001FAA8E /* SSSlideListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 435C124717C731FE001FAA8E /* SSSlideListView.m */; };
 		DC01E00E17C9CC440096254A /* FayeClient.m in Sources */ = {isa = PBXBuildFile; fileRef = DC01E00517C9CC440096254A /* FayeClient.m */; };
 		DC01E00F17C9CC440096254A /* FayeMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = DC01E00717C9CC440096254A /* FayeMessage.m */; };
@@ -125,6 +126,8 @@
 		435977DA17CD9A8D00117E2E /* delete_search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete_search.png; sourceTree = "<group>"; };
 		435977DB17CD9A8D00117E2E /* search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search.png; sourceTree = "<group>"; };
 		435977DE17CDCB3B00117E2E /* downloaded.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = downloaded.png; sourceTree = "<group>"; };
+		435977E017CDEACD00117E2E /* SSSlideShowInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSSlideShowInfoView.h; path = Classes/View/SSSlideShowInfoView.h; sourceTree = "<group>"; };
+		435977E117CDEACD00117E2E /* SSSlideShowInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSSlideShowInfoView.m; path = Classes/View/SSSlideShowInfoView.m; sourceTree = "<group>"; };
 		435C124617C731FD001FAA8E /* SSSlideListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSSlideListView.h; path = Classes/View/SSSlideListView.h; sourceTree = "<group>"; };
 		435C124717C731FE001FAA8E /* SSSlideListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSSlideListView.m; path = Classes/View/SSSlideListView.m; sourceTree = "<group>"; };
 		7E2702BF3BD1401A8049CA77 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -495,6 +498,8 @@
 				DC86F8D917CCF93E0029844C /* SSTagView.m */,
 				DC86F8DB17CD189D0029844C /* SSAddTagView.h */,
 				DC86F8DC17CD189D0029844C /* SSAddTagView.m */,
+				435977E017CDEACD00117E2E /* SSSlideShowInfoView.h */,
+				435977E117CDEACD00117E2E /* SSSlideShowInfoView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -838,6 +843,7 @@
 				DC86F8DA17CCF93F0029844C /* SSTagView.m in Sources */,
 				DC86F8DD17CD189E0029844C /* SSAddTagView.m in Sources */,
 				DC0388D817CDB9DA002100CD /* SSTextFieldView.m in Sources */,
+				435977E217CDEACE00117E2E /* SSSlideShowInfoView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

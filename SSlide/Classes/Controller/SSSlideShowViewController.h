@@ -14,6 +14,7 @@
 - (void)closePopup;
 - (void)showControlView;
 - (void)hideControlView;
+- (void)toogleInfoView;
 
 @end
 

@@ -99,7 +99,6 @@
                                             success:^(NSArray *result){
                                                 // stop loading status
                                                 [SVProgressHUD dismiss];
-                                                
                                                 [self.slideArray addObjectsFromArray:result];
                                                 [self.myView.slideListView.slideTableView reloadData];
                                             }
