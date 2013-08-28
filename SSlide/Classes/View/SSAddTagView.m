@@ -90,6 +90,7 @@
     [self.textField setText:@""];
     [self refresh];
     [self.delegate addTagDel:text];
+    [self endEditing:YES];
 }
 
 - (void)textFieldDidChange:(UITextField *)textField

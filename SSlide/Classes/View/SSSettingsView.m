@@ -43,9 +43,12 @@
     self.height = 40.f;
     float leftMargin = 0.f;
     float topMargin = 10.f;
-    
+    float fontSize = IS_IPAD ? [[SSDB5 theme] floatForKey:@"setting_label_font_size_ipad"] : [[SSDB5 theme] floatForKey:@"setting_label_font_size_iphone"];
     UILabel *tagsLabel = [[UILabel alloc] initWithFrame:CGRectMake(leftMargin, topMargin, self.width, self.height)];
     tagsLabel.text = [[SSDB5 theme]stringForKey:@"tags_label"];
+    
+    tagsLabel.font = [UIFont fontWithName:[[SSDB5 theme] stringForKey:@"quicksand_font"] size:fontSize];
+    
     tagsLabel.textAlignment = NSTextAlignmentCenter;
     [self addSubview:tagsLabel];
     
@@ -69,6 +72,7 @@
     topMargin += IS_IPAD ? 300.f : 125.f;
     UILabel *loginLabel = [[UILabel alloc] initWithFrame:CGRectMake(leftMargin, topMargin, self.width, self.height)];
     loginLabel.text = [[SSDB5 theme]stringForKey:@"login_label"];
+    loginLabel.font = [UIFont fontWithName:[[SSDB5 theme] stringForKey:@"quicksand_font"] size:fontSize];
     loginLabel.textAlignment = NSTextAlignmentCenter;
     [self addSubview:loginLabel];
     
