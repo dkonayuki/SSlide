@@ -49,6 +49,8 @@
         self.currentSlide = [[SSAppData sharedInstance] getDownloadedSlide:slideshow.slideId];
         if(self.currentSlide == nil) {
             self.currentSlide = slideshow;
+        } else {
+            self.currentSlide.channel = slideshow.channel;
         }
         self.totalPage = self.currentSlide.totalSlides;
         if (self.currentSlide.channel) {
@@ -153,6 +155,7 @@
     NSString *url = [NSString stringWithFormat:@"streaming/create"];
     NSDictionary *params = @{@"username": curUsername,
                              @"channel": self.channel,
+                             @"slideId": self.currentSlide.slideId,
                              @"title": self.currentSlide.title,
                              @"thumbnailUrl": self.currentSlide.thumbnailUrl,
                              @"created": self.currentSlide.created,
@@ -396,7 +399,6 @@
 {
     NSLog(@"fayeClientError %@", error);
 }
-
 
 #pragma mark - private
 - (void)disconnectToFayeServer

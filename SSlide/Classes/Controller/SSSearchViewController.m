@@ -101,6 +101,7 @@
                                                                 NSLog(@"%@", result);
                                                                 
                                                                 slideshow.username = [result objectForKey:@"username"];
+                                                                slideshow.slideId = [result objectForKey:@"slideId"];
                                                                 slideshow.title = [result objectForKey:@"title"];
                                                                 [slideshow setNormalThumbnailUrl:[result objectForKey:@"thumbnailUrl"]];
                                                                 [slideshow setNormalCreated:[result objectForKey:@"created"]];
