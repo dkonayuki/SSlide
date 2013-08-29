@@ -101,6 +101,10 @@
     [self.tagStrings removeObject:[NSString stringWithString:tagView.text]];
     [self.tagViews removeObject:tagView];
     [tagView removeFromSuperview];
+    int maxTagNum = [[SSDB5 theme] integerForKey:@"tag_max_num"];
+    if (([self.tagViews count] < maxTagNum) && (self.addTagView.isHidden)) {
+        self.addTagView.hidden = NO;
+    }
     [self redraw];
 }
 
@@ -108,6 +112,10 @@
 {
     [self.delegate didAddTag:tagText];
     [self createNewTag:tagText];
+    int maxTagNum = [[SSDB5 theme] integerForKey:@"tag_max_num"];
+    if (([self.tagViews count] >= maxTagNum) && (!self.addTagView.isHidden)) {
+        self.addTagView.hidden = YES;
+    }
     [self redraw];
 }
 

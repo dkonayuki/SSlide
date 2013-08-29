@@ -95,23 +95,26 @@
 - (void)getTopSlideshows:(void (^)(void))completed
 {
     // TODO: get setting info
-    NSMutableArray *tags = [SSAppData sharedInstance].currentUser.tags;
-    NSString *keyword = [tags count] > 0 ? [tags objectAtIndex:0] : [[SSDB5 theme] stringForKey:@"default_tag"];
-    [[SSApi sharedInstance] getMostViewedSlideshows:keyword
-                                               page:self.currentPage
-                                       itemsPerPage:[[SSDB5 theme] integerForKey:@"slide_num_in_page"]
-                                            success:^(NSArray *result){
-                                                // stop loading status
-                                                [SVProgressHUD dismiss];
-                                                [self.slideArray addObjectsFromArray:result];
-                                                [self.myView.slideListView reloadWithAnimation];
-                                                completed();
-                                            }
-                                            failure:^(void) {     // TODO: error handling
-                                                [SVProgressHUD dismiss];
-                                                completed();
-                                                NSLog(@"MostViewed ERROR");
-                                            }];
+    NSMutableArray *tags = [NSMutableArray arrayWithArray:[SSAppData sharedInstance].currentUser.tags];
+    if ([tags count] == 0) {
+        [tags addObject:[[SSDB5 theme] stringForKey:@"default_tag"]];
+    }
+    
+    [[SSApi sharedInstance] getLatestSlideshows:tags
+                                           page:self.currentPage
+                                   itemsPerPage:[[SSDB5 theme] integerForKey:@"slide_num_in_page"]
+                                        success:^(NSArray *result){
+                                            // stop loading status
+                                            [SVProgressHUD dismiss];
+                                            [self.slideArray addObjectsFromArray:result];
+                                            [self.myView.slideListView reloadWithAnimation];
+                                            completed();
+                                        }
+                                        failure:^(void) {     // TODO: error handling
+                                            [SVProgressHUD dismiss];
+                                            completed();
+                                            NSLog(@"MostViewed ERROR");
+                                        }];
 }
 
 @end

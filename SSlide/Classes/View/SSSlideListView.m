@@ -78,7 +78,7 @@
     {
         UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         [spinner startAnimating];
-        spinner.frame = CGRectMake(0, 0, 320, 44);
+        spinner.frame = CGRectMake(0, 0, self.bounds.size.width, 44);
         self.slideTableView.tableFooterView = spinner;
         if (!sLoading) {
             sLoading = YES;

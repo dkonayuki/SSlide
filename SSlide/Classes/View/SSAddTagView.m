@@ -86,7 +86,13 @@
 
 - (void)addTag
 {
+    if (!self.textField.text | ([self.textField.text length] == 0)) {
+        [SVProgressHUD showErrorWithStatus:@"Empty tag!"];
+        return;
+    }
+    
     NSString *text = [NSString stringWithString:self.textField.text];
+    
     [self.textField setText:@""];
     [self refresh];
     [self.delegate addTagDel:text];

@@ -91,7 +91,7 @@
 		<key>page_view_one_threshold</key>
 		<real>0.9</real>
 		<key>page_view_left_threshold_iphone</key>
-		<real>-0.2</real>
+		<real>-0.15</real>
 		<key>page_view_left_threshold_ipad</key>
 		<real>-0.08</real>
 		<key>user_screen_segmented_normal_color</key>
@@ -125,7 +125,9 @@
 		<key>default_username</key>
 		<string>defaultuser</string>
 		<key>default_tag</key>
-		<string>Ruby</string>
+		<string>Nodejs</string>
+		<key>tag_max_num</key>
+		<integer>4</integer>
 	</dict>
 </dict>
 </plist>

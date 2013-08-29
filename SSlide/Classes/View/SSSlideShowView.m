@@ -40,6 +40,13 @@
     UIPinchGestureRecognizer *pinchGes = [[UIPinchGestureRecognizer alloc] initWithTarget:self
                                                                                    action:@selector(pinchGestureAction:)];
     [self addGestureRecognizer:pinchGes];
+    
+    // loading spinner
+    self.loadingSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    float width = 50.f;
+    //self.loadingSpinner.backgroundColor = [UIColor greenSeaColor];
+    self.loadingSpinner.frame = CGRectMake(0, self.bounds.size.height - width, width, width);
+    [self addSubview:self.loadingSpinner];
 }
 
 - (void)pinchGestureAction:(UIPinchGestureRecognizer *)sender

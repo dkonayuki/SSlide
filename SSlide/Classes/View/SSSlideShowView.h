@@ -17,5 +17,6 @@
 @interface SSSlideShowView : SSView
 
 @property (strong, nonatomic) UIImageView *imageView;
+@property (strong, nonatomic) UIActivityIndicatorView *loadingSpinner;
 
 @end

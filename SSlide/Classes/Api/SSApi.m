@@ -114,10 +114,43 @@
  *	@param	page
  *	@param	itemsPerPage
  */
-- (void)getLatestSlideshows:(NSString *)tag page:(int)page itemsPerPage:(int)itemsPerPage success:(void (^)(NSArray *))success failure:(void (^)())failure
+- (void)getLatestSlideshows:(NSArray *)tags page:(int)page itemsPerPage:(int)itemsPerPage success:(void (^)(NSArray *))success failure:(void (^)())failure
 {
-    NSString *query = [NSString stringWithFormat:@"q=%@&page=%d&items_per_page=%d&sort=latest&what=tag", tag, page, itemsPerPage];
-    [self searchSlideshows:query success:success failure:failure];
+    self.slideshowArray = [[NSMutableArray alloc] init];
+    self.currentSlideshow = nil;
+    
+    int itemsInPage = [[SSDB5 theme] integerForKey:@"slide_num_in_page"] - [tags count] + 1;
+    int offset = itemsInPage*(page-1);
+    
+    NSMutableArray *operationsArray = [NSMutableArray array];
+    
+    for (NSString *key in tags) {
+        NSString *enKey= [key stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSString *url = [NSString stringWithFormat:@"%@get_slideshows_by_tag?tag=%@&detailed=1&limit=%d&offset=%d&%@", self.baseURL, enKey, itemsInPage, offset, [self getApiHash]];
+        
+        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
+        AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+        [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSError *error = nil;
+            TBXML *tbxml = [TBXML tbxmlWithXMLData:responseObject error:&error];
+            if (tbxml.rootXMLElement) {
+                [self traverseSlideshows:tbxml.rootXMLElement];
+            }
+        }
+                                         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                             
+                                         }];
+        
+        [operationsArray addObject:operation];
+    }
+    
+    [self.client enqueueBatchOfHTTPRequestOperations:operationsArray
+                                       progressBlock:^(NSUInteger numberOfFinishedOperations, NSUInteger totalNumberOfOperations) {
+                                       }
+                                     completionBlock:^(NSArray *operations) {
+                                         success(self.slideshowArray);
+                                         NSLog(@"ALL: %d", [self.slideshowArray count]);
+                                     }];
 }
 
 /**
