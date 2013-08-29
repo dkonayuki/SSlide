@@ -49,7 +49,8 @@
     if ([self.currentSlide checkIsDownloaded]) {
         self.myView.imageView.image = [UIImage imageWithContentsOfFile:[self.currentSlide localUrlOfImageAtPage:self.pageIndex]];
     } else {
-        [SVProgressHUD showWithStatus:@"Loading"];
+        //[SVProgressHUD showWithStatus:@"Loading"];
+        [self.myView.loadingSpinner startAnimating];
         // load image
         NSString *imageUrl = [NSString stringWithFormat:@"%@%d%@", self.currentSlide.slideImageBaseurl, self.pageIndex, self.currentSlide.slideImageBaseurlSuffix];
         NSLog(@"Image url: %@", imageUrl);
@@ -58,7 +59,8 @@
         [AFImageRequestOperation imageRequestOperationWithRequest:request
                                                           success:^(UIImage *image) {
                                                               self.myView.imageView.image = image;
-                                                              [SVProgressHUD dismiss];
+                                                              //[SVProgressHUD dismiss];
+                                                              [self.myView.loadingSpinner stopAnimating];
                                                           }];
         [operation start];
     }
