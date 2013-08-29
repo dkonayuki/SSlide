@@ -166,6 +166,7 @@
 
 - (void)didSelectedAtIndex:(int)index
 {
+    [self.view endEditing:YES];
     SSSlideshow *selectedSlide = [self.slideArray objectAtIndex:index];
     self.pageViewController = [[SSSlideShowPageViewController alloc] initWithSlideshow:selectedSlide andDelegate:self];
     [self presentPopupViewController:self.pageViewController animationType:MJPopupViewAnimationFade];
