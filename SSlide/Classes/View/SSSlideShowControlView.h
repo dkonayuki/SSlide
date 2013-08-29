@@ -12,6 +12,7 @@
 
 - (void)downloadCurrentSlideDel;
 - (void)startStreamingCurrentSlideDel;
+- (void)stopStreamingCurrentSlideDel;
 - (BOOL)isMasterDel;
 - (void)startDrawing;
 - (void)stopDrawing;

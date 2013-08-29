@@ -334,10 +334,20 @@
 
 - (void)startStreamingCurrentSlideDel
 {
+    if (self.isStreaming) {
+        return;
+    }
     if (!self.isMaster) {
         [self startFaye];
     } else {
         [self startStreaming];
+    }
+}
+
+- (void)stopStreamingCurrentSlideDel
+{
+    if (self.isStreaming) {
+    
     }
 }
 
@@ -368,6 +378,7 @@
 - (void)disconnectedFromServer
 {
     NSLog(@"Disconnected from server");
+    self.isStreaming = NO;
     [SVProgressHUD showErrorWithStatus:@"Disconnected"];
 }
 

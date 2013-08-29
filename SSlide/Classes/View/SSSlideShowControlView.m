@@ -154,14 +154,15 @@
         [self.streamingBtn setImage:[UIImage imageNamed:@"streaming_pressed.png"] forState:UIControlStateNormal];
         [self.streamingBtn setBackgroundImage:[self imageFromColor:[[SSDB5 theme] colorForKey:@"slideshow_btn_bg_pressed"]] forState:UIControlStateNormal];
         self.streamingBtn.tag = PRESSED;
+        [self.delegate startStreamingCurrentSlideDel];
     }
     else
     {
         [self.streamingBtn setImage:[UIImage imageNamed:@"streaming.png"] forState:UIControlStateNormal];
         [self.streamingBtn setBackgroundImage:[self imageFromColor:[[SSDB5 theme] colorForKey:@"slideshow_btn_bg"]] forState:UIControlStateNormal];
         self.streamingBtn.tag = NORMAL;
+        [self.delegate stopStreamingCurrentSlideDel];
     }
-    [self.delegate startStreamingCurrentSlideDel];
 }
 
 - (void)downloadBtnPressed:(id)sender
