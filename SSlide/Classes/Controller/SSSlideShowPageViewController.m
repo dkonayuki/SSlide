@@ -324,7 +324,7 @@
             //NSLog(@"download: %f", percent);
             [self.controlView setDownloadProgress:percent];
         } completion:^(BOOL result){
-            [SVProgressHUD showSuccessWithStatus:@"OK"];
+            [SVProgressHUD showSuccessWithStatus:@"Download completed!"];
             [self.delegate reloadSlidesListDel];
             [self.controlView setFinishDownload];
         }];
@@ -365,6 +365,11 @@
 - (void)clearDrawing
 {
     [self.drawingView clear];
+}
+
+- (BOOL)slideIdDownloaded
+{
+    return [self.currentSlide checkIsDownloadedAsNew];
 }
 
 #pragma mark - Faye Client Delegate

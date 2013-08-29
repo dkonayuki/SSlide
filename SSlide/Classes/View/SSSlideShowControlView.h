@@ -17,6 +17,7 @@
 - (void)startDrawing;
 - (void)stopDrawing;
 - (void)clearDrawing;
+- (BOOL)slideIdDownloaded;
 
 @end
 
