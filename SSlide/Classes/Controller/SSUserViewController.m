@@ -63,6 +63,9 @@
     {
         self.settingsViewController = [[SSSettingsViewController alloc] initWithDelegate:self];
     }
+    /*[self presentPopupViewController:self.settingsViewController animationType:MJPopupViewAnimationSlideLeftLeft dismissed:^{
+        [self reloadTags];
+    }];*/
     [self presentPopupViewController:self.settingsViewController animationType:MJPopupViewAnimationSlideLeftLeft];
 }
 

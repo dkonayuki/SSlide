@@ -43,10 +43,9 @@
 
 - (void)initView
 {
-    //self.backgroundColor = [UIColor grayColor];
-    self.layer.borderColor = [UIColor grayColor].CGColor;
-    self.layer.borderWidth = 1.f;
-    self.layer.cornerRadius = 2.f;
+    float corner = IS_IPAD ? 4.f : 3.f;
+    float border = IS_IPAD ? 2.f : 1.f;
+    float margin = IS_IPAD ? 10.f : 8.f;
     
     self.textField = [[UITextField alloc] init];
     self.textField.backgroundColor = [UIColor clearColor];
@@ -56,10 +55,16 @@
     [self addSubview:self.textField];
     
     self.button = [[UIButton alloc] init];
-    [self.button setTitle:@"+" forState:UIControlStateNormal];
-    [self.button setBackgroundColor:[UIColor greenSeaColor]];
+    [self.button setImage:[UIImage imageNamed:@"add.png"] forState:UIControlStateNormal];
+    [self.button setImageEdgeInsets:UIEdgeInsetsMake(margin, margin, margin, margin)];
+    [self.button setBackgroundColor:[[SSDB5 theme]colorForKey:@"tag_bg_color"]];
     [self.button addTarget:self action:@selector(addTag) forControlEvents:UIControlEventTouchDown];
     [self addSubview:self.button];
+
+    self.layer.borderColor = [[SSDB5 theme]colorForKey:@"tag_bg_color"].CGColor;
+    self.layer.borderWidth = border;
+    self.layer.cornerRadius = corner;
+    self.layer.masksToBounds = YES;
 }
 
 - (void)refresh

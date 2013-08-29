@@ -88,6 +88,9 @@
 
 #pragma mark - MNPageViewController delegate
 - (void)mn_pageViewController:(MNPageViewController *)pageViewController willPageToViewController:(SSViewController *)viewController withRatio:(CGFloat)ratio {
+    if ([viewController isKindOfClass:[SSTopViewController class]]) {
+        [(SSTopViewController*)viewController reloadTagsIfNeeded];
+    }
     // change alpha of view
 }
 
@@ -114,7 +117,6 @@
     static BOOL rightScrolling = NO;
     if ([viewController isKindOfClass:[SSSearchViewController class]]) {
         float right = IS_IPAD ? [[SSDB5 theme] floatForKey:@"page_view_right_threshold_ipad"] : [[SSDB5 theme] floatForKey:@"page_view_right_threshold_iphone"];
-        NSLog(@"%f %f", ratio, right);
         if (ratio > right && ratio != 1) {
             rightScrolling = YES;
         }
