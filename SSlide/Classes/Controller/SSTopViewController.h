@@ -10,4 +10,6 @@
 
 @interface SSTopViewController : SSViewController
 
+- (void)reloadTagsIfNeeded;
+
 @end
