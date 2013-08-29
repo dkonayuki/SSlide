@@ -66,6 +66,7 @@
     topMargin = self.bounds.size.height - 3*height/2;
     self.authenBtn = [[UIButton alloc] initWithFrame:CGRectMake(leftMargin, topMargin, self.bounds.size.width, height)];
     self.authenBtn.backgroundColor = [[SSDB5 theme] colorForKey:@"login_button_color"];
+    self.authenBtn.titleLabel.font = [UIFont fontWithName:[[SSDB5 theme] stringForKey:@"quicksand_font"]  size:fontSize];
     [self.authenBtn addTarget:self action:@selector(authenticateBtnPressed:) forControlEvents:UIControlEventTouchDown];
     [self addSubview:self.authenBtn];
     
@@ -82,7 +83,7 @@
     if (self.tagsListView) {
         [self.tagsListView removeFromSuperview];
     }
-    float textFontSize = (IS_IPAD) ? 40.f : 20.f;
+    float fontSize = IS_IPAD ? [[SSDB5 theme] floatForKey:@"setting_label_font_size_ipad"] : [[SSDB5 theme] floatForKey:@"setting_label_font_size_iphone"];
     float topMargin = height + 10.f;
     float leftMargin = 10.f;
     float width = self.bounds.size.width - 2*leftMargin;
@@ -127,7 +128,7 @@
         tmp = self.authenLabel.frame;
         tmp.origin.y = self.bounds.size.height - 5*height;
         self.authenLabel.frame = tmp;
-        self.authenLabel.font = [UIFont fontWithName:[[SSDB5 theme] stringForKey:@"quicksand_font"]  size:textFontSize];
+        self.authenLabel.font = [UIFont fontWithName:[[SSDB5 theme] stringForKey:@"quicksand_font"]  size:fontSize];
         [self.authenLabel setText:labelText];
         
         // usernameField and passwordField
