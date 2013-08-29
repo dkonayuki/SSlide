@@ -12,10 +12,12 @@
 
 - (void)downloadCurrentSlideDel;
 - (void)startStreamingCurrentSlideDel;
+- (void)stopStreamingCurrentSlideDel;
 - (BOOL)isMasterDel;
 - (void)startDrawing;
 - (void)stopDrawing;
 - (void)clearDrawing;
+- (BOOL)slideIdDownloaded;
 
 @end
 
@@ -23,5 +25,6 @@
 
 - (void)setDownloadProgress:(float)percent;
 - (void)setFinishDownload;
+- (void)offStreamingBtn;
 
 @end

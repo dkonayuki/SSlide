@@ -167,6 +167,7 @@
     self.fayeClient = [[FayeClient alloc] initWithURLString:[[SSDB5 theme] stringForKey:@"FAYE_BASE_URL"] channel:self.channel];
     self.fayeClient.delegate = self;
     [self.fayeClient connectToServer];
+    [SVProgressHUD showWithStatus:@"Connecting"];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -323,7 +324,7 @@
             //NSLog(@"download: %f", percent);
             [self.controlView setDownloadProgress:percent];
         } completion:^(BOOL result){
-            [SVProgressHUD showSuccessWithStatus:@"OK"];
+            [SVProgressHUD showSuccessWithStatus:@"Download completed!"];
             [self.delegate reloadSlidesListDel];
             [self.controlView setFinishDownload];
         }];
@@ -334,10 +335,20 @@
 
 - (void)startStreamingCurrentSlideDel
 {
+    if (self.isStreaming) {
+        return;
+    }
     if (!self.isMaster) {
         [self startFaye];
     } else {
         [self startStreaming];
+    }
+}
+
+- (void)stopStreamingCurrentSlideDel
+{
+    if (self.isStreaming) {
+    
     }
 }
 
@@ -356,6 +367,11 @@
     [self.drawingView clear];
 }
 
+- (BOOL)slideIdDownloaded
+{
+    return [self.currentSlide checkIsDownloadedAsNew];
+}
+
 #pragma mark - Faye Client Delegate
 - (void)connectedToServer
 {
@@ -368,6 +384,8 @@
 - (void)disconnectedFromServer
 {
     NSLog(@"Disconnected from server");
+    self.isStreaming = NO;
+    [self.controlView offStreamingBtn];
     [SVProgressHUD showErrorWithStatus:@"Disconnected"];
 }
 

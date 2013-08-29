@@ -7,7 +7,6 @@
 //
 
 #import "SSSlideShowControlView.h"
-#import <KAProgressLabel/KAProgressLabel.h>
 #import <QuartzCore/QuartzCore.h>
 
 #define NORMAL 0
@@ -15,11 +14,12 @@
 
 @interface SSSlideShowControlView()
 
-@property (strong, nonatomic) KAProgressLabel *downloadProgLabel;
 @property (strong, nonatomic) UIButton *downloadBtn;
 @property (strong, nonatomic) UIButton *streamingBtn;
 @property (strong, nonatomic) UIButton *penBtn;
 @property (strong, nonatomic) UIButton *eraseBtn;
+@property (strong, nonatomic) UIView *downloadBtnBackground;
+@property (assign, nonatomic) float downloadBtnHeight;
 
 @end
 
@@ -96,13 +96,23 @@
     [layer setBorderWidth:border];
     [self addSubview:self.eraseBtn];
 
+    // dowload button background
+    self.downloadBtnHeight = btnWidth - corner;
+    self.downloadBtnBackground = [[UIView alloc] initWithFrame:CGRectMake(0 + corner/2, 0 + corner/2, btnWidth - corner, btnWidth- corner)];
+    self.downloadBtnBackground.backgroundColor = [[SSDB5 theme] colorForKey:@"app_title_color"];
+    self.downloadBtnBackground.center = CGPointMake(self.frame.size.width/2 + (btnWidth + margin) *3/2, self.center.y);
+    layer = [self.downloadBtn layer];
+    [layer setMasksToBounds:YES];
+    [layer setCornerRadius:corner];
+    [self addSubview:self.downloadBtnBackground];
+    
     //download button
     self.downloadBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, btnWidth, btnWidth)];
     [self.downloadBtn setImage:[UIImage imageNamed:@"download_slide.png"] forState:UIControlStateNormal];
     [self.downloadBtn setBackgroundImage:[self imageFromColor:[[SSDB5 theme] colorForKey:@"slideshow_btn_bg"]] forState:UIControlStateNormal];
     [self.downloadBtn addTarget:self action:@selector(downloadBtnPressed:) forControlEvents:UIControlEventTouchDown];
     self.downloadBtn.center = CGPointMake(self.frame.size.width/2 + (btnWidth + margin) *3/2, self.center.y);
-    [self.downloadBtn setImageEdgeInsets:UIEdgeInsetsMake(padding, padding, padding, padding)];
+    //[self.downloadBtn setImageEdgeInsets:UIEdgeInsetsMake(padding, padding, padding, padding)];
     self.downloadBtn.tag = NORMAL;
     layer = [self.downloadBtn layer];
     [layer setMasksToBounds:YES];
@@ -111,17 +121,9 @@
     [layer setBorderWidth:border];
     [self addSubview:self.downloadBtn];
     
-    self.downloadProgLabel = [[KAProgressLabel alloc] initWithFrame:CGRectMake(0, 0, btnWidth, btnWidth)];
-    [self.downloadProgLabel setProgressColor:[[SSDB5 theme] colorForKey:@"download_progress_color"]];
-    [self.downloadProgLabel setTrackColor:[[SSDB5 theme] colorForKey:@"download_track_color"]];
-    [self.downloadProgLabel setFillColor:[UIColor whiteColor]];
-    [self.downloadProgLabel setBackgroundColor:[UIColor clearColor]];
-    [self.downloadProgLabel setBorderWidth:15.f];
-    [self.downloadProgLabel setTextAlignment:NSTextAlignmentCenter];
-    [self setDownloadProgress:0];
-    [self addSubview:self.downloadProgLabel];
-    // hide download ProgLabel
-    [self.downloadProgLabel setHidden:YES];
+    if ([self.delegate slideIdDownloaded]) {
+        [self setDownloadBtnForStateDownloaded];
+    }
 }
 
 - (void)eraseBtnPressed:(id)sender
@@ -161,6 +163,7 @@
         }
         [self.streamingBtn setBackgroundImage:[self imageFromColor:[[SSDB5 theme] colorForKey:@"slideshow_btn_bg_pressed"]] forState:UIControlStateNormal];
         self.streamingBtn.tag = PRESSED;
+        [self.delegate startStreamingCurrentSlideDel];
     }
     else
     {
@@ -174,23 +177,48 @@
         }
         [self.streamingBtn setBackgroundImage:[self imageFromColor:[[SSDB5 theme] colorForKey:@"slideshow_btn_bg"]] forState:UIControlStateNormal];
         self.streamingBtn.tag = NORMAL;
+        [self.delegate stopStreamingCurrentSlideDel];
     }
-    [self.delegate startStreamingCurrentSlideDel];
 }
 
 - (void)downloadBtnPressed:(id)sender
 {
-    [self.downloadProgLabel setHidden:NO];
-    [self.downloadBtn setHidden:YES];
-
-    [self.delegate downloadCurrentSlideDel];
+    if (self.downloadBtn.tag == NORMAL)
+    {
+        [self.downloadBtn setImage:[UIImage imageNamed:@"download_slide_pressed.png"] forState:UIControlStateNormal];
+        [self.downloadBtn setBackgroundImage:[self imageFromColor:[UIColor clearColor]] forState:UIControlStateNormal];
+        self.downloadBtn.tag = PRESSED;
+        [self.delegate downloadCurrentSlideDel];
+    } else {
+        [SVProgressHUD showErrorWithStatus:@"Already downloaded!"];
+    }
 }
 
 - (void)setDownloadProgress:(float)percent
 {
-    float per = percent * 100;
-    [self.downloadProgLabel setText:[NSString stringWithFormat:@"%d/100", (int)per]];
-    [self.downloadProgLabel setProgress:percent];
+    float per = percent * self.downloadBtnHeight;
+    CGRect rect = self.downloadBtnBackground.frame;
+    rect.size.height = per;
+    self.downloadBtnBackground.frame = rect;
+}
+
+- (void)setDownloadBtnForStateDownloaded
+{
+    CGRect rect = self.downloadBtnBackground.frame;
+    rect.size.height = self.downloadBtnHeight;
+    self.downloadBtnBackground.frame = rect;
+    self.downloadBtnBackground.backgroundColor = [UIColor whiteColor];
+    
+    [self.downloadBtn setImage:[UIImage imageNamed:@"download_slide_pressed.png"] forState:UIControlStateNormal];
+    [self.downloadBtn setBackgroundImage:[self imageFromColor:[UIColor clearColor]] forState:UIControlStateNormal];
+    self.downloadBtn.tag = PRESSED;
+}
+
+- (void)setDownloadBtnForStateNormal
+{
+    [self.downloadBtn setImage:[UIImage imageNamed:@"download_slide.png"] forState:UIControlStateNormal];
+    [self.downloadBtn setBackgroundImage:[self imageFromColor:[[SSDB5 theme] colorForKey:@"slideshow_btn_bg"]] forState:UIControlStateNormal];
+    self.downloadBtn.tag = NORMAL;
 }
 
 - (UIImage *) imageFromColor:(UIColor *)color {
@@ -206,8 +234,18 @@
 
 - (void)setFinishDownload
 {
-    [self.downloadProgLabel setText:@"OK"];
-    [self.downloadProgLabel setProgress:1.f];
+    [self setDownloadBtnForStateDownloaded];
+}
+
+- (void)offStreamingBtn
+{
+    if ([self.delegate isMasterDel]) {
+        [self.streamingBtn setImage:[UIImage imageNamed:@"streaming.png"] forState:UIControlStateNormal];
+    } else {
+        [self.streamingBtn setImage:[UIImage imageNamed:@"access.png"] forState:UIControlStateNormal];
+    }
+    [self.streamingBtn setBackgroundImage:[self imageFromColor:[[SSDB5 theme] colorForKey:@"slideshow_btn_bg"]] forState:UIControlStateNormal];
+    self.streamingBtn.tag = NORMAL;
 }
 
 @end
