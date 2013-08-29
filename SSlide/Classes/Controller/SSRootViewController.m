@@ -114,7 +114,8 @@
     static BOOL rightScrolling = NO;
     if ([viewController isKindOfClass:[SSSearchViewController class]]) {
         float right = IS_IPAD ? [[SSDB5 theme] floatForKey:@"page_view_right_threshold_ipad"] : [[SSDB5 theme] floatForKey:@"page_view_right_threshold_iphone"];
-        if (ratio < right) {
+        NSLog(@"%f %f", ratio, right);
+        if (ratio > right && ratio != 1) {
             rightScrolling = YES;
         }
         if (rightScrolling && ratio > [[SSDB5 theme] floatForKey:@"page_view_one_threshold"]) {
