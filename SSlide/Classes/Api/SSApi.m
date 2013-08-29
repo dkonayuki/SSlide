@@ -116,8 +116,28 @@
  */
 - (void)getLatestSlideshows:(NSString *)tag page:(int)page itemsPerPage:(int)itemsPerPage success:(void (^)(NSArray *))success failure:(void (^)())failure
 {
+    /*
     NSString *query = [NSString stringWithFormat:@"q=%@&page=%d&items_per_page=%d&sort=latest&what=tag", tag, page, itemsPerPage];
     [self searchSlideshows:query success:success failure:failure];
+    */
+    self.slideshowArray = [[NSMutableArray alloc] init];
+    self.currentSlideshow = nil;
+    int itemsInPage = [[SSDB5 theme] integerForKey:@"slide_num_in_page"];
+    int offset = itemsInPage*(page-1);
+    NSString *url = [NSString stringWithFormat:@"get_slideshows_by_tag?tag=%@&detailed=1&limit=%d&offset=%d&%@", tag, itemsInPage, offset, [self getApiHash]];
+    [self.client getPath:url
+              parameters:nil
+                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                     NSError *error = nil;
+                     TBXML *tbxml = [TBXML tbxmlWithXMLData:responseObject error:&error];
+                     if (tbxml.rootXMLElement) {
+                         [self traverseSlideshows:tbxml.rootXMLElement];
+                         success(self.slideshowArray);
+                     }
+                 }
+                 failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                     failure();
+                 }];
 }
 
 /**
