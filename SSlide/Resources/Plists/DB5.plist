@@ -121,7 +121,7 @@
 		<key>default_username</key>
 		<string>defaultuser</string>
 		<key>default_tag</key>
-		<string>Ruby</string>
+		<string>Nodejs</string>
 		<key>tag_max_num</key>
 		<integer>4</integer>
 	</dict>
