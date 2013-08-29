@@ -67,8 +67,16 @@
     self.slideTitle.text = self.title;
     self.slideTitle.backgroundColor = [UIColor clearColor];
     self.slideTitle.textColor = [[SSDB5 theme] colorForKey:@"info_title_text_color"];
-    self.slideTitle.font = [UIFont fontWithName:[[SSDB5 theme] stringForKey:@"quicksand_font"] size:titleFontSize];
+    self.slideTitle.font = [UIFont fontWithName:[[SSDB5 theme] stringForKey:@"candara_font"] size:titleFontSize];
     [self.slideTitle sizeToFit];
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGFloat screenHeight = screenRect.size.height;
+    if (self.slideTitle.frame.size.width > screenHeight * 3/4)
+    {
+        CGRect frame = self.slideTitle.frame;
+        frame.size.width = screenHeight * 3/4;
+        self.slideTitle.frame = frame;
+    }
     
     width = self.slideTitle.frame.size.width + leftMargin + pageWidth;
     //number background
@@ -103,7 +111,7 @@
     self.pageNumberLabel = [[UILabel alloc] initWithFrame:CGRectMake(pageImageWidth + leftMargin, topMargin, pageNumberBG.frame.size.width - pageImageWidth - leftMargin, height)];
     self.pageNumberLabel.text = [NSString stringWithFormat:@"%d/%d",1,self.totalPagesNumber];
     self.pageNumberLabel.backgroundColor = [UIColor clearColor];
-    self.pageNumberLabel.font = [UIFont fontWithName:[[SSDB5 theme] stringForKey:@"quicksand_font"] size:pageNumberFontSize];
+    self.pageNumberLabel.font = [UIFont fontWithName:[[SSDB5 theme] stringForKey:@"candara_font"] size:pageNumberFontSize];
     self.pageNumberLabel.textColor = [[SSDB5 theme] colorForKey:@"info_page_text_color"];
     [pageNumberBG addSubview:self.pageNumberLabel];
     
@@ -112,7 +120,6 @@
     CALayer *layer = [self.infoBG layer];
     [layer setMasksToBounds:YES];
     [layer setBorderColor:[[SSDB5 theme] colorForKey:@"info_pagenumber_bg_color"].CGColor];
-    layer.masksToBounds = YES;
     if (IS_IPAD)
     {
         [layer setBorderWidth:2.0];

@@ -47,20 +47,23 @@
 
 - (void)initView
 {
-    float topMargin = IS_IPAD ? 10.f : 5.f;
-    float leftMargin = IS_IPAD ? 16.f : 8.f;
+    float topMargin = IS_IPAD ? 16.f : 8.f;
+    float leftMargin = IS_IPAD ? 28.f : 14.f;
     self.backgroundColor = self.color;
     self.icon = [[UIImageView alloc] initWithFrame:CGRectMake(leftMargin, topMargin, self.bounds.size.height - 2*leftMargin, self.bounds.size.height - 2*topMargin)];
     self.icon.image = [UIImage imageNamed:self.imageName];
     self.icon.contentMode = UIViewContentModeScaleAspectFit;
     [self addSubview:self.icon];
     
-    self.textField = [[UITextField alloc] initWithFrame:CGRectMake(self.bounds.size.height + 2*leftMargin, 0, self.bounds.size.width - self.bounds.size.height, self.bounds.size.height)];
+    self.textField = [[UITextField alloc] initWithFrame:CGRectMake(self.bounds.size.height, 0, self.bounds.size.width - self.bounds.size.height, self.bounds.size.height)];
     self.textField.secureTextEntry = self.isPassword;
     self.textField.placeholder = self.placeholder;
+    [self.textField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
     self.textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     self.textField.textColor = [UIColor whiteColor];
     self.textField.delegate = self;
+    float textFontSize = (IS_IPAD) ? 28.f : 14.f;
+    self.textField.font = [UIFont fontWithName:[[SSDB5 theme] stringForKey:@"quicksand_font"]  size:textFontSize];
     [self addSubview:self.textField];
 }
 

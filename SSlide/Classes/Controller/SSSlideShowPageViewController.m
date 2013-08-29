@@ -102,19 +102,20 @@
     self.drawingView.hidden = YES;
     
     // control view
-    float cW = IS_IPAD ? [[SSDB5 theme] floatForKey:@"slide_control_view_height_ipad"] : [[SSDB5 theme] floatForKey:@"slide_control_view_height_iphone"];
-    CGRect rect = CGRectMake(self.view.bounds.size.width - cW, 0, self.view.bounds.size.height, cW);
+    float width = IS_IPAD ? [[SSDB5 theme] floatForKey:@"slide_control_view_height_ipad"] : [[SSDB5 theme] floatForKey:@"slide_control_view_height_iphone"];
+    float height = IS_IPAD ? 580.f : 270.f;
+    CGRect rect = CGRectMake(self.view.bounds.size.width - width, 0, height, width);
     self.controlView = [[SSSlideShowControlView alloc] initWithFrame:rect andDelegate:self];
     self.controlView.transform = CGAffineTransformMakeRotation(M_PI_2);
-    self.controlView.center = CGPointMake(self.view.bounds.size.width + cW/2, self.view.center.y);
+    self.controlView.center = CGPointMake(self.view.bounds.size.width + width/2, self.view.center.y);
     [self.view addSubview:self.controlView];
     
     //info view
-    self.infoView = [[SSSlideShowInfoView alloc] initWithFrame:CGRectMake(0, 0, 100.f, cW) andTitle:self.currentSlide.title andTotalPages:self.currentSlide.totalSlides];
+    self.infoView = [[SSSlideShowInfoView alloc] initWithFrame:CGRectMake(0, 0, 100.f, width) andTitle:self.currentSlide.title andTotalPages:self.currentSlide.totalSlides];
     [self.view addSubview:self.infoView];
     //[self.infoView sizeToFit];
     self.infoView.transform = CGAffineTransformMakeRotation(M_PI_2);
-    self.infoView.center = CGPointMake(cW/2, self.view.center.y);
+    self.infoView.center = CGPointMake(width/2, self.view.center.y);
     self.infoView.alpha = 0.f;
 }
 

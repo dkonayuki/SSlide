@@ -4,6 +4,10 @@
 <dict>
 	<key>Default</key>
 	<dict>
+		<key>slideshow_btn_bg_pressed</key>
+		<string>513c34</string>
+		<key>slideshow_btn_bg</key>
+		<string>ffffff</string>
 		<key>info_page_text_color</key>
 		<string>ffffff</string>
 		<key>info_title_text_color</key>
