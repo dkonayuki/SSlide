@@ -167,6 +167,7 @@
     self.fayeClient = [[FayeClient alloc] initWithURLString:[[SSDB5 theme] stringForKey:@"FAYE_BASE_URL"] channel:self.channel];
     self.fayeClient.delegate = self;
     [self.fayeClient connectToServer];
+    [SVProgressHUD showWithStatus:@"Connecting"];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -379,6 +380,7 @@
 {
     NSLog(@"Disconnected from server");
     self.isStreaming = NO;
+    [self.controlView offStreamingBtn];
     [SVProgressHUD showErrorWithStatus:@"Disconnected"];
 }
 

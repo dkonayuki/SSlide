@@ -211,4 +211,15 @@
     [self.downloadProgLabel setProgress:1.f];
 }
 
+- (void)offStreamingBtn
+{
+    if ([self.delegate isMasterDel]) {
+        [self.streamingBtn setImage:[UIImage imageNamed:@"streaming.png"] forState:UIControlStateNormal];
+    } else {
+        [self.streamingBtn setImage:[UIImage imageNamed:@"access.png"] forState:UIControlStateNormal];
+    }
+    [self.streamingBtn setBackgroundImage:[self imageFromColor:[[SSDB5 theme] colorForKey:@"slideshow_btn_bg"]] forState:UIControlStateNormal];
+    self.streamingBtn.tag = NORMAL;
+}
+
 @end

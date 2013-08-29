@@ -24,5 +24,6 @@
 
 - (void)setDownloadProgress:(float)percent;
 - (void)setFinishDownload;
+- (void)offStreamingBtn;
 
 @end
