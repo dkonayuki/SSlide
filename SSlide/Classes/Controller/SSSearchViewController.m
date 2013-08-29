@@ -12,6 +12,7 @@
 #import "SSSlideshow.h"
 #import <UIViewController+MJPopupViewController.h>
 #import "SSSlideShowPageViewController.h"
+#import "SSDescriptionViewController.h"
 
 @interface SSSearchViewController () <SSSearchViewDelegate, SSSlideListViewDelegate, SSSlideShowPageViewControllerDelegate, UIScrollViewDelegate>
 
@@ -20,6 +21,7 @@
 @property (assign, nonatomic) NSInteger currentPage;
 @property (nonatomic) NSMutableString *currentText;
 @property (strong, nonatomic) SSSlideShowPageViewController *pageViewController;
+@property (strong, nonatomic) SSDescriptionViewController *descriptionViewController;
 
 @end
 
@@ -55,6 +57,15 @@
 {
     self.currentPage ++;
     [self searchText:self.currentText firstTime:FALSE completion:completed];
+}
+
+- (void)showDescriptionView
+{
+    if (!self.descriptionViewController)
+    {
+        self.descriptionViewController = [[SSDescriptionViewController alloc] init];
+    }
+    [self presentPopupViewController:self.descriptionViewController animationType:MJPopupViewAnimationSlideRightRight];
 }
 
 - (void)searchText:(NSString *)text firstTime:(BOOL)fTime completion:(void (^)(void))completed

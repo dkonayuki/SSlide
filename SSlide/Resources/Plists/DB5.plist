@@ -92,8 +92,12 @@
 		<real>0.9</real>
 		<key>page_view_left_threshold_iphone</key>
 		<real>-0.15</real>
+		<key>page_view_right_threshold_iphone</key>
+		<real>0.15</real>
 		<key>page_view_left_threshold_ipad</key>
 		<real>-0.08</real>
+		<key>page_view_right_threshold_ipad</key>
+		<real>0.08</real>
 		<key>user_screen_segmented_normal_color</key>
 		<string>AFAA8F</string>
 		<key>user_screen_segmented_pressed_color</key>

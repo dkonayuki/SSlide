@@ -37,6 +37,8 @@
 		43B4725A17CF200000CAD335 /* access.png in Resources */ = {isa = PBXBuildFile; fileRef = 43B4725817CF200000CAD335 /* access.png */; };
 		43B4725D17CF21D900CAD335 /* add.png in Resources */ = {isa = PBXBuildFile; fileRef = 43B4725B17CF21D900CAD335 /* add.png */; };
 		43B4725E17CF21D900CAD335 /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 43B4725C17CF21D900CAD335 /* delete.png */; };
+		43B4726117CF374C00CAD335 /* description.png in Resources */ = {isa = PBXBuildFile; fileRef = 43B4726017CF374C00CAD335 /* description.png */; };
+		43B4726417CF3AB500CAD335 /* SSDescriptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 43B4726317CF3AB500CAD335 /* SSDescriptionViewController.m */; };
 		91F22B6617CE576200226368 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 91F22B6517CE576200226368 /* Default-Portrait~ipad.png */; };
 		91F22B6A17CE57B800226368 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 91F22B6917CE57B800226368 /* Default-Landscape~ipad.png */; };
 		DC01E00E17C9CC440096254A /* FayeClient.m in Sources */ = {isa = PBXBuildFile; fileRef = DC01E00517C9CC440096254A /* FayeClient.m */; };
@@ -148,6 +150,9 @@
 		43B4725817CF200000CAD335 /* access.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = access.png; sourceTree = "<group>"; };
 		43B4725B17CF21D900CAD335 /* add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add.png; sourceTree = "<group>"; };
 		43B4725C17CF21D900CAD335 /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete.png; sourceTree = "<group>"; };
+		43B4726017CF374C00CAD335 /* description.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = description.png; sourceTree = "<group>"; };
+		43B4726217CF3AB500CAD335 /* SSDescriptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSDescriptionViewController.h; path = Classes/Controller/SSDescriptionViewController.h; sourceTree = "<group>"; };
+		43B4726317CF3AB500CAD335 /* SSDescriptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSDescriptionViewController.m; path = Classes/Controller/SSDescriptionViewController.m; sourceTree = "<group>"; };
 		7E2702BF3BD1401A8049CA77 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		91F22B6517CE576200226368 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait~ipad.png"; path = "Resources/Images/Background/Default-Portrait~ipad.png"; sourceTree = "<group>"; };
 		91F22B6917CE57B800226368 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape~ipad.png"; path = "Resources/Images/Background/Default-Landscape~ipad.png"; sourceTree = "<group>"; };
@@ -326,6 +331,15 @@
 			path = Resources/Images/search_screen;
 			sourceTree = "<group>";
 		};
+		43B4725F17CF374C00CAD335 /* description_popup */ = {
+			isa = PBXGroup;
+			children = (
+				43B4726017CF374C00CAD335 /* description.png */,
+			);
+			name = description_popup;
+			path = Resources/Images/description_popup;
+			sourceTree = "<group>";
+		};
 		DC081B5217C657B200A893C2 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -481,6 +495,8 @@
 				DC2BCF5E17C5DBFE00181774 /* SSSlideShowViewController.m */,
 				DC11050817C7036E00833997 /* SSSettingsViewController.h */,
 				DC11050917C7036E00833997 /* SSSettingsViewController.m */,
+				43B4726217CF3AB500CAD335 /* SSDescriptionViewController.h */,
+				43B4726317CF3AB500CAD335 /* SSDescriptionViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -548,6 +564,7 @@
 		DCC0BB1817C493ED009FF1FD /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				43B4725F17CF374C00CAD335 /* description_popup */,
 				435977D917CD9A8D00117E2E /* search_screen */,
 				43357C6E17CC3627007CD24D /* slide_cell */,
 				43357C7317CC3627007CD24D /* top_screen */,
@@ -768,6 +785,7 @@
 				43B4725A17CF200000CAD335 /* access.png in Resources */,
 				43B4725D17CF21D900CAD335 /* add.png in Resources */,
 				43B4725E17CF21D900CAD335 /* delete.png in Resources */,
+				43B4726117CF374C00CAD335 /* description.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -868,6 +886,7 @@
 				DC86F8DD17CD189E0029844C /* SSAddTagView.m in Sources */,
 				DC0388D817CDB9DA002100CD /* SSTextFieldView.m in Sources */,
 				435977E217CDEACE00117E2E /* SSSlideShowInfoView.m in Sources */,
+				43B4726417CF3AB500CAD335 /* SSDescriptionViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
