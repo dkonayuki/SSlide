@@ -82,6 +82,7 @@
     if (self.tagsListView) {
         [self.tagsListView removeFromSuperview];
     }
+    float textFontSize = (IS_IPAD) ? 40.f : 20.f;
     float topMargin = height + 10.f;
     float leftMargin = 10.f;
     float width = self.bounds.size.width - 2*leftMargin;
@@ -126,6 +127,7 @@
         tmp = self.authenLabel.frame;
         tmp.origin.y = self.bounds.size.height - 5*height;
         self.authenLabel.frame = tmp;
+        self.authenLabel.font = [UIFont fontWithName:[[SSDB5 theme] stringForKey:@"quicksand_font"]  size:textFontSize];
         [self.authenLabel setText:labelText];
         
         // usernameField and passwordField
