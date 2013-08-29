@@ -110,6 +110,18 @@
             [self.userViewController showSettingsView];
         }
     }
+    // show description view
+    static BOOL rightScrolling = NO;
+    if ([viewController isKindOfClass:[SSSearchViewController class]]) {
+        float right = IS_IPAD ? [[SSDB5 theme] floatForKey:@"page_view_right_threshold_ipad"] : [[SSDB5 theme] floatForKey:@"page_view_right_threshold_iphone"];
+        if (ratio < right) {
+            rightScrolling = YES;
+        }
+        if (rightScrolling && ratio > [[SSDB5 theme] floatForKey:@"page_view_one_threshold"]) {
+            rightScrolling = NO;
+            [self.searchViewController showDescriptionView];
+        }
+    }
     // change alpha of view
 }
 

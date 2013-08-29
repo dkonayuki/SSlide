@@ -10,4 +10,6 @@
 
 @interface SSSearchViewController : SSViewController
 
+- (void)showDescriptionView;
+
 @end
