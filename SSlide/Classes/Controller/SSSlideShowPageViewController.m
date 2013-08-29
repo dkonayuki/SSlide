@@ -125,7 +125,7 @@
     CGRect rect = CGRectMake(self.view.bounds.size.width - width, 0, height, width);
     self.controlView = [[SSSlideShowControlView alloc] initWithFrame:rect andDelegate:self];
     self.controlView.transform = CGAffineTransformMakeRotation(M_PI_2);
-    self.controlView.center = CGPointMake(self.view.bounds.size.width + width/2, self.view.center.y);
+    self.controlView.center = CGPointMake(self.view.bounds.size.width + width/2, self.view.bounds.size.height/2);
     [self.view addSubview:self.controlView];
     
     //info view
