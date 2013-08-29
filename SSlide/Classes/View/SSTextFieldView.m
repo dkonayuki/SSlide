@@ -47,8 +47,8 @@
 
 - (void)initView
 {
-    float topMargin = IS_IPAD ? 16.f : 8.f;
-    float leftMargin = IS_IPAD ? 28.f : 14.f;
+    float topMargin = IS_IPAD ? 12.f : 8.f;
+    float leftMargin = IS_IPAD ? 20.f : 14.f;
     self.backgroundColor = self.color;
     self.icon = [[UIImageView alloc] initWithFrame:CGRectMake(leftMargin, topMargin, self.bounds.size.height - 2*leftMargin, self.bounds.size.height - 2*topMargin)];
     self.icon.image = [UIImage imageNamed:self.imageName];
