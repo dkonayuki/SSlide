@@ -131,7 +131,7 @@
 		<key>default_tag</key>
 		<string>Nodejs</string>
 		<key>tag_max_num</key>
-		<integer>5</integer>
+		<integer>4</integer>
 		<key>drawing_pen_width_iphone</key>
 		<integer>5</integer>
 		<key>drawing_pen_width_ipad</key>

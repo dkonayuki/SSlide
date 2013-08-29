@@ -44,11 +44,8 @@
 
 - (void)initView
 {
-    float margin =  IS_IPAD ? 10.f : 8.f;
-    float corner = IS_IPAD ? 4.f : 3.f;
-    self.backgroundColor = [[SSDB5 theme]colorForKey:@"tag_bg_color"];
-    self.layer.cornerRadius = corner;
-    self.layer.masksToBounds = YES;
+    self.backgroundColor = [UIColor greenSeaColor];
+    self.layer.cornerRadius = 2.f;
     
     self.label = [[UIButton alloc] init];
     self.label.backgroundColor = [UIColor clearColor];
@@ -59,8 +56,7 @@
     [self addSubview:self.label];
     
     self.button = [[UIButton alloc] init];
-    [self.button setImage:[UIImage imageNamed:@"delete.png"] forState:UIControlStateNormal];
-    [self.button setImageEdgeInsets:UIEdgeInsetsMake(margin, margin, margin, margin)];
+    [self.button setTitle:@"x" forState:UIControlStateNormal];
     [self.button addTarget:self action:@selector(deleteTag) forControlEvents:UIControlEventTouchDown];
     [self addSubview:self.button];
     self.button.hidden = YES;

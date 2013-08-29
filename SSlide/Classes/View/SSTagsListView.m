@@ -87,10 +87,6 @@
     self.addTagView.frame = curRect;
     
     x += self.addTagView.bounds.size.width + margin;
-    int maxTagNum = [[SSDB5 theme] integerForKey:@"tag_max_num"];
-    if (([self.tagViews count] >= maxTagNum) && (!self.addTagView.isHidden)) {
-        self.addTagView.hidden = YES;
-    }
 }
 
 #pragma mark - SSTagViewDelegate

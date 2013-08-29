@@ -88,9 +88,6 @@
 
 #pragma mark - MNPageViewController delegate
 - (void)mn_pageViewController:(MNPageViewController *)pageViewController willPageToViewController:(SSViewController *)viewController withRatio:(CGFloat)ratio {
-    if ([viewController isKindOfClass:[SSTopViewController class]]) {
-        [(SSTopViewController*)viewController reloadTagsIfNeeded];
-    }
     // change alpha of view
 }
 

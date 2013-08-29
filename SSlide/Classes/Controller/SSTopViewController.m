@@ -19,7 +19,7 @@
 @property (strong, nonatomic) SSTopView *myView;
 @property (strong, nonatomic) NSMutableArray *slideArray;
 @property (assign, nonatomic) NSInteger currentPage;
-@property (strong, nonatomic) NSMutableArray *currentTags;
+
 @property (strong, nonatomic) SSSlideShowPageViewController *pageViewController;
 
 @end
@@ -44,8 +44,6 @@
     self.view = self.myView;
     // init slideArray
     self.slideArray = [[NSMutableArray alloc] init];
-    //init current tags array
-    self.currentTags = [[NSMutableArray alloc] init];
     // show loading
     [SVProgressHUD showWithStatus:@"Loading"];
     // get first slide
@@ -93,31 +91,16 @@
     [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationFade];
 }
 
-- (void)reloadTagsIfNeeded
-{
-    NSMutableArray *tags = [NSMutableArray arrayWithArray:[SSAppData sharedInstance].currentUser.tags];
-    if (![self.currentTags isEqualToArray:tags] )
-    {
-        [self.slideArray removeAllObjects];
-        self.currentPage = 1;
-        @synchronized (self.currentTags)
-        {
-            [self getTopSlideshows:^(void) {
-            }];
-        }
-    }
-}
-
 #pragma mark - private
 - (void)getTopSlideshows:(void (^)(void))completed
 {
     // TODO: get setting info
-    self.currentTags = [NSMutableArray arrayWithArray:[SSAppData sharedInstance].currentUser.tags];
-    if ([self.currentTags count] == 0) {
-        [self.currentTags addObject:[[SSDB5 theme] stringForKey:@"default_tag"]];
+    NSMutableArray *tags = [NSMutableArray arrayWithArray:[SSAppData sharedInstance].currentUser.tags];
+    if ([tags count] == 0) {
+        [tags addObject:[[SSDB5 theme] stringForKey:@"default_tag"]];
     }
     
-    [[SSApi sharedInstance] getLatestSlideshows:self.currentTags
+    [[SSApi sharedInstance] getLatestSlideshows:tags
                                            page:self.currentPage
                                    itemsPerPage:[[SSDB5 theme] integerForKey:@"slide_num_in_page"]
                                         success:^(NSArray *result){
