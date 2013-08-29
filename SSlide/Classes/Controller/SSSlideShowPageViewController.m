@@ -13,6 +13,7 @@
 #import "SSAppData.h"
 #import "SSApi.h"
 #import <AFNetworking/AFHTTPClient.h>
+#import <ACEDrawingView/ACEDrawingView.h>
 
 @interface SSSlideShowPageViewController () <SSSlideSHowViewControllerDelegate, SSSlideShowControlViewDelegate, FayeClientDelegate>
 
@@ -24,6 +25,8 @@
 @property (strong, nonatomic) NSString *channel;
 @property (assign, nonatomic) BOOL isMaster;
 @property (assign, nonatomic) BOOL isStreaming;
+
+@property (strong, nonatomic) ACEDrawingView *drawingView;
 
 @end
 
@@ -90,6 +93,15 @@
     [self addChildViewController:self.pageController];
     [[self view] addSubview:[self.pageController view]];
     [self.pageController didMoveToParentViewController:self];
+    
+    self.drawingView = [[ACEDrawingView alloc] initWithFrame:self.view.bounds];
+    self.drawingView.lineColor = [UIColor orangeColor];
+    self.drawingView.drawTool = ACEDrawingToolTypePen;
+    float lineWitdh = IS_IPAD ? [[SSDB5 theme] floatForKey:@"drawing_pen_width_ipad"] : [[SSDB5 theme] floatForKey:@"drawing_pen_width_iphone"];
+    self.drawingView.lineWidth = lineWitdh;
+    //self.drawingView.delegate = self;
+    [self.view addSubview:self.drawingView];
+    self.drawingView.hidden = YES;
     
     // control view
     float width = IS_IPAD ? [[SSDB5 theme] floatForKey:@"slide_control_view_height_ipad"] : [[SSDB5 theme] floatForKey:@"slide_control_view_height_iphone"];
@@ -327,6 +339,21 @@
     } else {
         [self startStreaming];
     }
+}
+
+- (void)startDrawing
+{
+    self.drawingView.hidden = NO;
+}
+
+- (void)stopDrawing
+{
+    self.drawingView.hidden = YES;
+}
+
+- (void)clearDrawing
+{
+    [self.drawingView clear];
 }
 
 #pragma mark - Faye Client Delegate
