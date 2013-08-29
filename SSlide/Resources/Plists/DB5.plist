@@ -128,6 +128,10 @@
 		<string>Nodejs</string>
 		<key>tag_max_num</key>
 		<integer>4</integer>
+		<key>drawing_pen_width_iphone</key>
+		<integer>5</integer>
+		<key>drawing_pen_width_ipad</key>
+		<integer>10</integer>
 	</dict>
 </dict>
 </plist>

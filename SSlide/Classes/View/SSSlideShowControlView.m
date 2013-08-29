@@ -126,7 +126,7 @@
 
 - (void)eraseBtnPressed:(id)sender
 {
-
+    [self.delegate clearDrawing];
 }
 
 - (void)penBtnPressed:(id)sender
@@ -136,12 +136,14 @@
         [self.penBtn setImage:[UIImage imageNamed:@"pen_pressed.png"] forState:UIControlStateNormal];
         [self.penBtn setBackgroundImage:[self imageFromColor:[[SSDB5 theme] colorForKey:@"slideshow_btn_bg_pressed"]] forState:UIControlStateNormal];
         self.penBtn.tag = PRESSED;
+        [self.delegate startDrawing];
     }
     else
     {
         [self.penBtn setImage:[UIImage imageNamed:@"pen.png"] forState:UIControlStateNormal];
         [self.penBtn setBackgroundImage:[self imageFromColor:[[SSDB5 theme] colorForKey:@"slideshow_btn_bg"]] forState:UIControlStateNormal];
         self.penBtn.tag = NORMAL;
+        [self.delegate stopDrawing];
     }
 }
 
