@@ -83,6 +83,20 @@
     }
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self disconnectToFayeServer];
+    [self disconnectToServer];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - private
 - (void)initViewController
 {
     SSSlideShowViewController *initialViewController = [self viewControllerAtIndex:1];
@@ -168,50 +182,6 @@
     self.fayeClient.delegate = self;
     [self.fayeClient connectToServer];
     [SVProgressHUD showWithStatus:@"Connecting"];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    if (!self.isStreaming) {
-        return;
-    }
-    
-    [self.fayeClient disconnectFromServer];
-    
-    if (self.isMaster) {
-        NSString *curUsername = [SSAppData sharedInstance].currentUser.username;
-        
-        AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[[SSDB5 theme] stringForKey:@"SS_SERVER_BASE_URL"]]];
-        [client registerHTTPOperationClass:[AFJSONRequestOperation class]];
-        [client setDefaultHeader:@"Accept" value:@"application/json"];
-        
-        NSString *url = [NSString stringWithFormat:@"streaming/remove"];
-        NSDictionary *params = @{@"username": curUsername,
-                                 @"channel": self.channel};
-        
-        [client postPath:url
-              parameters:params
-                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                     NSDictionary *dict = (NSDictionary *)responseObject;
-                     NSLog(@"%@", dict);
-                 }
-                 failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                     NSLog(@"error");
-                 }];
-    }
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (SSSlideShowViewController *)viewControllerAtIndex:(NSUInteger)index
-{
-    SSSlideShowViewController *slideShowViewController = [[SSSlideShowViewController alloc] initWithCurrentSlideshow:self.currentSlide pageIndex:index andDelegate:self];
-    return slideShowViewController;
 }
 
 #pragma mark - UIPageViewControllerDataSource
@@ -347,9 +317,8 @@
 
 - (void)stopStreamingCurrentSlideDel
 {
-    if (self.isStreaming) {
-    
-    }
+    [self disconnectToFayeServer];
+    [self disconnectToServer];
 }
 
 - (void)startDrawing
@@ -384,9 +353,7 @@
 - (void)disconnectedFromServer
 {
     NSLog(@"Disconnected from server");
-    self.isStreaming = NO;
-    [self.controlView offStreamingBtn];
-    [SVProgressHUD showErrorWithStatus:@"Disconnected"];
+    [self disconnectToServer];
 }
 
 - (void)subscriptionFailedWithError:(NSString *)error
@@ -428,6 +395,56 @@
 - (void)fayeClientError:(NSError *)error
 {
     NSLog(@"fayeClientError %@", error);
+}
+
+
+#pragma mark - private
+- (void)disconnectToFayeServer
+{
+    if (!self.isStreaming) {
+        return;
+    }
+    
+    [self.fayeClient disconnectFromServer];
+}
+
+- (void)disconnectToServer
+{
+    if (!self.isStreaming) {
+        return;
+    }
+    
+    self.isStreaming = NO;
+    [self.controlView offStreamingBtn];
+    [SVProgressHUD showErrorWithStatus:@"Disconnected"];
+    
+    if (self.isMaster) {
+        NSString *curUsername = [SSAppData sharedInstance].currentUser.username;
+        
+        AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[[SSDB5 theme] stringForKey:@"SS_SERVER_BASE_URL"]]];
+        [client registerHTTPOperationClass:[AFJSONRequestOperation class]];
+        [client setDefaultHeader:@"Accept" value:@"application/json"];
+        
+        NSString *url = [NSString stringWithFormat:@"streaming/remove"];
+        NSDictionary *params = @{@"username": curUsername,
+                                 @"channel": self.channel};
+        
+        [client postPath:url
+              parameters:params
+                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                     NSDictionary *dict = (NSDictionary *)responseObject;
+                     NSLog(@"%@", dict);
+                 }
+                 failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                     NSLog(@"error");
+                 }];
+    }
+}
+
+- (SSSlideShowViewController *)viewControllerAtIndex:(NSUInteger)index
+{
+    SSSlideShowViewController *slideShowViewController = [[SSSlideShowViewController alloc] initWithCurrentSlideshow:self.currentSlide pageIndex:index andDelegate:self];
+    return slideShowViewController;
 }
 
 @end
