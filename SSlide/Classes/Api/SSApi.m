@@ -7,16 +7,16 @@
 //
 
 #import "SSApi.h"
-#import <NSString-Hashes/NSString+Hashes.h>
-#import <TBXML/TBXML.h>
-#import <TBXML+NSDictionary/TBXML+NSDictionary.h>
 #import "SSDB5.h"
 #import "SSSlideshow.h"
+#import <TBXML/TBXML.h>
+#import <TBXML+NSDictionary/TBXML+NSDictionary.h>
+#import <NSString-Hashes/NSString+Hashes.h>
 
 @interface SSApi()
 
-@property (strong, nonatomic) NSMutableArray *slideshowArray;
-@property (strong, nonatomic) SSSlideshow *currentSlideshow;
+@property (strong, readonly, nonatomic) NSArray *slideElement;
+@property (strong, readonly, nonatomic) NSString *lastElement;
 
 @end
 
@@ -47,8 +47,7 @@
  */
 - (void)getSlideshowsByUser:(NSString *)username page:(int)page success:(void (^)(NSArray *))success failure:(void (^)())failure
 {
-    self.slideshowArray = [[NSMutableArray alloc] init];
-    self.currentSlideshow = nil;
+    NSMutableArray *slideshowArray = [[NSMutableArray alloc] init];
     int itemsInPage = [[SSDB5 theme] integerForKey:@"slide_num_in_page"];
     int offset = itemsInPage*(page-1);
     NSString *url = [NSString stringWithFormat:@"get_slideshows_by_user?detailed=1&username_for=%@&limit=%d&offset=%d&%@", username, itemsInPage, offset, [self getApiHash]];
@@ -58,8 +57,8 @@
                      NSError *error = nil;
                      TBXML *tbxml = [TBXML tbxmlWithXMLData:responseObject error:&error];
                      if (tbxml.rootXMLElement) {
-                         [self traverseSlideshows:tbxml.rootXMLElement];
-                         success(self.slideshowArray);
+                         [self traverseSlideshows:tbxml.rootXMLElement result:slideshowArray];
+                         success(slideshowArray);
                      }
                  }
                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -76,22 +75,21 @@
 {
     NSString *paramsEncoding = [params stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSLog(@"paramsEncoding: %@", paramsEncoding);
-    self.slideshowArray = [[NSMutableArray alloc] init];
-    self.currentSlideshow = nil;
+    NSMutableArray *slideshowArray = [[NSMutableArray alloc] init];
     NSString *url = [NSString stringWithFormat:@"search_slideshows?detailed=1&%@&%@", paramsEncoding, [self getApiHash]];
     [self.client getPath:url
               parameters:nil
-            success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                NSError *error = nil;
-                TBXML *tbxml = [TBXML tbxmlWithXMLData:responseObject error:&error];
-                if (tbxml.rootXMLElement) {
-                    [self traverseSlideshows:tbxml.rootXMLElement];
-                    success(self.slideshowArray);
-                }
-            }
-            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                failure();
-            }];
+                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                     NSError *error = nil;
+                     TBXML *tbxml = [TBXML tbxmlWithXMLData:responseObject error:&error];
+                     if (tbxml.rootXMLElement) {
+                         [self traverseSlideshows:tbxml.rootXMLElement result:slideshowArray];
+                         success(slideshowArray);
+                     }
+                 }
+                 failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                     failure();
+                 }];
 }
 
 /**
@@ -116,8 +114,7 @@
  */
 - (void)getLatestSlideshows:(NSArray *)tags page:(int)page itemsPerPage:(int)itemsPerPage success:(void (^)(NSArray *))success failure:(void (^)())failure
 {
-    self.slideshowArray = [[NSMutableArray alloc] init];
-    self.currentSlideshow = nil;
+    NSMutableArray *slideshowArray = [[NSMutableArray alloc] init];
     
     int itemsInPage = [[SSDB5 theme] integerForKey:@"slide_num_in_page"] - [tags count] + 1;
     int offset = itemsInPage*(page-1);
@@ -134,7 +131,7 @@
             NSError *error = nil;
             TBXML *tbxml = [TBXML tbxmlWithXMLData:responseObject error:&error];
             if (tbxml.rootXMLElement) {
-                [self traverseSlideshows:tbxml.rootXMLElement];
+                [self traverseSlideshows:tbxml.rootXMLElement result:slideshowArray];
             }
         }
                                          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -148,8 +145,8 @@
                                        progressBlock:^(NSUInteger numberOfFinishedOperations, NSUInteger totalNumberOfOperations) {
                                        }
                                      completionBlock:^(NSArray *operations) {
-                                         success(self.slideshowArray);
-                                         NSLog(@"ALL: %d", [self.slideshowArray count]);
+                                         success(slideshowArray);
+                                         NSLog(@"ALL: %d", [slideshowArray count]);
                                      }];
 }
 
@@ -226,7 +223,7 @@
                                                         curSlide.slideImageBaseurlSuffix = [dict objectForKey:@"slide_image_baseurl_suffix"];
                                                         NSString *firstImageUrl = [NSString stringWithFormat:@"http:%@1%@", curSlide.slideImageBaseurl, curSlide.slideImageBaseurlSuffix];
                                                         curSlide.firstPageImageUrl = firstImageUrl;
-                                                       // [curSlide log];
+                                                        // [curSlide log];
                                                         result(TRUE);
                                                     }
                                                     failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
@@ -237,46 +234,49 @@
 }
 
 #pragma mark - private
-
 /**
- *	trarse xml
+ *	traverseSlideshows xml
  *
- *	@param	element	(root element)
+ *	@param	element
+ *	@param	slideshowArray
  */
-- (void)traverseSlideshows:(TBXMLElement *)element {
+- (void)traverseSlideshows:(TBXMLElement *)element result:(NSMutableArray *)slideshowArray {
     do {
+        SSSlideshow *lastSlide = (SSSlideshow *)[slideshowArray lastObject];
+        BOOL elementFinished = NO;
+        
         // Display the name of the element
         NSString *elementName = [TBXML elementName:element];
         //NSLog(@"%@", elementName);
         if ([elementName isEqualToString:@"Slideshow"]) {
-            self.currentSlideshow = [[SSSlideshow alloc] initWithDefaultData];
+            SSSlideshow *newSlide = [[SSSlideshow alloc] initWithDefaultData];
+            [slideshowArray addObject:newSlide];
         } else if ([elementName isEqualToString:@"ID"]) {
-            self.currentSlideshow.slideId = [TBXML textForElement:element];
+            lastSlide.slideId = [TBXML textForElement:element];
         } else if ([elementName isEqualToString:@"Title"]) {
-            self.currentSlideshow.title = [TBXML textForElement:element];
+            lastSlide.title = [TBXML textForElement:element];
         } else if ([elementName isEqualToString:@"Username"]) {
-            self.currentSlideshow.username = [TBXML textForElement:element];
+            lastSlide.username = [TBXML textForElement:element];
         } else if ([elementName isEqualToString:@"URL"]) {
-            self.currentSlideshow.url = [TBXML textForElement:element];
+            lastSlide.url = [TBXML textForElement:element];
         } else if ([elementName isEqualToString:@"ThumbnailURL"]) {
-            self.currentSlideshow.thumbnailUrl = [TBXML textForElement:element];
+            lastSlide.thumbnailUrl = [TBXML textForElement:element];
         } else if ([elementName isEqualToString:@"Created"]) {
-            self.currentSlideshow.created = [TBXML textForElement:element];
+            lastSlide.created = [TBXML textForElement:element];
         } else if ([elementName isEqualToString:@"NumDownloads"]) {
-            self.currentSlideshow.numDownloads = [[TBXML textForElement:element] integerValue];
+            lastSlide.numDownloads = [[TBXML textForElement:element] integerValue];
         } else if ([elementName isEqualToString:@"NumViews"]) {
-            self.currentSlideshow.numViews = [[TBXML textForElement:element] integerValue];
+            lastSlide.numViews = [[TBXML textForElement:element] integerValue];
         } else if ([elementName isEqualToString:@"NumFavorites"]) {
-            self.currentSlideshow.numFavorites = [[TBXML textForElement:element] integerValue];
+            lastSlide.numFavorites = [[TBXML textForElement:element] integerValue];
         }else if ([elementName isEqualToString:@"NumSlides"]) {
-            self.currentSlideshow.totalSlides = [[TBXML textForElement:element] integerValue];
-            [self.slideshowArray addObject:self.currentSlideshow];
-            //[self.currentSlideshow log];
+            lastSlide.totalSlides = [[TBXML textForElement:element] integerValue];
+            elementFinished = YES;
         }
         
         // if the element has child elements, process them
-        if (element->firstChild)
-            [self traverseSlideshows:element->firstChild];
+        if (!elementFinished && element->firstChild)
+            [self traverseSlideshows:element->firstChild result:slideshowArray];
         
         // Obtain next sibling element
     } while ((element = element->nextSibling));
