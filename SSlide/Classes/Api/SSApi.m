@@ -15,9 +15,6 @@
 
 @interface SSApi()
 
-@property (strong, readonly, nonatomic) NSArray *slideElement;
-@property (strong, readonly, nonatomic) NSString *lastElement;
-
 @end
 
 @implementation SSApi
@@ -176,29 +173,6 @@
                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                      result(NO);
                  }];
-}
-
-/**
- *	get extended slide info
- *
- *	@param	url
- */
-- (void)getExtendedSlideInfo:(NSString *)url
-{
-    NSString *requestUrl = [NSString stringWithFormat:@"%@?url=%@&format=json", [[SSDB5 theme] stringForKey:@"OEMBED_BASE_URL"], url];
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
-    
-    AFJSONRequestOperation *operation =
-    [AFJSONRequestOperation JSONRequestOperationWithRequest:request
-                                                    success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-                                                        NSDictionary *dict = (NSDictionary *)JSON;
-                                                        NSLog(@"OK");
-                                                        NSLog(@"%@", dict);
-                                                    }
-                                                    failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-                                                        NSLog(@"error");
-                                                    }];
-    [operation start];
 }
 
 /**
