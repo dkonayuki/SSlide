@@ -32,15 +32,6 @@
 
 @implementation SSSlideShowPageViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (id)initWithSlideshow:(SSSlideshow *)slideshow andDelegate:(id)delegate
 {
     self = [super init];
@@ -90,12 +81,6 @@
     [super viewWillDisappear:animated];
     [self disconnectToFayeServer];
     [self disconnectToServer];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - private

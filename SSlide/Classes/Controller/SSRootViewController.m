@@ -14,15 +14,6 @@
 
 @implementation SSRootViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -43,12 +34,6 @@
     CGRect pageViewRect = self.view.bounds;
     pageViewRect = CGRectInset(pageViewRect, 0.f, 0.f);
     self.pageViewController.view.frame = pageViewRect;
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - MNPageViewController datasource

@@ -27,15 +27,6 @@
 
 @implementation SSSearchViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -45,12 +36,6 @@
     self.slideArray = [[NSMutableArray alloc] init];
     self.currentPage = 1;
     self.currentText = [NSMutableString stringWithString:@""];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)getMoreSlides:(void (^)(void))completed
@@ -118,7 +103,10 @@
                                                             }
                                                             [self.myView.slideListView.slideTableView setContentOffset:CGPointZero animated:NO];
                                                             [self.myView initSlideListView];
-                                                            [self.myView.slideListView.slideTableView reloadData];
+                                                            
+                                                            NSUInteger from = 0;
+                                                            NSUInteger sum = array.count;
+                                                            [self.myView.slideListView reloadWithAnimation:from andSum:sum];
                                                         }
                                                         failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
                                                             [SVProgressHUD dismiss];
@@ -131,14 +119,17 @@
         [[SSApi sharedInstance] searchSlideshows:params
                                          success:^(NSArray *result){
                                              [SVProgressHUD dismiss];
-                                             if (!isSame)
-                                             {
+                                             if (!isSame) {
                                                  [self.slideArray removeAllObjects];
                                                  [self.myView.slideListView.slideTableView setContentOffset:CGPointZero animated:NO];
                                              }
                                              [self.slideArray addObjectsFromArray:result];
                                              [self.myView initSlideListView];
-                                             [self.myView.slideListView reloadWithAnimation];
+                                             
+                                             NSUInteger from = (self.currentPage - 1)* [[SSDB5 theme] integerForKey:@"slide_num_in_page"];
+                                             NSUInteger sum = result.count;
+                                             
+                                             [self.myView.slideListView reloadWithAnimation:from andSum:sum];
                                              completed();
                                          }
                                          failure:^(void) {     // TODO: error handling

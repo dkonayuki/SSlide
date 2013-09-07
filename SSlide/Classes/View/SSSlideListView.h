@@ -25,6 +25,6 @@
 @property (strong, nonatomic) UITableView *slideTableView;
 @property (assign, nonatomic) BOOL infiniteLoad;
 
-- (void)reloadWithAnimation;
+- (void)reloadWithAnimation:(NSUInteger)from andSum:(NSUInteger)sum;
 
 @end

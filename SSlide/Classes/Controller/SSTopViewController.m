@@ -26,15 +26,6 @@
 
 @implementation SSTopViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -49,12 +40,6 @@
     // get first slide
     [self getTopSlideshows:^(void) {
     }];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - SSTopView delegate
@@ -94,7 +79,6 @@
 #pragma mark - private
 - (void)getTopSlideshows:(void (^)(void))completed
 {
-    // TODO: get setting info
     NSMutableArray *tags = [NSMutableArray arrayWithArray:[SSAppData sharedInstance].currentUser.tags];
     if ([tags count] == 0) {
         [tags addObject:[[SSDB5 theme] stringForKey:@"default_tag"]];
@@ -107,7 +91,9 @@
                                             // stop loading status
                                             [SVProgressHUD dismiss];
                                             [self.slideArray addObjectsFromArray:result];
-                                            [self.myView.slideListView reloadWithAnimation];
+                                            NSUInteger from = (self.currentPage - 1) * [[SSDB5 theme] integerForKey:@"slide_num_in_page"];
+                                            NSUInteger sum = result.count;
+                                            [self.myView.slideListView reloadWithAnimation:from andSum:sum];
                                             completed();
                                         }
                                         failure:^(void) {     // TODO: error handling

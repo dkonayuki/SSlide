@@ -96,17 +96,14 @@
 }
 
 #pragma mark
-- (void)reloadWithAnimation
+- (void)reloadWithAnimation:(NSUInteger)from andSum:(NSUInteger)sum
 {
-    [UIView transitionWithView: self.slideTableView
-                      duration: 0.25f
-                       options: UIViewAnimationOptionTransitionNone
-                    animations: ^(void) {
-                        [self.slideTableView reloadData];
-                    }
-                    completion: ^(BOOL isFinished) {
-                    
-                    }];
+    NSMutableArray *pathArray = [[NSMutableArray alloc] init];
+    for (int i = from; i < from + sum; i++) {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+        [pathArray addObject:indexPath];
+    }
+    [self.slideTableView insertRowsAtIndexPaths:pathArray withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 @end

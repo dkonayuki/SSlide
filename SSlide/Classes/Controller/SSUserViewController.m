@@ -28,15 +28,6 @@
 
 @implementation SSUserViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -49,12 +40,6 @@
     
     self.isDownloadedMode = YES;
     [self getDownloadedSlideshows];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)showSettingsView
@@ -114,7 +99,7 @@
 
 - (void) reloadSlidesListDel
 {
-    [self.myView.slideListView reloadWithAnimation];
+    //[self.myView.slideListView reloadWithAnimation];
 }
 
 - (void)closePopupDel
@@ -141,7 +126,10 @@
                                         success:^(NSArray *result){
                                             if (!self.isDownloadedMode) {
                                                 [self.slideArray addObjectsFromArray:result];
-                                                [self.myView.slideListView reloadWithAnimation];
+                                                
+                                                NSUInteger from = (self.currentPage -1) * [[SSDB5 theme] integerForKey:@"slide_num_in_page"];
+                                                NSUInteger sum = result.count;
+                                                [self.myView.slideListView reloadWithAnimation:from andSum:sum];
                                                 if ([result count] < [[SSDB5 theme] integerForKey:@"slide_num_in_page"]){
                                                     self.endOfSlidesList = YES;
                                                 } else {
@@ -158,7 +146,7 @@
 - (void)getDownloadedSlideshows
 {
     self.slideArray = [[SSAppData sharedInstance] downloadedSlides];
-    [self.myView.slideListView reloadWithAnimation];
+    [self.myView.slideListView reloadWithAnimation:0 andSum:self.slideArray.count];
 }
 
 @end
