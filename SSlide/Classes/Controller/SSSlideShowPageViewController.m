@@ -65,10 +65,10 @@
     self.pageController.delegate = self;
     [[self.pageController view] setFrame:[[self view] bounds]];
     
-    [self.currentSlide log];
-    
     if (![self.currentSlide checkIsDownloaded] && [self.currentSlide extendedInfoIsNil]) {
+        [SVProgressHUD showWithStatus:@"loading"];
         [[SSApi sharedInstance] addExtendedSlideInfo:self.currentSlide result:^(BOOL result) {
+            [SVProgressHUD dismiss];
             [self initViewController];
         }];
     } else {
