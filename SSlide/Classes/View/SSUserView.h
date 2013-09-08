@@ -9,7 +9,7 @@
 #import "SSView.h"
 #import "SSSlideListView.h"
 
-@protocol SSUserViewDelegate <NSObject>
+@protocol SSUserViewDelegate <SSViewDelegate>
 
 - (void)segmentedControlChangedDel:(NSUInteger)index;
 - (NSString *)getUsernameDel;

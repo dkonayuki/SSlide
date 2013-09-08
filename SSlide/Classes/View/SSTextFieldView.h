@@ -8,7 +8,7 @@
 
 #import "SSView.h"
 
-@protocol SSTextFieldViewDelegate <NSObject>
+@protocol SSTextFieldViewDelegate <SSViewDelegate>
 
 - (void)textFieldDidBeginEditingDel;
 

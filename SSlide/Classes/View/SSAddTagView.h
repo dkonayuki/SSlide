@@ -18,7 +18,7 @@
 
 @end
 
-@protocol SSAddTagViewDelegate <NSObject>
+@protocol SSAddTagViewDelegate <SSViewDelegate>
 
 - (void)redrawDel;
 - (void)addTagDel:(NSString *)tagText;

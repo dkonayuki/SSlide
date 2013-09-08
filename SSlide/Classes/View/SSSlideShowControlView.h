@@ -8,7 +8,7 @@
 
 #import "SSView.h"
 
-@protocol SSSlideShowControlViewDelegate <NSObject>
+@protocol SSSlideShowControlViewDelegate <SSViewDelegate>
 
 - (void)downloadCurrentSlideDel;
 - (void)startStreamingCurrentSlideDel;

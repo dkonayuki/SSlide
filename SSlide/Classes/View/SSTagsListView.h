@@ -9,7 +9,7 @@
 #import "SSView.h"
 #import "SSTagView.h"
 
-@protocol SSTagsListViewDelegate <NSObject>
+@protocol SSTagsListViewDelegate <SSViewDelegate>
 
 - (void)didAddTag:(NSString *)tag;
 - (void)didRemoveTag:(NSString *)tag;

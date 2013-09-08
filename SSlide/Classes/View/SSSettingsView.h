@@ -8,7 +8,7 @@
 
 #import "SSView.h"
 
-@protocol SSSettingsViewDelegate <NSObject>
+@protocol SSSettingsViewDelegate <SSViewDelegate>
 
 - (void)loginActionDel:(NSString *)username password:(NSString *)password;
 - (void)logoutActionDel;

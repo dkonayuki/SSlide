@@ -19,7 +19,7 @@
 
 @end
 
-@protocol SSTagViewDelegate <NSObject>
+@protocol SSTagViewDelegate <SSViewDelegate>
 
 - (void)redrawDel;
 - (void)removeTagDel:(SSTagView *)tagView;

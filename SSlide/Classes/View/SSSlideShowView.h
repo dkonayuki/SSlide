@@ -8,7 +8,7 @@
 
 #import "SSView.h"
 
-@protocol SSSlideShowViewDelegate <NSObject>
+@protocol SSSlideShowViewDelegate <SSViewDelegate>
 
 - (void)dismissView;
 

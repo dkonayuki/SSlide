@@ -10,12 +10,14 @@
 #import "SSSlideshow.h"
 #import "SSSlideListView.h"
 
-@protocol SSSearchViewDelegate <NSObject>
+/* */
+@protocol SSSearchViewDelegate <SSViewDelegate>
 
 - (void)searchText:(NSString *)text firstTime:(BOOL)fTime completion:(void (^)(void))completed;
 
 @end
 
+/* */
 @interface SSSearchView : SSView
 
 @property (strong, nonatomic) UITextField *searchTextField;

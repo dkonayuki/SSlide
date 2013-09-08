@@ -9,7 +9,8 @@
 #import "SSView.h"
 #import "SSSlideshow.h"
 
-@protocol SSSlideListViewDelegate <NSObject>
+/* */
+@protocol SSSlideListViewDelegate <SSViewDelegate>
 
 - (NSInteger) numberOfRows;
 - (SSSlideshow *) getDataAtIndex:(int)index;
@@ -20,6 +21,7 @@
 
 @end
 
+/* */
 @interface SSSlideListView : SSView
 
 @property (strong, nonatomic) UITableView *slideTableView;
