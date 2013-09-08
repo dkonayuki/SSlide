@@ -129,7 +129,7 @@
                                                 
                                                 NSUInteger from = (self.currentPage -1) * [[SSDB5 theme] integerForKey:@"slide_num_in_page"];
                                                 NSUInteger sum = result.count;
-                                                [self.myView.slideListView reloadWithAnimation:from andSum:sum];
+                                                [self.myView.slideListView addRowsWithAnimation:from andSum:sum];
                                                 if ([result count] < [[SSDB5 theme] integerForKey:@"slide_num_in_page"]){
                                                     self.endOfSlidesList = YES;
                                                 } else {
@@ -146,7 +146,7 @@
 - (void)getDownloadedSlideshows
 {
     self.slideArray = [[SSAppData sharedInstance] downloadedSlides];
-    [self.myView.slideListView reloadWithAnimation:0 andSum:self.slideArray.count];
+    [self.myView.slideListView.slideTableView reloadData];// reloadWithAnimation:0 andSum:self.slideArray.count];
 }
 
 @end

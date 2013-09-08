@@ -103,10 +103,7 @@
                                                             }
                                                             [self.myView.slideListView.slideTableView setContentOffset:CGPointZero animated:NO];
                                                             [self.myView initSlideListView];
-                                                            
-                                                            NSUInteger from = 0;
-                                                            NSUInteger sum = array.count;
-                                                            [self.myView.slideListView reloadWithAnimation:from andSum:sum];
+                                                            [self.myView.slideListView reloadRowsWithAnimation];
                                                         }
                                                         failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
                                                             [SVProgressHUD dismiss];
@@ -128,8 +125,11 @@
                                              
                                              NSUInteger from = (self.currentPage - 1)* [[SSDB5 theme] integerForKey:@"slide_num_in_page"];
                                              NSUInteger sum = result.count;
-                                             
-                                             [self.myView.slideListView reloadWithAnimation:from andSum:sum];
+                                             if (fTime) {
+                                                 [self.myView.slideListView reloadRowsWithAnimation];
+                                             } else {
+                                                 [self.myView.slideListView addRowsWithAnimation:from andSum:sum];
+                                             }
                                              completed();
                                          }
                                          failure:^(void) {     // TODO: error handling

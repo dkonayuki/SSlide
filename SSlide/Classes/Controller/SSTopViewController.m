@@ -93,7 +93,7 @@
                                             [self.slideArray addObjectsFromArray:result];
                                             NSUInteger from = (self.currentPage - 1) * [[SSDB5 theme] integerForKey:@"slide_num_in_page"];
                                             NSUInteger sum = result.count;
-                                            [self.myView.slideListView reloadWithAnimation:from andSum:sum];
+                                            [self.myView.slideListView addRowsWithAnimation:from andSum:sum];
                                             completed();
                                         }
                                         failure:^(void) {     // TODO: error handling

@@ -96,8 +96,17 @@
 }
 
 #pragma mark
-- (void)reloadWithAnimation:(NSUInteger)from andSum:(NSUInteger)sum
+- (void)reloadRowsWithAnimation
 {
+    NSIndexSet *section = [[NSIndexSet alloc] initWithIndex:0];
+    [self.slideTableView reloadSections:section withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
+- (void)addRowsWithAnimation:(NSUInteger)from andSum:(NSUInteger)sum
+{
+    if (sum <= 0) {
+        return;
+    }
     NSMutableArray *pathArray = [[NSMutableArray alloc] init];
     for (int i = from; i < from + sum; i++) {
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
