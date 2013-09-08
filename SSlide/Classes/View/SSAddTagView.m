@@ -20,15 +20,6 @@
 
 @implementation SSAddTagView
 
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-    }
-    return self;
-}
-
 - (id)initWithFrame:(CGRect)frame andDelegate:(id)delegate fontSize:(float)fontSize
 {
     self = [super initWithFrame:frame];

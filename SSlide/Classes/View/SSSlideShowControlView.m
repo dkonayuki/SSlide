@@ -25,15 +25,6 @@
 
 @implementation SSSlideShowControlView
 
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-    }
-    return self;
-}
-
 - (void)initView
 {
     self.backgroundColor = [UIColor clearColor];

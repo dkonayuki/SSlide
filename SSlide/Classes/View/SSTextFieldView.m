@@ -21,15 +21,6 @@
 
 @implementation SSTextFieldView
 
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-    }
-    return self;
-}
-
 - (id)initWithFrame:(CGRect)frame delegate:(id)delegate imageName:(NSString *)image color:(UIColor *)color isPassword:(BOOL)isPassword placeholder:(NSString *)placeholder
 {
     self = [super initWithFrame:frame];

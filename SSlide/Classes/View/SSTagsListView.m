@@ -19,15 +19,6 @@
 
 @implementation SSTagsListView
 
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-    }
-    return self;
-}
-
 - (id)initWithFrame:(CGRect)frame andDelegate:(id)delegate andTagStrings:(NSMutableArray *)tagStrings
 {
     self = [super initWithFrame:frame];

@@ -21,16 +21,6 @@
 
 @implementation SSSlideShowInfoView
 
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-        [self initView];
-    }
-    return self;
-}
-
 - (id)initWithFrame:(CGRect)frame andTitle:(NSString *)title andTotalPages:(NSInteger)total
 {
     self = [super initWithFrame:frame];
@@ -140,14 +130,5 @@
 {
     self.pageNumberLabel.text = [NSString stringWithFormat:@"%d/%d", pageNumber, self.totalPagesNumber];
 }
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
 
 @end
