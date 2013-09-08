@@ -66,9 +66,10 @@
     [self presentPopupViewController:self.pageViewController animationType:MJPopupViewAnimationFade];
 }
 
+#pragma SSSlideShowPageViewController delegate
 - (void) reloadSlidesListDel
 {
-    [self.myView.slideListView.slideTableView reloadData];
+    [self.myView.slideListView reloadRowsWithAnimation];
 }
 
 - (void)closePopupDel
@@ -84,14 +85,14 @@
         [tags addObject:[[SSDB5 theme] stringForKey:@"default_tag"]];
     }
     
+    int slideNumPerPage = [[SSDB5 theme] integerForKey:@"slide_num_in_page"];
     [[SSApi sharedInstance] getLatestSlideshows:tags
                                            page:self.currentPage
-                                   itemsPerPage:[[SSDB5 theme] integerForKey:@"slide_num_in_page"]
-                                        success:^(NSArray *result){
-                                            // stop loading status
+                                   itemsPerPage:slideNumPerPage
+                                        success:^(NSArray *result) {
                                             [SVProgressHUD dismiss];
                                             [self.slideArray addObjectsFromArray:result];
-                                            NSUInteger from = (self.currentPage - 1) * [[SSDB5 theme] integerForKey:@"slide_num_in_page"];
+                                            NSUInteger from = (self.currentPage - 1) * slideNumPerPage;
                                             NSUInteger sum = result.count;
                                             [self.myView.slideListView addRowsWithAnimation:from andSum:sum];
                                             completed();

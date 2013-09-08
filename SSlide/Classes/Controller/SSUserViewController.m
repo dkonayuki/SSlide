@@ -44,8 +44,7 @@
 
 - (void)showSettingsView
 {
-    if (!self.settingsViewController)
-    {
+    if (!self.settingsViewController) {
         self.settingsViewController = [[SSSettingsViewController alloc] initWithDelegate:self];
     }
     [self presentPopupViewController:self.settingsViewController animationType:MJPopupViewAnimationSlideLeftLeft];
@@ -59,8 +58,9 @@
         [self getDownloadedSlideshows];
     } else {
         self.isDownloadedMode = NO;
-        // init slideArray
+        self.currentPage = 1;
         self.slideArray = [[NSMutableArray alloc] init];
+        [self.myView.slideListView reloadRowsWithAnimation];
         [self getUserSlideshows];
     }
 }
@@ -70,7 +70,7 @@
     return [SSAppData sharedInstance].currentUser.username;
 }
 
-#pragma mark - SSTopView delegate
+#pragma mark - SSSlideListView delegate
 - (NSInteger)numberOfRows
 {
     return self.slideArray.count;
@@ -97,9 +97,10 @@
     [self presentPopupViewController:self.pageViewController animationType:MJPopupViewAnimationFade];
 }
 
+#pragma mark - SSlideShowPageViewController delegate
 - (void) reloadSlidesListDel
 {
-    //[self.myView.slideListView reloadWithAnimation];
+    [self.myView.slideListView reloadRowsWithAnimation];
 }
 
 - (void)closePopupDel
@@ -116,21 +117,24 @@
 #pragma mark - private
 - (void)getUserSlideshows
 {
+    if (![[SSAppData sharedInstance] isLogined]) {
+        return;
+    }
     // show loading
     [SVProgressHUD showWithStatus:@"Loading"];
     // TODO: get setting info
     NSString *currentUsername = [SSAppData sharedInstance].currentUser.username;
-    NSLog(@"current username: %@", currentUsername);
     [[SSApi sharedInstance] getSlideshowsByUser:currentUsername
                                            page:self.currentPage
                                         success:^(NSArray *result){
                                             if (!self.isDownloadedMode) {
                                                 [self.slideArray addObjectsFromArray:result];
                                                 
-                                                NSUInteger from = (self.currentPage -1) * [[SSDB5 theme] integerForKey:@"slide_num_in_page"];
+                                                NSUInteger slidesPerPage = [[SSDB5 theme] integerForKey:@"slide_num_in_page"];
+                                                NSUInteger from = (self.currentPage -1) * slidesPerPage;
                                                 NSUInteger sum = result.count;
                                                 [self.myView.slideListView addRowsWithAnimation:from andSum:sum];
-                                                if ([result count] < [[SSDB5 theme] integerForKey:@"slide_num_in_page"]){
+                                                if ([result count] < slidesPerPage){
                                                     self.endOfSlidesList = YES;
                                                 } else {
                                                     self.currentPage ++;
@@ -146,7 +150,7 @@
 - (void)getDownloadedSlideshows
 {
     self.slideArray = [[SSAppData sharedInstance] downloadedSlides];
-    [self.myView.slideListView.slideTableView reloadData];// reloadWithAnimation:0 andSum:self.slideArray.count];
+    [self.myView.slideListView reloadRowsWithAnimation];
 }
 
 @end
