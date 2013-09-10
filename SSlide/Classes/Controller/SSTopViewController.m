@@ -11,15 +11,14 @@
 #import "SSApi.h"
 #import "SSAppData.h"
 #import "SSSlideshow.h"
+#import "SSSlideDataSource.h"
 #import "SSSlideShowPageViewController.h"
 #import <UIViewController+MJPopupViewController.h>
 
 @interface SSTopViewController () <SSSlideListViewDelegate, SSSlideShowPageViewControllerDelegate>
 
 @property (strong, nonatomic) SSTopView *myView;
-@property (strong, nonatomic) NSMutableArray *slideArray;
-@property (assign, nonatomic) NSInteger currentPage;
-
+@property (strong, nonatomic) SSSlideDataSource *slideDataSource;
 @property (strong, nonatomic) SSSlideShowPageViewController *pageViewController;
 
 @end
@@ -30,11 +29,10 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    self.currentPage = 1;
     self.myView = [[SSTopView alloc] initWithFrame:self.view.bounds andDelegate:self];
     self.view = self.myView;
-    // init slideArray
-    self.slideArray = [[NSMutableArray alloc] init];
+    // init slideDataSource
+    self.slideDataSource = [[SSSlideDataSource alloc] init];
     // show loading
     [SVProgressHUD showWithStatus:@"Loading"];
     // get first slide
@@ -45,23 +43,22 @@
 #pragma mark - SSTopView delegate
 - (NSInteger)numberOfRows
 {
-    return self.slideArray.count;
+    return [self.slideDataSource slideSum];
 }
 
 - (SSSlideshow *)getDataAtIndex:(int)index
 {
-    return [self.slideArray objectAtIndex:index];
+    return [self.slideDataSource slideAtIndex:index];
 }
 
 - (void)getMoreSlides:(void (^)(void))completed
 {
-    self.currentPage ++;
     [self getTopSlideshows:completed];
 }
 
 - (void)didSelectedAtIndex:(int)index
 {
-    SSSlideshow *selectedSlide = [self.slideArray objectAtIndex:index];
+    SSSlideshow *selectedSlide = [self.slideDataSource slideAtIndex:index];
     self.pageViewController = [[SSSlideShowPageViewController alloc] initWithSlideshow:selectedSlide andDelegate:self];
     [self presentPopupViewController:self.pageViewController animationType:MJPopupViewAnimationFade];
 }
@@ -87,13 +84,13 @@
     
     int slideNumPerPage = [[SSDB5 theme] integerForKey:@"slide_num_in_page"];
     [[SSApi sharedInstance] getLatestSlideshows:tags
-                                           page:self.currentPage
+                                           page:[self.slideDataSource nextPageNum]
                                    itemsPerPage:slideNumPerPage
                                         success:^(NSArray *result) {
                                             [SVProgressHUD dismiss];
-                                            [self.slideArray addObjectsFromArray:result];
-                                            NSUInteger from = (self.currentPage - 1) * slideNumPerPage;
+                                            NSUInteger from = [self.slideDataSource slideSum];
                                             NSUInteger sum = result.count;
+                                            [self.slideDataSource addSlidesFromArray:result];
                                             [self.myView.slideListView addRowsWithAnimation:from andSum:sum];
                                             completed();
                                         }

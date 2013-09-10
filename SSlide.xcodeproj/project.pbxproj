@@ -69,7 +69,6 @@
 		DC4830AD17CC807E00193354 /* login_password@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC4830A917CC807E00193354 /* login_password@2x.png */; };
 		DC4830AE17CC807E00193354 /* login_username.png in Resources */ = {isa = PBXBuildFile; fileRef = DC4830AA17CC807E00193354 /* login_username.png */; };
 		DC4830AF17CC807E00193354 /* login_username@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC4830AB17CC807E00193354 /* login_username@2x.png */; };
-		DC48BFD117C51C3D00340FE0 /* SSApi.m in Sources */ = {isa = PBXBuildFile; fileRef = DC48BFD017C51C3D00340FE0 /* SSApi.m */; };
 		DC56EEDA17CB2497005866B2 /* publish_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DC56EED617CB2497005866B2 /* publish_icon.png */; };
 		DC56EEDB17CB2497005866B2 /* publish_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC56EED717CB2497005866B2 /* publish_icon@2x.png */; };
 		DC70E57817C49B49004633F2 /* SSTopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC70E57717C49B49004633F2 /* SSTopViewController.m */; };
@@ -78,6 +77,8 @@
 		DC86F8DA17CCF93F0029844C /* SSTagView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC86F8D917CCF93E0029844C /* SSTagView.m */; };
 		DC86F8DD17CD189E0029844C /* SSAddTagView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC86F8DC17CD189D0029844C /* SSAddTagView.m */; };
 		DC9F48E717DF405A00B0EC15 /* SSDB5.m in Sources */ = {isa = PBXBuildFile; fileRef = DC9F48E617DF405A00B0EC15 /* SSDB5.m */; };
+		DC9F48EA17DF49C200B0EC15 /* SSApi.m in Sources */ = {isa = PBXBuildFile; fileRef = DC9F48E917DF49C200B0EC15 /* SSApi.m */; };
+		DC9F48ED17DF4A1700B0EC15 /* SSSlideDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = DC9F48EC17DF4A1700B0EC15 /* SSSlideDataSource.m */; };
 		DCB5A5FA17C4F2970089809C /* SSSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB5A5F917C4F2970089809C /* SSSearchViewController.m */; };
 		DCB5A5FD17C4F2C50089809C /* SSUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB5A5FC17C4F2C50089809C /* SSUserViewController.m */; };
 		DCB5A60317C4F7920089809C /* SSSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB5A60217C4F7920089809C /* SSSearchView.m */; };
@@ -201,8 +202,6 @@
 		DC4830A917CC807E00193354 /* login_password@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login_password@2x.png"; sourceTree = "<group>"; };
 		DC4830AA17CC807E00193354 /* login_username.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login_username.png; sourceTree = "<group>"; };
 		DC4830AB17CC807E00193354 /* login_username@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login_username@2x.png"; sourceTree = "<group>"; };
-		DC48BFCF17C51C3D00340FE0 /* SSApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSApi.h; path = Classes/Api/SSApi.h; sourceTree = "<group>"; };
-		DC48BFD017C51C3D00340FE0 /* SSApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSApi.m; path = Classes/Api/SSApi.m; sourceTree = "<group>"; };
 		DC56EED617CB2497005866B2 /* publish_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = publish_icon.png; sourceTree = "<group>"; };
 		DC56EED717CB2497005866B2 /* publish_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "publish_icon@2x.png"; sourceTree = "<group>"; };
 		DC70E57617C49B49004633F2 /* SSTopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSTopViewController.h; path = Classes/Controller/SSTopViewController.h; sourceTree = "<group>"; };
@@ -217,6 +216,10 @@
 		DC86F8DC17CD189D0029844C /* SSAddTagView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSAddTagView.m; path = Classes/View/SSAddTagView.m; sourceTree = "<group>"; };
 		DC9F48E517DF405A00B0EC15 /* SSDB5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSDB5.h; path = Classes/Manager/SSDB5.h; sourceTree = "<group>"; };
 		DC9F48E617DF405A00B0EC15 /* SSDB5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSDB5.m; path = Classes/Manager/SSDB5.m; sourceTree = "<group>"; };
+		DC9F48E817DF49C200B0EC15 /* SSApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSApi.h; path = Classes/Helper/SSApi.h; sourceTree = "<group>"; };
+		DC9F48E917DF49C200B0EC15 /* SSApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSApi.m; path = Classes/Helper/SSApi.m; sourceTree = "<group>"; };
+		DC9F48EB17DF4A1700B0EC15 /* SSSlideDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSSlideDataSource.h; path = Classes/Helper/SSSlideDataSource.h; sourceTree = "<group>"; };
+		DC9F48EC17DF4A1700B0EC15 /* SSSlideDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSSlideDataSource.m; path = Classes/Helper/SSSlideDataSource.m; sourceTree = "<group>"; };
 		DCB5A5F817C4F2970089809C /* SSSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSSearchViewController.h; path = Classes/Controller/SSSearchViewController.h; sourceTree = "<group>"; };
 		DCB5A5F917C4F2970089809C /* SSSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSSearchViewController.m; path = Classes/Controller/SSSearchViewController.m; sourceTree = "<group>"; };
 		DCB5A5FB17C4F2C50089809C /* SSUserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSUserViewController.h; path = Classes/Controller/SSUserViewController.h; sourceTree = "<group>"; };
@@ -367,13 +370,15 @@
 			path = Resources/Images/user_screen;
 			sourceTree = "<group>";
 		};
-		DC48BFCE17C51BBA00340FE0 /* Api */ = {
+		DC48BFCE17C51BBA00340FE0 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
-				DC48BFCF17C51C3D00340FE0 /* SSApi.h */,
-				DC48BFD017C51C3D00340FE0 /* SSApi.m */,
+				DC9F48E817DF49C200B0EC15 /* SSApi.h */,
+				DC9F48E917DF49C200B0EC15 /* SSApi.m */,
+				DC9F48EB17DF4A1700B0EC15 /* SSSlideDataSource.h */,
+				DC9F48EC17DF4A1700B0EC15 /* SSSlideDataSource.m */,
 			);
-			name = Api;
+			name = Helper;
 			sourceTree = "<group>";
 		};
 		DC56EECF17CB1DB5005866B2 /* slideshow_screen */ = {
@@ -467,7 +472,7 @@
 				DCC0BB1117C493ED009FF1FD /* View */,
 				DCC0BB1417C493ED009FF1FD /* Model */,
 				DC9F48E417DF375300B0EC15 /* Manager */,
-				DC48BFCE17C51BBA00340FE0 /* Api */,
+				DC48BFCE17C51BBA00340FE0 /* Helper */,
 				DC081B5217C657B200A893C2 /* Extensions */,
 				DCC0BB3717C493ED009FF1FD /* Utilities */,
 			);
@@ -868,7 +873,6 @@
 				DCB5A5FD17C4F2C50089809C /* SSUserViewController.m in Sources */,
 				DCB5A60317C4F7920089809C /* SSSearchView.m in Sources */,
 				DCB5A60617C4F7A20089809C /* SSUserView.m in Sources */,
-				DC48BFD117C51C3D00340FE0 /* SSApi.m in Sources */,
 				DCDDF64817C59CFD0095A299 /* SSSlideshow.m in Sources */,
 				DC2BCF5C17C5AECA00181774 /* SSSlideCell.m in Sources */,
 				DC2BCF5F17C5DBFE00181774 /* SSSlideShowViewController.m in Sources */,
@@ -895,6 +899,8 @@
 				435977E217CDEACE00117E2E /* SSSlideShowInfoView.m in Sources */,
 				43B4726417CF3AB500CAD335 /* SSDescriptionViewController.m in Sources */,
 				DC9F48E717DF405A00B0EC15 /* SSDB5.m in Sources */,
+				DC9F48EA17DF49C200B0EC15 /* SSApi.m in Sources */,
+				DC9F48ED17DF4A1700B0EC15 /* SSSlideDataSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
