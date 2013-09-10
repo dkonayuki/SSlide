@@ -8,6 +8,7 @@
 
 #import "SSAppDelegate.h"
 #import "SSAppData.h"
+#import <NewRelicAgent/NewRelicAgent.h>
 
 @implementation SSAppDelegate
 
@@ -15,6 +16,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [NewRelicAgent startWithApplicationToken:@"AA76b469e3cad066a6987a7adf69a1144b87d8fb1c"];
     // load data
     [SSAppData sharedInstance];
     // init window
