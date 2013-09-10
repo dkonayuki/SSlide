@@ -8,8 +8,8 @@
 
 #import "SSUserView.h"
 #import <AKSegmentedControl/AKSegmentedControl.h>
-#import <QuartzCore/QuartzCore.h>
 #import "SSAdManager.h"
+#import "SSImageHelper.h"
 
 @interface SSUserView()
 
@@ -59,9 +59,11 @@
     UIButton *downloadedBtn = [[UIButton alloc] init];
     UIImage *downloadedBtnImageNormal = [UIImage imageNamed:@"download-icon.png"];
     
-    [downloadedBtn setBackgroundImage:[self imageFromColor:[[SSDB5 theme] colorForKey:@"user_screen_segmented_pressed_color"]] forState:UIControlStateHighlighted];
-    [downloadedBtn setBackgroundImage:[self imageFromColor:[[SSDB5 theme] colorForKey:@"user_screen_segmented_pressed_color"]] forState:UIControlStateSelected];
-    [downloadedBtn setBackgroundImage:[self imageFromColor:[[SSDB5 theme] colorForKey:@"user_screen_segmented_pressed_color"]] forState:(UIControlStateHighlighted|UIControlStateSelected)];
+    UIColor *pressedColor = [[SSDB5 theme] colorForKey:@"user_screen_segmented_pressed_color"];
+    UIImage *pressedImage = [SSImageHelper imageFromColor:pressedColor];
+    [downloadedBtn setBackgroundImage:pressedImage forState:UIControlStateHighlighted];
+    [downloadedBtn setBackgroundImage:pressedImage forState:UIControlStateSelected];
+    [downloadedBtn setBackgroundImage:pressedImage forState:(UIControlStateHighlighted|UIControlStateSelected)];
     
     [downloadedBtn setImage:downloadedBtnImageNormal forState:UIControlStateNormal];
     [downloadedBtn setImage:downloadedBtnImageNormal forState:UIControlStateSelected];
@@ -75,9 +77,9 @@
     UIButton *mySlidesBtn = [[UIButton alloc] init];
     UIImage *mySlidesBtnImageNormal = [UIImage imageNamed:@"my-slides-icon.png"];
     
-    [mySlidesBtn setBackgroundImage:[self imageFromColor:[[SSDB5 theme] colorForKey:@"user_screen_segmented_pressed_color"]] forState:UIControlStateHighlighted];
-    [mySlidesBtn setBackgroundImage:[self imageFromColor:[[SSDB5 theme] colorForKey:@"user_screen_segmented_pressed_color"]] forState:UIControlStateSelected];
-    [mySlidesBtn setBackgroundImage:[self imageFromColor:[[SSDB5 theme] colorForKey:@"user_screen_segmented_pressed_color"]] forState:(UIControlStateHighlighted|UIControlStateSelected)];
+    [mySlidesBtn setBackgroundImage:pressedImage forState:UIControlStateHighlighted];
+    [mySlidesBtn setBackgroundImage:pressedImage forState:UIControlStateSelected];
+    [mySlidesBtn setBackgroundImage:pressedImage forState:(UIControlStateHighlighted|UIControlStateSelected)];
     
     [mySlidesBtn setImage:mySlidesBtnImageNormal forState:UIControlStateNormal];
     [mySlidesBtn setImage:mySlidesBtnImageNormal forState:UIControlStateSelected];
@@ -114,17 +116,6 @@
 - (void)refresh
 {
     [self.usernameLabel setText:[self.delegate getUsernameDel]];
-}
-
-- (UIImage *) imageFromColor:(UIColor *)color {
-    CGRect rect = CGRectMake(0, 0, 1, 1);
-    UIGraphicsBeginImageContext(rect.size);
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSetFillColorWithColor(context, [color CGColor]);
-    CGContextFillRect(context, rect);
-    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return img;
 }
 
 - (void)segmentedControlValueChanged:(id)sender

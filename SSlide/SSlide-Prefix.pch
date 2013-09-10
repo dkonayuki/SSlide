@@ -17,3 +17,7 @@
 #define IS_IPAD (!IS_IPHONE)
 #define IS_WIDESCREEN ([[UIScreen mainScreen] bounds].size.height > 480.f)
 #define IS_IPHONE_5 ( IS_IPHONE && IS_WIDESCREEN )
+
+#define SEARCH_OPTION_RELEVANCE 0
+#define SEARCH_OPTION_MOST_VIEWED 1
+#define SEARCH_OPTION_LASTEST 2

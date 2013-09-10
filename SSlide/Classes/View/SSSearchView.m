@@ -9,12 +9,15 @@
 #import "SSSearchView.h"
 #import <QuartzCore/QuartzCore.h>
 #import "SSSlideCell.h"
+#import "SSSearchOptionView.h"
 
-@interface SSSearchView() <UITextFieldDelegate>
+@interface SSSearchView() <UITextFieldDelegate, SSSearchOptionViewDelegate>
 
-@property (nonatomic) float topMargin;
-@property (nonatomic) BOOL didMove;
+@property (assign, nonatomic) float topMargin;
+@property (assign, nonatomic) BOOL didMove;
 @property (strong, nonatomic) UIView *searchBG;
+@property (strong, nonatomic) SSSearchOptionView *searchOptionView;
+@property (assign, nonatomic) NSUInteger searchOption;
 
 @end
 
@@ -26,8 +29,7 @@
     
     float height = [[SSDB5 theme] floatForKey:@"search_textfield_height"];
     float fontSize = 14;
-    if (IS_IPAD)
-    {
+    if (IS_IPAD) {
         height *= 2.2;
         fontSize *= 2.2;
     }
@@ -46,20 +48,13 @@
     [self.searchBG addSubview:textBG];
     CALayer *layer = [textBG layer];
     [layer setMasksToBounds:YES];
-    if (IS_IPAD)
-    {
-        [layer setCornerRadius:4.0];
-    } else
-    {
-        [layer setCornerRadius:2.0];
-    }
+    [layer setCornerRadius: IS_IPAD ? 4.f : 2.f];
     
     float bttWidth = 15.f;
     float bttHeight = 15.f;
     float margin = 10.f;
     width = width - bttWidth * 2 - margin;
-    if (IS_IPAD)
-    {
+    if (IS_IPAD) {
         bttWidth *= 2.2;
         bttHeight *= 2.2;
         width = width - bttWidth * 2 - margin * 2.2;
@@ -89,8 +84,7 @@
     margin = 20.f;
     width -= margin;
     height = 15.f;
-    if (IS_IPAD)
-    {
+    if (IS_IPAD) {
         width -= margin;
         height *= 2.2f;
     }
@@ -103,15 +97,16 @@
     self.searchTextField.font = [UIFont fontWithName:[[SSDB5 theme] stringForKey:@"quicksand_font"] size:fontSize];
     [self.searchBG addSubview:self.searchTextField];
     self.didMove = FALSE;
-}
-
-- (void)searchText
-{
-    if (self.searchTextField.text && ![self.searchTextField.text isEqualToString:@""])
-    {
-        [self.delegate searchText:self.searchTextField.text firstTime:TRUE completion:^(void) {}];
-        [self endEditing:YES];
-    }
+    
+    // search optionView
+    float sH = IS_IPAD ? [[SSDB5 theme] floatForKey:@"search_option_view_height_ipad"] : [[SSDB5 theme] floatForKey:@"search_option_view_height_iphone"];
+    self.searchOptionView = [[SSSearchOptionView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, sH) andDelegate:self];
+    [self addSubview:self.searchOptionView];
+    float xCenter = self.bounds.size.width/2;
+    float yCenter = self.bounds.size.height + sH;
+    self.searchOptionView.center = CGPointMake(xCenter, yCenter);
+    self.searchOptionView.hidden = YES;
+    self.searchOption = SEARCH_OPTION_RELEVANCE;
 }
 
 - (void)deleteText
@@ -119,20 +114,9 @@
     self.searchTextField.text = @"";
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    if (self.searchTextField.text && ![self.searchTextField.text isEqualToString:@""])
-    {
-        [self.delegate searchText:textField.text firstTime:TRUE completion:^(void){}];
-        [textField resignFirstResponder];
-    }
-    return YES;
-}
-
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (IS_IPAD)
-    {
+    if (IS_IPAD) {
         return [[SSDB5 theme] floatForKey:@"slide_cell_height_ipad"];
     }
     return [[SSDB5 theme] floatForKey:@"slide_cell_height_iphone"];
@@ -140,8 +124,7 @@
 
 - (void) initSlideListView
 {
-    if (!self.slideListView)
-    {
+    if (!self.slideListView) {
         self.slideListView = [[SSSlideListView alloc] initWithFrame:CGRectMake(0,
                                                                                self.topMargin,
                                                                                self.bounds.size.width,
@@ -153,14 +136,57 @@
 
 - (void)moveToTop
 {
-    if (!self.didMove)
-    {
+    if (!self.didMove) {
         self.didMove = TRUE;
         [UIView beginAnimations:nil context:nil];
         [UIView setAnimationDuration:0.5];
         self.searchBG.center = CGPointMake(self.bounds.size.width/2, self.topMargin/2);
         [UIView commitAnimations];
     }
+}
+
+#pragma mark - UITextFieldDelegate
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    if (self.searchTextField.text && ![self.searchTextField.text isEqualToString:@""]) {
+        [self.delegate searchText:textField.text option:self.searchOption firstTime:TRUE completion:^(void){}];
+        [textField resignFirstResponder];
+    }
+    return YES;
+}
+
+#pragma mark - SSSearchOptionView delegate
+- (void)searchOptionSeletedDel:(NSUInteger)index
+{
+    self.searchOption = index;
+}
+
+#pragma mark - keyboard event
+- (void) keyboardWillShow:(NSNotification *)note {
+    NSDictionary *userInfo = [note userInfo];
+    CGRect kbRect = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue];
+    float xCenter = self.bounds.size.width/2;
+    float yCenter = self.bounds.size.height - kbRect.size.height - self.searchOptionView.frame.size.height/2;
+    self.searchOptionView.hidden = NO;
+    [self bringSubviewToFront:self.searchOptionView];
+    
+    [UIView animateWithDuration:0.25f
+                     animations:^{
+                         self.searchOptionView.center = CGPointMake(xCenter, yCenter);
+                     }];
+}
+
+- (void) keyboardWillHide:(NSNotification *)note {
+    float xCenter = self.bounds.size.width/2;
+    float yCenter = self.bounds.size.height + self.searchOptionView.frame.size.height;
+
+    [UIView animateWithDuration:0.25f
+                     animations:^{
+                         self.searchOptionView.center = CGPointMake(xCenter, yCenter);
+                     }
+                     completion:^(BOOL finish){
+                         self.searchOptionView.hidden = YES;
+                     }];
 }
 
 @end

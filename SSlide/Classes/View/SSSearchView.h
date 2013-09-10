@@ -13,7 +13,7 @@
 /* */
 @protocol SSSearchViewDelegate <SSViewDelegate>
 
-- (void)searchText:(NSString *)text firstTime:(BOOL)fTime completion:(void (^)(void))completed;
+- (void)searchText:(NSString *)text option:(NSUInteger)option firstTime:(BOOL)fTime completion:(void (^)(void))completed;
 
 @end
 
@@ -25,5 +25,8 @@
 
 - (void) initSlideListView;
 - (void) moveToTop;
+
+- (void) keyboardWillShow:(NSNotification *)note;
+- (void) keyboardWillHide:(NSNotification *)note;
 
 @end

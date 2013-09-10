@@ -20,6 +20,7 @@
 @property (strong, nonatomic) SSSearchView *myView;
 @property (strong, nonatomic) SSSlideDataSource *slideDataSource;
 @property (copy, nonatomic) NSString *currentSearchKeyword;
+@property (assign, nonatomic) NSUInteger searchOption;
 @property (strong, nonatomic) SSSlideShowPageViewController *pageViewController;
 @property (strong, nonatomic) SSDescriptionViewController *descriptionViewController;
 
@@ -34,6 +35,22 @@
     self.view = self.myView;
     self.slideDataSource = [[SSSlideDataSource alloc] init];
     self.currentSearchKeyword = @"";
+    
+    // keyboard
+    [[NSNotificationCenter defaultCenter] addObserver:self.myView
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:@"UIKeyboardWillShowNotification"
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self.myView
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:@"UIKeyboardWillHideNotification"
+                                               object:nil];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self.myView];
 }
 
 - (void)showDescriptionView
@@ -44,10 +61,24 @@
     [self presentPopupViewController:self.descriptionViewController animationType:MJPopupViewAnimationSlideRightRight];
 }
 
+#pragma mark - SSSearchView delegate
+- (void)searchText:(NSString *)text option:(NSUInteger)option firstTime:(BOOL)fTime completion:(void (^)(void))completed
+{
+    if (![self.currentSearchKeyword isEqualToString:text] || (self.searchOption != option)) {
+        self.currentSearchKeyword = text;
+        self.searchOption = option;
+        [self.slideDataSource resetDataSource];
+    }
+    
+    [self.myView moveToTop];
+    
+    [self searchSlides:YES completion:completed];
+}
+
 #pragma mark - SSSlideListView delegate
 - (void)getMoreSlides:(void (^)(void))completed
 {
-    [self searchText:self.currentSearchKeyword firstTime:FALSE completion:completed];
+    [self searchSlides:NO completion:completed];
 }
 
 - (void)didSelectedAtIndex:(int)index
@@ -80,38 +111,41 @@
 }
 
 #pragma mark - private
-- (void)searchText:(NSString *)text firstTime:(BOOL)fTime completion:(void (^)(void))completed
+- (void)searchSlides:(BOOL)isFirstTime completion:(void (^)(void))completed
 {
-    BOOL isSame = TRUE;
-    if (![self.currentSearchKeyword isEqualToString:text] || fTime) {
-        isSame = FALSE;
-        self.currentSearchKeyword = text;
-        [self.slideDataSource resetDataSource];
-    }
-    
-    if (fTime) {
-        [SVProgressHUD showWithStatus:@"Loading"];
+    if (isFirstTime) {
+        [SVProgressHUD showWithStatus:@"loading"];
         [self.myView moveToTop];
     }
     
-    if ([text hasPrefix:@"#"]) {
-        NSString *username = [text substringFromIndex:1];
+    if ([self.currentSearchKeyword hasPrefix:@"#"]) {
+        NSString *username = [self.currentSearchKeyword substringFromIndex:1];
         [self searchStreaming:username completion:completed];
     } else {
         int slidesPerPage = [[SSDB5 theme] integerForKey:@"slide_num_in_page"];
         int currentPageNum = [self.slideDataSource currentPageNum];
-        NSString *params = [NSString stringWithFormat:@"q=%@&page=%d&items_per_page=%d", text, currentPageNum, slidesPerPage];
+        NSString *sort = @"relevance";
+        switch (self.searchOption) {
+            case SEARCH_OPTION_MOST_VIEWED:
+                sort = @"mostviewed";
+                break;
+            case SEARCH_OPTION_LASTEST:
+                sort = @"latest";
+            default:
+                break;
+        }
+        
+        NSString *params = [NSString stringWithFormat:@"q=%@&page=%d&items_per_page=%d&sort=%@", self.currentSearchKeyword, currentPageNum, slidesPerPage, sort ];
         [[SSApi sharedInstance] searchSlideshows:params
                                          success:^(NSArray *result){
                                              [SVProgressHUD dismiss];
-                                             
                                              NSUInteger from = [self.slideDataSource slideSum];
                                              NSUInteger sum = result.count;
 
                                              [self.slideDataSource addSlidesFromArray:result];
                                              [self.myView initSlideListView];
                                              
-                                             if (fTime) {
+                                             if (isFirstTime) {
                                                  [self.myView.slideListView reloadRowsWithAnimation];
                                              } else {
                                                  [self.myView.slideListView addRowsWithAnimation:from andSum:sum];
