@@ -136,6 +136,10 @@
 		<integer>5</integer>
 		<key>drawing_pen_width_ipad</key>
 		<integer>10</integer>
+		<key>iad_height_iphone</key>
+		<integer>50</integer>
+		<key>iad_height_ipad</key>
+		<string>66</string>
 	</dict>
 </dict>
 </plist>

@@ -40,9 +40,9 @@
 - (void) initSlideListView:(float) topMargin
 {
     self.slideListView = [[SSSlideListView alloc] initWithFrame:CGRectMake(0,
-                                                                        topMargin,
-                                                                        self.bounds.size.width,
-                                                                        self.bounds.size.height - topMargin)
+                                                                           topMargin,
+                                                                           self.bounds.size.width,
+                                                                           self.bounds.size.height - topMargin)
                                                     andDelegate:self.delegate];
     [self addSubview:self.slideListView];
 }

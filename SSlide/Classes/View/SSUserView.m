@@ -9,10 +9,12 @@
 #import "SSUserView.h"
 #import <AKSegmentedControl/AKSegmentedControl.h>
 #import <QuartzCore/QuartzCore.h>
+#import "SSAdManager.h"
 
 @interface SSUserView()
 
 @property (strong, nonatomic) UILabel *usernameLabel;
+@property (strong, nonatomic) SSAdManager *adManager;
 
 @end
 
@@ -99,6 +101,14 @@
                                                     andDelegate:self.delegate];
     self.slideListView.infiniteLoad = NO;
     [self addSubview:self.slideListView];
+    
+    // ad
+    float iadHeight = IS_IPAD ? [[SSDB5 theme] floatForKey:@"iad_height_ipad"] : [[SSDB5 theme] floatForKey:@"iad_height_iphone"];
+    self.adManager = [[SSAdManager alloc] initWithAdFrame:CGRectMake(0,
+                                                                     self.bounds.size.height - iadHeight,
+                                                                     self.bounds.size.width,
+                                                                     iadHeight)];
+    [self addSubview:self.adManager.iAdView];
 }
 
 - (void)refresh

@@ -79,6 +79,8 @@
 		DC9F48E717DF405A00B0EC15 /* SSDB5.m in Sources */ = {isa = PBXBuildFile; fileRef = DC9F48E617DF405A00B0EC15 /* SSDB5.m */; };
 		DC9F48EA17DF49C200B0EC15 /* SSApi.m in Sources */ = {isa = PBXBuildFile; fileRef = DC9F48E917DF49C200B0EC15 /* SSApi.m */; };
 		DC9F48ED17DF4A1700B0EC15 /* SSSlideDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = DC9F48EC17DF4A1700B0EC15 /* SSSlideDataSource.m */; };
+		DC9F48EF17DF58E900B0EC15 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC9F48EE17DF58E900B0EC15 /* iAd.framework */; };
+		DC9F48F517DF67D600B0EC15 /* SSAdManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DC9F48F417DF67D600B0EC15 /* SSAdManager.m */; };
 		DCB5A5FA17C4F2970089809C /* SSSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB5A5F917C4F2970089809C /* SSSearchViewController.m */; };
 		DCB5A5FD17C4F2C50089809C /* SSUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB5A5FC17C4F2C50089809C /* SSUserViewController.m */; };
 		DCB5A60317C4F7920089809C /* SSSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB5A60217C4F7920089809C /* SSSearchView.m */; };
@@ -220,6 +222,9 @@
 		DC9F48E917DF49C200B0EC15 /* SSApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSApi.m; path = Classes/Helper/SSApi.m; sourceTree = "<group>"; };
 		DC9F48EB17DF4A1700B0EC15 /* SSSlideDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSSlideDataSource.h; path = Classes/Helper/SSSlideDataSource.h; sourceTree = "<group>"; };
 		DC9F48EC17DF4A1700B0EC15 /* SSSlideDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSSlideDataSource.m; path = Classes/Helper/SSSlideDataSource.m; sourceTree = "<group>"; };
+		DC9F48EE17DF58E900B0EC15 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
+		DC9F48F317DF67D600B0EC15 /* SSAdManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSAdManager.h; path = Classes/Manager/SSAdManager.h; sourceTree = "<group>"; };
+		DC9F48F417DF67D600B0EC15 /* SSAdManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSAdManager.m; path = Classes/Manager/SSAdManager.m; sourceTree = "<group>"; };
 		DCB5A5F817C4F2970089809C /* SSSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSSearchViewController.h; path = Classes/Controller/SSSearchViewController.h; sourceTree = "<group>"; };
 		DCB5A5F917C4F2970089809C /* SSSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSSearchViewController.m; path = Classes/Controller/SSSearchViewController.m; sourceTree = "<group>"; };
 		DCB5A5FB17C4F2C50089809C /* SSUserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSUserViewController.h; path = Classes/Controller/SSUserViewController.h; sourceTree = "<group>"; };
@@ -271,6 +276,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC9F48EF17DF58E900B0EC15 /* iAd.framework in Frameworks */,
 				DCC0BAF917C493ED009FF1FD /* UIKit.framework in Frameworks */,
 				DCC0BAFB17C493ED009FF1FD /* Foundation.framework in Frameworks */,
 				DCC0BAFD17C493ED009FF1FD /* CoreGraphics.framework in Frameworks */,
@@ -407,6 +413,8 @@
 			children = (
 				DC9F48E517DF405A00B0EC15 /* SSDB5.h */,
 				DC9F48E617DF405A00B0EC15 /* SSDB5.m */,
+				DC9F48F317DF67D600B0EC15 /* SSAdManager.h */,
+				DC9F48F417DF67D600B0EC15 /* SSAdManager.m */,
 			);
 			name = Manager;
 			sourceTree = "<group>";
@@ -434,6 +442,7 @@
 		DCC0BAF717C493ED009FF1FD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DC9F48EE17DF58E900B0EC15 /* iAd.framework */,
 				DCC0BAF817C493ED009FF1FD /* UIKit.framework */,
 				DCC0BAFA17C493ED009FF1FD /* Foundation.framework */,
 				DCC0BAFC17C493ED009FF1FD /* CoreGraphics.framework */,
@@ -901,6 +910,7 @@
 				DC9F48E717DF405A00B0EC15 /* SSDB5.m in Sources */,
 				DC9F48EA17DF49C200B0EC15 /* SSApi.m in Sources */,
 				DC9F48ED17DF4A1700B0EC15 /* SSSlideDataSource.m in Sources */,
+				DC9F48F517DF67D600B0EC15 /* SSAdManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
