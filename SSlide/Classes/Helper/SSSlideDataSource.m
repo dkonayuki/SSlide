@@ -52,6 +52,11 @@
     self.slideArray = [[NSMutableArray alloc] init];
 }
 
+- (void)resetBySlideArray:(NSMutableArray *)slides
+{
+    self.slideArray = slides;
+}
+
 - (void)addSlidesFromArray:(NSArray *)newSlides
 {
     self.currentPage ++;

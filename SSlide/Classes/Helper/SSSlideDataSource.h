@@ -18,6 +18,7 @@
 - (SSSlideshow *)slideAtIndex:(NSUInteger)index;
 
 - (void)resetDataSource;
+- (void)resetBySlideArray:(NSMutableArray *)slides;
 - (void)addSlidesFromArray:(NSArray *)newSlides;
 - (void)addSlide:(SSSlideshow *)newSlide;
 

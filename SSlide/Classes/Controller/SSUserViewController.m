@@ -8,18 +8,18 @@
 
 #import "SSUserViewController.h"
 #import "SSUserView.h"
-#import "SSSettingsViewController.h"
-#import <UIViewController+MJPopupViewController.h>
 #import "SSApi.h"
 #import "SSAppData.h"
+#import "SSSlideDataSource.h"
 #import "SSSlideShowPageViewController.h"
+#import "SSSettingsViewController.h"
+#import <UIViewController+MJPopupViewController.h>
 
 @interface SSUserViewController () <SSUserViewDelegate, SSSlideListViewDelegate, SSSlideShowPageViewControllerDelegate, SSSettingsViewControllerDelegate>
 
 @property (strong, nonatomic) SSUserView *myView;
-@property (strong, nonatomic) NSMutableArray *slideArray;
+@property (strong, nonatomic) SSSlideDataSource *slideDataSource;
 @property (assign, nonatomic) BOOL isDownloadedMode;
-@property (assign, nonatomic) NSInteger currentPage;
 @property (assign, nonatomic) BOOL endOfSlidesList;
 @property (strong, nonatomic) SSSlideShowPageViewController *pageViewController;
 @property (strong, nonatomic) SSSettingsViewController *settingsViewController;
@@ -35,10 +35,11 @@
     self.myView = [[SSUserView alloc] initWithFrame:self.view.bounds andDelegate:self];
     self.view = self.myView;
     
-    self.currentPage = 1;
     self.endOfSlidesList = NO;
-    
     self.isDownloadedMode = YES;
+    
+    self.slideDataSource = [[SSSlideDataSource alloc] init];
+    
     [self getDownloadedSlideshows];
 }
 
@@ -58,8 +59,7 @@
         [self getDownloadedSlideshows];
     } else {
         self.isDownloadedMode = NO;
-        self.currentPage = 1;
-        self.slideArray = [[NSMutableArray alloc] init];
+        [self.slideDataSource resetDataSource];
         [self.myView.slideListView reloadRowsWithAnimation];
         [self getUserSlideshows];
     }
@@ -73,12 +73,12 @@
 #pragma mark - SSSlideListView delegate
 - (NSInteger)numberOfRows
 {
-    return self.slideArray.count;
+    return [self.slideDataSource slideSum];
 }
 
 - (SSSlideshow *)getDataAtIndex:(int)index
 {
-    return [self.slideArray objectAtIndex:index];
+    return [self.slideDataSource slideAtIndex:index];
 }
 
 - (void)getMoreSlides
@@ -86,13 +86,12 @@
     if (self.isDownloadedMode || self.endOfSlidesList) {
         return;
     }
-    self.currentPage ++;
     [self getUserSlideshows];
 }
 
 - (void)didSelectedAtIndex:(int)index
 {
-    SSSlideshow *selectedSlide = [self.slideArray objectAtIndex:index];
+    SSSlideshow *selectedSlide = [self.slideDataSource slideAtIndex:index];
     self.pageViewController = [[SSSlideShowPageViewController alloc] initWithSlideshow:selectedSlide andDelegate:self];
     [self presentPopupViewController:self.pageViewController animationType:MJPopupViewAnimationFade];
 }
@@ -125,19 +124,19 @@
     // TODO: get setting info
     NSString *currentUsername = [SSAppData sharedInstance].currentUser.username;
     [[SSApi sharedInstance] getSlideshowsByUser:currentUsername
-                                           page:self.currentPage
+                                           page:[self.slideDataSource currentPageNum]
                                         success:^(NSArray *result){
                                             if (!self.isDownloadedMode) {
-                                                [self.slideArray addObjectsFromArray:result];
                                                 
-                                                NSUInteger slidesPerPage = [[SSDB5 theme] integerForKey:@"slide_num_in_page"];
-                                                NSUInteger from = (self.currentPage -1) * slidesPerPage;
+                                                NSUInteger from = [self.slideDataSource slideSum];
                                                 NSUInteger sum = result.count;
+                        
+                                                [self.slideDataSource addSlidesFromArray:result];
                                                 [self.myView.slideListView addRowsWithAnimation:from andSum:sum];
+                                                
+                                                int slidesPerPage = [[SSDB5 theme] integerForKey:@"slide_num_in_page"];
                                                 if ([result count] < slidesPerPage){
                                                     self.endOfSlidesList = YES;
-                                                } else {
-                                                    self.currentPage ++;
                                                 }
                                             }
                                             [SVProgressHUD dismiss];
@@ -149,7 +148,7 @@
 
 - (void)getDownloadedSlideshows
 {
-    self.slideArray = [[SSAppData sharedInstance] downloadedSlides];
+    [self.slideDataSource resetBySlideArray:[[SSAppData sharedInstance] downloadedSlides]];
     [self.myView.slideListView reloadRowsWithAnimation];
 }
 
