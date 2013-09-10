@@ -236,12 +236,13 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     AFImageRequestOperation *operation = [AFImageRequestOperation imageRequestOperationWithRequest:request success:^(UIImage *image) {
         self.thumbnail.image = image;
-        self.thumbnail.transform = CGAffineTransformMakeScale(0.75f, 0.75f);
-        self.thumbnail.layer.opacity = 0.5f;
-        [UIView animateWithDuration:0.5f animations:^(void) {
-            self.thumbnail.transform = CGAffineTransformMakeScale(1.0f, 1.0f);
-            self.thumbnail.layer.opacity = 1.0f;
-        }];
+        self.thumbnail.transform = CGAffineTransformMakeScale(0.95f, 0.95f);
+        self.thumbnail.layer.opacity = 0.35f;
+        [UIView animateWithDuration:0.35f
+                         animations:^(void) {
+                             self.thumbnail.transform = CGAffineTransformMakeScale(1.0f, 1.0f);
+                             self.thumbnail.layer.opacity = 1.0f;
+                         }];
     }];
                                           
     [operation start];

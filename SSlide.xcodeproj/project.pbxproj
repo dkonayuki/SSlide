@@ -77,6 +77,7 @@
 		DC86F8D717CCF92D0029844C /* SSTagsListView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC86F8D617CCF92D0029844C /* SSTagsListView.m */; };
 		DC86F8DA17CCF93F0029844C /* SSTagView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC86F8D917CCF93E0029844C /* SSTagView.m */; };
 		DC86F8DD17CD189E0029844C /* SSAddTagView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC86F8DC17CD189D0029844C /* SSAddTagView.m */; };
+		DC9F48E717DF405A00B0EC15 /* SSDB5.m in Sources */ = {isa = PBXBuildFile; fileRef = DC9F48E617DF405A00B0EC15 /* SSDB5.m */; };
 		DCB5A5FA17C4F2970089809C /* SSSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB5A5F917C4F2970089809C /* SSSearchViewController.m */; };
 		DCB5A5FD17C4F2C50089809C /* SSUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB5A5FC17C4F2C50089809C /* SSUserViewController.m */; };
 		DCB5A60317C4F7920089809C /* SSSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB5A60217C4F7920089809C /* SSSearchView.m */; };
@@ -98,7 +99,6 @@
 		DCC0BB3017C493ED009FF1FD /* DB5.plist in Resources */ = {isa = PBXBuildFile; fileRef = DCC0BB2F17C493ED009FF1FD /* DB5.plist */; };
 		DCC0BB3317C493ED009FF1FD /* SSView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC0BB3217C493ED009FF1FD /* SSView.m */; };
 		DCC0BB3617C493ED009FF1FD /* SSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC0BB3517C493ED009FF1FD /* SSViewController.m */; };
-		DCC0BB3A17C493ED009FF1FD /* SSDB5.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC0BB3917C493ED009FF1FD /* SSDB5.m */; };
 		DCC0BB4217C493EE009FF1FD /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCC0BB4117C493EE009FF1FD /* SenTestingKit.framework */; };
 		DCC0BB4317C493EE009FF1FD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCC0BAF817C493ED009FF1FD /* UIKit.framework */; };
 		DCC0BB4417C493EE009FF1FD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCC0BAFA17C493ED009FF1FD /* Foundation.framework */; };
@@ -215,6 +215,8 @@
 		DC86F8D917CCF93E0029844C /* SSTagView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSTagView.m; path = Classes/View/SSTagView.m; sourceTree = "<group>"; };
 		DC86F8DB17CD189D0029844C /* SSAddTagView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSAddTagView.h; path = Classes/View/SSAddTagView.h; sourceTree = "<group>"; };
 		DC86F8DC17CD189D0029844C /* SSAddTagView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSAddTagView.m; path = Classes/View/SSAddTagView.m; sourceTree = "<group>"; };
+		DC9F48E517DF405A00B0EC15 /* SSDB5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSDB5.h; path = Classes/Manager/SSDB5.h; sourceTree = "<group>"; };
+		DC9F48E617DF405A00B0EC15 /* SSDB5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSDB5.m; path = Classes/Manager/SSDB5.m; sourceTree = "<group>"; };
 		DCB5A5F817C4F2970089809C /* SSSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSSearchViewController.h; path = Classes/Controller/SSSearchViewController.h; sourceTree = "<group>"; };
 		DCB5A5F917C4F2970089809C /* SSSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSSearchViewController.m; path = Classes/Controller/SSSearchViewController.m; sourceTree = "<group>"; };
 		DCB5A5FB17C4F2C50089809C /* SSUserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSUserViewController.h; path = Classes/Controller/SSUserViewController.h; sourceTree = "<group>"; };
@@ -248,8 +250,6 @@
 		DCC0BB3217C493ED009FF1FD /* SSView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = SSView.m; path = Classes/View/SSView.m; sourceTree = "<group>"; };
 		DCC0BB3417C493ED009FF1FD /* SSViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SSViewController.h; path = Classes/Controller/SSViewController.h; sourceTree = "<group>"; };
 		DCC0BB3517C493ED009FF1FD /* SSViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = SSViewController.m; path = Classes/Controller/SSViewController.m; sourceTree = "<group>"; };
-		DCC0BB3817C493ED009FF1FD /* SSDB5.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SSDB5.h; path = Classes/Utilities/SSDB5.h; sourceTree = "<group>"; };
-		DCC0BB3917C493ED009FF1FD /* SSDB5.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = SSDB5.m; path = Classes/Utilities/SSDB5.m; sourceTree = "<group>"; };
 		DCC0BB4017C493EE009FF1FD /* SSlideTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SSlideTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCC0BB4117C493EE009FF1FD /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		DCC0BB4917C493EE009FF1FD /* SSlideTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SSlideTests-Info.plist"; sourceTree = "<group>"; };
@@ -397,6 +397,15 @@
 			path = Resources/Images/slideshow_screen;
 			sourceTree = "<group>";
 		};
+		DC9F48E417DF375300B0EC15 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				DC9F48E517DF405A00B0EC15 /* SSDB5.h */,
+				DC9F48E617DF405A00B0EC15 /* SSDB5.m */,
+			);
+			name = Manager;
+			sourceTree = "<group>";
+		};
 		DCC0BAEC17C493ED009FF1FD = {
 			isa = PBXGroup;
 			children = (
@@ -457,6 +466,7 @@
 				DCC0BB0E17C493ED009FF1FD /* Controller */,
 				DCC0BB1117C493ED009FF1FD /* View */,
 				DCC0BB1417C493ED009FF1FD /* Model */,
+				DC9F48E417DF375300B0EC15 /* Manager */,
 				DC48BFCE17C51BBA00340FE0 /* Api */,
 				DC081B5217C657B200A893C2 /* Extensions */,
 				DCC0BB3717C493ED009FF1FD /* Utilities */,
@@ -634,8 +644,6 @@
 				DC01E00B17C9CC440096254A /* NSObject+Serialize.m */,
 				DC01E00C17C9CC440096254A /* NSString+InflectionSupport.h */,
 				DC01E00D17C9CC440096254A /* NSString+InflectionSupport.m */,
-				DCC0BB3817C493ED009FF1FD /* SSDB5.h */,
-				DCC0BB3917C493ED009FF1FD /* SSDB5.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -854,7 +862,6 @@
 				DCC0BB0D17C493ED009FF1FD /* SSAppDelegate.m in Sources */,
 				DCC0BB3317C493ED009FF1FD /* SSView.m in Sources */,
 				DCC0BB3617C493ED009FF1FD /* SSViewController.m in Sources */,
-				DCC0BB3A17C493ED009FF1FD /* SSDB5.m in Sources */,
 				DC70E57817C49B49004633F2 /* SSTopViewController.m in Sources */,
 				DC70E57B17C49BCD004633F2 /* SSTopView.m in Sources */,
 				DCB5A5FA17C4F2970089809C /* SSSearchViewController.m in Sources */,
@@ -887,6 +894,7 @@
 				DC0388D817CDB9DA002100CD /* SSTextFieldView.m in Sources */,
 				435977E217CDEACE00117E2E /* SSSlideShowInfoView.m in Sources */,
 				43B4726417CF3AB500CAD335 /* SSDescriptionViewController.m in Sources */,
+				DC9F48E717DF405A00B0EC15 /* SSDB5.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
