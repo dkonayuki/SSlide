@@ -66,6 +66,8 @@
 		<string>nzpqg0UU</string>
 		<key>API_SECRET</key>
 		<string>UCE7pcPa</string>
+		<key>NEW_RELIC_TOKEN</key>
+		<string>AA76b469e3cad066a6987a7adf69a1144b87d8fb1c</string>
 		<key>top_view_bg_color</key>
 		<string>008080</string>
 		<key>search_view_bg_color</key>

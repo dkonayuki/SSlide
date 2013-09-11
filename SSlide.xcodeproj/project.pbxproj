@@ -73,6 +73,7 @@
 		DC56EEDB17CB2497005866B2 /* publish_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC56EED717CB2497005866B2 /* publish_icon@2x.png */; };
 		DC70E57817C49B49004633F2 /* SSTopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC70E57717C49B49004633F2 /* SSTopViewController.m */; };
 		DC70E57B17C49BCD004633F2 /* SSTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC70E57A17C49BCD004633F2 /* SSTopView.m */; };
+		DC771A1D17E0656B008EE9CC /* bgip5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC771A1C17E0656B008EE9CC /* bgip5@2x.png */; };
 		DC86F8D717CCF92D0029844C /* SSTagsListView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC86F8D617CCF92D0029844C /* SSTagsListView.m */; };
 		DC86F8DA17CCF93F0029844C /* SSTagView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC86F8D917CCF93E0029844C /* SSTagView.m */; };
 		DC86F8DD17CD189E0029844C /* SSAddTagView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC86F8DC17CD189D0029844C /* SSAddTagView.m */; };
@@ -212,6 +213,7 @@
 		DC70E57717C49B49004633F2 /* SSTopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSTopViewController.m; path = Classes/Controller/SSTopViewController.m; sourceTree = "<group>"; };
 		DC70E57917C49BCD004633F2 /* SSTopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSTopView.h; path = Classes/View/SSTopView.h; sourceTree = "<group>"; };
 		DC70E57A17C49BCD004633F2 /* SSTopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSTopView.m; path = Classes/View/SSTopView.m; sourceTree = "<group>"; };
+		DC771A1C17E0656B008EE9CC /* bgip5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bgip5@2x.png"; path = "Resources/Images/Background/bgip5@2x.png"; sourceTree = "<group>"; };
 		DC86F8D517CCF92D0029844C /* SSTagsListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSTagsListView.h; path = Classes/View/SSTagsListView.h; sourceTree = "<group>"; };
 		DC86F8D617CCF92D0029844C /* SSTagsListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSTagsListView.m; path = Classes/View/SSTagsListView.m; sourceTree = "<group>"; };
 		DC86F8D817CCF93E0029844C /* SSTagView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSTagView.h; path = Classes/View/SSTagView.h; sourceTree = "<group>"; };
@@ -612,6 +614,7 @@
 		DCC0BB1917C493ED009FF1FD /* Background */ = {
 			isa = PBXGroup;
 			children = (
+				DC771A1C17E0656B008EE9CC /* bgip5@2x.png */,
 				91F22B6917CE57B800226368 /* Default-Landscape~ipad.png */,
 				91F22B6517CE576200226368 /* Default-Portrait~ipad.png */,
 				43357C7C17CC3EEB007CD24D /* bgip5.png */,
@@ -741,6 +744,11 @@
 				CLASSPREFIX = SS;
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = S2;
+				TargetAttributes = {
+					DCC0BAF417C493ED009FF1FD = {
+						DevelopmentTeam = PZK4944X96;
+					};
+				};
 			};
 			buildConfigurationList = DCC0BAF017C493ED009FF1FD /* Build configuration list for PBXProject "SSlide" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -813,6 +821,7 @@
 				43B4725017CEE7A500CAD335 /* pen.png in Resources */,
 				43B4725117CEE7A500CAD335 /* streaming_pressed.png in Resources */,
 				43B4725217CEE7A500CAD335 /* streaming.png in Resources */,
+				DC771A1D17E0656B008EE9CC /* bgip5@2x.png in Resources */,
 				43B4725917CF200000CAD335 /* access_pressed.png in Resources */,
 				43B4725A17CF200000CAD335 /* access.png in Resources */,
 				43B4725D17CF21D900CAD335 /* add.png in Resources */,
@@ -1021,6 +1030,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EFFA65580FCF476BA4AB7419 /* Pods.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SSlide/SSlide-Prefix.pch";
 				INFOPLIST_FILE = "SSlide/SSlide-Info.plist";
@@ -1035,6 +1045,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EFFA65580FCF476BA4AB7419 /* Pods.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SSlide/SSlide-Prefix.pch";
 				INFOPLIST_FILE = "SSlide/SSlide-Info.plist";

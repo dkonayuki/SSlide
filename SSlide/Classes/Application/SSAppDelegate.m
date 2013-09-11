@@ -16,7 +16,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [NewRelicAgent startWithApplicationToken:@"AA76b469e3cad066a6987a7adf69a1144b87d8fb1c"];
+    [NewRelicAgent startWithApplicationToken:[[SSDB5 theme] stringForKey:@"NEW_RELIC_TOKEN"]];
     // load data
     [SSAppData sharedInstance];
     // init window
