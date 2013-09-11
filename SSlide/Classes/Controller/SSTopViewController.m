@@ -38,6 +38,10 @@
     // get first slide
     [self getTopSlideshows:^(void) {
     }];
+    
+    // add tag change notification
+    NSNotificationCenter *ncenter = [NSNotificationCenter defaultCenter];
+    [ncenter addObserver:self selector:@selector(SSDidChangeTagNotification:) name:@"SSDidChangeTag" object:nil];
 }
 
 #pragma mark - SSTopView delegate
@@ -72,6 +76,16 @@
 - (void)closePopupDel
 {
     [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationFade];
+}
+
+#pragma mark - notification
+- (void)SSDidChangeTagNotification:(NSNotification *)center
+{
+    [self.slideDataSource resetDataSource];
+    [self.myView.slideListView reloadRowsWithAnimation];
+    // get first slide
+    [self getTopSlideshows:^(void) {
+    }];
 }
 
 #pragma mark - private

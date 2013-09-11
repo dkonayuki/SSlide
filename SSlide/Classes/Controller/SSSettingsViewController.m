@@ -16,6 +16,7 @@
 @interface SSSettingsViewController () <SSSettingsViewDelegate, SSTagsListViewDelegate>
 
 @property (strong, nonatomic) SSSettingsView *myView;
+@property (assign, nonatomic) BOOL didChangeTags;
 
 @end
 
@@ -33,6 +34,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.didChangeTags = NO;
 	// Do any additional setup after loading the view.
     float wR = IS_IPAD ? 5.f : 10.f;
     
@@ -42,6 +44,16 @@
     float height = self.view.bounds.size.height - 2*topMargin;
     self.myView = [[SSSettingsView alloc] initWithFrame:CGRectMake(leftMargin, topMargin, width, height) andDelegate:self];
     self.view = self.myView;
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    if (self.didChangeTags) {
+        self.didChangeTags = NO;
+        NSNotification *notification = [NSNotification notificationWithName:@"SSDidChangeTag" object:nil];
+        [[NSNotificationCenter defaultCenter] postNotification:notification];
+    }
 }
 
 #pragma mark - SSSetingsViewDelegate
@@ -88,12 +100,14 @@
 - (void)didAddTag:(NSString *)tag
 {
     [[SSAppData sharedInstance].currentUser.tags addObject:tag];
+    self.didChangeTags = YES;
     [SSAppData saveAppData];
 }
 
 - (void)didRemoveTag:(NSString *)tag
 {
     [[SSAppData sharedInstance].currentUser.tags removeObject:tag];
+    self.didChangeTags = YES;
     [SSAppData saveAppData];
 }
 
