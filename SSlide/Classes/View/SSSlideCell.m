@@ -39,6 +39,7 @@
 - (id)init {
     self = [super init];
     if (self) {
+        self.backgroundColor = [UIColor clearColor];
         float cellHeight = IS_IPAD ? [[SSDB5 theme] floatForKey:@"slide_cell_height_ipad"] : [[SSDB5 theme] floatForKey:@"slide_cell_height_iphone"];
         float cellWidth = IS_IPAD ? 680.f : 320.f;
         float titleFontSize;
