@@ -62,7 +62,9 @@
     CGSize size = [self.label.titleLabel.text sizeWithFont:[UIFont systemFontOfSize:self.fontSize]];
 
     self.label.frame = CGRectMake(padding, padding, size.width + padding, size.height);
-    [self.label sizeToFit];
+    if (SYSTEM_VERSION_LESS_THAN(@"7.0")) {
+        [self.label sizeToFit];
+    }
     
     CGRect curFrame = self.frame;
     if (![self.button isHidden]) {
