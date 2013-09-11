@@ -10,6 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "SSSlideCell.h"
 #import "SSSearchOptionView.h"
+#import "SSAdManager.h"
 
 @interface SSSearchView() <UITextFieldDelegate, SSSearchOptionViewDelegate>
 
@@ -18,6 +19,7 @@
 @property (strong, nonatomic) UIView *searchBG;
 @property (strong, nonatomic) SSSearchOptionView *searchOptionView;
 @property (assign, nonatomic) NSUInteger searchOption;
+@property (strong, nonatomic) SSAdManager *adManager;
 
 @end
 
@@ -108,6 +110,14 @@
     self.searchOptionView.center = CGPointMake(xCenter, yCenter);
     self.searchOptionView.hidden = YES;
     self.searchOption = SEARCH_OPTION_RELEVANCE;
+    
+    // ad
+    float iadHeight = IS_IPAD ? [[SSDB5 theme] floatForKey:@"iad_height_ipad"] : [[SSDB5 theme] floatForKey:@"iad_height_iphone"];
+    self.adManager = [[SSAdManager alloc] initWithAdFrame:CGRectMake(0,
+                                                                     self.bounds.size.height - iadHeight,
+                                                                     self.bounds.size.width,
+                                                                     iadHeight)];
+    [self addSubview:self.adManager.iAdView];
 }
 
 - (void)deleteText
@@ -145,6 +155,7 @@
             self.searchBG.center = CGPointMake(self.bounds.size.width/2,
                                                statusBarHeight + self.topMargin/2);
         }];
+        [self.adManager.iAdView removeFromSuperview];
     }
 }
 
