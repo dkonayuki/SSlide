@@ -22,21 +22,21 @@
 
 - (void)initView
 {
-    float usernameSize = 17.f;
-    if (IS_IPAD)
-    {
-        usernameSize *= 2.2;
-    }
     self.backgroundColor = [UIColor clearColor];
-    float topMargin = IS_IPAD ? [[SSDB5 theme]floatForKey:@"page_top_margin_ipad"] : [[SSDB5 theme]floatForKey:@"page_top_margin_iphone"];
+    
+    float usernameSize = IS_IPAD ? 37.f : 17.f;
+    float topBarHeight = IS_IPAD ? [[SSDB5 theme]floatForKey:@"page_top_margin_ipad"] : [[SSDB5 theme]floatForKey:@"page_top_margin_iphone"];
+    float statusBarHeight = SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0") ? 20.f : 0.f;
+    float topMargin = topBarHeight + statusBarHeight;
     
     /** username label **/
-    self.usernameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, topMargin)];
+    UIColor *bgColor = SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0") ? [UIColor clearColor] : [[SSDB5 theme] colorForKey:@"app_title_color"];
+    self.usernameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, statusBarHeight, self.bounds.size.width, topBarHeight)];
     self.usernameLabel.textAlignment = NSTextAlignmentCenter;
     [self.usernameLabel setText:[self.delegate getUsernameDel]];
     self.usernameLabel.font = [UIFont fontWithName:[[SSDB5 theme] stringForKey:@"quicksand_font"] size:usernameSize];
     self.usernameLabel.textColor = [[SSDB5 theme] colorForKey:@"username_color"];
-    self.usernameLabel.backgroundColor = [[SSDB5 theme] colorForKey:@"app_title_color"];
+    self.usernameLabel.backgroundColor = bgColor;
     [self addSubview:self.usernameLabel];
     
     /** segmented control **/

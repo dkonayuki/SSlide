@@ -33,8 +33,9 @@
         height *= 2.2;
         fontSize *= 2.2;
     }
+    UIColor *bgColor = SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0") ? [UIColor clearColor] : [[SSDB5 theme] colorForKey:@"app_title_color"];
     self.searchBG = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, self.topMargin)];
-    self.searchBG.backgroundColor =  [[SSDB5 theme] colorForKey:@"app_title_color"];
+    self.searchBG.backgroundColor = bgColor;
     self.searchBG.center = CGPointMake(self.center.x, self.bounds.size.height/3);
     [self addSubview:self.searchBG];
     
@@ -125,8 +126,9 @@
 - (void) initSlideListView
 {
     if (!self.slideListView) {
+        float statusBarHeight = SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0") ? 20.f : 0.f;
         self.slideListView = [[SSSlideListView alloc] initWithFrame:CGRectMake(0,
-                                                                               self.topMargin,
+                                                                               self.topMargin + statusBarHeight,
                                                                                self.bounds.size.width,
                                                                                self.bounds.size.height - self.topMargin)
                                                         andDelegate:self.delegate];
@@ -137,11 +139,12 @@
 - (void)moveToTop
 {
     if (!self.didMove) {
+        float statusBarHeight = SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0") ? 20.f : 0.f;
         self.didMove = TRUE;
-        [UIView beginAnimations:nil context:nil];
-        [UIView setAnimationDuration:0.5];
-        self.searchBG.center = CGPointMake(self.bounds.size.width/2, self.topMargin/2);
-        [UIView commitAnimations];
+        [UIView animateWithDuration:0.5f animations:^(void) {
+            self.searchBG.center = CGPointMake(self.bounds.size.width/2,
+                                               statusBarHeight + self.topMargin/2);
+        }];
     }
 }
 
