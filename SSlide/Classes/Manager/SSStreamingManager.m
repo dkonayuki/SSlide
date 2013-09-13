@@ -129,9 +129,9 @@
 - (void)messageReceived:(NSDictionary *)messageDict channel:(NSString *)channel
 {
     NSLog(@"messageReceived %@ channel %@",messageDict, channel);
-    NSString *username = [messageDict objectForKey:@"username"];
-    NSString *curUsername = [SSAppData sharedInstance].currentUser.username;
-    if (![username isEqualToString:curUsername]) {
+    //NSString *username = [messageDict objectForKey:@"username"];
+    //NSString *curUsername = [SSAppData sharedInstance].currentUser.username;
+    if (!self.isMaster) {
         NSUInteger pageNum = [((NSNumber *)[messageDict objectForKey:@"pagenum"]) integerValue];
         [self.delegate gotoPageWithNumDel:pageNum];
     }
