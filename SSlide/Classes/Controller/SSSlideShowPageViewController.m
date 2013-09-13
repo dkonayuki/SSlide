@@ -7,25 +7,20 @@
 //
 
 #import "SSSlideShowPageViewController.h"
-#import "SSSlideShowControlView.h"
-#import "SSSlideShowInfoView.h"
-#import "FayeClient.h"
 #import "SSAppData.h"
 #import "SSApi.h"
-#import <AFNetworking/AFHTTPClient.h>
+#import "SSSlideShowControlView.h"
+#import "SSSlideShowInfoView.h"
+#import "SSStreamingManager.h"
 #import <ACEDrawingView/ACEDrawingView.h>
 
-@interface SSSlideShowPageViewController () <SSSlideSHowViewControllerDelegate, SSSlideShowControlViewDelegate, FayeClientDelegate>
+@interface SSSlideShowPageViewController () <SSSlideSHowViewControllerDelegate, SSSlideShowControlViewDelegate, SSStreamingManagerDelegate>
 
 @property (strong, nonatomic) SSSlideshow *currentSlide;
 @property (assign, nonatomic) NSInteger totalPage;
 @property (strong, nonatomic) SSSlideShowControlView *controlView;
 @property (strong, nonatomic) SSSlideShowInfoView *infoView;
-@property (strong, nonatomic) FayeClient *fayeClient;
-@property (strong, nonatomic) NSString *channel;
-@property (assign, nonatomic) BOOL isMaster;
-@property (assign, nonatomic) BOOL isStreaming;
-
+@property (strong, nonatomic) SSStreamingManager *streamingManager;
 @property (strong, nonatomic) ACEDrawingView *drawingView;
 
 @end
@@ -44,13 +39,10 @@
             self.currentSlide.channel = slideshow.channel;
         }
         self.totalPage = self.currentSlide.totalSlides;
-        if (self.currentSlide.channel) {
-            self.channel = self.currentSlide.channel;
-            self.isMaster = NO;
-        }else {
-            self.isMaster = YES;
-        }
-        self.isStreaming = NO;
+        
+        BOOL isMaster = self.currentSlide.channel ? NO : YES;
+        self.streamingManager = [[SSStreamingManager alloc] initWithSlideshow:self.currentSlide asMaster:isMaster];
+        self.streamingManager.delegate = self;
     }
     return self;
 }
@@ -79,8 +71,8 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [self disconnectToFayeServer];
-    [self disconnectToServer];
+    [self.streamingManager stopSynchronizing];
+    [self.controlView offStreamingBtn];
 }
 
 #pragma mark - private
@@ -122,107 +114,6 @@
     self.infoView.alpha = 0.f;
 }
 
-- (void)startStreaming 
-{
-    // checklogin
-    if (![[SSAppData sharedInstance] isLogined]) {
-        [SVProgressHUD showErrorWithStatus:@"Please login!"];
-        return;
-    }
-    
-    NSString *curUsername = [SSAppData sharedInstance].currentUser.username;
-    self.channel = [NSString stringWithFormat:@"/%@/%@", curUsername, self.currentSlide.slideId];
-    
-    AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[[SSDB5 theme] stringForKey:@"SS_SERVER_BASE_URL"]]];
-    [client registerHTTPOperationClass:[AFJSONRequestOperation class]];
-    [client setDefaultHeader:@"Accept" value:@"application/json"];
-    
-    NSString *url = [NSString stringWithFormat:@"streaming/create"];
-    NSDictionary *params = @{@"username": curUsername,
-                             @"channel": self.channel,
-                             @"slideId": self.currentSlide.slideId,
-                             @"title": self.currentSlide.title,
-                             @"thumbnailUrl": self.currentSlide.thumbnailUrl,
-                             @"created": self.currentSlide.created,
-                             @"numViews": [NSNumber numberWithInt:self.currentSlide.numViews],
-                             @"numDownloads": [NSNumber numberWithInt:self.currentSlide.numDownloads],
-                             @"numFavorites": [NSNumber numberWithInt:self.currentSlide.numFavorites],
-                             @"totalSlides": [NSNumber numberWithInt:self.currentSlide.totalSlides],
-                             @"slideImageBaseurl": self.currentSlide.slideImageBaseurl,
-                             @"slideImageBaseurlSuffix": self.currentSlide.slideImageBaseurlSuffix,
-                             @"firstPageImageUrl": self.currentSlide.firstPageImageUrl};
-    
-    [client postPath:url
-          parameters:params
-             success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                 NSDictionary *dict = (NSDictionary *)responseObject;
-                 NSLog(@"%@", dict);
-                 [self startFaye];
-             }
-             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                 NSLog(@"error");
-             }];
-}
-
-- (void)startFaye
-{
-    self.fayeClient = [[FayeClient alloc] initWithURLString:[[SSDB5 theme] stringForKey:@"FAYE_BASE_URL"] channel:self.channel];
-    self.fayeClient.delegate = self;
-    [self.fayeClient connectToServer];
-    [SVProgressHUD showWithStatus:@"Connecting"];
-}
-
-#pragma mark - UIPageViewControllerDataSource
-- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController {
-    
-    NSUInteger index = [(SSSlideShowViewController *)viewController pageIndex];
-    if (index == 1) {
-        return nil;
-    }
-    index --;
-    
-    return [self viewControllerAtIndex:index];
-}
-
-- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController {
-    
-    NSUInteger index = [(SSSlideShowViewController *)viewController pageIndex];
-    index ++;
-    if (index == self.totalPage + 1) {
-        return nil;
-    }
-
-    return [self viewControllerAtIndex:index];
-}
-
-- (void)gotoPage:(int)pageNum
-{
-    SSSlideShowViewController *curentViewController = [self viewControllerAtIndex:pageNum];
-    
-    NSArray *viewControllers = [NSArray arrayWithObject:curentViewController];
-    
-    [self.pageController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
-}
-
-#pragma mark - UIPageViewController delegate
-- (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
-{
-    if (completed) {
-        SSSlideShowViewController *currentViewController = [[pageViewController viewControllers] lastObject];
-        int pageNum = currentViewController.pageIndex;
-        NSLog(@"new page: %d", pageNum);
-        NSNumber *pn = [NSNumber numberWithInt:pageNum];
-        [self.infoView setPageNumber:pageNum];
-        
-        if (self.isMaster && self.isStreaming) {
-            SSUser *currentUser = [[SSAppData sharedInstance] currentUser];
-            NSDictionary *mesg = @{@"username": currentUser.username,
-                                   @"pagenum": pn};
-            [self.fayeClient sendMessage:mesg onChannel:self.channel];
-        }
-    }
-}
-
 #pragma mark - SSSlideShowViewControllerDelegate
 - (void)closePopup
 {
@@ -231,19 +122,17 @@
 
 - (BOOL)isMasterDel
 {
-    return self.isMaster;
+    return [self.streamingManager isMasterDevice];
 }
 
 - (void)toogleInfoView
 {
-    if (self.infoView.alpha == 0)
-    {
+    if (self.infoView.alpha == 0) {
         [UIView animateWithDuration:0.5f animations:^(void) {
             self.infoView.alpha = 1.0;
         }];
     }
-    else
-    {
+    else {
         [UIView animateWithDuration:0.5f animations:^(void) {
             self.infoView.alpha = 0;
         }];    
@@ -293,20 +182,13 @@
 
 - (void)startStreamingCurrentSlideDel
 {
-    if (self.isStreaming) {
-        return;
-    }
-    if (!self.isMaster) {
-        [self startFaye];
-    } else {
-        [self startStreaming];
-    }
+    [self.streamingManager startSynchronizing];
 }
 
 - (void)stopStreamingCurrentSlideDel
 {
-    [self disconnectToFayeServer];
-    [self disconnectToServer];
+    [self.streamingManager stopSynchronizing];
+    [self.controlView offStreamingBtn];
 }
 
 - (void)startDrawing
@@ -329,105 +211,59 @@
     return [self.currentSlide checkIsDownloadedAsNew];
 }
 
-#pragma mark - Faye Client Delegate
-- (void)connectedToServer
+#pragma mark - SSStreamingManagerDelegate
+- (void)gotoPageWithNumDel:(NSUInteger)pageNum
 {
-    NSLog(@"Connected to server");
-    NSString *mes = self.isMaster ? @"Publish: OK" : @"Subscribe: OK";
-    self.isStreaming = YES;
-    [SVProgressHUD showSuccessWithStatus:mes];
+    [self gotoPage:pageNum];
 }
 
-- (void)disconnectedFromServer
+- (void)disconnectedFromServerDel
 {
-    NSLog(@"Disconnected from server");
-    [self disconnectToServer];
+    [self.controlView offStreamingBtn];
 }
 
-- (void)subscriptionFailedWithError:(NSString *)error
-{
-    NSLog(@"Subscription did fail: %@", error);
-}
-
-- (void)subscribedToChannel:(NSString *)channel
-{
-    NSLog(@"Subscribed to channel: %@", channel);
-}
-
-- (void)messageReceived:(NSDictionary *)messageDict channel:(NSString *)channel
-{
-    NSLog(@"messageReceived %@ channel %@",messageDict, channel);
-    NSString *username = [messageDict objectForKey:@"username"];
-    NSString *curUsername = [SSAppData sharedInstance].currentUser.username;
-    if (![username isEqualToString:curUsername]) {
-        int pageNum = [((NSNumber *)[messageDict objectForKey:@"pagenum"]) intValue];
-        [self gotoPage:pageNum];
+#pragma mark - UIPageViewControllerDataSource
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController {
+    
+    NSUInteger index = [(SSSlideShowViewController *)viewController pageIndex];
+    if (index == 1) {
+        return nil;
     }
+    index --;
+    
+    return [self viewControllerAtIndex:index];
 }
 
-- (void)connectionFailed
-{
-    NSLog(@"Connection Failed");
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController {
+    
+    NSUInteger index = [(SSSlideShowViewController *)viewController pageIndex];
+    index ++;
+    if (index == self.totalPage + 1) {
+        return nil;
+    }
+    
+    return [self viewControllerAtIndex:index];
 }
 
-- (void)didSubscribeToChannel:(NSString *)channel
+- (void)gotoPage:(NSUInteger)pageNum
 {
-    NSLog(@"didSubscribeToChannel %@", channel);
+    SSSlideShowViewController *curentViewController = [self viewControllerAtIndex:pageNum];
+    NSArray *viewControllers = [NSArray arrayWithObject:curentViewController];
+    
+    [self.pageController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
 }
 
-- (void)didUnsubscribeFromChannel:(NSString *)channel
+#pragma mark - UIPageViewController delegate
+- (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
 {
-    NSLog(@"didUnsubscribeFromChannel %@", channel);
-}
-
-- (void)fayeClientError:(NSError *)error
-{
-    NSLog(@"fayeClientError %@", error);
+    if (completed) {
+        SSSlideShowViewController *currentViewController = [[pageViewController viewControllers] lastObject];
+        NSUInteger pageNum = currentViewController.pageIndex;
+        [self.streamingManager gotoPageWithNum:pageNum];
+    }
 }
 
 #pragma mark - private
-- (void)disconnectToFayeServer
-{
-    if (!self.isStreaming) {
-        return;
-    }
-    
-    [self.fayeClient disconnectFromServer];
-}
-
-- (void)disconnectToServer
-{
-    if (!self.isStreaming) {
-        return;
-    }
-    
-    self.isStreaming = NO;
-    [self.controlView offStreamingBtn];
-    [SVProgressHUD showErrorWithStatus:@"Disconnected"];
-    
-    if (self.isMaster) {
-        NSString *curUsername = [SSAppData sharedInstance].currentUser.username;
-        
-        AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[[SSDB5 theme] stringForKey:@"SS_SERVER_BASE_URL"]]];
-        [client registerHTTPOperationClass:[AFJSONRequestOperation class]];
-        [client setDefaultHeader:@"Accept" value:@"application/json"];
-        
-        NSString *url = [NSString stringWithFormat:@"streaming/remove"];
-        NSDictionary *params = @{@"username": curUsername,
-                                 @"channel": self.channel};
-        
-        [client postPath:url
-              parameters:params
-                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                     NSDictionary *dict = (NSDictionary *)responseObject;
-                     NSLog(@"%@", dict);
-                 }
-                 failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                     NSLog(@"error");
-                 }];
-    }
-}
-
 - (SSSlideShowViewController *)viewControllerAtIndex:(NSUInteger)index
 {
     SSSlideShowViewController *slideShowViewController = [[SSSlideShowViewController alloc] initWithCurrentSlideshow:self.currentSlide pageIndex:index andDelegate:self];

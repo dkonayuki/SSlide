@@ -171,7 +171,9 @@
                                                         [self.slideDataSource resetDataSource];
                                                         NSArray *array = (NSArray *)JSON;
                                                         NSLog(@"result: %d", [array count]);
-                                                        
+                                                        if (array.count == 0) {
+                                                            [SVProgressHUD showSuccessWithStatus:@"No Results!"];
+                                                        }
                                                         for (NSDictionary *result in array) {
                                                             SSSlideshow *slideshow = [[SSSlideshow alloc] initWithDefaultData];
                                                             

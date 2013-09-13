@@ -58,6 +58,7 @@
 		DC11050417C6FF0B00833997 /* segmented-separator.png in Resources */ = {isa = PBXBuildFile; fileRef = DC1104F417C6FF0B00833997 /* segmented-separator.png */; };
 		DC11050517C6FF0B00833997 /* segmented-separator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC1104F517C6FF0B00833997 /* segmented-separator@2x.png */; };
 		DC11050A17C7036E00833997 /* SSSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC11050917C7036E00833997 /* SSSettingsViewController.m */; };
+		DC18588917E33F3700CDC495 /* SSStreamingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DC18588817E33F3700CDC495 /* SSStreamingManager.m */; };
 		DC2BCF5C17C5AECA00181774 /* SSSlideCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2BCF5B17C5AECA00181774 /* SSSlideCell.m */; };
 		DC2BCF5F17C5DBFE00181774 /* SSSlideShowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2BCF5E17C5DBFE00181774 /* SSSlideShowViewController.m */; };
 		DC2BCF6217C5DC1D00181774 /* SSSlideShowView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2BCF6117C5DC1C00181774 /* SSSlideShowView.m */; };
@@ -190,6 +191,8 @@
 		DC1104F517C6FF0B00833997 /* segmented-separator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "segmented-separator@2x.png"; sourceTree = "<group>"; };
 		DC11050817C7036E00833997 /* SSSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSSettingsViewController.h; path = Classes/Controller/SSSettingsViewController.h; sourceTree = "<group>"; };
 		DC11050917C7036E00833997 /* SSSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSSettingsViewController.m; path = Classes/Controller/SSSettingsViewController.m; sourceTree = "<group>"; };
+		DC18588717E33F3700CDC495 /* SSStreamingManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSStreamingManager.h; path = Classes/Manager/SSStreamingManager.h; sourceTree = "<group>"; };
+		DC18588817E33F3700CDC495 /* SSStreamingManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSStreamingManager.m; path = Classes/Manager/SSStreamingManager.m; sourceTree = "<group>"; };
 		DC2BCF5A17C5AECA00181774 /* SSSlideCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSSlideCell.h; path = Classes/View/SSSlideCell.h; sourceTree = "<group>"; };
 		DC2BCF5B17C5AECA00181774 /* SSSlideCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSSlideCell.m; path = Classes/View/SSSlideCell.m; sourceTree = "<group>"; };
 		DC2BCF5D17C5DBFE00181774 /* SSSlideShowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSSlideShowViewController.h; path = Classes/Controller/SSSlideShowViewController.h; sourceTree = "<group>"; };
@@ -425,6 +428,8 @@
 				DC9F48E617DF405A00B0EC15 /* SSDB5.m */,
 				DC9F48F317DF67D600B0EC15 /* SSAdManager.h */,
 				DC9F48F417DF67D600B0EC15 /* SSAdManager.m */,
+				DC18588717E33F3700CDC495 /* SSStreamingManager.h */,
+				DC18588817E33F3700CDC495 /* SSStreamingManager.m */,
 			);
 			name = Manager;
 			sourceTree = "<group>";
@@ -927,6 +932,7 @@
 				435977E217CDEACE00117E2E /* SSSlideShowInfoView.m in Sources */,
 				43B4726417CF3AB500CAD335 /* SSDescriptionViewController.m in Sources */,
 				DC9F48E717DF405A00B0EC15 /* SSDB5.m in Sources */,
+				DC18588917E33F3700CDC495 /* SSStreamingManager.m in Sources */,
 				DC9F48EA17DF49C200B0EC15 /* SSApi.m in Sources */,
 				DC9F48ED17DF4A1700B0EC15 /* SSSlideDataSource.m in Sources */,
 				DC9F48F517DF67D600B0EC15 /* SSAdManager.m in Sources */,
