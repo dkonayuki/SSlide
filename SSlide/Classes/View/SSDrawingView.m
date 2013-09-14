@@ -37,6 +37,37 @@
     [self.path setLineWidth:lineWidth];
 }
 
+- (void)clear
+{
+    [self.path removeAllPoints];
+    self.incrementalImage = nil;
+    [self setNeedsDisplay];
+}
+
+- (void)didEndTouch
+{
+    [self drawBitmap];
+    [self setNeedsDisplay];
+    [self.path removeAllPoints];
+    _ctr = 0;
+}
+
+- (void)drawNewPoints:(NSArray *)points
+{
+    CGPoint p0 = [[points objectAtIndex:0] CGPointValue];
+    CGPoint p1 = [[points objectAtIndex:1] CGPointValue];
+    CGPoint p2 = [[points objectAtIndex:2] CGPointValue];
+    CGPoint p3 = [[points objectAtIndex:3] CGPointValue];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.path moveToPoint:CGPointMake(p0.x * _vWidth, p0.y * _vHeight)];
+        [self.path addCurveToPoint:CGPointMake(p3.x * _vWidth, p3.y * _vHeight)
+                     controlPoint1:CGPointMake(p1.x * _vWidth, p1.y * _vHeight)
+                     controlPoint2:CGPointMake(p2.x * _vWidth, p2.y * _vHeight)];
+        [self setNeedsDisplay];
+    });
+}
+
+#pragma mark - private
 - (void)drawRect:(CGRect)rect
 {
     [self.lineColor setStroke];
@@ -99,36 +130,6 @@
     [self.path stroke];
     self.incrementalImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-}
-
-- (void)clear
-{
-    [self.path removeAllPoints];
-    self.incrementalImage = nil;
-    [self setNeedsDisplay];
-}
-
-- (void)didEndTouch
-{
-    [self drawBitmap];
-    [self setNeedsDisplay];
-    [self.path removeAllPoints];
-    _ctr = 0;
-}
-
-- (void)drawNewPoints:(NSArray *)points
-{
-    CGPoint p0 = [[points objectAtIndex:0] CGPointValue];
-    CGPoint p1 = [[points objectAtIndex:1] CGPointValue];
-    CGPoint p2 = [[points objectAtIndex:2] CGPointValue];
-    CGPoint p3 = [[points objectAtIndex:3] CGPointValue];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.path moveToPoint:CGPointMake(p0.x * _vWidth, p0.y * _vHeight)];
-        [self.path addCurveToPoint:CGPointMake(p3.x * _vWidth, p3.y * _vHeight)
-                     controlPoint1:CGPointMake(p1.x * _vWidth, p1.y * _vHeight)
-                     controlPoint2:CGPointMake(p2.x * _vWidth, p2.y * _vHeight)];
-        [self setNeedsDisplay];
-    });
 }
 
 @end

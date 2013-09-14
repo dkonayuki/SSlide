@@ -176,7 +176,6 @@
         return;
     }
     
-    NSLog(@"messageReceived %@ channel %@",messageDict, channel);
     NSUInteger mesType = [((NSNumber *)[messageDict objectForKey:@"mestype"]) integerValue];
     switch (mesType) {
         case 1: // change page
@@ -267,7 +266,6 @@
     [client postPath:url
           parameters:params
              success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                 NSLog(@"OK");
                  [self startFaye];
              }
              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -277,7 +275,6 @@
 
 - (void)startFaye
 {
-    NSLog(@"CHANEL: %@", self.channel);
     self.fayeClient = [[FayeClient alloc] initWithURLString:[[SSDB5 theme] stringForKey:@"FAYE_BASE_URL"] channel:self.channel];
     self.fayeClient.delegate = self;
     [self.fayeClient connectToServer];
