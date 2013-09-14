@@ -12,6 +12,9 @@
 @protocol SSStreamingManagerDelegate <NSObject>
 
 - (void)gotoPageWithNumDel:(NSUInteger)pageNum;
+- (void)didAddPointsFromMasterDel:(NSArray *)points;
+- (void)didClearFromMasterDel;
+- (void)didEndTouchFromMasterDel;
 - (void)disconnectedFromServerDel;
 
 @end
@@ -24,7 +27,11 @@
 - (void)startSynchronizing;
 - (void)stopSynchronizing;
 
-- (void)gotoPageWithNum:(NSUInteger)pageNum;
 - (BOOL)isMasterDevice;
+
+- (void)gotoPageWithNum:(NSUInteger)pageNum;
+- (void)didAddPointsInDrawingView:(NSArray *)points;
+- (void)didClearDrawingView;
+- (void)didEndTouchDrawingView;
 
 @end

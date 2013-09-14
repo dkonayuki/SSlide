@@ -85,20 +85,64 @@
     [self.fayeClient disconnectFromServer];
 }
 
-- (void)gotoPageWithNum:(NSUInteger)pageNum
-{
-    if (self.isMaster && self.isStreaming) {
-        SSUser *currentUser = [[SSAppData sharedInstance] currentUser];
-        NSNumber *pn = [NSNumber numberWithInt:pageNum];
-        NSDictionary *mesg = @{@"username": currentUser.username,
-                               @"pagenum": pn};
-        [self.fayeClient sendMessage:mesg onChannel:self.channel];
-    }
-}
-
 - (BOOL)isMasterDevice
 {
     return self.isMaster;
+}
+
+- (void)gotoPageWithNum:(NSUInteger)pageNum
+{
+    if (!self.isMaster || !self.isStreaming) {
+        return;
+    }
+    SSUser *currentUser = [[SSAppData sharedInstance] currentUser];
+    NSNumber *pn = [NSNumber numberWithInt:pageNum];
+    NSDictionary *mesg = @{@"mestype": @"1",
+                           @"username": currentUser.username,
+                           @"pagenum": pn};
+    [self.fayeClient sendMessage:mesg onChannel:self.channel];
+}
+
+- (void)didAddPointsInDrawingView:(NSArray *)points
+{
+    if (!self.isMaster || !self.isStreaming) {
+        return;
+    }
+    
+    SSUser *currentUser = [[SSAppData sharedInstance] currentUser];
+    NSMutableString *pStr = [[NSMutableString alloc] init];
+    for (NSValue *value in points) {
+        CGPoint p = [value CGPointValue];
+        [pStr appendString:[NSString stringWithFormat:@"%.2f %.2f ", p.x, p.y]];
+    }
+    NSDictionary *mesg = @{@"mestype": @"2",
+                           @"username": currentUser.username,
+                           @"points": pStr};
+    [self.fayeClient sendMessage:mesg onChannel:self.channel];
+}
+
+- (void)didClearDrawingView
+{
+    if (!self.isMaster || !self.isStreaming) {
+        return;
+    }
+    
+    SSUser *currentUser = [[SSAppData sharedInstance] currentUser];
+    NSDictionary *mesg = @{@"mestype": @"3",
+                           @"username": currentUser.username};
+    [self.fayeClient sendMessage:mesg onChannel:self.channel];
+}
+
+- (void)didEndTouchDrawingView
+{
+    if (!self.isMaster || !self.isStreaming) {
+        return;
+    }
+    
+    SSUser *currentUser = [[SSAppData sharedInstance] currentUser];
+    NSDictionary *mesg = @{@"mestype": @"4",
+                           @"username": currentUser.username};
+    [self.fayeClient sendMessage:mesg onChannel:self.channel];
 }
 
 #pragma mark - Faye Client Delegate
@@ -128,12 +172,43 @@
 
 - (void)messageReceived:(NSDictionary *)messageDict channel:(NSString *)channel
 {
+    if (self.isMaster) {
+        return;
+    }
+    
     NSLog(@"messageReceived %@ channel %@",messageDict, channel);
-    //NSString *username = [messageDict objectForKey:@"username"];
-    //NSString *curUsername = [SSAppData sharedInstance].currentUser.username;
-    if (!self.isMaster) {
-        NSUInteger pageNum = [((NSNumber *)[messageDict objectForKey:@"pagenum"]) integerValue];
-        [self.delegate gotoPageWithNumDel:pageNum];
+    NSUInteger mesType = [((NSNumber *)[messageDict objectForKey:@"mestype"]) integerValue];
+    switch (mesType) {
+        case 1: // change page
+        {
+            NSUInteger pageNum = [((NSNumber *)[messageDict objectForKey:@"pagenum"]) integerValue];
+            [self.delegate gotoPageWithNumDel:pageNum];
+        }
+            break;
+        case 2: // drawing
+        {
+            NSString *pStr = [messageDict objectForKey:@"points"];
+            NSArray *value = [pStr componentsSeparatedByString:@" "];
+            NSMutableArray *pArray = [[NSMutableArray alloc] init];
+            for (int i = 0; i < value.count - 1; i+=2) {
+                CGPoint p = CGPointMake([[value objectAtIndex:i] floatValue],
+                                         [[value objectAtIndex:i + 1] floatValue]);
+                [pArray addObject:[NSValue valueWithCGPoint:p]];
+            }
+            [self.delegate didAddPointsFromMasterDel:pArray];
+        }
+            break;
+        case 3: // clear
+        {
+            [self.delegate didClearFromMasterDel];
+        }
+            break;
+        case 4: // did end touch
+        {
+            [self.delegate didEndTouchFromMasterDel];
+        }
+        default:
+            break;
     }
 }
 

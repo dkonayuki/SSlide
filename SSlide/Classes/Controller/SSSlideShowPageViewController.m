@@ -12,16 +12,16 @@
 #import "SSSlideShowControlView.h"
 #import "SSSlideShowInfoView.h"
 #import "SSStreamingManager.h"
-#import <ACEDrawingView/ACEDrawingView.h>
+#import "SSDrawingView.h"
 
-@interface SSSlideShowPageViewController () <SSSlideSHowViewControllerDelegate, SSSlideShowControlViewDelegate, SSStreamingManagerDelegate>
+@interface SSSlideShowPageViewController () <SSSlideSHowViewControllerDelegate, SSSlideShowControlViewDelegate, SSStreamingManagerDelegate, SSDrawingViewDelegate>
 
 @property (strong, nonatomic) SSSlideshow *currentSlide;
 @property (assign, nonatomic) NSInteger totalPage;
 @property (strong, nonatomic) SSSlideShowControlView *controlView;
 @property (strong, nonatomic) SSSlideShowInfoView *infoView;
 @property (strong, nonatomic) SSStreamingManager *streamingManager;
-@property (strong, nonatomic) ACEDrawingView *drawingView;
+@property (strong, nonatomic) SSDrawingView *drawingView;
 
 @end
 
@@ -87,12 +87,11 @@
     [[self view] addSubview:[self.pageController view]];
     [self.pageController didMoveToParentViewController:self];
     
-    self.drawingView = [[ACEDrawingView alloc] initWithFrame:self.view.bounds];
+    // drawing view
+    self.drawingView = [[SSDrawingView alloc] initWithFrame:self.view.bounds andDelegate:self];
     self.drawingView.lineColor = [UIColor orangeColor];
-    self.drawingView.drawTool = ACEDrawingToolTypePen;
-    float lineWitdh = IS_IPAD ? [[SSDB5 theme] floatForKey:@"drawing_pen_width_ipad"] : [[SSDB5 theme] floatForKey:@"drawing_pen_width_iphone"];
-    self.drawingView.lineWidth = lineWitdh;
-    //self.drawingView.delegate = self;
+    float lineWidth = IS_IPAD ? [[SSDB5 theme] floatForKey:@"drawing_pen_width_ipad"] : [[SSDB5 theme] floatForKey:@"drawing_pen_width_iphone"];
+    self.drawingView.lineWidth = lineWidth;
     [self.view addSubview:self.drawingView];
     self.drawingView.hidden = YES;
     
@@ -204,6 +203,7 @@
 - (void)clearDrawing
 {
     [self.drawingView clear];
+    [self.streamingManager didClearDrawingView];
 }
 
 - (BOOL)slideIdDownloaded
@@ -217,9 +217,41 @@
     [self gotoPage:pageNum];
 }
 
+- (void)didAddPointsFromMasterDel:(NSArray *)points
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^(void) {
+        [self.drawingView drawNewPoints:points];
+    });
+}
+
+- (void)didClearFromMasterDel
+{
+    [self.drawingView clear];
+}
+
 - (void)disconnectedFromServerDel
 {
     [self.controlView offStreamingBtn];
+}
+
+- (void)didEndTouchFromMasterDel
+{
+    [self.drawingView didEndTouch];
+}
+
+#pragma mark - SSDrawingViewDelegate
+- (void)didAddPointsDel:(NSArray *)points
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^(void){
+        [self.streamingManager didAddPointsInDrawingView:points];
+    });
+}
+
+- (void)didEndTouchDel
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^(void){
+        [self.streamingManager didEndTouchDrawingView];
+    });
 }
 
 #pragma mark - UIPageViewControllerDataSource

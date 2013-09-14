@@ -91,7 +91,6 @@
 - (void)dismissView
 {
     [self.delegate closePopup];
-    //[self dismissViewControllerAnimated:NO completion:nil];
 }
 
 @end

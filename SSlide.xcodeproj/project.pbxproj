@@ -112,6 +112,7 @@
 		DCC0BB4C17C493EE009FF1FD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DCC0BB4A17C493EE009FF1FD /* InfoPlist.strings */; };
 		DCC0BB4F17C493EE009FF1FD /* SSlideTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC0BB4E17C493EE009FF1FD /* SSlideTests.m */; };
 		DCD300A117C708F600908CC9 /* SSSettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCD300A017C708F600908CC9 /* SSSettingsView.m */; };
+		DCD7D9E017E41D9B00C16A20 /* SSDrawingView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCD7D9DF17E41D9B00C16A20 /* SSDrawingView.m */; };
 		DCDDF64817C59CFD0095A299 /* SSSlideshow.m in Sources */ = {isa = PBXBuildFile; fileRef = DCDDF64717C59CFD0095A299 /* SSSlideshow.m */; };
 /* End PBXBuildFile section */
 
@@ -277,6 +278,8 @@
 		DCC0BB4E17C493EE009FF1FD /* SSlideTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SSlideTests.m; sourceTree = "<group>"; };
 		DCD3009F17C708F600908CC9 /* SSSettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSSettingsView.h; path = Classes/View/SSSettingsView.h; sourceTree = "<group>"; };
 		DCD300A017C708F600908CC9 /* SSSettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSSettingsView.m; path = Classes/View/SSSettingsView.m; sourceTree = "<group>"; };
+		DCD7D9DE17E41D9B00C16A20 /* SSDrawingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSDrawingView.h; path = Classes/View/SSDrawingView.h; sourceTree = "<group>"; };
+		DCD7D9DF17E41D9B00C16A20 /* SSDrawingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSDrawingView.m; path = Classes/View/SSDrawingView.m; sourceTree = "<group>"; };
 		DCDDF64617C59CFD0095A299 /* SSSlideshow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSSlideshow.h; path = Classes/Model/SSSlideshow.h; sourceTree = "<group>"; };
 		DCDDF64717C59CFD0095A299 /* SSSlideshow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSSlideshow.m; path = Classes/Model/SSSlideshow.m; sourceTree = "<group>"; };
 		EFFA65580FCF476BA4AB7419 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
@@ -573,6 +576,8 @@
 				435977E117CDEACD00117E2E /* SSSlideShowInfoView.m */,
 				DC9F48F617DF720300B0EC15 /* SSSearchOptionView.h */,
 				DC9F48F717DF720400B0EC15 /* SSSearchOptionView.m */,
+				DCD7D9DE17E41D9B00C16A20 /* SSDrawingView.h */,
+				DCD7D9DF17E41D9B00C16A20 /* SSDrawingView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -917,6 +922,7 @@
 				DC05A02517C73541000EE26F /* SSAppData.m in Sources */,
 				DC05A02817C73581000EE26F /* SSUser.m in Sources */,
 				DC0C758717C8907000BD9C58 /* SSRootViewController.m in Sources */,
+				DCD7D9E017E41D9B00C16A20 /* SSDrawingView.m in Sources */,
 				DC38D0CC17C8ADD10013CAD6 /* SSSlideShowControlView.m in Sources */,
 				DC01E00E17C9CC440096254A /* FayeClient.m in Sources */,
 				DC01E00F17C9CC440096254A /* FayeMessage.m in Sources */,
