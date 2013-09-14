@@ -64,6 +64,8 @@
 		DC2BCF5C17C5AECA00181774 /* SSSlideCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2BCF5B17C5AECA00181774 /* SSSlideCell.m */; };
 		DC2BCF5F17C5DBFE00181774 /* SSSlideShowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2BCF5E17C5DBFE00181774 /* SSSlideShowViewController.m */; };
 		DC2BCF6217C5DC1D00181774 /* SSSlideShowView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2BCF6117C5DC1C00181774 /* SSSlideShowView.m */; };
+		DC2EAB5717E4C5C200BABB57 /* trash_icon_on.png in Resources */ = {isa = PBXBuildFile; fileRef = DC2EAB5517E4C5C200BABB57 /* trash_icon_on.png */; };
+		DC2EAB5817E4C5C200BABB57 /* trash_icon_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC2EAB5617E4C5C200BABB57 /* trash_icon_on@2x.png */; };
 		DC38D0CC17C8ADD10013CAD6 /* SSSlideShowControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC38D0CB17C8ADD10013CAD6 /* SSSlideShowControlView.m */; };
 		DC3A4A6617CC38CE00133DDF /* MNPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3A4A6317CC38CE00133DDF /* MNPageViewController.m */; };
 		DC3A4A6717CC38CE00133DDF /* MNQueuingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3A4A6517CC38CE00133DDF /* MNQueuingScrollView.m */; };
@@ -204,6 +206,8 @@
 		DC2BCF5E17C5DBFE00181774 /* SSSlideShowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSSlideShowViewController.m; path = Classes/Controller/SSSlideShowViewController.m; sourceTree = "<group>"; };
 		DC2BCF6017C5DC1C00181774 /* SSSlideShowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSSlideShowView.h; path = Classes/View/SSSlideShowView.h; sourceTree = "<group>"; };
 		DC2BCF6117C5DC1C00181774 /* SSSlideShowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSSlideShowView.m; path = Classes/View/SSSlideShowView.m; sourceTree = "<group>"; };
+		DC2EAB5517E4C5C200BABB57 /* trash_icon_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trash_icon_on.png; sourceTree = "<group>"; };
+		DC2EAB5617E4C5C200BABB57 /* trash_icon_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "trash_icon_on@2x.png"; sourceTree = "<group>"; };
 		DC38D0CA17C8ADD10013CAD6 /* SSSlideShowControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSSlideShowControlView.h; path = Classes/View/SSSlideShowControlView.h; sourceTree = "<group>"; };
 		DC38D0CB17C8ADD10013CAD6 /* SSSlideShowControlView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSSlideShowControlView.m; path = Classes/View/SSSlideShowControlView.m; sourceTree = "<group>"; };
 		DC3A4A6217CC38CE00133DDF /* MNPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNPageViewController.h; path = Classes/Utilities/MNPageViewController.h; sourceTree = "<group>"; };
@@ -377,6 +381,8 @@
 		DC1104E717C6FF0B00833997 /* user_screen */ = {
 			isa = PBXGroup;
 			children = (
+				DC2EAB5517E4C5C200BABB57 /* trash_icon_on.png */,
+				DC2EAB5617E4C5C200BABB57 /* trash_icon_on@2x.png */,
 				DC0EB1BF17E49BCC00AB7918 /* trash_icon.png */,
 				DC0EB1C017E49BCC00AB7918 /* trash_icon@2x.png */,
 				43B4725B17CF21D900CAD335 /* add.png */,
@@ -812,6 +818,7 @@
 				43357C6D17CC3610007CD24D /* bgipad.png in Resources */,
 				43357C7517CC3627007CD24D /* bar.png in Resources */,
 				43357C7617CC3627007CD24D /* downloadcell.png in Resources */,
+				DC2EAB5817E4C5C200BABB57 /* trash_icon_on@2x.png in Resources */,
 				43357C7717CC3627007CD24D /* like.png in Resources */,
 				DC0EB1C217E49BCC00AB7918 /* trash_icon@2x.png in Resources */,
 				43357C7817CC3627007CD24D /* view.png in Resources */,
@@ -836,6 +843,7 @@
 				43B4724D17CEE7A500CAD335 /* eraser_pressed.png in Resources */,
 				43B4724E17CEE7A500CAD335 /* eraser.png in Resources */,
 				43B4724F17CEE7A500CAD335 /* pen_pressed.png in Resources */,
+				DC2EAB5717E4C5C200BABB57 /* trash_icon_on.png in Resources */,
 				43B4725017CEE7A500CAD335 /* pen.png in Resources */,
 				43B4725117CEE7A500CAD335 /* streaming_pressed.png in Resources */,
 				43B4725217CEE7A500CAD335 /* streaming.png in Resources */,

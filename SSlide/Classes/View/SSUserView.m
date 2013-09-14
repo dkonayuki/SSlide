@@ -211,9 +211,13 @@
             
             CGPoint curPoint = [sender locationInView:self];
             if (CGRectContainsPoint(self.trashView.frame, curPoint)) {
-                self.willDelete = YES;
-            } else {
+                if (!self.willDelete) {
+                    self.willDelete = YES;
+                    [self.trashView setImage:[UIImage imageNamed:@"trash_icon_on.png"]];
+                }
+            } else if (self.willDelete) {
                 self.willDelete = NO;
+                [self.trashView setImage:[UIImage imageNamed:@"trash_icon.png"]];
             }
         }
             break;
