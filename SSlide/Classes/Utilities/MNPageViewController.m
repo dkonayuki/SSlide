@@ -67,6 +67,11 @@
     [self initializeChildControllers];
 }
 
+- (void)enableScrolling:(BOOL)enable
+{
+    [self.scrollView setScrollEnabled:enable];
+}
+
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
     

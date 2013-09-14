@@ -34,6 +34,22 @@
     CGRect pageViewRect = self.view.bounds;
     pageViewRect = CGRectInset(pageViewRect, 0.f, 0.f);
     self.pageViewController.view.frame = pageViewRect;
+    
+    // add tag change notification
+    NSNotificationCenter *ncenter = [NSNotificationCenter defaultCenter];
+    [ncenter addObserver:self selector:@selector(SSToggleInteraction:) name:@"SSToggleInteraction" object:nil];
+}
+
+- (void)SSToggleInteraction:(NSNotification *)center
+{
+    NSDictionary *dict = [center userInfo];
+    BOOL enable = [(NSNumber *)[dict objectForKey:@"enable"] boolValue];
+    [self.pageViewController enableScrolling:enable];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - MNPageViewController datasource

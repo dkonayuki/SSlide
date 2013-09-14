@@ -10,11 +10,20 @@
 #import <AKSegmentedControl/AKSegmentedControl.h>
 #import "SSAdManager.h"
 #import "SSImageHelper.h"
+#import "SSSlideCell.h"
 
-@interface SSUserView()
+@interface SSUserView() <UIGestureRecognizerDelegate>
 
 @property (strong, nonatomic) UILabel *usernameLabel;
 @property (strong, nonatomic) SSAdManager *adManager;
+
+@property (assign, nonatomic) BOOL isDeletingState;
+@property (assign, nonatomic) BOOL willDelete;
+@property (assign, nonatomic) CGAffineTransform curTransform;
+@property (weak, nonatomic) SSSlideCell *curCell;
+@property (assign, nonatomic) NSUInteger curIndex;
+
+@property (strong, nonatomic) UIImageView *trashView;
 
 @end
 
@@ -103,6 +112,17 @@
                                                     andDelegate:self.delegate];
     self.slideListView.infiniteLoad = NO;
     [self addSubview:self.slideListView];
+    [self onDeleteGesture];
+    
+    // trash view
+    float trashWidth = IS_IPAD ? 150.f : 75.f;
+    self.trashView = [[UIImageView alloc] initWithFrame:CGRectMake(-trashWidth/3,
+                                                                   self.center.y - trashWidth/2,
+                                                                   trashWidth,
+                                                                   trashWidth)];
+    self.trashView.image = [UIImage imageNamed:@"trash_icon.png"];
+    [self addSubview:self.trashView];
+    self.trashView.hidden = YES;
     
     // ad
     float iadHeight = IS_IPAD ? [[SSDB5 theme] floatForKey:@"iad_height_ipad"] : [[SSDB5 theme] floatForKey:@"iad_height_iphone"];
@@ -122,6 +142,117 @@
 {
     AKSegmentedControl *segmentedControl = (AKSegmentedControl *)sender;
     [self.delegate segmentedControlChangedDel:[[segmentedControl selectedIndexes] firstIndex]];
+}
+
+#pragma mark - delete gesture
+- (void)onDeleteGesture
+{
+    // gesture
+    UILongPressGestureRecognizer *longPressRecognizer = [[UILongPressGestureRecognizer alloc]
+                                                         initWithTarget:self
+                                                         action:@selector(onLongPress:)];
+    longPressRecognizer.delegate = self;
+    UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureAction:)];
+    panGestureRecognizer.delegate = self;
+    [self.slideListView addGestureRecognizer:longPressRecognizer];
+    [self.slideListView addGestureRecognizer:panGestureRecognizer];
+    self.isDeletingState = NO;
+    self.willDelete = NO;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    return YES;
+}
+
+- (void)onLongPress:(UILongPressGestureRecognizer *)sender
+{
+    if (self.isDeletingState) {
+        if (sender.state == UIGestureRecognizerStateEnded || sender.state == UIGestureRecognizerStateCancelled) {
+            [self backToNormalState];
+        }
+        return;
+    }
+    
+    CGPoint touchPoint = [sender locationInView:self.slideListView.slideTableView];
+    NSIndexPath* row = [self.slideListView.slideTableView indexPathForRowAtPoint:touchPoint];
+    if (row != nil) {
+        self.curCell = (SSSlideCell *)[self.slideListView.slideTableView cellForRowAtIndexPath:row];
+        self.curIndex = row.row;
+        self.curTransform = self.curCell.transform;
+        
+        [self gotoDeleteState];
+    }
+}
+
+- (void)panGestureAction:(UIPanGestureRecognizer *)sender
+{
+    if (!self.isDeletingState) {
+        return;
+    }
+    switch (sender.state) {
+        case UIGestureRecognizerStateCancelled:
+        case UIGestureRecognizerStateEnded:
+        {
+            [self backToNormalState];
+            if (self.willDelete) {
+                self.willDelete = NO;
+                [self.delegate deleteDownloadedSlideAtIndex:self.curIndex];
+            }
+        }
+            break;
+        case UIGestureRecognizerStateChanged:
+        {
+            CGPoint translatedPoint = [sender translationInView:self.slideListView];
+            CGAffineTransform currentTransform = self.curCell.transform;
+            currentTransform.tx = translatedPoint.x;
+            currentTransform.ty = translatedPoint.y;
+            [self.curCell setTransform:currentTransform];
+            
+            CGPoint curPoint = [sender locationInView:self];
+            if (CGRectContainsPoint(self.trashView.frame, curPoint)) {
+                self.willDelete = YES;
+            } else {
+                self.willDelete = NO;
+            }
+        }
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)gotoDeleteState
+{
+    self.willDelete = NO;
+    self.isDeletingState = YES;
+    self.slideListView.slideTableView.scrollEnabled = NO;
+    self.trashView.hidden = NO;
+    
+    CGAffineTransform currentTransform = self.curCell.transform;
+    currentTransform.a = 0.75f;
+    currentTransform.d = 0.75f;
+    [self.curCell setTransform:currentTransform];
+    [self.slideListView.slideTableView bringSubviewToFront:self.curCell];
+    
+    NSNotification *notification = [NSNotification notificationWithName:@"SSToggleInteraction" object:nil userInfo:@{@"enable": [NSNumber numberWithBool:NO]}];
+    [[NSNotificationCenter defaultCenter] postNotification:notification];
+}
+
+- (void)backToNormalState
+{
+    [UIView animateWithDuration:0.5f
+                     animations:^(void) {
+                         [self.curCell setTransform:self.curTransform];
+                     }
+                     completion:^(BOOL finish) {
+                         self.isDeletingState = NO;
+                         self.slideListView.slideTableView.scrollEnabled = YES;
+                         self.trashView.hidden = YES;
+                         
+                         NSNotification *notification = [NSNotification notificationWithName:@"SSToggleInteraction" object:nil userInfo:@{@"enable": [NSNumber numberWithBool:YES]}];
+                         [[NSNotificationCenter defaultCenter] postNotification:notification];
+                     }];
 }
 
 @end

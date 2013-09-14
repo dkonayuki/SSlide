@@ -20,6 +20,8 @@
 @property(nonatomic,weak) id <MNPageViewControllerDataSource> dataSource;
 @property(nonatomic,weak) id <MNPageViewControllerDelegate>   delegate;
 
+- (void)enableScrolling:(BOOL)enable;
+
 @end
 
 @protocol MNPageViewControllerDataSource <NSObject>

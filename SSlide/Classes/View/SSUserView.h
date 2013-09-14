@@ -13,6 +13,7 @@
 
 - (void)segmentedControlChangedDel:(NSUInteger)index;
 - (NSString *)getUsernameDel;
+- (void)deleteDownloadedSlideAtIndex:(NSUInteger)index;
 
 @end
 

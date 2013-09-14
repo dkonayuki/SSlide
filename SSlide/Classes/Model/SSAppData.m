@@ -70,13 +70,7 @@
 
 - (NSArray *)mySlides
 {
-    /*
-    NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(SSSlideshow *evaluatedObj, NSDictionary *bind) {
-        return [evaluatedObj.username isEqualToString:self.currentUser.username];
-    }];
-     */
     NSArray *downloaded = [self.downloadedSlides copy];
-    //NSArray *result = [downloaded filteredArrayUsingPredicate:predicate];
     return downloaded;
 }
 
@@ -93,6 +87,24 @@
 - (BOOL)isLogined
 {
     return self.currentUser && self.currentUser.username && self.currentUser.password;
+}
+
+- (BOOL)deleteDownloadedSlideAtIndex:(NSUInteger)index
+{
+    SSSlideshow *willDeleteSlide = [self.downloadedSlides objectAtIndex:index];
+    NSString *directory = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    NSString *folderPath = [directory stringByAppendingPathComponent:[NSString stringWithFormat:@"/%@", willDeleteSlide.slideId]];
+    NSError *error;
+    [fileManager removeItemAtPath:folderPath error:&error];
+    if (error) {
+        return FALSE;
+    } else {
+        [self.downloadedSlides removeObjectAtIndex:index];
+        [SSAppData saveAppData];
+        return TRUE;
+    }
 }
 
 @end

@@ -18,6 +18,7 @@
 - (NSArray *)mySlides;
 - (BOOL)isLogined;
 - (SSSlideshow *)getDownloadedSlide:(NSString *)slideId;
+- (BOOL)deleteDownloadedSlideAtIndex:(NSUInteger)index;
 
 + (SSAppData *)sharedInstance;
 + (void)saveAppData;

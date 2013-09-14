@@ -44,6 +44,11 @@
     [ncenter addObserver:self selector:@selector(SSDidChangeTagNotification:) name:@"SSDidChangeTag" object:nil];
 }
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 #pragma mark - SSTopView delegate
 - (NSInteger)numberOfRows
 {

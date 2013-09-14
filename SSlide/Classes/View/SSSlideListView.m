@@ -18,11 +18,7 @@
 - (void) initView
 {
     self.infiniteLoad = YES;
-    self.slideTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,
-                                                                        0,
-                                                                        self.bounds.size.width,
-                                                                        self.bounds.size.height
-                                                                        )];
+    self.slideTableView = [[UITableView alloc] initWithFrame:self.bounds];
     self.slideTableView.delegate = self;
     self.slideTableView.dataSource = self;
     self.slideTableView.backgroundColor = [UIColor clearColor];

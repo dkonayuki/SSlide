@@ -55,6 +55,11 @@
     [self presentPopupViewController:self.settingsViewController animationType:MJPopupViewAnimationSlideLeftLeft];
 }
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 #pragma mark - notification
 - (void)SSDownloadFinishNotification:(NSNotification *)center
 {
@@ -80,6 +85,17 @@
 - (NSString *)getUsernameDel
 {
     return [SSAppData sharedInstance].currentUser.username;
+}
+
+- (void)deleteDownloadedSlideAtIndex:(NSUInteger)index
+{
+    BOOL result = [[SSAppData sharedInstance] deleteDownloadedSlideAtIndex:index];
+    if (result) {
+        [self getDownloadedSlideshows];
+        [SVProgressHUD showSuccessWithStatus:@"Deleted!"];
+    } else {
+        [SVProgressHUD showErrorWithStatus:@"Error!"];
+    }
 }
 
 #pragma mark - SSSlideListView delegate
