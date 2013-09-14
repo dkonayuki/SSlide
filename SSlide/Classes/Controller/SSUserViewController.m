@@ -41,6 +41,10 @@
     self.slideDataSource = [[SSSlideDataSource alloc] init];
     
     [self getDownloadedSlideshows];
+    
+    // add tag change notification
+    NSNotificationCenter *ncenter = [NSNotificationCenter defaultCenter];
+    [ncenter addObserver:self selector:@selector(SSDownloadFinishNotification:) name:@"SSDownloadFinish" object:nil];
 }
 
 - (void)showSettingsView
@@ -49,6 +53,14 @@
         self.settingsViewController = [[SSSettingsViewController alloc] initWithDelegate:self];
     }
     [self presentPopupViewController:self.settingsViewController animationType:MJPopupViewAnimationSlideLeftLeft];
+}
+
+#pragma mark - notification
+- (void)SSDownloadFinishNotification:(NSNotification *)center
+{
+    if (self.isDownloadedMode) {
+        [self getDownloadedSlideshows];
+    }
 }
 
 #pragma mark - SSUserViewDelegate

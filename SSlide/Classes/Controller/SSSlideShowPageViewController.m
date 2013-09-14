@@ -173,6 +173,9 @@
             [SVProgressHUD showSuccessWithStatus:@"Download completed!"];
             [self.delegate reloadSlidesListDel];
             [self.controlView setFinishDownload];
+            // reload user page
+            NSNotification *notification = [NSNotification notificationWithName:@"SSDownloadFinish" object:nil];
+            [[NSNotificationCenter defaultCenter] postNotification:notification];
         }];
     } else {
         [SVProgressHUD showErrorWithStatus:@"Already exists!"];
