@@ -166,17 +166,18 @@
 - (void)downloadCurrentSlideDel
 {
     if (![self.currentSlide checkIsDownloadedAsNew]) {
-        [self.currentSlide download:^(float percent) {
-            //NSLog(@"download: %f", percent);
-            [self.controlView setDownloadProgress:percent];
-        } completion:^(BOOL result){
-            [SVProgressHUD showSuccessWithStatus:@"Download completed!"];
-            [self.delegate reloadSlidesListDel];
-            [self.controlView setFinishDownload];
-            // reload user page
-            NSNotification *notification = [NSNotification notificationWithName:@"SSDownloadFinish" object:nil];
-            [[NSNotificationCenter defaultCenter] postNotification:notification];
-        }];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
+            [self.currentSlide download:^(float percent) {
+                [self.controlView setDownloadProgress:percent];
+            } completion:^(BOOL result){
+                [SVProgressHUD showSuccessWithStatus:@"Download completed!"];
+                [self.delegate reloadSlidesListDel];
+                [self.controlView setFinishDownload];
+                // reload user page
+                NSNotification *notification = [NSNotification notificationWithName:@"SSDownloadFinish" object:nil];
+                [[NSNotificationCenter defaultCenter] postNotification:notification];
+            }];
+        });
     } else {
         [SVProgressHUD showErrorWithStatus:@"Already exists!"];
     }
