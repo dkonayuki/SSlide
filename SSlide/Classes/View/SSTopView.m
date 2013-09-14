@@ -27,7 +27,7 @@
     float width = IS_IPAD ? 100.f * 1.8f : 100.f;
     float height = IS_IPAD ? 31.f * 1.8f : 31.f;
     
-    UIColor *bgColor = SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0") ? [UIColor clearColor] : [[SSDB5 theme] colorForKey:@"app_title_color"];
+    UIColor *bgColor = [UIColor clearColor];//SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0") ? [UIColor clearColor] : [[SSDB5 theme] colorForKey:@"app_title_color"];
     UIView *titleBackground = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, topMargin)];
     titleBackground.backgroundColor = bgColor;
     

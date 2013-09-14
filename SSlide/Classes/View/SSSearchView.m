@@ -35,7 +35,7 @@
         height *= 2.2;
         fontSize *= 2.2;
     }
-    UIColor *bgColor = SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0") ? [UIColor clearColor] : [[SSDB5 theme] colorForKey:@"app_title_color"];
+    UIColor *bgColor = [UIColor clearColor];//SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0") ? [UIColor clearColor] : [[SSDB5 theme] colorForKey:@"app_title_color"];
     self.searchBG = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, self.topMargin)];
     self.searchBG.backgroundColor = bgColor;
     self.searchBG.center = CGPointMake(self.center.x, self.bounds.size.height/3);

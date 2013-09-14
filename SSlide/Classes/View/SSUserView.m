@@ -30,7 +30,7 @@
     float topMargin = topBarHeight + statusBarHeight;
     
     /** username label **/
-    UIColor *bgColor = SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0") ? [UIColor clearColor] : [[SSDB5 theme] colorForKey:@"app_title_color"];
+    UIColor *bgColor = [UIColor clearColor];//SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0") ? [UIColor clearColor] : [[SSDB5 theme] colorForKey:@"app_title_color"];
     self.usernameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, statusBarHeight, self.bounds.size.width, topBarHeight)];
     self.usernameLabel.textAlignment = NSTextAlignmentCenter;
     [self.usernameLabel setText:[self.delegate getUsernameDel]];
