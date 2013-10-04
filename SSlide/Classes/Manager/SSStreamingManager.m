@@ -13,6 +13,7 @@
 #import <SVProgressHUD/SVProgressHUD.h>
 #import <AFNetworking/AFHTTPClient.h>
 #import <AFJSONRequestOperation.h>
+#import <FlatUIKit.h>
 
 @interface SSStreamingManager() <FayeClientDelegate>
 
@@ -148,9 +149,22 @@
 #pragma mark - Faye Client Delegate
 - (void)connectedToServer
 {
-    NSString *mes = self.isMaster ? @"Publish: OK" : @"Subscribe: OK";
+    NSString *mes;
+    NSString *title;
+    if (self.isMaster)
+    {
+        title = @"Publish successful";
+        mes = [NSString stringWithFormat:@"Other devices can search \"#%@\" to subscribe.",[SSAppData sharedInstance].currentUser.username];
+    }
+    else
+    {
+        title = @"Subscription successful";
+        NSArray *stringArr = [self.channel componentsSeparatedByString:@"/"];
+        mes = [NSString stringWithFormat:@"Your device is now syncing with %@'s device.", [stringArr objectAtIndex:1]];
+    }
     self.isStreaming = YES;
-    [SVProgressHUD showSuccessWithStatus:mes];
+    [SVProgressHUD dismiss];
+    [self displayConnectedMessage:mes withTitle:title];
 }
 
 - (void)disconnectedFromServer
@@ -279,6 +293,11 @@
     self.fayeClient.delegate = self;
     [self.fayeClient connectToServer];
     [SVProgressHUD showWithStatus:@"Connecting"];
+}
+
+- (void)displayConnectedMessage:(NSString *)message withTitle:(NSString *)title
+{
+    [self.delegate displayConnectedMessage:message withTitle:title];
 }
 
 @end

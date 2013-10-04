@@ -16,6 +16,7 @@
 - (void)didClearFromMasterDel;
 - (void)didEndTouchFromMasterDel;
 - (void)disconnectedFromServerDel;
+- (void)displayConnectedMessage:(NSString *)mes withTitle:(NSString *)title;
 
 @end
 

@@ -30,7 +30,7 @@
     self.topMargin = IS_IPAD ? [[SSDB5 theme]floatForKey:@"page_top_margin_ipad"] : [[SSDB5 theme]floatForKey:@"page_top_margin_iphone"];
     
     float height = [[SSDB5 theme] floatForKey:@"search_textfield_height"];
-    float fontSize = 14;
+    float fontSize = 16;
     if (IS_IPAD) {
         height *= 2.2;
         fontSize *= 2.2;
@@ -41,11 +41,11 @@
     self.searchBG.center = CGPointMake(self.center.x, self.bounds.size.height/3);
     [self addSubview:self.searchBG];
     
-    float width = self.bounds.size.width * 0.8f;
+    float width = self.bounds.size.width * 0.9f;
     
     //text background
     UIView *textBG;
-    textBG = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width * 0.8f, height)];
+    textBG = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
     textBG.backgroundColor = [[SSDB5 theme] colorForKey:@"searchbar_bg_color"];
     textBG.center = CGPointMake(self.searchBG.center.x, self.searchBG.frame.size.height/2);
     [self.searchBG addSubview:textBG];
@@ -53,8 +53,8 @@
     [layer setMasksToBounds:YES];
     [layer setCornerRadius: IS_IPAD ? 4.f : 2.f];
     
-    float bttWidth = 15.f;
-    float bttHeight = 15.f;
+    float bttWidth = 16.f;
+    float bttHeight = 16.f;
     float margin = 10.f;
     width = width - bttWidth * 2 - margin;
     if (IS_IPAD) {
