@@ -31,7 +31,6 @@
     [self.view addSubview:description];
     self.view.layer.cornerRadius = IS_IPAD ? 8.0 : 4.0;
     self.view.layer.masksToBounds = YES;
-	// Do any additional setup after loading the view.
 }
 
 @end

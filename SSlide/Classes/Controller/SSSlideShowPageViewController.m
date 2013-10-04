@@ -22,6 +22,7 @@
 @property (strong, nonatomic) SSSlideShowInfoView *infoView;
 @property (strong, nonatomic) SSStreamingManager *streamingManager;
 @property (strong, nonatomic) SSDrawingView *drawingView;
+@property (strong, nonatomic) FUIAlertView *alertView;
 
 @end
 
@@ -181,6 +182,31 @@
     } else {
         [SVProgressHUD showErrorWithStatus:@"Already exists!"];
     }
+}
+
+- (void)displayConnectedMessage:(NSString *)mes withTitle:(NSString *)title
+{
+    float fontSize = IS_IPAD ? 28.f : 14.f;
+    self.alertView = [[FUIAlertView alloc] initWithTitle:title
+                                                          message:mes
+                                                         delegate:nil
+                                                cancelButtonTitle:nil
+                                                otherButtonTitles:nil, nil];
+    self.alertView.titleLabel.textColor = [UIColor cloudsColor];
+    self.alertView.titleLabel.font = [UIFont fontWithName:[[SSDB5 theme] stringForKey:@"candara_font"] size:fontSize * 1.2];
+    self.alertView.messageLabel.textColor = [UIColor cloudsColor];
+    self.alertView.messageLabel.font = [UIFont fontWithName:[[SSDB5 theme] stringForKey:@"candara_font"] size:fontSize];
+    self.alertView.backgroundOverlay.backgroundColor = [UIColor clearColor];
+    self.alertView.alertContainer.backgroundColor = [[SSDB5 theme] colorForKey:@"streaming_alert_bg_color"];
+    //alertView.transform = CGAffineTransformMakeRotation(M_PI_2);
+    [self.alertView show];
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissMessage)];
+    [self.alertView addGestureRecognizer:singleTap];
+}
+
+- (void)dismissMessage
+{
+    [self.alertView dismissWithClickedButtonIndex:0 animated:YES];
 }
 
 - (void)startStreamingCurrentSlideDel
