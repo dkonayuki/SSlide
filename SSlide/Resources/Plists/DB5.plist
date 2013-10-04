@@ -4,6 +4,8 @@
 <dict>
 	<key>Default</key>
 	<dict>
+		<key>streaming_alert_bg_color</key>
+		<string>513c34</string>
 		<key>slideshow_btn_bg_pressed</key>
 		<string>513c34</string>
 		<key>slideshow_btn_bg</key>
@@ -53,7 +55,7 @@
 		<key>page_top_margin_ipad</key>
 		<integer>90</integer>
 		<key>search_textfield_height</key>
-		<integer>25</integer>
+		<integer>30</integer>
 		<key>API_BASE_URL</key>
 		<string>https://www.slideshare.net/api/2/</string>
 		<key>OEMBED_BASE_URL</key>
