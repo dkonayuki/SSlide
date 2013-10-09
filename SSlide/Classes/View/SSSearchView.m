@@ -184,7 +184,8 @@
     self.searchOptionView.hidden = NO;
     [self bringSubviewToFront:self.searchOptionView];
     
-    [UIView animateWithDuration:0.25f
+    float duration = SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0") ? 0.4f : 0.25f;
+    [UIView animateWithDuration:duration
                      animations:^{
                          self.searchOptionView.center = CGPointMake(xCenter, yCenter);
                      }];
@@ -193,8 +194,9 @@
 - (void) keyboardWillHide:(NSNotification *)note {
     float xCenter = self.bounds.size.width/2;
     float yCenter = self.bounds.size.height + self.searchOptionView.frame.size.height;
-
-    [UIView animateWithDuration:0.25f
+    
+    float duration = SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0") ? 0.2f : 0.25f;
+    [UIView animateWithDuration:duration
                      animations:^{
                          self.searchOptionView.center = CGPointMake(xCenter, yCenter);
                      }
