@@ -148,6 +148,8 @@
 		<integer>50</integer>
 		<key>search_option_view_height_ipad</key>
 		<integer>60</integer>
+		<key>tutorial_slide_id</key>
+		<string>27019970</string>
 	</dict>
 </dict>
 </plist>

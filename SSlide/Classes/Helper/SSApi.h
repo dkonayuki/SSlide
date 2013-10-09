@@ -26,6 +26,8 @@
 
 - (void)getLatestSlideshows:(NSArray *)tags page:(int)page itemsPerPage:(int)itemsPerPage success:(void (^)(NSArray *result))success failure:(void (^)())failure;
 
+- (void)getSlideshowsById:(NSString *)slideId success:(void (^)(SSSlideshow *result))success failure:(void (^)())failure;
+
 - (void)addExtendedSlideInfo:(SSSlideshow *)slide result:(void (^)(BOOL result))result;
 
 /**

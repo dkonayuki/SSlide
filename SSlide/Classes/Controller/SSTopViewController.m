@@ -42,6 +42,44 @@
     // add tag change notification
     NSNotificationCenter *ncenter = [NSNotificationCenter defaultCenter];
     [ncenter addObserver:self selector:@selector(SSDidChangeTagNotification:) name:@"SSDidChangeTag" object:nil];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    // check download tutorial
+    if(![defaults objectForKey:@"DownloadedTutorialSlide"]) {
+        [SVProgressHUD showWithStatus:@"Downloading"];
+        [[SSApi sharedInstance] getSlideshowsById:[[SSDB5 theme] stringForKey:@"tutorial_slide_id"]
+                                          success:^(SSSlideshow *slide) {
+                                              [[SSApi sharedInstance] addExtendedSlideInfo:slide
+                                                                                    result:^(BOOL result) {
+                                                                                        [self downloadTutorialSlide:slide];
+                                                                                    }];
+                                          }
+                                          failure:^(void) {
+                                              [SVProgressHUD showErrorWithStatus:@"Error!"];
+                                          }];
+    }
+}
+
+- (void)downloadTutorialSlide:(SSSlideshow *)slide
+{
+    if (![slide checkIsDownloadedAsNew]) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
+            [slide download:^(float percent) {
+            } completion:^(BOOL result){
+                [SVProgressHUD showSuccessWithStatus:@"Download completed!"];
+                
+                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                [defaults setObject:@"OK" forKey:@"DownloadedTutorialSlide"];
+                [defaults synchronize];
+                
+                // reload user page
+                NSNotification *notification = [NSNotification notificationWithName:@"SSDownloadFinish" object:nil];
+                [[NSNotificationCenter defaultCenter] postNotification:notification];
+            }];
+        });
+    } else {
+        [SVProgressHUD showErrorWithStatus:@"Already exists!"];
+    }
 }
 
 - (void)dealloc

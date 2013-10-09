@@ -63,6 +63,25 @@
                  }];
 }
 
+- (void)getSlideshowsById:(NSString *)slideId success:(void (^)(SSSlideshow *))success failure:(void (^)())failure
+{
+    NSMutableArray *slideshowArray = [[NSMutableArray alloc] init];
+    NSString *url = [NSString stringWithFormat:@"get_slideshow?slideshow_id=%@&detailed=1&%@", slideId, [self getApiHash]];
+    [self.client getPath:url
+              parameters:nil
+                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                     NSError *error = nil;
+                     TBXML *tbxml = [TBXML tbxmlWithXMLData:responseObject error:&error];
+                     if (tbxml.rootXMLElement) {
+                         [self traverseSlideshows:tbxml.rootXMLElement result:slideshowArray];
+                         success([slideshowArray objectAtIndex:0]);
+                     }
+                 }
+                 failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                     failure();
+                 }];
+}
+
 /**
  *	search slideshows
  *
