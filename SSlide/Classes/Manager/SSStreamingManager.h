@@ -34,5 +34,6 @@
 - (void)didAddPointsInDrawingView:(NSArray *)points;
 - (void)didClearDrawingView;
 - (void)didEndTouchDrawingView;
+- (void)sendQuestion:(NSString *)question;
 
 @end

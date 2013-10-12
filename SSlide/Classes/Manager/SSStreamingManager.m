@@ -22,6 +22,7 @@
 @property (strong, nonatomic) NSString *channel;
 @property (assign, nonatomic) BOOL isMaster;
 @property (assign, nonatomic) BOOL isStreaming;
+@property (strong, nonatomic) NSDictionary *messageTypeDic;
 
 @end
 
@@ -37,6 +38,12 @@
         if (!self.isMaster) {
             self.channel = self.currentSlide.channel;
         }
+        
+        self.messageTypeDic = @{@"move": @1,
+                                @"draw": @2,
+                                @"end_draw": @3,
+                                @"clear": @4,
+                                @"question": @5};
     }
     return self;
 }
@@ -96,11 +103,9 @@
     if (!self.isMaster || !self.isStreaming) {
         return;
     }
-    SSUser *currentUser = [[SSAppData sharedInstance] currentUser];
     NSNumber *pn = [NSNumber numberWithInt:pageNum];
-    NSDictionary *mesg = @{@"mestype": @"1",
-                           @"username": currentUser.username,
-                           @"pagenum": pn};
+    NSDictionary *mesg = [self createMessageContent:@"move"
+                                           andExtra:@{@"pageNum": pn}];
     [self.fayeClient sendMessage:mesg onChannel:self.channel];
 }
 
@@ -110,15 +115,13 @@
         return;
     }
     
-    SSUser *currentUser = [[SSAppData sharedInstance] currentUser];
     NSMutableString *pStr = [[NSMutableString alloc] init];
     for (NSValue *value in points) {
         CGPoint p = [value CGPointValue];
         [pStr appendString:[NSString stringWithFormat:@"%.2f %.2f ", p.x, p.y]];
     }
-    NSDictionary *mesg = @{@"mestype": @"2",
-                           @"username": currentUser.username,
-                           @"points": pStr};
+    NSDictionary *mesg = [self createMessageContent:@"draw"
+                                           andExtra:@{@"pointSet": pStr}];
     [self.fayeClient sendMessage:mesg onChannel:self.channel];
 }
 
@@ -128,9 +131,8 @@
         return;
     }
     
-    SSUser *currentUser = [[SSAppData sharedInstance] currentUser];
-    NSDictionary *mesg = @{@"mestype": @"3",
-                           @"username": currentUser.username};
+    NSDictionary *mesg = [self createMessageContent:@"clear"
+                                           andExtra:@{}];
     [self.fayeClient sendMessage:mesg onChannel:self.channel];
 }
 
@@ -140,9 +142,19 @@
         return;
     }
     
-    SSUser *currentUser = [[SSAppData sharedInstance] currentUser];
-    NSDictionary *mesg = @{@"mestype": @"4",
-                           @"username": currentUser.username};
+    NSDictionary *mesg = [self createMessageContent:@"end_draw"
+                                           andExtra:@{}];
+    [self.fayeClient sendMessage:mesg onChannel:self.channel];
+}
+
+- (void)sendQuestion:(NSString *)question
+{
+    if (self.isMaster || !self.isStreaming) {
+        return;
+    }
+    
+    NSDictionary *mesg = [self createMessageContent:@"question"
+                                           andExtra:@{@"content": question}];
     [self.fayeClient sendMessage:mesg onChannel:self.channel];
 }
 
@@ -190,17 +202,20 @@
         return;
     }
     
-    NSUInteger mesType = [((NSNumber *)[messageDict objectForKey:@"mestype"]) integerValue];
+    NSUInteger mesType = [[self.messageTypeDic objectForKey:[messageDict objectForKey:@"messageType"]] integerValue];
+    NSDictionary *mesExtra = [messageDict objectForKey:@"messageExtra"];
+    
     switch (mesType) {
         case 1: // change page
         {
-            NSUInteger pageNum = [((NSNumber *)[messageDict objectForKey:@"pagenum"]) integerValue];
+            NSUInteger pageNum = [((NSNumber *)[mesExtra objectForKey:@"pageNum"]) integerValue];
             [self.delegate gotoPageWithNumDel:pageNum];
         }
             break;
+            
         case 2: // drawing
         {
-            NSString *pStr = [messageDict objectForKey:@"points"];
+            NSString *pStr = [mesExtra objectForKey:@"pointSet"];
             NSArray *value = [pStr componentsSeparatedByString:@" "];
             NSMutableArray *pArray = [[NSMutableArray alloc] init];
             for (int i = 0; i < value.count - 1; i+=2) {
@@ -211,15 +226,17 @@
             [self.delegate didAddPointsFromMasterDel:pArray];
         }
             break;
-        case 3: // clear
-        {
-            [self.delegate didClearFromMasterDel];
-        }
-            break;
-        case 4: // did end touch
-        {
+            
+        case 3: // did end touch
             [self.delegate didEndTouchFromMasterDel];
-        }
+            break;
+            
+        case 4: // clear
+            [self.delegate didClearFromMasterDel];
+            break;
+            
+        case 5: // question
+            break;
         default:
             break;
     }
@@ -298,6 +315,15 @@
 - (void)displayConnectedMessage:(NSString *)message withTitle:(NSString *)title
 {
     [self.delegate displayConnectedMessage:message withTitle:title];
+}
+
+- (NSDictionary *)createMessageContent:(NSString *)action andExtra:(NSDictionary *)extra
+{
+    NSString *curUsername = [SSAppData sharedInstance].currentUser.username;
+    NSDictionary *mesg = @{@"messageType": action,
+                           @"userName": curUsername,
+                           @"messageExtra": extra};
+    return mesg;
 }
 
 @end
