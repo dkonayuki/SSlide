@@ -23,6 +23,7 @@
 @property (strong, nonatomic) SSStreamingManager *streamingManager;
 @property (strong, nonatomic) SSDrawingView *drawingView;
 @property (strong, nonatomic) FUIAlertView *alertView;
+@property (assign, nonatomic) BOOL changedDrawingViewSize;
 
 @end
 
@@ -44,6 +45,7 @@
         BOOL isMaster = self.currentSlide.channel ? NO : YES;
         self.streamingManager = [[SSStreamingManager alloc] initWithSlideshow:self.currentSlide asMaster:isMaster];
         self.streamingManager.delegate = self;
+        self.changedDrawingViewSize = NO;
     }
     return self;
 }
@@ -123,6 +125,34 @@
 - (BOOL)isMasterDel
 {
     return [self.streamingManager isMasterDevice];
+}
+
+- (void)setImageSize:(CGSize)size
+{
+    if (self.changedDrawingViewSize) {
+        return;
+    }
+    
+    float cw = self.drawingView.bounds.size.width;
+    float ch = self.drawingView.bounds.size.height;
+    float cr = cw/ch;
+    float iw = size.height;
+    float ih = size.width;
+    float ir = iw/ih;
+    
+    if (cr > ir) {
+        float nw = ch * ir;
+        float dw = (cw - nw)/2;
+        self.drawingView.frame = CGRectMake(dw, 0, nw, ch);
+        [self.drawingView resetSize];
+    } else if (cr < ir) {
+        float nh = cw / ir;
+        float dh = (ch - nh)/2;
+        self.drawingView.frame = CGRectMake(0, dh, cw, nh);
+        [self.drawingView resetSize];
+    }
+    
+    self.changedDrawingViewSize = YES;
 }
 
 - (void)toogleInfoView

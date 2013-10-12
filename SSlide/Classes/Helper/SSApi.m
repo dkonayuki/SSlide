@@ -209,6 +209,7 @@
     [AFJSONRequestOperation JSONRequestOperationWithRequest:request
                                                     success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
                                                         NSDictionary *dict = (NSDictionary *)JSON;
+                                                        
                                                         NSString *totalSlides = (NSString *)[dict objectForKey:@"total_slides"];
                                                         
                                                         curSlide.totalSlides = [totalSlides integerValue];

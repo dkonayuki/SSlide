@@ -32,6 +32,12 @@
     _vHeight = self.bounds.size.height;
 }
 
+- (void)resetSize
+{
+    _vWidth = self.bounds.size.width;
+    _vHeight = self.bounds.size.height;
+}
+
 - (void)setLineWidth:(CGFloat)lineWidth
 {
     [self.path setLineWidth:lineWidth];

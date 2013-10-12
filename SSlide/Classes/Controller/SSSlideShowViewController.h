@@ -15,6 +15,7 @@
 - (void)showControlView;
 - (void)hideControlView;
 - (void)toogleInfoView;
+- (void)setImageSize:(CGSize)size;
 
 @end
 

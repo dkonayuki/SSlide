@@ -50,7 +50,7 @@
         [AFImageRequestOperation imageRequestOperationWithRequest:request
                                                           success:^(UIImage *image) {
                                                               self.myView.imageView.image = image;
-                                                              //[SVProgressHUD dismiss];
+                                                              [self.delegate setImageSize:image.size];
                                                               [self.myView.loadingSpinner stopAnimating];
                                                           }];
         [operation start];

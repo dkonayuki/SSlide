@@ -20,6 +20,8 @@
 @property (strong, nonatomic) UIColor *lineColor;
 @property (assign, nonatomic) CGFloat lineWidth;
 
+- (void)resetSize;
+
 - (void)drawNewPoints:(NSArray *)points;
 - (void)didEndTouch;
 
