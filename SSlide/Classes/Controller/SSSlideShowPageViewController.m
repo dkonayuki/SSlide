@@ -265,14 +265,18 @@
 
 - (void)clearDrawing
 {
-    //[self.drawingView clear];
-    //[self.streamingManager didClearDrawingView];
-    [self.streamingManager sendQuestion:@"TEST"];
+    [self.drawingView clear];
+    [self.streamingManager didClearDrawingView];
 }
 
 - (BOOL)slideIdDownloaded
 {
     return [self.currentSlide checkIsDownloadedAsNew];
+}
+
+- (void)sendQuestion:(NSString *)question
+{
+    [self.streamingManager sendQuestion:question];
 }
 
 #pragma mark - SSStreamingManagerDelegate

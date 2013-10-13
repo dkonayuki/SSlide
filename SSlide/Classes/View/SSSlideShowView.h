@@ -11,6 +11,7 @@
 @protocol SSSlideShowViewDelegate <SSViewDelegate>
 
 - (void)dismissView;
+- (void)createQuestion:(NSString *)question;
 
 @end
 

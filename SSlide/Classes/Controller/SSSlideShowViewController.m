@@ -93,4 +93,9 @@
     [self.delegate closePopup];
 }
 
+- (void)createQuestion:(NSString *)question
+{
+    [self.delegate sendQuestion:question];
+}
+
 @end

@@ -16,6 +16,7 @@
 - (void)hideControlView;
 - (void)toogleInfoView;
 - (void)setImageSize:(CGSize)size;
+- (void)sendQuestion:(NSString *)question;
 
 @end
 

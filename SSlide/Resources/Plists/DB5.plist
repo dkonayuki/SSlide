@@ -150,6 +150,8 @@
 		<integer>60</integer>
 		<key>tutorial_slide_id</key>
 		<string>27019970</string>
+		<key>question_input_border_color</key>
+		<string>402D28</string>
 	</dict>
 </dict>
 </plist>

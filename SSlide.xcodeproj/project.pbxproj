@@ -93,6 +93,7 @@
 		DCB5A5FD17C4F2C50089809C /* SSUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB5A5FC17C4F2C50089809C /* SSUserViewController.m */; };
 		DCB5A60317C4F7920089809C /* SSSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB5A60217C4F7920089809C /* SSSearchView.m */; };
 		DCB5A60617C4F7A20089809C /* SSUserView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB5A60517C4F7A20089809C /* SSUserView.m */; };
+		DCBE5EB1180AFA0B0050A93F /* SSQuestionInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBE5EB0180AFA0B0050A93F /* SSQuestionInputView.m */; };
 		DCC0BAF917C493ED009FF1FD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCC0BAF817C493ED009FF1FD /* UIKit.framework */; };
 		DCC0BAFB17C493ED009FF1FD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCC0BAFA17C493ED009FF1FD /* Foundation.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		DCC0BAFD17C493ED009FF1FD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCC0BAFC17C493ED009FF1FD /* CoreGraphics.framework */; };
@@ -253,6 +254,8 @@
 		DCB5A60217C4F7920089809C /* SSSearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSSearchView.m; path = Classes/View/SSSearchView.m; sourceTree = "<group>"; };
 		DCB5A60417C4F7A20089809C /* SSUserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSUserView.h; path = Classes/View/SSUserView.h; sourceTree = "<group>"; };
 		DCB5A60517C4F7A20089809C /* SSUserView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSUserView.m; path = Classes/View/SSUserView.m; sourceTree = "<group>"; };
+		DCBE5EAF180AFA0B0050A93F /* SSQuestionInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSQuestionInputView.h; path = Classes/View/SSQuestionInputView.h; sourceTree = "<group>"; };
+		DCBE5EB0180AFA0B0050A93F /* SSQuestionInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSQuestionInputView.m; path = Classes/View/SSQuestionInputView.m; sourceTree = "<group>"; };
 		DCC0BAF517C493ED009FF1FD /* SSlide.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SSlide.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCC0BAF817C493ED009FF1FD /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		DCC0BAFA17C493ED009FF1FD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -590,6 +593,8 @@
 				DC9F48F717DF720400B0EC15 /* SSSearchOptionView.m */,
 				DCD7D9DE17E41D9B00C16A20 /* SSDrawingView.h */,
 				DCD7D9DF17E41D9B00C16A20 /* SSDrawingView.m */,
+				DCBE5EAF180AFA0B0050A93F /* SSQuestionInputView.h */,
+				DCBE5EB0180AFA0B0050A93F /* SSQuestionInputView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -938,6 +943,7 @@
 				DC05A02517C73541000EE26F /* SSAppData.m in Sources */,
 				DC05A02817C73581000EE26F /* SSUser.m in Sources */,
 				DC0C758717C8907000BD9C58 /* SSRootViewController.m in Sources */,
+				DCBE5EB1180AFA0B0050A93F /* SSQuestionInputView.m in Sources */,
 				DCD7D9E017E41D9B00C16A20 /* SSDrawingView.m in Sources */,
 				DC38D0CC17C8ADD10013CAD6 /* SSSlideShowControlView.m in Sources */,
 				DC01E00E17C9CC440096254A /* FayeClient.m in Sources */,
