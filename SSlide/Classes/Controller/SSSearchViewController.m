@@ -161,7 +161,8 @@
 }
 
 - (void)searchStreaming:(NSString *)username completion:(void (^)(void))completed {
-    NSString *requestUrl = [NSString stringWithFormat:@"%@/streaming/search?username=%@", [[SSDB5 theme] stringForKey:@"SS_SERVER_BASE_URL"], username];
+    NSString *requestUrl = [NSString stringWithFormat:@"%@/streaming/search?channel=/%@",
+                            [[SSDB5 theme] stringForKey:@"SS_SERVER_BASE_URL"], username];
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
     
     AFJSONRequestOperation *operation =
@@ -169,40 +170,55 @@
                                                     success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
                                                         [SVProgressHUD dismiss];
                                                         [self.slideDataSource resetDataSource];
-                                                        NSArray *array = (NSArray *)JSON;
-                                                        NSLog(@"result: %d", [array count]);
-                                                        if (array.count == 0) {
+                                                        NSDictionary *dic = (NSDictionary *)JSON;
+                                                        NSString *messType = [dic objectForKey:@"message_type"];
+                                                        
+                                                        if ([messType isEqualToString:@"error"])
+                                                        {
                                                             [SVProgressHUD showSuccessWithStatus:@"No Results!"];
                                                         }
-                                                        for (NSDictionary *result in array) {
-                                                            SSSlideshow *slideshow = [[SSSlideshow alloc] initWithDefaultData];
-                                                            
-                                                            slideshow.username = [result objectForKey:@"username"];
-                                                            slideshow.slideId = [result objectForKey:@"slideId"];
-                                                            slideshow.title = [result objectForKey:@"title"];
-                                                            [slideshow setNormalThumbnailUrl:[result objectForKey:@"thumbnailUrl"]];
-                                                            [slideshow setNormalCreated:[result objectForKey:@"created"]];
-                                                            slideshow.numViews = [((NSNumber *)[result objectForKey:@"numViews"]) intValue];
-                                                            slideshow.numDownloads = [((NSNumber *)[result objectForKey:@"numDownloads"]) intValue];
-                                                            slideshow.numFavorites = [((NSNumber *)[result objectForKey:@"numFavarites"]) intValue];
-                                                            slideshow.totalSlides = [((NSNumber *)[result objectForKey:@"totalSlides"]) intValue];
-                                                            [slideshow setNormalSlideImageBaseurl:[result objectForKey:@"slideImageBaseurl"]];
-                                                            slideshow.slideImageBaseurlSuffix = [result objectForKey:@"slideImageBaseurlSuffix"];
-                                                            slideshow.firstPageImageUrl = [result objectForKey:@"firstPageImageUrl"];
-                                                            slideshow.channel = [result objectForKey:@"channel"];
-                                                            
-                                                            [self.slideDataSource addSlide:slideshow];
+                                                        else
+                                                        {
+                                                            NSArray *array = (NSArray *)[dic objectForKey:@"message_content"];
+                                                            for (NSDictionary *result in array) {
+                                                                SSSlideshow *slideshow = [[SSSlideshow alloc] initWithDefaultData];
+                                                                [self parseSlideData:slideshow andDic:result];
+                                                                [self.slideDataSource addSlide:slideshow];
+                                                            }
                                                         }
+                                                        
                                                         [self.myView.slideListView.slideTableView setContentOffset:CGPointZero animated:NO];
                                                         [self.myView initSlideListView];
                                                         [self.myView.slideListView reloadRowsWithAnimation];
                                                     }
                                                     failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
                                                         [SVProgressHUD dismiss];
-                                                        NSLog(@"Fail");
+                                                        NSLog(@"Fail: %@", error);
                                                     }];
     
     [operation start];
+}
+
+#pragma mark - private
+- (void)parseSlideData:(SSSlideshow *)slideshow andDic:(NSDictionary *)result
+{
+    slideshow.username = [result objectForKey:@"username"];
+    slideshow.slideId = [result objectForKey:@"slideId"];
+    slideshow.title = [result objectForKey:@"title"];
+    [slideshow setNormalThumbnailUrl:[result objectForKey:@"thumbnailUrl"]];
+    [slideshow setNormalCreated:[result objectForKey:@"created"]];
+    slideshow.numViews = [((NSNumber *)[result objectForKey:@"numViews"]) intValue];
+    slideshow.numDownloads = [((NSNumber *)[result objectForKey:@"numDownloads"]) intValue];
+    slideshow.numFavorites = [((NSNumber *)[result objectForKey:@"numFavarites"]) intValue];
+    slideshow.totalSlides = [((NSNumber *)[result objectForKey:@"totalSlides"]) intValue];
+    [slideshow setSlideImageBaseurl:[result objectForKey:@"slideImageBaseurl"]];
+    
+    slideshow.slideImageBaseurlSuffix = [result objectForKey:@"slideImageBaseurlSuffix"];
+    
+    NSString *firstImageUrl = [NSString stringWithFormat:@"%@1%@", slideshow.slideImageBaseurl, slideshow.slideImageBaseurlSuffix];
+    slideshow.firstPageImageUrl = firstImageUrl;
+    
+    slideshow.channel = [result objectForKey:@"channel"];
 }
 
 @end

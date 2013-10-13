@@ -36,7 +36,10 @@
         self.isMaster = isMaster;
         self.isStreaming = NO;
         if (!self.isMaster) {
-            self.channel = self.currentSlide.channel;
+            self.channel = [NSString stringWithFormat:@"%@", self.currentSlide.channel];
+        } else {
+            NSString *curUsername = [SSAppData sharedInstance].currentUser.username;
+            self.channel = [NSString stringWithFormat:@"/%@", curUsername];
         }
         
         self.messageTypeDic = @{@"move": @1,
@@ -83,8 +86,7 @@
         [client postPath:url
               parameters:params
                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                     NSDictionary *dict = (NSDictionary *)responseObject;
-                     NSLog(@"%@", dict);
+                     NSLog(@"OK");
                  }
                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                      NSLog(@"error");
@@ -171,8 +173,8 @@
     else
     {
         title = @"Subscription successful";
-        NSArray *stringArr = [self.channel componentsSeparatedByString:@"/"];
-        mes = [NSString stringWithFormat:@"Your device is now syncing with %@'s device.", [stringArr objectAtIndex:1]];
+        //NSArray *stringArr = [self.channel componentsSeparatedByString:@"/"];
+        mes = [NSString stringWithFormat:@"Your device is now syncing with %@'s device.", self.channel];
     }
     self.isStreaming = YES;
     [SVProgressHUD dismiss];
@@ -198,6 +200,7 @@
 
 - (void)messageReceived:(NSDictionary *)messageDict channel:(NSString *)channel
 {
+    NSLog(@"OK");
     if (self.isMaster) {
         return;
     }
@@ -236,6 +239,10 @@
             break;
             
         case 5: // question
+        {
+            NSString *question = [mesExtra objectForKey:@"content"];
+            NSLog(@"QUESTION : %@", question);
+        }
             break;
         default:
             break;
@@ -271,28 +278,14 @@
         [SVProgressHUD showErrorWithStatus:@"Please login!"];
         return;
     }
-    
-    NSString *curUsername = [SSAppData sharedInstance].currentUser.username;
-    self.channel = [NSString stringWithFormat:@"/%@/%@", curUsername, self.currentSlide.slideId];
-    
+
     AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[[SSDB5 theme] stringForKey:@"SS_SERVER_BASE_URL"]]];
     [client registerHTTPOperationClass:[AFJSONRequestOperation class]];
     [client setDefaultHeader:@"Accept" value:@"application/json"];
     
-    NSString *url = [NSString stringWithFormat:@"streaming/create"];
-    NSDictionary *params = @{@"username": curUsername,
-                             @"channel": self.channel,
-                             @"slideId": self.currentSlide.slideId,
-                             @"title": self.currentSlide.title,
-                             @"thumbnailUrl": self.currentSlide.thumbnailUrl,
-                             @"created": self.currentSlide.created,
-                             @"numViews": [NSNumber numberWithInt:self.currentSlide.numViews],
-                             @"numDownloads": [NSNumber numberWithInt:self.currentSlide.numDownloads],
-                             @"numFavorites": [NSNumber numberWithInt:self.currentSlide.numFavorites],
-                             @"totalSlides": [NSNumber numberWithInt:self.currentSlide.totalSlides],
-                             @"slideImageBaseurl": self.currentSlide.slideImageBaseurl,
-                             @"slideImageBaseurlSuffix": self.currentSlide.slideImageBaseurlSuffix,
-                             @"firstPageImageUrl": self.currentSlide.firstPageImageUrl};
+    NSString *url = [NSString stringWithFormat:@"/streaming/register"];
+    NSDictionary *params = @{@"channel": self.channel,
+                             @"slide_id": self.currentSlide.slideId};
     
     [client postPath:url
           parameters:params
@@ -321,7 +314,7 @@
 {
     NSString *curUsername = [SSAppData sharedInstance].currentUser.username;
     NSDictionary *mesg = @{@"messageType": action,
-                           @"userName": curUsername,
+                           @"messageOwner": curUsername,
                            @"messageExtra": extra};
     return mesg;
 }

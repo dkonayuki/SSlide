@@ -12,6 +12,7 @@
 
 @property (assign, nonatomic) float lastScale;
 @property (assign, nonatomic) BOOL stopPinch;
+@property (strong, nonatomic) UITextView *tmpTextView;
 
 @end
 
@@ -38,6 +39,18 @@
     //self.loadingSpinner.backgroundColor = [UIColor greenSeaColor];
     self.loadingSpinner.frame = CGRectMake(0, self.bounds.size.height - width, width, width);
     [self addSubview:self.loadingSpinner];
+    
+    // long press gesture
+    UILongPressGestureRecognizer *longPressGes = [[UILongPressGestureRecognizer alloc] initWithTarget:self
+                                                                                               action:@selector(longPressGestureAction:)];
+    [self addGestureRecognizer:longPressGes];
+    
+    self.tmpTextView = [[UITextView alloc] init];
+    [self addSubview:self.tmpTextView];
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 }
 
 - (void)pinchGestureAction:(UIPinchGestureRecognizer *)sender
@@ -96,5 +109,38 @@
                          }];
     }
 }
+
+- (void)longPressGestureAction:(UILongPressGestureRecognizer *)sender
+{
+    [self.tmpTextView endEditing:YES];
+    [self.tmpTextView becomeFirstResponder];
+}
+
+#pragma mark Notifications
+
+- (void)keyboardWillShow:(NSNotification *)notification
+{
+//    /* Move the toolbar to above the keyboard */
+//	[UIView beginAnimations:nil context:NULL];
+//	[UIView setAnimationDuration:0.3];
+//	CGRect frame = self.inputToolbar.frame;
+//    frame.origin.y = self.frame.size.width - frame.size.height - kKeyboardHeightLandscape - kStatusBarHeight;
+//	self.inputToolbar.frame = frame;
+//	[UIView commitAnimations];
+//    //keyboardIsVisible = YES;
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification
+{
+//    /* Move the toolbar back to bottom of the screen */
+//	[UIView beginAnimations:nil context:NULL];
+//	[UIView setAnimationDuration:0.3];
+//	CGRect frame = self.inputToolbar.frame;
+//    frame.origin.y = self.frame.size.width - frame.size.height;
+//	self.inputToolbar.frame = frame;
+//	[UIView commitAnimations];
+//    //keyboardIsVisible = NO;
+}
+
 
 @end

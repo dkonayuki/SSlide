@@ -53,6 +53,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationLandscapeRight animated:NO];
+    
 	// Do any additional setup after loading the view.
     self.pageController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationVertical options:nil];
     
@@ -76,6 +78,7 @@
     [super viewWillDisappear:animated];
     [self.streamingManager stopSynchronizing];
     [self.controlView offStreamingBtn];
+    [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationPortrait animated:NO];
 }
 
 #pragma mark - private
@@ -262,8 +265,9 @@
 
 - (void)clearDrawing
 {
-    [self.drawingView clear];
-    [self.streamingManager didClearDrawingView];
+    //[self.drawingView clear];
+    //[self.streamingManager didClearDrawingView];
+    [self.streamingManager sendQuestion:@"TEST"];
 }
 
 - (BOOL)slideIdDownloaded

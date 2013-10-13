@@ -87,6 +87,10 @@
     return nil;
 }
 
+- (BOOL)shouldAutorotate {
+    return NO;
+}
+
 #pragma mark - MNPageViewController delegate
 - (void)mn_pageViewController:(MNPageViewController *)pageViewController willPageToViewController:(SSViewController *)viewController withRatio:(CGFloat)ratio {
     // change alpha of view

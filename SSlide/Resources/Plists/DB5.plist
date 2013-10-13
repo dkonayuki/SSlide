@@ -61,9 +61,9 @@
 		<key>OEMBED_BASE_URL</key>
 		<string>http://www.slideshare.net/api/oembed/2</string>
 		<key>FAYE_BASE_URL</key>
-		<string>ws://133.242.167.91:9292/faye</string>
+		<string>ws://192.168.111.30:9292/faye</string>
 		<key>SS_SERVER_BASE_URL</key>
-		<string>http://133.242.167.91:5689/</string>
+		<string>http://192.168.111.30:3000/</string>
 		<key>API_KEY</key>
 		<string>nzpqg0UU</string>
 		<key>API_SECRET</key>
