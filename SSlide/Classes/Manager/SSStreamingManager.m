@@ -44,9 +44,8 @@
         
         self.messageTypeDic = @{@"move": @1,
                                 @"draw": @2,
-                                @"end_draw": @3,
-                                @"clear": @4,
-                                @"question": @5};
+                                @"clear": @3,
+                                @"question": @4};
     }
     return self;
 }
@@ -123,7 +122,7 @@
         [pStr appendString:[NSString stringWithFormat:@"%.2f %.2f ", p.x, p.y]];
     }
     NSDictionary *mesg = [self createMessageContent:@"draw"
-                                           andExtra:@{@"pointSet": pStr}];
+                                           andExtra:@{@"pointSet": pStr, @"status": @"dragging"}];
     [self.fayeClient sendMessage:mesg onChannel:self.channel];
 }
 
@@ -144,8 +143,8 @@
         return;
     }
     
-    NSDictionary *mesg = [self createMessageContent:@"end_draw"
-                                           andExtra:@{}];
+    NSDictionary *mesg = [self createMessageContent:@"draw"
+                                           andExtra:@{@"status": @"end_dragging"}];
     [self.fayeClient sendMessage:mesg onChannel:self.channel];
 }
 
@@ -200,14 +199,12 @@
 
 - (void)messageReceived:(NSDictionary *)messageDict channel:(NSString *)channel
 {
-    NSLog(@"OK");
     if (self.isMaster) {
         return;
     }
     
     NSUInteger mesType = [[self.messageTypeDic objectForKey:[messageDict objectForKey:@"messageType"]] integerValue];
     NSDictionary *mesExtra = [messageDict objectForKey:@"messageExtra"];
-    
     switch (mesType) {
         case 1: // change page
         {
@@ -218,27 +215,28 @@
             
         case 2: // drawing
         {
-            NSString *pStr = [mesExtra objectForKey:@"pointSet"];
-            NSArray *value = [pStr componentsSeparatedByString:@" "];
-            NSMutableArray *pArray = [[NSMutableArray alloc] init];
-            for (int i = 0; i < value.count - 1; i+=2) {
-                CGPoint p = CGPointMake([[value objectAtIndex:i] floatValue],
-                                         [[value objectAtIndex:i + 1] floatValue]);
-                [pArray addObject:[NSValue valueWithCGPoint:p]];
+            NSString *status = [mesExtra objectForKey:@"status"];
+            if([status isEqualToString:@"dragging"]) {
+                NSString *pStr = [mesExtra objectForKey:@"pointSet"];
+                NSArray *value = [pStr componentsSeparatedByString:@" "];
+                NSMutableArray *pArray = [[NSMutableArray alloc] init];
+                for (int i = 0; i < value.count - 1; i+=2) {
+                    CGPoint p = CGPointMake([[value objectAtIndex:i] floatValue],
+                                            [[value objectAtIndex:i + 1] floatValue]);
+                    [pArray addObject:[NSValue valueWithCGPoint:p]];
+                }
+                [self.delegate didAddPointsFromMasterDel:pArray];
+            } else {
+                [self.delegate didEndTouchFromMasterDel];
             }
-            [self.delegate didAddPointsFromMasterDel:pArray];
         }
             break;
             
-        case 3: // did end touch
-            [self.delegate didEndTouchFromMasterDel];
-            break;
-            
-        case 4: // clear
+        case 3: // clear
             [self.delegate didClearFromMasterDel];
             break;
             
-        case 5: // question
+        case 4: // question
         {
             NSString *question = [mesExtra objectForKey:@"content"];
             NSLog(@"QUESTION : %@", question);
