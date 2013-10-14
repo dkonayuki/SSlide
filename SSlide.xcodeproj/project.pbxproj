@@ -61,6 +61,10 @@
 		DC11050517C6FF0B00833997 /* segmented-separator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC1104F517C6FF0B00833997 /* segmented-separator@2x.png */; };
 		DC11050A17C7036E00833997 /* SSSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC11050917C7036E00833997 /* SSSettingsViewController.m */; };
 		DC18588917E33F3700CDC495 /* SSStreamingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DC18588817E33F3700CDC495 /* SSStreamingManager.m */; };
+		DC2AA39B180C497E0034FA35 /* CENotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2AA398180C497E0034FA35 /* CENotifier.m */; };
+		DC2AA39C180C497F0034FA35 /* CENotifyView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2AA39A180C497E0034FA35 /* CENotifyView.m */; };
+		DC2AA39E180C4B880034FA35 /* user_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DC2AA39D180C4B880034FA35 /* user_icon.png */; };
+		DC2AA3A1180C4EC00034FA35 /* SSQuestionNotificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2AA3A0180C4EC00034FA35 /* SSQuestionNotificationView.m */; };
 		DC2BCF5C17C5AECA00181774 /* SSSlideCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2BCF5B17C5AECA00181774 /* SSSlideCell.m */; };
 		DC2BCF5F17C5DBFE00181774 /* SSSlideShowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2BCF5E17C5DBFE00181774 /* SSSlideShowViewController.m */; };
 		DC2BCF6217C5DC1D00181774 /* SSSlideShowView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2BCF6117C5DC1C00181774 /* SSSlideShowView.m */; };
@@ -201,6 +205,13 @@
 		DC11050917C7036E00833997 /* SSSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSSettingsViewController.m; path = Classes/Controller/SSSettingsViewController.m; sourceTree = "<group>"; };
 		DC18588717E33F3700CDC495 /* SSStreamingManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSStreamingManager.h; path = Classes/Manager/SSStreamingManager.h; sourceTree = "<group>"; };
 		DC18588817E33F3700CDC495 /* SSStreamingManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSStreamingManager.m; path = Classes/Manager/SSStreamingManager.m; sourceTree = "<group>"; };
+		DC2AA397180C497E0034FA35 /* CENotifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CENotifier.h; path = Classes/Utilities/CENotifier.h; sourceTree = "<group>"; };
+		DC2AA398180C497E0034FA35 /* CENotifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CENotifier.m; path = Classes/Utilities/CENotifier.m; sourceTree = "<group>"; };
+		DC2AA399180C497E0034FA35 /* CENotifyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CENotifyView.h; path = Classes/Utilities/CENotifyView.h; sourceTree = "<group>"; };
+		DC2AA39A180C497E0034FA35 /* CENotifyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CENotifyView.m; path = Classes/Utilities/CENotifyView.m; sourceTree = "<group>"; };
+		DC2AA39D180C4B880034FA35 /* user_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = user_icon.png; sourceTree = "<group>"; };
+		DC2AA39F180C4EC00034FA35 /* SSQuestionNotificationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSQuestionNotificationView.h; path = Classes/View/SSQuestionNotificationView.h; sourceTree = "<group>"; };
+		DC2AA3A0180C4EC00034FA35 /* SSQuestionNotificationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSQuestionNotificationView.m; path = Classes/View/SSQuestionNotificationView.m; sourceTree = "<group>"; };
 		DC2BCF5A17C5AECA00181774 /* SSSlideCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSSlideCell.h; path = Classes/View/SSSlideCell.h; sourceTree = "<group>"; };
 		DC2BCF5B17C5AECA00181774 /* SSSlideCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSSlideCell.m; path = Classes/View/SSSlideCell.m; sourceTree = "<group>"; };
 		DC2BCF5D17C5DBFE00181774 /* SSSlideShowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSSlideShowViewController.h; path = Classes/Controller/SSSlideShowViewController.h; sourceTree = "<group>"; };
@@ -421,6 +432,7 @@
 		DC56EECF17CB1DB5005866B2 /* slideshow_screen */ = {
 			isa = PBXGroup;
 			children = (
+				DC2AA39D180C4B880034FA35 /* user_icon.png */,
 				43B4725717CF200000CAD335 /* access_pressed.png */,
 				43B4725817CF200000CAD335 /* access.png */,
 				43B4724317CEE7A400CAD335 /* download_slide_pressed.png */,
@@ -595,6 +607,8 @@
 				DCD7D9DF17E41D9B00C16A20 /* SSDrawingView.m */,
 				DCBE5EAF180AFA0B0050A93F /* SSQuestionInputView.h */,
 				DCBE5EB0180AFA0B0050A93F /* SSQuestionInputView.m */,
+				DC2AA39F180C4EC00034FA35 /* SSQuestionNotificationView.h */,
+				DC2AA3A0180C4EC00034FA35 /* SSQuestionNotificationView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -684,6 +698,10 @@
 		DCC0BB3717C493ED009FF1FD /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				DC2AA397180C497E0034FA35 /* CENotifier.h */,
+				DC2AA398180C497E0034FA35 /* CENotifier.m */,
+				DC2AA399180C497E0034FA35 /* CENotifyView.h */,
+				DC2AA39A180C497E0034FA35 /* CENotifyView.m */,
 				DC3A4A6217CC38CE00133DDF /* MNPageViewController.h */,
 				DC3A4A6317CC38CE00133DDF /* MNPageViewController.m */,
 				DC3A4A6417CC38CE00133DDF /* MNQueuingScrollView.h */,
@@ -855,6 +873,7 @@
 				DC771A1D17E0656B008EE9CC /* bgip5@2x.png in Resources */,
 				43B4725917CF200000CAD335 /* access_pressed.png in Resources */,
 				43B4725A17CF200000CAD335 /* access.png in Resources */,
+				DC2AA39E180C4B880034FA35 /* user_icon.png in Resources */,
 				43B4725D17CF21D900CAD335 /* add.png in Resources */,
 				43B4725E17CF21D900CAD335 /* delete.png in Resources */,
 				43B4726117CF374C00CAD335 /* description.png in Resources */,
@@ -936,12 +955,15 @@
 				DC2BCF5C17C5AECA00181774 /* SSSlideCell.m in Sources */,
 				DC2BCF5F17C5DBFE00181774 /* SSSlideShowViewController.m in Sources */,
 				DC2BCF6217C5DC1D00181774 /* SSSlideShowView.m in Sources */,
+				DC2AA3A1180C4EC00034FA35 /* SSQuestionNotificationView.m in Sources */,
 				DC081B5517C666F800A893C2 /* SSSlideShowPageViewController.m in Sources */,
 				435C124817C731FE001FAA8E /* SSSlideListView.m in Sources */,
+				DC2AA39B180C497E0034FA35 /* CENotifier.m in Sources */,
 				DC11050A17C7036E00833997 /* SSSettingsViewController.m in Sources */,
 				DCD300A117C708F600908CC9 /* SSSettingsView.m in Sources */,
 				DC05A02517C73541000EE26F /* SSAppData.m in Sources */,
 				DC05A02817C73581000EE26F /* SSUser.m in Sources */,
+				DC2AA39C180C497F0034FA35 /* CENotifyView.m in Sources */,
 				DC0C758717C8907000BD9C58 /* SSRootViewController.m in Sources */,
 				DCBE5EB1180AFA0B0050A93F /* SSQuestionInputView.m in Sources */,
 				DCD7D9E017E41D9B00C16A20 /* SSDrawingView.m in Sources */,

@@ -17,12 +17,14 @@
 - (void)didEndTouchFromMasterDel;
 - (void)disconnectedFromServerDel;
 - (void)displayConnectedMessage:(NSString *)mes withTitle:(NSString *)title;
+- (void)didHasNewQuestion:(NSString *)question;
 
 @end
 
 @interface SSStreamingManager : NSObject
 
 @property (weak, nonatomic) id delegate;
+@property (strong, nonatomic) NSMutableArray *questions;
 
 - (id)initWithSlideshow:(SSSlideshow *)curSlide asMaster:(BOOL)isMaster;
 - (void)startSynchronizing;

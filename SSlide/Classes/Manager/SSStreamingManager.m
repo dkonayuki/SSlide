@@ -35,6 +35,7 @@
         self.currentSlide = curSlide;
         self.isMaster = isMaster;
         self.isStreaming = NO;
+        
         if (!self.isMaster) {
             self.channel = [NSString stringWithFormat:@"%@", self.currentSlide.channel];
         } else {
@@ -42,6 +43,7 @@
             self.channel = [NSString stringWithFormat:@"/%@", curUsername];
         }
         
+        self.questions = [[NSMutableArray alloc] init];
         self.messageTypeDic = @{@"move": @1,
                                 @"draw": @2,
                                 @"clear": @3,
@@ -172,7 +174,6 @@
     else
     {
         title = @"Subscription successful";
-        //NSArray *stringArr = [self.channel componentsSeparatedByString:@"/"];
         mes = [NSString stringWithFormat:@"Your device is now syncing with %@'s device.", self.channel];
     }
     self.isStreaming = YES;
@@ -199,15 +200,14 @@
 
 - (void)messageReceived:(NSDictionary *)messageDict channel:(NSString *)channel
 {
-    if (self.isMaster) {
-        return;
-    }
-    
     NSUInteger mesType = [[self.messageTypeDic objectForKey:[messageDict objectForKey:@"messageType"]] integerValue];
     NSDictionary *mesExtra = [messageDict objectForKey:@"messageExtra"];
     switch (mesType) {
         case 1: // change page
         {
+            if (self.isMaster) {
+                return;
+            }
             NSUInteger pageNum = [((NSNumber *)[mesExtra objectForKey:@"pageNum"]) integerValue];
             [self.delegate gotoPageWithNumDel:pageNum];
         }
@@ -215,6 +215,9 @@
             
         case 2: // drawing
         {
+            if (self.isMaster) {
+                return;
+            }
             NSString *status = [mesExtra objectForKey:@"status"];
             if([status isEqualToString:@"dragging"]) {
                 NSString *pStr = [mesExtra objectForKey:@"pointSet"];
@@ -233,13 +236,20 @@
             break;
             
         case 3: // clear
+            if (self.isMaster) {
+                return;
+            }
             [self.delegate didClearFromMasterDel];
             break;
             
         case 4: // question
         {
+            if (!self.isMaster) {
+                return;
+            }
             NSString *question = [mesExtra objectForKey:@"content"];
-            NSLog(@"QUESTION : %@", question);
+            [self.questions addObject:question];
+            [self.delegate didHasNewQuestion:question];
         }
             break;
         default:

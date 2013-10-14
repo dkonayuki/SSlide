@@ -13,6 +13,7 @@
 #import "SSSlideShowInfoView.h"
 #import "SSStreamingManager.h"
 #import "SSDrawingView.h"
+#import "SSQuestionNotificationView.h"
 
 @interface SSSlideShowPageViewController () <SSSlideSHowViewControllerDelegate, SSSlideShowControlViewDelegate, SSStreamingManagerDelegate, SSDrawingViewDelegate>
 
@@ -26,6 +27,8 @@
 @property (strong, nonatomic) FUIAlertView *alertView;
 @property (assign, nonatomic) BOOL changedDrawingViewSize;
 @property (strong, nonatomic) NSMutableDictionary *drawingImages;
+
+@property (strong, nonatomic) SSQuestionNotificationView *questionNotificationView;
 
 @end
 
@@ -123,6 +126,17 @@
     self.infoView.transform = CGAffineTransformMakeRotation(M_PI_2);
     self.infoView.center = CGPointMake(width/2, self.view.center.y);
     self.infoView.alpha = 0.f;
+    
+    // question view
+    float qw = 0.f;
+    float qh = self.view.bounds.size.width;
+    float margin = 50.f;
+    self.questionNotificationView = [[SSQuestionNotificationView alloc] initWithFrame:CGRectMake(0, 0, qw, qh) andDelegate:self];
+    self.questionNotificationView.backgroundColor = [UIColor greenColor];
+    self.questionNotificationView.transform = CGAffineTransformMakeRotation(M_PI_2);
+    self.questionNotificationView.center = CGPointMake(self.view.bounds.size.width - qh/2 - margin, self.view.bounds.size.height - qw/2 - margin);
+    [self.view addSubview:self.questionNotificationView];
+    self.questionNotificationView.hidden = YES;
 }
 
 #pragma mark - SSSlideShowViewControllerDelegate
@@ -251,6 +265,9 @@
 - (void)startStreamingCurrentSlideDel
 {
     [self.streamingManager startSynchronizing];
+    if ([self.streamingManager isMasterDevice]) {
+        self.questionNotificationView.hidden = NO;
+    }
 }
 
 - (void)stopStreamingCurrentSlideDel
@@ -311,6 +328,12 @@
 - (void)didEndTouchFromMasterDel
 {
     [self.drawingView didEndTouch];
+}
+
+- (void)didHasNewQuestion:(NSString *)question
+{
+    int quesNum = [self.streamingManager.questions count];
+    [self.questionNotificationView addNewQuestion:quesNum content:question];
 }
 
 #pragma mark - SSDrawingViewDelegate
