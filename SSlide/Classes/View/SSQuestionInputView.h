@@ -8,8 +8,16 @@
 
 #import "SSView.h"
 
+@protocol SSQuestionInputViewDelegate <SSViewDelegate>
+
+- (void)sendQuestion:(NSString *)question;
+- (void)cancelQuestion;
+
+@end
+
 @interface SSQuestionInputView : SSView
 
-@property (strong, nonatomic) UITextView *questionInputTextView;
+- (void)show;
+- (void)hide;
 
 @end

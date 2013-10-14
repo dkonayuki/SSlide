@@ -12,6 +12,9 @@
 
 - (void)dismissView;
 - (void)createQuestion:(NSString *)question;
+- (void)swipeLeftAction;
+- (void)tapAction;
+- (void)swipeRightAction;
 
 @end
 

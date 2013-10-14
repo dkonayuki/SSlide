@@ -40,7 +40,6 @@
     if ([self.currentSlide checkIsDownloaded]) {
         self.myView.imageView.image = [UIImage imageWithContentsOfFile:[self.currentSlide localUrlOfImageAtPage:self.pageIndex]];
     } else {
-        //[SVProgressHUD showWithStatus:@"Loading"];
         [self.myView.loadingSpinner startAnimating];
         // load image
         NSString *imageUrl = [NSString stringWithFormat:@"%@%d%@", self.currentSlide.slideImageBaseurl, self.pageIndex, self.currentSlide.slideImageBaseurlSuffix];
@@ -55,19 +54,17 @@
                                                           }];
         [operation start];
     }
-    
-    // add swipe gesture to show control view
-    UISwipeGestureRecognizer *swipeLeftRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeLeftAction)];
-    [swipeLeftRecognizer setDirection:UISwipeGestureRecognizerDirectionLeft];
-    [self.myView addGestureRecognizer:swipeLeftRecognizer];
-    
-    UISwipeGestureRecognizer *swipeRightRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeRightAction)];
-    [swipeRightRecognizer setDirection:UISwipeGestureRecognizerDirectionRight];
-    [self.myView addGestureRecognizer:swipeRightRecognizer];
-    
-    //add touch gesture to show info
-    UITapGestureRecognizer *touchRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction)];
-    [self.myView addGestureRecognizer:touchRecognizer];
+}
+
+#pragma mark - SSSlideShowView delegate
+- (void)dismissView
+{
+    [self.delegate closePopup];
+}
+
+- (void)createQuestion:(NSString *)question
+{
+    [self.delegate sendQuestion:question];
 }
 
 - (void)swipeLeftAction
@@ -85,17 +82,6 @@
 {
     NSLog(@"Right swipe");
     [self.delegate hideControlView];
-}
-
-#pragma mark - SSSlideShowView delegate
-- (void)dismissView
-{
-    [self.delegate closePopup];
-}
-
-- (void)createQuestion:(NSString *)question
-{
-    [self.delegate sendQuestion:question];
 }
 
 @end

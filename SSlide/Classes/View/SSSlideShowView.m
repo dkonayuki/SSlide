@@ -8,13 +8,13 @@
 
 #import "SSSlideShowView.h"
 #import <QuartzCore/QuartzCore.h>
+#import "SSQuestionInputView.h"
 
-@interface SSSlideShowView() <UIGestureRecognizerDelegate>
+@interface SSSlideShowView() <UIGestureRecognizerDelegate, SSQuestionInputViewDelegate>
 
 @property (assign, nonatomic) float lastScale;
 @property (assign, nonatomic) BOOL stopPinch;
-@property (strong, nonatomic) UIView *questionInputView;
-@property (strong, nonatomic) UITextView *questionInputTextView;
+@property (strong, nonatomic) SSQuestionInputView *questionInputView;
 @property (assign, nonatomic) BOOL inputViewIsShowing;
 
 @end
@@ -49,39 +49,29 @@
     [self addGestureRecognizer:longPressGes];
     self.inputViewIsShowing = NO;
     
-    float w = IS_IPAD ? 500 : 300;
-    float h = IS_IPAD ? 200 : 100;
-    float cx = self.bounds.size.width - h/2 - 30.f;
+    float w = IS_IPAD ? 600 : 350;
+    float h = IS_IPAD ? 200 : 80;
+    float cx = self.bounds.size.width/2 + h/2 + 10.f;
     float cy = self.center.y;
-    float font_size = IS_IPAD ? 30.f : 20.f;
-    float btnw = h/2;
-    self.questionInputView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, w + btnw, h)];
+    
+    self.questionInputView = [[SSQuestionInputView alloc] initWithFrame:CGRectMake(0, 0, w , h) andDelegate:self];
     self.questionInputView.backgroundColor = [UIColor clearColor];
-    
-    self.questionInputTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, w, h)];
-    self.questionInputTextView.font = [UIFont systemFontOfSize:font_size];
-    self.questionInputTextView.layer.cornerRadius = 5.f;
-    self.questionInputTextView.layer.borderWidth = 2.f;
-    self.questionInputTextView.layer.borderColor = [[SSDB5 theme] colorForKey:@"question_input_border_color"].CGColor;
-    [self.questionInputView addSubview:self.questionInputTextView];
-    
     self.questionInputView.transform = CGAffineTransformMakeRotation(M_PI_2);
     self.questionInputView.center = CGPointMake(cx, cy);
     [self addSubview:self.questionInputView];
     
-    self.questionInputView.hidden = YES;
+    // add swipe gesture to show control view
+    UISwipeGestureRecognizer *swipeLeftRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeLeftAction)];
+    [swipeLeftRecognizer setDirection:UISwipeGestureRecognizerDirectionLeft];
+    [self addGestureRecognizer:swipeLeftRecognizer];
     
-    UIButton *sendButton = [[UIButton alloc] initWithFrame:CGRectMake(w, 0, btnw, btnw)];
-    [sendButton setTitle:@"Send" forState:UIControlStateNormal];
-    [sendButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-    [sendButton addTarget:self action:@selector(sendQuestionButtonPressed) forControlEvents:UIControlEventTouchDown];
-    [self.questionInputView addSubview:sendButton];
+    UISwipeGestureRecognizer *swipeRightRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeRightAction)];
+    [swipeRightRecognizer setDirection:UISwipeGestureRecognizerDirectionRight];
+    [self addGestureRecognizer:swipeRightRecognizer];
     
-    UIButton *cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(w, btnw, btnw, btnw)];
-    [cancelButton setTitle:@"Cancel" forState:UIControlStateNormal];
-    [cancelButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-    [cancelButton addTarget:self action:@selector(cancelQuestionButtonPressed) forControlEvents:UIControlEventTouchDown];
-    [self.questionInputView addSubview:cancelButton];
+    //add touch gesture to show info
+    UITapGestureRecognizer *touchRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction)];
+    [self addGestureRecognizer:touchRecognizer];
 }
 
 - (void)pinchGestureAction:(UIPinchGestureRecognizer *)sender
@@ -148,23 +138,38 @@
     }
     self.inputViewIsShowing = YES;
     
-    self.questionInputView.hidden = NO;
-    [self.questionInputTextView becomeFirstResponder];
+    [self.questionInputView show];
 }
 
-- (void)sendQuestionButtonPressed
+- (void)swipeLeftAction
 {
-    NSLog(@"Send Question");
-    [self.delegate createQuestion:self.questionInputTextView.text];
-    [self cancelQuestionButtonPressed];
+    [self.delegate swipeLeftAction];
 }
 
-- (void)cancelQuestionButtonPressed
+- (void)tapAction
 {
-    self.questionInputView.hidden = YES;
+    [self.delegate tapAction];
+    if (self.inputViewIsShowing) {
+        [self.questionInputView hide];
+        self.inputViewIsShowing = NO;
+    }
+}
+
+- (void)swipeRightAction
+{
+    [self.delegate swipeRightAction];
+}
+
+#pragma mark - SSQuestionInputViewDelegate
+- (void)sendQuestion:(NSString *)question
+{
+    [self.delegate createQuestion:question];
     self.inputViewIsShowing = NO;
-    [self.questionInputTextView resignFirstResponder];
-    NSLog(@"cancel Question");
+}
+
+- (void)cancelQuestion
+{
+    self.inputViewIsShowing = NO;
 }
 
 @end
