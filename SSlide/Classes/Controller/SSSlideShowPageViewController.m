@@ -18,12 +18,14 @@
 
 @property (strong, nonatomic) SSSlideshow *currentSlide;
 @property (assign, nonatomic) NSInteger totalPage;
+@property (assign, nonatomic) NSUInteger curPageNum;
 @property (strong, nonatomic) SSSlideShowControlView *controlView;
 @property (strong, nonatomic) SSSlideShowInfoView *infoView;
 @property (strong, nonatomic) SSStreamingManager *streamingManager;
 @property (strong, nonatomic) SSDrawingView *drawingView;
 @property (strong, nonatomic) FUIAlertView *alertView;
 @property (assign, nonatomic) BOOL changedDrawingViewSize;
+@property (strong, nonatomic) NSMutableDictionary *drawingImages;
 
 @end
 
@@ -46,6 +48,9 @@
         self.streamingManager = [[SSStreamingManager alloc] initWithSlideshow:self.currentSlide asMaster:isMaster];
         self.streamingManager.delegate = self;
         self.changedDrawingViewSize = NO;
+        
+        // drawing images
+        self.drawingImages = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
@@ -84,7 +89,8 @@
 #pragma mark - private
 - (void)initViewController
 {
-    SSSlideShowViewController *initialViewController = [self viewControllerAtIndex:1];
+    self.curPageNum = 1;
+    SSSlideShowViewController *initialViewController = [self viewControllerAtIndex:self.curPageNum];
     NSArray *viewControllers = [NSArray arrayWithObject:initialViewController];
     
     [self.pageController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
@@ -357,9 +363,21 @@
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
 {
     if (completed) {
+        // save drawing image
+        UIImage *preImage = [self.drawingView getCopyDrawingImage];
+        if(preImage) {
+            [self.drawingImages setObject:preImage forKey:[NSNumber numberWithInt:self.curPageNum]];
+        }
+        
+        // change
         SSSlideShowViewController *currentViewController = [[pageViewController viewControllers] lastObject];
-        NSUInteger pageNum = currentViewController.pageIndex;
-        [self.streamingManager gotoPageWithNum:pageNum];
+        self.curPageNum = currentViewController.pageIndex;
+        
+        // reset drawing
+        UIImage *curImage = [self.drawingImages objectForKey:[NSNumber numberWithInt:self.curPageNum]];
+        [self.drawingView resetWithImage:curImage];
+        
+        [self.streamingManager gotoPageWithNum:self.curPageNum];
     }
 }
 

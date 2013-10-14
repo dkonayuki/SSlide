@@ -38,6 +38,24 @@
     _vHeight = self.bounds.size.height;
 }
 
+- (void)resetWithImage:(UIImage *)image
+{
+    if (image) {
+        self.incrementalImage = image;
+        [self drawBitmap];
+        [self setNeedsDisplay];
+        [self.path removeAllPoints];
+        _ctr = 0;
+    } else {
+        [self clear];
+    }
+}
+
+- (UIImage *)getCopyDrawingImage
+{
+    return [self.incrementalImage copy];
+}
+
 - (void)setLineWidth:(CGFloat)lineWidth
 {
     [self.path setLineWidth:lineWidth];

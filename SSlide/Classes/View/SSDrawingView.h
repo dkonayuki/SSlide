@@ -21,6 +21,8 @@
 @property (assign, nonatomic) CGFloat lineWidth;
 
 - (void)resetSize;
+- (void)resetWithImage:(UIImage *)image;
+- (UIImage *)getCopyDrawingImage;
 
 - (void)drawNewPoints:(NSArray *)points;
 - (void)didEndTouch;
