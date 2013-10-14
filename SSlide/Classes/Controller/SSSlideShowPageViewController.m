@@ -305,7 +305,15 @@
 #pragma mark - SSStreamingManagerDelegate
 - (void)gotoPageWithNumDel:(NSUInteger)pageNum
 {
-    [self gotoPage:pageNum];
+    /*
+    if (pageNum == self.curPageNum -1) {
+        
+    } else if (pageNum == self.curPageNum + 1) {
+        
+    } else {
+     */
+        [self gotoPage:pageNum];
+    //}
 }
 
 - (void)didAddPointsFromMasterDel:(NSArray *)points
@@ -376,7 +384,16 @@
 
 - (void)gotoPage:(NSUInteger)pageNum
 {
-    SSSlideShowViewController *curentViewController = [self viewControllerAtIndex:pageNum];
+    UIImage *preImage = [self.drawingView getCopyDrawingImage];
+    if(preImage) {
+        [self.drawingImages setObject:preImage forKey:[NSNumber numberWithInt:self.curPageNum]];
+    }
+    self.curPageNum = pageNum;
+    // reset drawing
+    UIImage *curImage = [self.drawingImages objectForKey:[NSNumber numberWithInt:self.curPageNum]];
+    [self.drawingView resetWithImage:curImage];
+    
+    SSSlideShowViewController *curentViewController = [self viewControllerAtIndex:self.curPageNum];
     NSArray *viewControllers = [NSArray arrayWithObject:curentViewController];
     
     [self.pageController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
