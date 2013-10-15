@@ -97,6 +97,7 @@
 		DCB5A5FD17C4F2C50089809C /* SSUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB5A5FC17C4F2C50089809C /* SSUserViewController.m */; };
 		DCB5A60317C4F7920089809C /* SSSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB5A60217C4F7920089809C /* SSSearchView.m */; };
 		DCB5A60617C4F7A20089809C /* SSUserView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB5A60517C4F7A20089809C /* SSUserView.m */; };
+		DCB94F45180D8110007E7D03 /* SSQuestionListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB94F44180D8110007E7D03 /* SSQuestionListViewController.m */; };
 		DCBE5EB1180AFA0B0050A93F /* SSQuestionInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBE5EB0180AFA0B0050A93F /* SSQuestionInputView.m */; };
 		DCC0BAF917C493ED009FF1FD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCC0BAF817C493ED009FF1FD /* UIKit.framework */; };
 		DCC0BAFB17C493ED009FF1FD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCC0BAFA17C493ED009FF1FD /* Foundation.framework */; settings = {ATTRIBUTES = (Required, ); }; };
@@ -265,6 +266,8 @@
 		DCB5A60217C4F7920089809C /* SSSearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSSearchView.m; path = Classes/View/SSSearchView.m; sourceTree = "<group>"; };
 		DCB5A60417C4F7A20089809C /* SSUserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSUserView.h; path = Classes/View/SSUserView.h; sourceTree = "<group>"; };
 		DCB5A60517C4F7A20089809C /* SSUserView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSUserView.m; path = Classes/View/SSUserView.m; sourceTree = "<group>"; };
+		DCB94F43180D8110007E7D03 /* SSQuestionListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSQuestionListViewController.h; path = Classes/Controller/SSQuestionListViewController.h; sourceTree = "<group>"; };
+		DCB94F44180D8110007E7D03 /* SSQuestionListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSQuestionListViewController.m; path = Classes/Controller/SSQuestionListViewController.m; sourceTree = "<group>"; };
 		DCBE5EAF180AFA0B0050A93F /* SSQuestionInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSQuestionInputView.h; path = Classes/View/SSQuestionInputView.h; sourceTree = "<group>"; };
 		DCBE5EB0180AFA0B0050A93F /* SSQuestionInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSQuestionInputView.m; path = Classes/View/SSQuestionInputView.m; sourceTree = "<group>"; };
 		DCC0BAF517C493ED009FF1FD /* SSlide.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SSlide.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -566,6 +569,8 @@
 				DC11050917C7036E00833997 /* SSSettingsViewController.m */,
 				43B4726217CF3AB500CAD335 /* SSDescriptionViewController.h */,
 				43B4726317CF3AB500CAD335 /* SSDescriptionViewController.m */,
+				DCB94F43180D8110007E7D03 /* SSQuestionListViewController.h */,
+				DCB94F44180D8110007E7D03 /* SSQuestionListViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -959,6 +964,7 @@
 				DC081B5517C666F800A893C2 /* SSSlideShowPageViewController.m in Sources */,
 				435C124817C731FE001FAA8E /* SSSlideListView.m in Sources */,
 				DC2AA39B180C497E0034FA35 /* CENotifier.m in Sources */,
+				DCB94F45180D8110007E7D03 /* SSQuestionListViewController.m in Sources */,
 				DC11050A17C7036E00833997 /* SSSettingsViewController.m in Sources */,
 				DCD300A117C708F600908CC9 /* SSSettingsView.m in Sources */,
 				DC05A02517C73541000EE26F /* SSAppData.m in Sources */,

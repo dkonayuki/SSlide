@@ -46,8 +46,7 @@
         self.questions = [[NSMutableArray alloc] init];
         self.messageTypeDic = @{@"move": @1,
                                 @"draw": @2,
-                                @"clear": @3,
-                                @"question": @4};
+                                @"question": @3};
     }
     return self;
 }
@@ -134,8 +133,8 @@
         return;
     }
     
-    NSDictionary *mesg = [self createMessageContent:@"clear"
-                                           andExtra:@{}];
+    NSDictionary *mesg = [self createMessageContent:@"draw"
+                                           andExtra:@{@"status": @"clear_drawing"}];
     [self.fayeClient sendMessage:mesg onChannel:self.channel];
 }
 
@@ -219,7 +218,8 @@
                 return;
             }
             NSString *status = [mesExtra objectForKey:@"status"];
-            if([status isEqualToString:@"dragging"]) {
+            if([status isEqualToString:@"dragging"])
+            {
                 NSString *pStr = [mesExtra objectForKey:@"pointSet"];
                 NSArray *value = [pStr componentsSeparatedByString:@" "];
                 NSMutableArray *pArray = [[NSMutableArray alloc] init];
@@ -229,20 +229,22 @@
                     [pArray addObject:[NSValue valueWithCGPoint:p]];
                 }
                 [self.delegate didAddPointsFromMasterDel:pArray];
-            } else {
+                return;
+            }
+            
+            if([status isEqualToString:@"end_dragging"])
+            {
                 [self.delegate didEndTouchFromMasterDel];
+            }
+            
+            if([status isEqualToString:@"clear_drawing"])
+            {
+                [self.delegate didClearFromMasterDel];
             }
         }
             break;
             
-        case 3: // clear
-            if (self.isMaster) {
-                return;
-            }
-            [self.delegate didClearFromMasterDel];
-            break;
-            
-        case 4: // question
+        case 3: // question
         {
             if (!self.isMaster) {
                 return;

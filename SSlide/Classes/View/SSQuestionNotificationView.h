@@ -8,8 +8,15 @@
 
 #import "SSView.h"
 
+@protocol SSQuestionNotificationViewDelegate <SSViewDelegate>
+
+- (void)showQuestionList;
+
+@end
+
 @interface SSQuestionNotificationView : SSView
 
+- (void)setNotificationViewHeight:(float)height;
 - (void)addNewQuestion:(NSUInteger)quesNum content:(NSString *)question;
 
 @end

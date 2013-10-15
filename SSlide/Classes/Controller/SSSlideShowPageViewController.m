@@ -14,8 +14,9 @@
 #import "SSStreamingManager.h"
 #import "SSDrawingView.h"
 #import "SSQuestionNotificationView.h"
+#import "SSQuestionListViewController.h"
 
-@interface SSSlideShowPageViewController () <SSSlideSHowViewControllerDelegate, SSSlideShowControlViewDelegate, SSStreamingManagerDelegate, SSDrawingViewDelegate>
+@interface SSSlideShowPageViewController () <SSSlideSHowViewControllerDelegate, SSSlideShowControlViewDelegate, SSStreamingManagerDelegate, SSDrawingViewDelegate, SSQuestionNotificationViewDelegate>
 
 @property (strong, nonatomic) SSSlideshow *currentSlide;
 @property (assign, nonatomic) NSInteger totalPage;
@@ -29,6 +30,7 @@
 @property (strong, nonatomic) NSMutableDictionary *drawingImages;
 
 @property (strong, nonatomic) SSQuestionNotificationView *questionNotificationView;
+@property (strong, nonatomic) UIPopoverController *myPopoverController;
 
 @end
 
@@ -128,15 +130,32 @@
     self.infoView.alpha = 0.f;
     
     // question view
-    float qw = 0.f;
-    float qh = self.view.bounds.size.width;
-    float margin = 50.f;
-    self.questionNotificationView = [[SSQuestionNotificationView alloc] initWithFrame:CGRectMake(0, 0, qw, qh) andDelegate:self];
-    self.questionNotificationView.backgroundColor = [UIColor greenColor];
+    float qw = 50.f;
+    float left_margin = 10.f;
+    float top_margin = 30.f;
+    self.questionNotificationView = [[SSQuestionNotificationView alloc] initWithFrame:CGRectMake(0, 0, qw, qw) andDelegate:self];
+    [self.questionNotificationView setNotificationViewHeight:self.view.bounds.size.width];
+    self.questionNotificationView.backgroundColor = [UIColor clearColor];
     self.questionNotificationView.transform = CGAffineTransformMakeRotation(M_PI_2);
-    self.questionNotificationView.center = CGPointMake(self.view.bounds.size.width - qh/2 - margin, self.view.bounds.size.height - qw/2 - margin);
+    self.questionNotificationView.center = CGPointMake(self.view.bounds.size.width - qw/2 - top_margin,
+                                                       self.view.bounds.size.height - qw/2 - left_margin);
     [self.view addSubview:self.questionNotificationView];
     self.questionNotificationView.hidden = YES;
+}
+
+#pragma mark - SSQuestionNotificationViewDelegate
+- (void)showQuestionList
+{
+    SSQuestionListViewController *questionViewController = [[SSQuestionListViewController alloc] init];
+    [questionViewController setQuestionList:self.streamingManager.questions];
+    
+    self.myPopoverController = [[UIPopoverController alloc] initWithContentViewController:questionViewController];
+    questionViewController.tableView.frame = CGRectMake(0, 0, 250, 600);
+    self.myPopoverController.popoverContentSize = CGSizeMake(250, 600);
+    [self.myPopoverController presentPopoverFromRect:self.questionNotificationView.bounds
+                                              inView:self.questionNotificationView
+                            permittedArrowDirections:UIPopoverArrowDirectionAny
+                                            animated:YES];
 }
 
 #pragma mark - SSSlideShowViewControllerDelegate
