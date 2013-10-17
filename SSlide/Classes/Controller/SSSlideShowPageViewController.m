@@ -64,7 +64,8 @@
 {
     [super viewDidLoad];
     [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationLandscapeRight animated:NO];
-    
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
+
 	// Do any additional setup after loading the view.
     self.pageController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationVertical options:nil];
     
@@ -89,6 +90,7 @@
     [self.streamingManager stopSynchronizing];
     [self.controlView offStreamingBtn];
     [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationPortrait animated:NO];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
 }
 
 #pragma mark - private
@@ -216,6 +218,9 @@
     [UIView animateWithDuration:0.5f
                      animations:^(void) {
                          float cW = IS_IPAD ? [[SSDB5 theme] floatForKey:@"slide_control_view_height_ipad"] : [[SSDB5 theme] floatForKey:@"slide_control_view_height_iphone"];
+                         if(IS_IPHONE && SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+                             cW += 20.f;
+                         }
                          self.controlView.center = CGPointMake(self.view.bounds.size.width - cW/2, self.view.center.y);
                      }
                      completion:^(BOOL finished) {

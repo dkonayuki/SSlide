@@ -9,10 +9,10 @@
 #import "SSDrawingView.h"
 
 @interface SSDrawingView() {
-    CGPoint _pts[5];
-    NSUInteger _ctr;
-    CGFloat _vWidth;
-    CGFloat _vHeight;
+    CGPoint mPts[5];
+    NSUInteger mCtr;
+    CGFloat mWidth;
+    CGFloat mHeight;
 }
 
 @property (strong, nonatomic) UIBezierPath *path;
@@ -28,14 +28,14 @@
     self.backgroundColor = [UIColor clearColor];
     self.path = [UIBezierPath bezierPath];
     
-    _vWidth = self.bounds.size.width;
-    _vHeight = self.bounds.size.height;
+    mWidth = self.bounds.size.width;
+    mHeight = self.bounds.size.height;
 }
 
 - (void)resetSize
 {
-    _vWidth = self.bounds.size.width;
-    _vHeight = self.bounds.size.height;
+    mWidth = self.bounds.size.width;
+    mHeight = self.bounds.size.height;
 }
 
 - (void)resetWithImage:(UIImage *)image
@@ -45,7 +45,7 @@
         [self drawBitmap];
         [self setNeedsDisplay];
         [self.path removeAllPoints];
-        _ctr = 0;
+        mCtr = 0;
     } else {
         [self clear];
     }
@@ -73,7 +73,7 @@
     [self drawBitmap];
     [self setNeedsDisplay];
     [self.path removeAllPoints];
-    _ctr = 0;
+    mCtr = 0;
 }
 
 - (void)drawNewPoints:(NSArray *)points
@@ -83,10 +83,10 @@
     CGPoint p2 = [[points objectAtIndex:2] CGPointValue];
     CGPoint p3 = [[points objectAtIndex:3] CGPointValue];
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.path moveToPoint:CGPointMake(p0.x * _vWidth, p0.y * _vHeight)];
-        [self.path addCurveToPoint:CGPointMake(p3.x * _vWidth, p3.y * _vHeight)
-                     controlPoint1:CGPointMake(p1.x * _vWidth, p1.y * _vHeight)
-                     controlPoint2:CGPointMake(p2.x * _vWidth, p2.y * _vHeight)];
+        [self.path moveToPoint:CGPointMake(p0.x * mWidth, p0.y * mHeight)];
+        [self.path addCurveToPoint:CGPointMake(p3.x * mWidth, p3.y * mHeight)
+                     controlPoint1:CGPointMake(p1.x * mWidth, p1.y * mHeight)
+                     controlPoint2:CGPointMake(p2.x * mWidth, p2.y * mHeight)];
         [self setNeedsDisplay];
     });
 }
@@ -101,34 +101,34 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    _ctr = 0;
+    mCtr = 0;
     UITouch *touch = [touches anyObject];
-    _pts[0] = [touch locationInView:self];
+    mPts[0] = [touch locationInView:self];
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
     UITouch *touch = [touches anyObject];
     CGPoint p = [touch locationInView:self];
-    _ctr++;
-    _pts[_ctr] = p;
-    if (_ctr == 4)
+    mCtr++;
+    mPts[mCtr] = p;
+    if (mCtr == 4)
     {
-        _pts[3] = CGPointMake((_pts[2].x + _pts[4].x)/2.0, (_pts[2].y + _pts[4].y)/2.0);
-        [self.path moveToPoint:_pts[0]];
-        [self.path addCurveToPoint:_pts[3] controlPoint1:_pts[1] controlPoint2:_pts[2]];
+        mPts[3] = CGPointMake((mPts[2].x + mPts[4].x)/2.0, (mPts[2].y + mPts[4].y)/2.0);
+        [self.path moveToPoint:mPts[0]];
+        [self.path addCurveToPoint:mPts[3] controlPoint1:mPts[1] controlPoint2:mPts[2]];
         [self setNeedsDisplay];
         
         NSArray *points = [NSArray arrayWithObjects:
-                           [NSValue valueWithCGPoint:CGPointMake(_pts[0].x/_vWidth, _pts[0].y/_vHeight)],
-                           [NSValue valueWithCGPoint:CGPointMake(_pts[1].x/_vWidth, _pts[1].y/_vHeight)],
-                           [NSValue valueWithCGPoint:CGPointMake(_pts[2].x/_vWidth, _pts[2].y/_vHeight)],
-                           [NSValue valueWithCGPoint:CGPointMake(_pts[3].x/_vWidth, _pts[3].y/_vHeight)], nil];
+                           [NSValue valueWithCGPoint:CGPointMake(mPts[0].x/mWidth, mPts[0].y/mHeight)],
+                           [NSValue valueWithCGPoint:CGPointMake(mPts[1].x/mWidth, mPts[1].y/mHeight)],
+                           [NSValue valueWithCGPoint:CGPointMake(mPts[2].x/mWidth, mPts[2].y/mHeight)],
+                           [NSValue valueWithCGPoint:CGPointMake(mPts[3].x/mWidth, mPts[3].y/mHeight)], nil];
         [self.delegate didAddPointsDel:points];
         
-        _pts[0] = _pts[3];
-        _pts[1] = _pts[4];
-        _ctr = 1;
+        mPts[0] = mPts[3];
+        mPts[1] = mPts[4];
+        mCtr = 1;
     }
 }
 
@@ -137,7 +137,7 @@
     [self drawBitmap];
     [self setNeedsDisplay];
     [self.path removeAllPoints];
-    _ctr = 0;
+    mCtr = 0;
     [self.delegate didEndTouchDel];
 }
 

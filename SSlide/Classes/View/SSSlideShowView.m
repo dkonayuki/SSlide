@@ -50,7 +50,7 @@
     self.inputViewIsShowing = NO;
     
     float w = IS_IPAD ? 600 : 350;
-    float h = IS_IPAD ? 200 : 80;
+    float h = IS_IPAD ? 200 : 70;
     float cx = self.bounds.size.width/2 + h/2 + 10.f;
     float cy = self.center.y;
     
