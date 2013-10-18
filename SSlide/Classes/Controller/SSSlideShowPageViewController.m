@@ -32,6 +32,11 @@
 @property (strong, nonatomic) SSQuestionNotificationView *questionNotificationView;
 @property (strong, nonatomic) UIPopoverController *myPopoverController;
 
+@property (strong, nonatomic) NSMutableDictionary *cachedViewControllerDic;
+@property (assign, nonatomic) NSUInteger minCachedPageNum;
+@property (assign, nonatomic) NSUInteger maxCachedPageNum;
+@property (assign, nonatomic) NSUInteger lastLoadedPageNum;
+
 @end
 
 @implementation SSSlideShowPageViewController
@@ -56,6 +61,10 @@
         
         // drawing images
         self.drawingImages = [[NSMutableDictionary alloc] init];
+        self.cachedViewControllerDic = [[NSMutableDictionary alloc] init];
+        self.minCachedPageNum = 1;
+        self.maxCachedPageNum = 1;
+        self.lastLoadedPageNum = 1;
     }
     return self;
 }
@@ -413,6 +422,8 @@
         [self.drawingImages setObject:preImage forKey:[NSNumber numberWithInt:self.curPageNum]];
     }
     self.curPageNum = pageNum;
+    [self.infoView setPageNumber:self.curPageNum];
+    
     // reset drawing
     UIImage *curImage = [self.drawingImages objectForKey:[NSNumber numberWithInt:self.curPageNum]];
     [self.drawingView resetWithImage:curImage];
@@ -442,14 +453,76 @@
         [self.drawingView resetWithImage:curImage];
         
         [self.streamingManager gotoPageWithNum:self.curPageNum];
+        // set page num
+        [self.infoView setPageNumber:self.curPageNum];
     }
 }
 
 #pragma mark - private
 - (SSSlideShowViewController *)viewControllerAtIndex:(NSUInteger)index
 {
-    SSSlideShowViewController *slideShowViewController = [[SSSlideShowViewController alloc] initWithCurrentSlideshow:self.currentSlide pageIndex:index andDelegate:self];
-    return slideShowViewController;
+    SSSlideShowViewController *targetSlideShowViewController = [self loadViewControllerAtIndex:index];
+    
+    // download around
+    if (index == 1) {
+        while ((self.maxCachedPageNum < 5) && (self.maxCachedPageNum < self.totalPage)) {
+            self.maxCachedPageNum ++;
+            [self loadViewControllerAtIndex:self.maxCachedPageNum];
+        }
+    } else {
+        if (self.lastLoadedPageNum < index)
+        {
+            if((self.maxCachedPageNum <= index + 2) && (self.maxCachedPageNum < self.totalPage)) {
+                // add new max
+                [self loadViewControllerAtIndex:self.maxCachedPageNum + 1];
+                // remove min
+                NSLog(@"REMOVE SLIDE NUM: %d", self.minCachedPageNum);
+                [self.cachedViewControllerDic removeObjectForKey:[NSNumber numberWithInt:self.minCachedPageNum]];
+                self.minCachedPageNum ++;
+                [self logCachedPagenums];
+            }
+        }else {
+            if((self.minCachedPageNum > 1) && (self.minCachedPageNum >= index -2)) {
+                // add new min
+                [self loadViewControllerAtIndex:self.minCachedPageNum - 1];
+                // remove max
+                NSLog(@"REMOVE SLIDE NUM: %d", self.maxCachedPageNum);
+                [self.cachedViewControllerDic removeObjectForKey:[NSNumber numberWithInt:self.maxCachedPageNum]];
+                self.maxCachedPageNum --;
+                [self logCachedPagenums];
+            }
+        }
+    }
+    
+    self.lastLoadedPageNum = index;
+    return targetSlideShowViewController;
+}
+
+- (SSSlideShowViewController *)loadViewControllerAtIndex:(NSUInteger)index
+{
+    SSSlideShowViewController *targetSlideShowViewController = [self.cachedViewControllerDic objectForKey:[NSNumber numberWithInt:index]];
+    if(targetSlideShowViewController == nil) {
+        NSLog(@"LOAD NEW SLIDE NUM: %d", index);
+        targetSlideShowViewController = [[SSSlideShowViewController alloc] initWithCurrentSlideshow:self.currentSlide pageIndex:index andDelegate:self];
+        [self.cachedViewControllerDic setObject:targetSlideShowViewController forKey:[NSNumber numberWithInt:index]];
+        if (self.minCachedPageNum > index) {
+            self.minCachedPageNum = index;
+        }
+        if (self.maxCachedPageNum < index) {
+            self.maxCachedPageNum = index;
+        }
+        [self logCachedPagenums];
+    }
+    return targetSlideShowViewController;
+}
+
+- (void)logCachedPagenums
+{
+    NSMutableString *list = [NSMutableString stringWithString:@"Cached: "];
+    for (NSNumber *pageNum in self.cachedViewControllerDic) {
+        [list appendString:[NSString stringWithFormat:@" %d ", pageNum.intValue]];
+    }
+    NSLog(@"%@", list);
 }
 
 @end
