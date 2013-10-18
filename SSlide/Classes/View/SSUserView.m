@@ -125,12 +125,14 @@
     self.trashView.hidden = YES;
     
     // ad
-    float iadHeight = IS_IPAD ? [[SSDB5 theme] floatForKey:@"iad_height_ipad"] : [[SSDB5 theme] floatForKey:@"iad_height_iphone"];
-    self.adManager = [[SSAdManager alloc] initWithAdFrame:CGRectMake(0,
-                                                                     self.bounds.size.height - iadHeight,
-                                                                     self.bounds.size.width,
-                                                                     iadHeight)];
-    [self addSubview:self.adManager.iAdView];
+    if (SHOW_AD) {
+        float iadHeight = IS_IPAD ? [[SSDB5 theme] floatForKey:@"iad_height_ipad"] : [[SSDB5 theme] floatForKey:@"iad_height_iphone"];
+        self.adManager = [[SSAdManager alloc] initWithAdFrame:CGRectMake(0,
+                                                                         self.bounds.size.height - iadHeight,
+                                                                         self.bounds.size.width,
+                                                                         iadHeight)];
+        [self addSubview:self.adManager.iAdView];
+    }
 }
 
 - (void)refresh
