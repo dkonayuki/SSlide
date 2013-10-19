@@ -104,6 +104,7 @@
 - (void)initViewController
 {
     self.myView = [[SSSlideShowPageView alloc] initWithFrame:self.view.bounds andDelegate:self];
+    [self.myView initSubView:self.currentSlide.title totalPage:self.totalPage];
     self.view = self.myView;
     
     self.curPageNum = 1;
@@ -114,8 +115,9 @@
     
     [self addChildViewController:self.pageController];
     [self.myView addSubview:self.pageController.view];
-    [self.myView initSubView:self.currentSlide.title totalPage:self.totalPage];
     [self.pageController didMoveToParentViewController:self];
+    
+    [self.myView bringAllSubViewToFront];
 }
 
 #pragma mark - SSQuestionNotificationViewDelegate

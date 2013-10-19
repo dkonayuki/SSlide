@@ -69,6 +69,21 @@
     self.questionNotificationView.hidden = YES;
 }
 
+- (void)bringAllSubViewToFront
+{
+    // drawing view
+    [self bringSubviewToFront:self.drawingView];
+    
+    // control view
+    [self bringSubviewToFront:self.controlView];
+    
+    //info view
+    [self bringSubviewToFront:self.infoView];
+    
+    // question view
+    [self bringSubviewToFront:self.questionNotificationView];
+}
+
 #pragma mark - INFO VIEW
 - (void)toogleInfoView
 {
@@ -147,11 +162,13 @@
     if (cr > ir) {
         float nw = ch * ir;
         float dw = (cw - nw)/2;
+        
         self.drawingView.frame = CGRectMake(dw, 0, nw, ch);
         [self.drawingView resetSize];
     } else if (cr < ir) {
         float nh = cw / ir;
         float dh = (ch - nh)/2;
+        
         self.drawingView.frame = CGRectMake(0, dh, cw, nh);
         [self.drawingView resetSize];
     }

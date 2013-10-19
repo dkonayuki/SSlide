@@ -12,6 +12,7 @@
 @interface SSSlideShowPageView : SSView
 
 - (void)initSubView:(NSString *)title totalPage:(NSUInteger)totalPage;
+- (void)bringAllSubViewToFront;
 
 - (void)offStreamingBtn;
 - (void)toogleInfoView;

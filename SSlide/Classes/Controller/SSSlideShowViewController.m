@@ -38,7 +38,9 @@
     self.view = self.myView;
     
     if ([self.currentSlide checkIsDownloaded]) {
-        self.myView.imageView.image = [UIImage imageWithContentsOfFile:[self.currentSlide localUrlOfImageAtPage:self.pageIndex]];
+        UIImage *image = [UIImage imageWithContentsOfFile:[self.currentSlide localUrlOfImageAtPage:self.pageIndex]];
+        self.myView.imageView.image = image;
+        [self.delegate setImageSize:image.size];
     } else {
         [self.myView.loadingSpinner startAnimating];
         // load image
