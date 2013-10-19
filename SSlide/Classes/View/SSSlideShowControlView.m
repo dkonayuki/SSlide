@@ -8,6 +8,7 @@
 
 #import "SSSlideShowControlView.h"
 #import <QuartzCore/QuartzCore.h>
+#import "SSImageHelper.h"
 
 #define NORMAL 0
 #define PRESSED 1
@@ -37,13 +38,12 @@
     
     //streaming button
     self.streamingBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, btnWidth, btnWidth)];
-    //[streamingBtn setTitle:@"Streaming" forState:UIControlStateNormal];
     if ([self.delegate isMasterDel]) {
         [self.streamingBtn setImage:[UIImage imageNamed:@"streaming.png"] forState:UIControlStateNormal];
     } else {
         [self.streamingBtn setImage:[UIImage imageNamed:@"access.png"] forState:UIControlStateNormal];
     }
-    [self.streamingBtn setBackgroundImage:[self imageFromColor:[[SSDB5 theme] colorForKey:@"slideshow_btn_bg"]] forState:UIControlStateNormal];
+    [self.streamingBtn setBackgroundImage:[SSImageHelper imageFromColor:[[SSDB5 theme] colorForKey:@"slideshow_btn_bg"]] forState:UIControlStateNormal];
     [self.streamingBtn addTarget:self action:@selector(streamingBtnPressed:) forControlEvents:UIControlEventTouchDown];
     [self.streamingBtn setImageEdgeInsets:UIEdgeInsetsMake(padding, padding, padding, padding)];
     self.streamingBtn.center = CGPointMake(self.frame.size.width/2 - (btnWidth + margin) * 3/2, self.center.y);
@@ -54,11 +54,11 @@
     [layer setBorderColor:[[SSDB5 theme] colorForKey:@"info_pagenumber_bg_color"].CGColor];
     [layer setBorderWidth:border];
     [self addSubview:self.streamingBtn];
-
+    
     //pen button
     self.penBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, btnWidth, btnWidth)];
     [self.penBtn setImage:[UIImage imageNamed:@"pen.png"] forState:UIControlStateNormal];
-    [self.penBtn setBackgroundImage:[self imageFromColor:[[SSDB5 theme] colorForKey:@"slideshow_btn_bg"]] forState:UIControlStateNormal];
+    [self.penBtn setBackgroundImage:[SSImageHelper imageFromColor:[[SSDB5 theme] colorForKey:@"slideshow_btn_bg"]] forState:UIControlStateNormal];
     [self.penBtn setImageEdgeInsets:UIEdgeInsetsMake(padding, padding, padding, padding)];
     [self.penBtn addTarget:self action:@selector(penBtnPressed:) forControlEvents:UIControlEventTouchDown];
     self.penBtn.center = CGPointMake(self.frame.size.width/2 - (btnWidth + margin)/2, self.center.y);
@@ -69,13 +69,13 @@
     [layer setBorderColor:[[SSDB5 theme] colorForKey:@"info_pagenumber_bg_color"].CGColor];
     [layer setBorderWidth:border];
     [self addSubview:self.penBtn];
-
+    
     //erase button
     self.eraseBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, btnWidth, btnWidth)];
     [self.eraseBtn setImage:[UIImage imageNamed:@"eraser.png"] forState:UIControlStateNormal];
-    [self.eraseBtn setBackgroundImage:[self imageFromColor:[[SSDB5 theme] colorForKey:@"slideshow_btn_bg"]] forState:UIControlStateNormal];
+    [self.eraseBtn setBackgroundImage:[SSImageHelper imageFromColor:[[SSDB5 theme] colorForKey:@"slideshow_btn_bg"]] forState:UIControlStateNormal];
     [self.eraseBtn setImage:[UIImage imageNamed:@"eraser_pressed.png"] forState:UIControlStateHighlighted];
-    [self.eraseBtn setBackgroundImage:[self imageFromColor:[[SSDB5 theme] colorForKey:@"slideshow_btn_bg_pressed"]] forState:UIControlStateHighlighted];
+    [self.eraseBtn setBackgroundImage:[SSImageHelper imageFromColor:[[SSDB5 theme] colorForKey:@"slideshow_btn_bg_pressed"]] forState:UIControlStateHighlighted];
     [self.eraseBtn setImageEdgeInsets:UIEdgeInsetsMake(padding, padding, padding, padding)];
     [self.eraseBtn addTarget:self action:@selector(eraseBtnPressed:) forControlEvents:UIControlEventTouchDown];
     self.eraseBtn.center = CGPointMake(self.frame.size.width/2 + (btnWidth + margin)/2, self.center.y);
@@ -86,7 +86,7 @@
     [layer setBorderColor:[[SSDB5 theme] colorForKey:@"info_pagenumber_bg_color"].CGColor];
     [layer setBorderWidth:border];
     [self addSubview:self.eraseBtn];
-
+    
     // dowload button background
     self.downloadBtnHeight = btnWidth - corner;
     self.downloadBtnBackground = [[UIView alloc] initWithFrame:CGRectMake(0 + corner/2, 0 + corner/2, btnWidth - corner, btnWidth- corner)];
@@ -100,7 +100,7 @@
     //download button
     self.downloadBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, btnWidth, btnWidth)];
     [self.downloadBtn setImage:[UIImage imageNamed:@"download_slide.png"] forState:UIControlStateNormal];
-    [self.downloadBtn setBackgroundImage:[self imageFromColor:[[SSDB5 theme] colorForKey:@"slideshow_btn_bg"]] forState:UIControlStateNormal];
+    [self.downloadBtn setBackgroundImage:[SSImageHelper imageFromColor:[[SSDB5 theme] colorForKey:@"slideshow_btn_bg"]] forState:UIControlStateNormal];
     [self.downloadBtn addTarget:self action:@selector(downloadBtnPressed:) forControlEvents:UIControlEventTouchDown];
     self.downloadBtn.center = CGPointMake(self.frame.size.width/2 + (btnWidth + margin) *3/2, self.center.y);
     //[self.downloadBtn setImageEdgeInsets:UIEdgeInsetsMake(padding, padding, padding, padding)];
@@ -127,14 +127,14 @@
     if (self.penBtn.tag == NORMAL)
     {
         [self.penBtn setImage:[UIImage imageNamed:@"pen_pressed.png"] forState:UIControlStateNormal];
-        [self.penBtn setBackgroundImage:[self imageFromColor:[[SSDB5 theme] colorForKey:@"slideshow_btn_bg_pressed"]] forState:UIControlStateNormal];
+        [self.penBtn setBackgroundImage:[SSImageHelper imageFromColor:[[SSDB5 theme] colorForKey:@"slideshow_btn_bg_pressed"]] forState:UIControlStateNormal];
         self.penBtn.tag = PRESSED;
         [self.delegate startDrawing];
     }
     else
     {
         [self.penBtn setImage:[UIImage imageNamed:@"pen.png"] forState:UIControlStateNormal];
-        [self.penBtn setBackgroundImage:[self imageFromColor:[[SSDB5 theme] colorForKey:@"slideshow_btn_bg"]] forState:UIControlStateNormal];
+        [self.penBtn setBackgroundImage:[SSImageHelper imageFromColor:[[SSDB5 theme] colorForKey:@"slideshow_btn_bg"]] forState:UIControlStateNormal];
         self.penBtn.tag = NORMAL;
         [self.delegate stopDrawing];
     }
@@ -150,9 +150,9 @@
         }
         else
         {
-             [self.streamingBtn setImage:[UIImage imageNamed:@"access_pressed.png"] forState:UIControlStateNormal];
+            [self.streamingBtn setImage:[UIImage imageNamed:@"access_pressed.png"] forState:UIControlStateNormal];
         }
-        [self.streamingBtn setBackgroundImage:[self imageFromColor:[[SSDB5 theme] colorForKey:@"slideshow_btn_bg_pressed"]] forState:UIControlStateNormal];
+        [self.streamingBtn setBackgroundImage:[SSImageHelper imageFromColor:[[SSDB5 theme] colorForKey:@"slideshow_btn_bg_pressed"]] forState:UIControlStateNormal];
         self.streamingBtn.tag = PRESSED;
         [self.delegate startStreamingCurrentSlideDel];
     }
@@ -166,7 +166,7 @@
         {
             [self.streamingBtn setImage:[UIImage imageNamed:@"access.png"] forState:UIControlStateNormal];
         }
-        [self.streamingBtn setBackgroundImage:[self imageFromColor:[[SSDB5 theme] colorForKey:@"slideshow_btn_bg"]] forState:UIControlStateNormal];
+        [self.streamingBtn setBackgroundImage:[SSImageHelper imageFromColor:[[SSDB5 theme] colorForKey:@"slideshow_btn_bg"]] forState:UIControlStateNormal];
         self.streamingBtn.tag = NORMAL;
         [self.delegate stopStreamingCurrentSlideDel];
     }
@@ -177,7 +177,7 @@
     if (self.downloadBtn.tag == NORMAL)
     {
         [self.downloadBtn setImage:[UIImage imageNamed:@"download_slide_pressed.png"] forState:UIControlStateNormal];
-        [self.downloadBtn setBackgroundImage:[self imageFromColor:[UIColor clearColor]] forState:UIControlStateNormal];
+        [self.downloadBtn setBackgroundImage:[SSImageHelper imageFromColor:[UIColor clearColor]] forState:UIControlStateNormal];
         self.downloadBtn.tag = PRESSED;
         [self.delegate downloadCurrentSlideDel];
     } else {
@@ -201,26 +201,15 @@
     self.downloadBtnBackground.backgroundColor = [UIColor whiteColor];
     
     [self.downloadBtn setImage:[UIImage imageNamed:@"download_slide_pressed.png"] forState:UIControlStateNormal];
-    [self.downloadBtn setBackgroundImage:[self imageFromColor:[UIColor clearColor]] forState:UIControlStateNormal];
+    [self.downloadBtn setBackgroundImage:[SSImageHelper imageFromColor:[UIColor clearColor]] forState:UIControlStateNormal];
     self.downloadBtn.tag = PRESSED;
 }
 
 - (void)setDownloadBtnForStateNormal
 {
     [self.downloadBtn setImage:[UIImage imageNamed:@"download_slide.png"] forState:UIControlStateNormal];
-    [self.downloadBtn setBackgroundImage:[self imageFromColor:[[SSDB5 theme] colorForKey:@"slideshow_btn_bg"]] forState:UIControlStateNormal];
+    [self.downloadBtn setBackgroundImage:[SSImageHelper imageFromColor:[[SSDB5 theme] colorForKey:@"slideshow_btn_bg"]] forState:UIControlStateNormal];
     self.downloadBtn.tag = NORMAL;
-}
-
-- (UIImage *) imageFromColor:(UIColor *)color {
-    CGRect rect = CGRectMake(0, 0, 1, 1);
-    UIGraphicsBeginImageContext(rect.size);
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSetFillColorWithColor(context, [color CGColor]);
-    CGContextFillRect(context, rect);
-    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return img;
 }
 
 - (void)setFinishDownload
@@ -235,7 +224,7 @@
     } else {
         [self.streamingBtn setImage:[UIImage imageNamed:@"access.png"] forState:UIControlStateNormal];
     }
-    [self.streamingBtn setBackgroundImage:[self imageFromColor:[[SSDB5 theme] colorForKey:@"slideshow_btn_bg"]] forState:UIControlStateNormal];
+    [self.streamingBtn setBackgroundImage:[SSImageHelper imageFromColor:[[SSDB5 theme] colorForKey:@"slideshow_btn_bg"]] forState:UIControlStateNormal];
     self.streamingBtn.tag = NORMAL;
 }
 

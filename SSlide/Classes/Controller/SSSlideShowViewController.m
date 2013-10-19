@@ -69,7 +69,6 @@
 
 - (void)swipeLeftAction
 {
-    NSLog(@"left swipe");
     [self.delegate showControlView];
 }
 
@@ -80,7 +79,6 @@
 
 - (void)swipeRightAction
 {
-    NSLog(@"Right swipe");
     [self.delegate hideControlView];
 }
 
