@@ -173,16 +173,13 @@
                                                         NSDictionary *dic = (NSDictionary *)JSON;
                                                         NSString *messType = [dic objectForKey:@"message_type"];
                                                         
-                                                        if ([messType isEqualToString:@"error"])
-                                                        {
+                                                        if ([messType isEqualToString:@"error"]) {
                                                             [SVProgressHUD showSuccessWithStatus:@"No Results!"];
-                                                        }
-                                                        else
-                                                        {
+                                                        } else {
                                                             NSArray *array = (NSArray *)[dic objectForKey:@"message_content"];
                                                             for (NSDictionary *result in array) {
                                                                 SSSlideshow *slideshow = [[SSSlideshow alloc] initWithDefaultData];
-                                                                [self parseSlideData:slideshow andDic:result];
+                                                                [slideshow assignDataFromDictionary:result];
                                                                 [self.slideDataSource addSlide:slideshow];
                                                             }
                                                         }
@@ -197,28 +194,6 @@
                                                     }];
     
     [operation start];
-}
-
-#pragma mark - private
-- (void)parseSlideData:(SSSlideshow *)slideshow andDic:(NSDictionary *)result
-{
-    slideshow.username = [result objectForKey:@"username"];
-    slideshow.slideId = [result objectForKey:@"slideId"];
-    slideshow.title = [result objectForKey:@"title"];
-    [slideshow setNormalThumbnailUrl:[result objectForKey:@"thumbnailUrl"]];
-    [slideshow setNormalCreated:[result objectForKey:@"created"]];
-    slideshow.numViews = [((NSNumber *)[result objectForKey:@"numViews"]) intValue];
-    slideshow.numDownloads = [((NSNumber *)[result objectForKey:@"numDownloads"]) intValue];
-    slideshow.numFavorites = [((NSNumber *)[result objectForKey:@"numFavarites"]) intValue];
-    slideshow.totalSlides = [((NSNumber *)[result objectForKey:@"totalSlides"]) intValue];
-    [slideshow setSlideImageBaseurl:[result objectForKey:@"slideImageBaseurl"]];
-    
-    slideshow.slideImageBaseurlSuffix = [result objectForKey:@"slideImageBaseurlSuffix"];
-    
-    NSString *firstImageUrl = [NSString stringWithFormat:@"%@1%@", slideshow.slideImageBaseurl, slideshow.slideImageBaseurlSuffix];
-    slideshow.firstPageImageUrl = firstImageUrl;
-    
-    slideshow.channel = [result objectForKey:@"channel"];
 }
 
 @end

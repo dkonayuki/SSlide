@@ -127,7 +127,6 @@
             [self.searchViewController showDescriptionView];
         }
     }
-    // change alpha of view
 }
 
 @end

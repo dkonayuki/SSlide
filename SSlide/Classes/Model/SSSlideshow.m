@@ -242,4 +242,25 @@
 }
 
 
+- (void)assignDataFromDictionary:(NSDictionary *)dic
+{
+    self.username = [dic objectForKey:@"username"];
+    self.slideId = [dic objectForKey:@"slideId"];
+    self.title = [dic objectForKey:@"title"];
+    [self setNormalThumbnailUrl:[dic objectForKey:@"thumbnailUrl"]];
+    [self setNormalCreated:[dic objectForKey:@"created"]];
+    self.numViews = [((NSNumber *)[dic objectForKey:@"numViews"]) intValue];
+    self.numDownloads = [((NSNumber *)[dic objectForKey:@"numDownloads"]) intValue];
+    self.numFavorites = [((NSNumber *)[dic objectForKey:@"numFavarites"]) intValue];
+    self.totalSlides = [((NSNumber *)[dic objectForKey:@"totalSlides"]) intValue];
+    [self setSlideImageBaseurl:[dic objectForKey:@"slideImageBaseurl"]];
+    
+    self.slideImageBaseurlSuffix = [dic objectForKey:@"slideImageBaseurlSuffix"];
+    
+    NSString *firstImageUrl = [NSString stringWithFormat:@"%@1%@", self.slideImageBaseurl, self.slideImageBaseurlSuffix];
+    self.firstPageImageUrl = firstImageUrl;
+    
+    self.channel = [dic objectForKey:@"channel"];
+}
+
 @end

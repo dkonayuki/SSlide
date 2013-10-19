@@ -27,6 +27,8 @@
 
 - (id)initWithDefaultData;
 
+- (void)assignDataFromDictionary:(NSDictionary *)dic;
+
 - (void)setNormalCreated:(NSString *)created;
 - (void)setNormalThumbnailUrl:(NSString *)thumbnailUrl;
 - (void)setNormalSlideImageBaseurl:(NSString *)slideImageBaseurl;
