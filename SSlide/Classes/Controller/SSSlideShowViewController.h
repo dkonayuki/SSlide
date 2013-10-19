@@ -9,7 +9,7 @@
 #import "SSViewController.h"
 #import "SSSlideshow.h"
 
-@protocol SSSlideSHowViewControllerDelegate <NSObject>
+@protocol SSSlideShowViewControllerDelegate <NSObject>
 
 - (void)closePopup;
 - (void)showControlView;

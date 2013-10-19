@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <FUIButton.h>
+#import <FlatUIKit/FUIAlertView.h>
 #import <FlatUIKit/UIColor+FlatUI.h>
 #import <FlatUIKit/UIFont+FlatUI.h>
 #import <SVProgressHUD/SVProgressHUD.h>

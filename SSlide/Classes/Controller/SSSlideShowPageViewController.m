@@ -9,31 +9,33 @@
 #import "SSSlideShowPageViewController.h"
 #import "SSAppData.h"
 #import "SSApi.h"
+#import "SSQuestionNotificationView.h"
+#import "SSQuestionListViewController.h"
+#import "SSSlidePageCacheManager.h"
+#import "SSSlideShowPageView.h"
 #import "SSSlideShowControlView.h"
 #import "SSSlideShowInfoView.h"
 #import "SSStreamingManager.h"
 #import "SSDrawingView.h"
-#import "SSQuestionNotificationView.h"
-#import "SSQuestionListViewController.h"
-#import "SSSlidePageCacheManager.h"
 
-@interface SSSlideShowPageViewController () <SSSlideSHowViewControllerDelegate, SSSlideShowControlViewDelegate, SSStreamingManagerDelegate, SSDrawingViewDelegate, SSQuestionNotificationViewDelegate>
+@interface SSSlideShowPageViewController () <SSSlideShowViewControllerDelegate,
+                                            SSSlideShowControlViewDelegate,
+                                            SSStreamingManagerDelegate,
+                                            SSDrawingViewDelegate,
+                                            SSQuestionNotificationViewDelegate>
 
 @property (strong, nonatomic) SSSlideshow *currentSlide;
 @property (assign, nonatomic) NSInteger totalPage;
 @property (assign, nonatomic) NSUInteger curPageNum;
-@property (strong, nonatomic) SSSlideShowControlView *controlView;
-@property (strong, nonatomic) SSSlideShowInfoView *infoView;
-@property (strong, nonatomic) SSStreamingManager *streamingManager;
-@property (strong, nonatomic) SSDrawingView *drawingView;
-@property (strong, nonatomic) FUIAlertView *alertView;
+
 @property (assign, nonatomic) BOOL changedDrawingViewSize;
 @property (strong, nonatomic) NSMutableDictionary *drawingImages;
 
-@property (strong, nonatomic) SSQuestionNotificationView *questionNotificationView;
-@property (strong, nonatomic) UIPopoverController *myPopoverController;
-
+@property (strong, nonatomic) SSStreamingManager *streamingManager;
 @property (strong, nonatomic) SSSlidePageCacheManager *slideCacheManager;
+@property (strong, nonatomic) SSSlideShowPageView *myView;
+
+@property (strong, nonatomic) UIPopoverController *myPopoverController;
 
 @end
 
@@ -59,7 +61,7 @@
         
         // drawing images
         self.drawingImages = [[NSMutableDictionary alloc] init];
-        
+        // slide cache manager
         self.slideCacheManager = [[SSSlidePageCacheManager alloc] initWithCurrentSlideshow:self.currentSlide delegate:self  ];
     }
     return self;
@@ -93,7 +95,7 @@
 {
     [super viewWillDisappear:animated];
     [self.streamingManager stopSynchronizing];
-    [self.controlView offStreamingBtn];
+    [self.myView offStreamingBtn];
     [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationPortrait animated:NO];
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
 }
@@ -101,6 +103,9 @@
 #pragma mark - private
 - (void)initViewController
 {
+    self.myView = [[SSSlideShowPageView alloc] initWithFrame:self.view.bounds andDelegate:self];
+    self.view = self.myView;
+    
     self.curPageNum = 1;
     SSSlideShowViewController *initialViewController = [self.slideCacheManager viewControllerAtIndex:self.curPageNum];
     NSArray *viewControllers = [NSArray arrayWithObject:initialViewController];
@@ -108,46 +113,9 @@
     [self.pageController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
     
     [self addChildViewController:self.pageController];
-    [[self view] addSubview:[self.pageController view]];
+    [self.myView addSubview:self.pageController.view];
+    [self.myView initSubView:self.currentSlide.title totalPage:self.totalPage];
     [self.pageController didMoveToParentViewController:self];
-    
-    // drawing view
-    self.drawingView = [[SSDrawingView alloc] initWithFrame:self.view.bounds andDelegate:self];
-    self.drawingView.lineColor = [UIColor orangeColor];
-    float lineWidth = IS_IPAD ? [[SSDB5 theme] floatForKey:@"drawing_pen_width_ipad"] : [[SSDB5 theme] floatForKey:@"drawing_pen_width_iphone"];
-    self.drawingView.lineWidth = lineWidth;
-    [self.view addSubview:self.drawingView];
-    self.drawingView.hidden = YES;
-    
-    // control view
-    float width = IS_IPAD ? [[SSDB5 theme] floatForKey:@"slide_control_view_height_ipad"] : [[SSDB5 theme] floatForKey:@"slide_control_view_height_iphone"];
-    float height = IS_IPAD ? 580.f : 270.f;
-    CGRect rect = CGRectMake(self.view.bounds.size.width - width, 0, height, width);
-    self.controlView = [[SSSlideShowControlView alloc] initWithFrame:rect andDelegate:self];
-    self.controlView.transform = CGAffineTransformMakeRotation(M_PI_2);
-    self.controlView.center = CGPointMake(self.view.bounds.size.width + width/2, self.view.bounds.size.height/2);
-    [self.view addSubview:self.controlView];
-    
-    //info view
-    self.infoView = [[SSSlideShowInfoView alloc] initWithFrame:CGRectMake(0, 0, 100.f, width) andTitle:self.currentSlide.title andTotalPages:self.currentSlide.totalSlides];
-    [self.view addSubview:self.infoView];
-    //[self.infoView sizeToFit];
-    self.infoView.transform = CGAffineTransformMakeRotation(M_PI_2);
-    self.infoView.center = CGPointMake(width/2, self.view.center.y);
-    self.infoView.alpha = 0.f;
-    
-    // question view
-    float qw = 50.f;
-    float left_margin = 10.f;
-    float top_margin = 30.f;
-    self.questionNotificationView = [[SSQuestionNotificationView alloc] initWithFrame:CGRectMake(0, 0, qw, qw) andDelegate:self];
-    [self.questionNotificationView setNotificationViewHeight:self.view.bounds.size.width];
-    self.questionNotificationView.backgroundColor = [UIColor clearColor];
-    self.questionNotificationView.transform = CGAffineTransformMakeRotation(M_PI_2);
-    self.questionNotificationView.center = CGPointMake(self.view.bounds.size.width - qw/2 - top_margin,
-                                                       self.view.bounds.size.height - qw/2 - left_margin);
-    [self.view addSubview:self.questionNotificationView];
-    self.questionNotificationView.hidden = YES;
 }
 
 #pragma mark - SSQuestionNotificationViewDelegate
@@ -159,8 +127,8 @@
     self.myPopoverController = [[UIPopoverController alloc] initWithContentViewController:questionViewController];
     questionViewController.tableView.frame = CGRectMake(0, 0, 250, 600);
     self.myPopoverController.popoverContentSize = CGSizeMake(250, 600);
-    [self.myPopoverController presentPopoverFromRect:self.questionNotificationView.bounds
-                                              inView:self.questionNotificationView
+    [self.myPopoverController presentPopoverFromRect:[self.myView getQuestionNotificationView].bounds
+                                              inView:[self.myView getQuestionNotificationView]
                             permittedArrowDirections:UIPopoverArrowDirectionAny
                                             animated:YES];
 }
@@ -176,74 +144,29 @@
     return [self.streamingManager isMasterDevice];
 }
 
+- (void)toogleInfoView
+{
+    [self.myView toogleInfoView];
+}
+
+- (void)showControlView
+{
+    [self.myView showControlView];
+}
+
+- (void)hideControlView
+{
+    [self.myView hideControlView];
+}
+
 - (void)setImageSize:(CGSize)size
 {
     if (self.changedDrawingViewSize) {
         return;
     }
     
-    float cw = self.drawingView.bounds.size.width;
-    float ch = self.drawingView.bounds.size.height;
-    float cr = cw/ch;
-    float iw = size.height;
-    float ih = size.width;
-    float ir = iw/ih;
-    
-    if (cr > ir) {
-        float nw = ch * ir;
-        float dw = (cw - nw)/2;
-        self.drawingView.frame = CGRectMake(dw, 0, nw, ch);
-        [self.drawingView resetSize];
-    } else if (cr < ir) {
-        float nh = cw / ir;
-        float dh = (ch - nh)/2;
-        self.drawingView.frame = CGRectMake(0, dh, cw, nh);
-        [self.drawingView resetSize];
-    }
-    
+    [self.myView setDrawingViewSize:size];
     self.changedDrawingViewSize = YES;
-}
-
-- (void)toogleInfoView
-{
-    if (self.infoView.alpha == 0) {
-        [UIView animateWithDuration:0.5f animations:^(void) {
-            self.infoView.alpha = 1.0;
-        }];
-    }
-    else {
-        [UIView animateWithDuration:0.5f animations:^(void) {
-            self.infoView.alpha = 0;
-        }];    
-    }
-}
-
-- (void)showControlView
-{
-    [UIView animateWithDuration:0.5f
-                     animations:^(void) {
-                         float cW = IS_IPAD ? [[SSDB5 theme] floatForKey:@"slide_control_view_height_ipad"] : [[SSDB5 theme] floatForKey:@"slide_control_view_height_iphone"];
-                         if(IS_IPHONE && SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
-                             cW += 20.f;
-                         }
-                         self.controlView.center = CGPointMake(self.view.bounds.size.width - cW/2, self.view.center.y);
-                     }
-                     completion:^(BOOL finished) {
-                        
-                     }];
-}
-
-- (void)hideControlView
-{
-    NSLog(@"hide control view");
-    [UIView animateWithDuration:0.35f
-                     animations:^(void) {
-                         float cW = IS_IPAD ? [[SSDB5 theme] floatForKey:@"slide_control_view_height_ipad"] : [[SSDB5 theme] floatForKey:@"slide_control_view_height_iphone"];
-                         self.controlView.center = CGPointMake(self.view.bounds.size.width + cW/2, self.view.center.y);
-                     }
-                     completion:^(BOOL finished) {
-                         
-                     }];
 }
 
 - (void)downloadCurrentSlideDel
@@ -251,11 +174,11 @@
     if (![self.currentSlide checkIsDownloadedAsNew]) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
             [self.currentSlide download:^(float percent) {
-                [self.controlView setDownloadProgress:percent];
+                [self.myView showDownloadProgress:percent];
             } completion:^(BOOL result){
                 [SVProgressHUD showSuccessWithStatus:@"Download completed!"];
                 [self.delegate reloadSlidesListDel];
-                [self.controlView setFinishDownload];
+                [self.myView showDownloadFinished];
                 // reload user page
                 NSNotification *notification = [NSNotification notificationWithName:@"SSDownloadFinish" object:nil];
                 [[NSNotificationCenter defaultCenter] postNotification:notification];
@@ -295,29 +218,29 @@
 {
     [self.streamingManager startSynchronizing];
     if ([self.streamingManager isMasterDevice]) {
-        self.questionNotificationView.hidden = NO;
+        [self.myView showQuestionNotificationView];
     }
 }
 
 - (void)stopStreamingCurrentSlideDel
 {
     [self.streamingManager stopSynchronizing];
-    [self.controlView offStreamingBtn];
+    [self.myView offStreamingBtn];
 }
 
 - (void)startDrawing
 {
-    self.drawingView.hidden = NO;
+    [self.myView showDrawingView:YES];
 }
 
 - (void)stopDrawing
 {
-    self.drawingView.hidden = YES;
+    [self.myView showDrawingView:NO];
 }
 
 - (void)clearDrawing
 {
-    [self.drawingView clear];
+    [self.myView clearDrawing];
     [self.streamingManager didClearDrawingView];
 }
 
@@ -340,29 +263,29 @@
 - (void)didAddPointsFromMasterDel:(NSArray *)points
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^(void) {
-        [self.drawingView drawNewPoints:points];
+        [self.myView drawingNewPoinst:points];
     });
 }
 
 - (void)didClearFromMasterDel
 {
-    [self.drawingView clear];
+    [self.myView clearDrawing];
 }
 
 - (void)disconnectedFromServerDel
 {
-    [self.controlView offStreamingBtn];
+    [self.myView offStreamingBtn];
 }
 
 - (void)didEndTouchFromMasterDel
 {
-    [self.drawingView didEndTouch];
+    [self.myView drawingDidEnd];
 }
 
 - (void)didHasNewQuestion:(NSString *)question
 {
     int quesNum = [self.streamingManager.questions count];
-    [self.questionNotificationView addNewQuestion:quesNum content:question];
+    [self.myView showNewQuestion:quesNum content:question];
 }
 
 #pragma mark - SSDrawingViewDelegate
@@ -405,16 +328,16 @@
 
 - (void)gotoPage:(NSUInteger)pageNum
 {
-    UIImage *preImage = [self.drawingView getCopyDrawingImage];
+    UIImage *preImage = [self.myView getCopyDrawingImage];
     if(preImage) {
         [self.drawingImages setObject:preImage forKey:[NSNumber numberWithInt:self.curPageNum]];
     }
     self.curPageNum = pageNum;
-    [self.infoView setPageNumber:self.curPageNum];
+    [self.myView updateInforView:self.curPageNum];
     
     // reset drawing
     UIImage *curImage = [self.drawingImages objectForKey:[NSNumber numberWithInt:self.curPageNum]];
-    [self.drawingView resetWithImage:curImage];
+    [self.myView resetDrawingViewWithImage:curImage];
     
     SSSlideShowViewController *curentViewController = [self.slideCacheManager viewControllerAtIndex:self.curPageNum];
     NSArray *viewControllers = [NSArray arrayWithObject:curentViewController];
@@ -427,7 +350,7 @@
 {
     if (completed) {
         // save drawing image
-        UIImage *preImage = [self.drawingView getCopyDrawingImage];
+        UIImage *preImage = [self.myView getCopyDrawingImage];
         if(preImage) {
             [self.drawingImages setObject:preImage forKey:[NSNumber numberWithInt:self.curPageNum]];
         }
@@ -438,11 +361,11 @@
         
         // reset drawing
         UIImage *curImage = [self.drawingImages objectForKey:[NSNumber numberWithInt:self.curPageNum]];
-        [self.drawingView resetWithImage:curImage];
+        [self.myView resetDrawingViewWithImage:curImage];
         
         [self.streamingManager gotoPageWithNum:self.curPageNum];
         // set page num
-        [self.infoView setPageNumber:self.curPageNum];
+        [self.myView updateInforView:self.curPageNum];
     }
 }
 
