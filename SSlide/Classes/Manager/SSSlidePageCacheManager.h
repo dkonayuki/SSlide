@@ -7,9 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SSSlideshow.h"
+#import "SSSlideShowViewController.h"
 
 @interface SSSlidePageCacheManager : NSObject
 
-- (id)init;
+@property (weak, nonatomic) id delegate;
+
+- (id)initWithCurrentSlideshow:(SSSlideshow *)currentSlideshow delegate:(id)delegate;
+- (SSSlideShowViewController *)viewControllerAtIndex:(NSUInteger)index;
 
 @end
