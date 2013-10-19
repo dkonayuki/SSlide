@@ -16,7 +16,8 @@
 
 @end
 
-@interface SSSlideShowPageViewController : SSViewController <UIPageViewControllerDataSource, UIPageViewControllerDelegate>
+@interface SSSlideShowPageViewController : SSViewController <UIPageViewControllerDataSource,
+                                                            UIPageViewControllerDelegate>
 
 @property (strong, nonatomic) UIPageViewController *pageController;
 @property (weak, nonatomic) id delegate;

@@ -15,7 +15,10 @@
 #import "SSSettingsViewController.h"
 #import <UIViewController+MJPopupViewController.h>
 
-@interface SSUserViewController () <SSUserViewDelegate, SSSlideListViewDelegate, SSSlideShowPageViewControllerDelegate, SSSettingsViewControllerDelegate>
+@interface SSUserViewController () <SSUserViewDelegate,
+                                    SSSlideListViewDelegate,
+                                    SSSlideShowPageViewControllerDelegate,
+                                    SSSettingsViewControllerDelegate>
 
 @property (strong, nonatomic) SSUserView *myView;
 @property (strong, nonatomic) SSSlideDataSource *slideDataSource;

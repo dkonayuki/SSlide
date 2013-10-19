@@ -334,15 +334,7 @@
 #pragma mark - SSStreamingManagerDelegate
 - (void)gotoPageWithNumDel:(NSUInteger)pageNum
 {
-    /*
-    if (pageNum == self.curPageNum -1) {
-        
-    } else if (pageNum == self.curPageNum + 1) {
-        
-    } else {
-     */
-        [self gotoPage:pageNum];
-    //}
+    [self gotoPage:pageNum];
 }
 
 - (void)didAddPointsFromMasterDel:(NSArray *)points
