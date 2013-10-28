@@ -12,7 +12,6 @@
 #import <FlatUIKit/UIColor+FlatUI.h>
 #import <FlatUIKit/UIFont+FlatUI.h>
 #import <SVProgressHUD/SVProgressHUD.h>
-#import <FLKAutoLayout/FLKAutoLayoutPredicateList.h>
 #import "SSDB5.h"
 
 @protocol SSViewDelegate <NSObject>

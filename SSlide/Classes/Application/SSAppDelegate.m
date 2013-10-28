@@ -8,7 +8,7 @@
 
 #import "SSAppDelegate.h"
 #import "SSAppData.h"
-#import <NewRelicAgent/NewRelicAgent.h>
+//#import <NewRelicAgent/NewRelicAgent.h>
 
 @implementation SSAppDelegate
 
