@@ -18,7 +18,7 @@
         sharedSSAppData = [[SSAppData alloc] init];
         
         // load data
-        NSString *directory = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
+        NSString *directory = [SSAppData getDataDirectory];
         NSFileManager *fileManager = [NSFileManager defaultManager];
         // load user data
         NSString *filePath = [directory stringByAppendingPathComponent:@"SSUserData"];
@@ -42,9 +42,32 @@
     return sharedSSAppData;
 }
 
++ (NSString *)getDataDirectory
+{
+    NSString *directory = [NSHomeDirectory() stringByAppendingPathComponent:@"Library"];
+    NSString *dataDirectory = [directory stringByAppendingPathComponent:@"SSlideData"];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    if (![fileManager fileExistsAtPath:dataDirectory]) {
+        [[NSFileManager defaultManager] createDirectoryAtPath:dataDirectory
+                                  withIntermediateDirectories:NO
+                                                   attributes:nil
+                                                        error:nil];
+        NSURL *url = [NSURL fileURLWithPath:dataDirectory isDirectory:YES];
+        NSError *error = nil;
+        BOOL success = [url setResourceValue:[NSNumber numberWithBool: YES]
+                                      forKey: NSURLIsExcludedFromBackupKey error:&error];
+        if(!success){
+            NSLog(@"Error excluding %@ from backup %@", [url lastPathComponent], error);
+        }
+    }
+    
+    return dataDirectory;
+}
+
 +(void)saveAppData
 {
-    NSString *directory = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
+    NSString *directory = [SSAppData getDataDirectory];
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
     // save user data
@@ -92,7 +115,7 @@
 - (BOOL)deleteDownloadedSlideAtIndex:(NSUInteger)index
 {
     SSSlideshow *willDeleteSlide = [self.downloadedSlides objectAtIndex:index];
-    NSString *directory = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
+    NSString *directory = [SSAppData getDataDirectory];
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
     NSString *folderPath = [directory stringByAppendingPathComponent:[NSString stringWithFormat:@"/%@", willDeleteSlide.slideId]];
@@ -105,6 +128,25 @@
         [SSAppData saveAppData];
         return TRUE;
     }
+}
+
++ (BOOL)addSkipBackupAttributeToItemAtURL:(NSString *)imagePath
+{
+    NSURL *url = [NSURL fileURLWithPath:imagePath isDirectory:NO];
+    assert([[NSFileManager defaultManager] fileExistsAtPath: [url path]]);
+    
+    //NSLog(@"BEFORE resource values for directory: %@", [url resourceValuesForKeys:@[NSURLIsExcludedFromBackupKey, NSURLIsDirectoryKey] error:nil]);
+    
+    NSError *error = nil;
+    BOOL success = [url setResourceValue: [NSNumber numberWithBool: YES]
+                                  forKey: NSURLIsExcludedFromBackupKey error: &error];
+    if(!success){
+        NSLog(@"Error excluding %@ from backup %@", [url lastPathComponent], error);
+    }
+    
+    //NSLog(@"AFTER resource values for directory: %@", [url resourceValuesForKeys:@[NSURLIsExcludedFromBackupKey, NSURLIsDirectoryKey] error:nil]);
+          
+    return success;
 }
 
 @end

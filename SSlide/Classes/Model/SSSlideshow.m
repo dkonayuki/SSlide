@@ -185,7 +185,7 @@
 
 - (void)download:(void (^)(float))progress completion:(void (^)(BOOL))completion
 {
-    NSString *directory = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
+    NSString *directory = [SSAppData getDataDirectory];
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
     NSString *folderPath = [directory stringByAppendingPathComponent:[NSString stringWithFormat:@"/%@", self.slideId]];
@@ -217,6 +217,7 @@
         [AFImageRequestOperation imageRequestOperationWithRequest:request
                                                           success:^(UIImage *image) {
                                                               [UIImagePNGRepresentation(image) writeToFile:filePath atomically:YES];
+                                                              [SSAppData addSkipBackupAttributeToItemAtURL:filePath];
                                                           }];
         [operationsArray addObject:operation];
     }

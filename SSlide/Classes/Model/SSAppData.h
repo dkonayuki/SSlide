@@ -21,6 +21,8 @@
 - (BOOL)deleteDownloadedSlideAtIndex:(NSUInteger)index;
 
 + (SSAppData *)sharedInstance;
++ (NSString *)getDataDirectory;
 + (void)saveAppData;
++ (BOOL)addSkipBackupAttributeToItemAtURL:(NSString *)imagePath;
 
 @end
