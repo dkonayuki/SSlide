@@ -218,7 +218,10 @@
 
 - (void)startStreamingCurrentSlideDel
 {
-    [self.streamingManager startSynchronizing];
+    if(![self.streamingManager startSynchronizing]){
+        [self.myView offStreamingBtn];
+        return;
+    }
     if ([self.streamingManager isMasterDevice]) {
         [self.myView showQuestionNotificationView];
     }

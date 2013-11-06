@@ -27,7 +27,7 @@
 @property (strong, nonatomic) NSMutableArray *questions;
 
 - (id)initWithSlideshow:(SSSlideshow *)curSlide asMaster:(BOOL)isMaster;
-- (void)startSynchronizing;
+- (BOOL)startSynchronizing;
 - (void)stopSynchronizing;
 
 - (BOOL)isMasterDevice;

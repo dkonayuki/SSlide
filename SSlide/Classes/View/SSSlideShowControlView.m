@@ -144,29 +144,21 @@
 {
     if (self.streamingBtn.tag == NORMAL)
     {
-        if ([self.delegate isMasterDel])
-        {
-            [self.streamingBtn setImage:[UIImage imageNamed:@"streaming_pressed.png"] forState:UIControlStateNormal];
-        }
-        else
-        {
-            [self.streamingBtn setImage:[UIImage imageNamed:@"access_pressed.png"] forState:UIControlStateNormal];
-        }
-        [self.streamingBtn setBackgroundImage:[SSImageHelper imageFromColor:[[SSDB5 theme] colorForKey:@"slideshow_btn_bg_pressed"]] forState:UIControlStateNormal];
+        [self.streamingBtn setImage:[UIImage imageNamed:
+                                     [self.delegate isMasterDel] ? @"streaming_pressed.png" : @"access_pressed.png"]
+                           forState:UIControlStateNormal];
+        [self.streamingBtn setBackgroundImage:[SSImageHelper imageFromColor:[[SSDB5 theme] colorForKey:@"slideshow_btn_bg_pressed"]]
+                                     forState:UIControlStateNormal];
         self.streamingBtn.tag = PRESSED;
         [self.delegate startStreamingCurrentSlideDel];
     }
     else
     {
-        if ([self.delegate isMasterDel])
-        {
-            [self.streamingBtn setImage:[UIImage imageNamed:@"streaming.png"] forState:UIControlStateNormal];
-        }
-        else
-        {
-            [self.streamingBtn setImage:[UIImage imageNamed:@"access.png"] forState:UIControlStateNormal];
-        }
-        [self.streamingBtn setBackgroundImage:[SSImageHelper imageFromColor:[[SSDB5 theme] colorForKey:@"slideshow_btn_bg"]] forState:UIControlStateNormal];
+        [self.streamingBtn setImage:[UIImage imageNamed:
+                                         [self.delegate isMasterDel] ? @"streaming.png" : @"access.png"]
+                               forState:UIControlStateNormal];
+        [self.streamingBtn setBackgroundImage:[SSImageHelper imageFromColor:[[SSDB5 theme] colorForKey:@"slideshow_btn_bg"]]
+                                     forState:UIControlStateNormal];
         self.streamingBtn.tag = NORMAL;
         [self.delegate stopStreamingCurrentSlideDel];
     }

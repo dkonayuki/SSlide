@@ -281,12 +281,12 @@
 }
 
 #pragma mark - private
-- (void)startStreaming
+- (BOOL)startStreaming
 {
     // checklogin
     if (![[SSAppData sharedInstance] isLogined]) {
         [SVProgressHUD showErrorWithStatus:@"Please login!"];
-        return;
+        return false;
     }
 
     AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[[SSDB5 theme] stringForKey:@"SS_SERVER_BASE_URL"]]];
@@ -305,6 +305,7 @@
              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                  [SVProgressHUD showErrorWithStatus:@"Error!"];
              }];
+    return true;
 }
 
 - (void)startFaye
