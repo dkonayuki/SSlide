@@ -15,6 +15,7 @@
 - (void)swipeLeftAction;
 - (void)tapAction;
 - (void)swipeRightAction;
+- (BOOL)isStreamingAsClient;
 
 @end
 

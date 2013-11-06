@@ -17,6 +17,7 @@
 - (void)toogleInfoView;
 - (void)setImageSize:(CGSize)size;
 - (void)sendQuestion:(NSString *)question;
+- (BOOL)isStreamingAsClient;
 
 @end
 

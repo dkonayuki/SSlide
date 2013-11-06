@@ -31,6 +31,7 @@
 - (void)stopSynchronizing;
 
 - (BOOL)isMasterDevice;
+- (BOOL)isStreamingAsClient;
 
 - (void)gotoPageWithNum:(NSUInteger)pageNum;
 - (void)didAddPointsInDrawingView:(NSArray *)points;

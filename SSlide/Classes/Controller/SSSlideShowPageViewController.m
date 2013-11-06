@@ -150,6 +150,11 @@
     return [self.streamingManager isMasterDevice];
 }
 
+- (BOOL)isStreamingAsClient
+{
+    return [self.streamingManager isStreamingAsClient];
+}
+
 - (void)toogleInfoView
 {
     [self.myView toogleInfoView];

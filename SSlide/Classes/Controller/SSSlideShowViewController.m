@@ -84,4 +84,9 @@
     [self.delegate hideControlView];
 }
 
+- (BOOL)isStreamingAsClient
+{
+    return [self.delegate isStreamingAsClient];
+}
+
 @end

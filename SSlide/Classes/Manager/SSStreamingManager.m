@@ -160,6 +160,11 @@
     [self.fayeClient sendMessage:mesg onChannel:self.channel];
 }
 
+- (BOOL)isStreamingAsClient
+{
+    return self.isStreaming && (!self.isMaster);
+}
+
 #pragma mark - Faye Client Delegate
 - (void)connectedToServer
 {

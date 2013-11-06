@@ -133,11 +133,11 @@
 
 - (void)longPressGestureAction:(UILongPressGestureRecognizer *)sender
 {
-    if (self.inputViewIsShowing) {
+    if (self.inputViewIsShowing || (![self.delegate isStreamingAsClient])) {
         return;
     }
-    self.inputViewIsShowing = YES;
     
+    self.inputViewIsShowing = YES;
     [self.questionInputView show];
 }
 
