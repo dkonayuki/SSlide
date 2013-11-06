@@ -105,11 +105,21 @@
 
 - (void)setCreated:(NSString *)created
 {
-    NSArray *comp = [created componentsSeparatedByString:@" "];
-    NSString *date = [comp objectAtIndex:2];
-    NSString *month = [comp objectAtIndex:1];
-    NSString *year = [comp objectAtIndex:5];
-    mCreated = [NSString stringWithFormat:@"%@ %@ %@", date, month, year];
+    if([created rangeOfString:@"UTC"].location != NSNotFound) {
+        NSArray *comp = [created componentsSeparatedByString:@" "];
+        NSString *d = [comp objectAtIndex:0];
+        comp = [d componentsSeparatedByString:@"-"];
+        NSString *date = [comp objectAtIndex:2];
+        NSString *month = [comp objectAtIndex:1];
+        NSString *year = [comp objectAtIndex:0];
+        mCreated = [NSString stringWithFormat:@"%@ %@ %@", date, month, year];
+    } else {
+        NSArray *comp = [created componentsSeparatedByString:@" "];
+        NSString *date = [comp objectAtIndex:2];
+        NSString *month = [comp objectAtIndex:1];
+        NSString *year = [comp objectAtIndex:5];
+        mCreated = [NSString stringWithFormat:@"%@ %@ %@", date, month, year];
+    }
 }
 
 - (void)setSlideImageBaseurl:(NSString *)slideImageBaseurl
