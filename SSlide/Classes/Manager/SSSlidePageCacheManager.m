@@ -8,6 +8,8 @@
 
 #import "SSSlidePageCacheManager.h"
 
+#define PRE_CACHE_NUM 3
+
 @interface SSSlidePageCacheManager()
 
 @property (strong, nonatomic) NSMutableDictionary *cachedViewControllerDic;
@@ -41,32 +43,31 @@
     
     // download around
     if (index == 1) {
-        while ((self.maxCachedPageNum < 5) && (self.maxCachedPageNum < self.totalPage)) {
+        while ((self.maxCachedPageNum <= PRE_CACHE_NUM) && (self.maxCachedPageNum < self.totalPage)) {
             self.maxCachedPageNum ++;
             [self loadViewControllerAtIndex:self.maxCachedPageNum];
         }
     } else {
         if (self.lastLoadedPageNum < index)
         {
-            if((self.maxCachedPageNum <= index + 2) && (self.maxCachedPageNum < self.totalPage)) {
-                // add new max
+            // add new max
+            if((self.maxCachedPageNum <= (index + PRE_CACHE_NUM - 1)) && (self.maxCachedPageNum < self.totalPage)) {
                 [self loadViewControllerAtIndex:self.maxCachedPageNum + 1];
+            }
+            if(self.minCachedPageNum < index -1) {
                 // remove min
                 NSLog(@"REMOVE SLIDE NUM: %d", self.minCachedPageNum);
                 [self.cachedViewControllerDic removeObjectForKey:[NSNumber numberWithInt:self.minCachedPageNum]];
                 self.minCachedPageNum ++;
-                [self logCachedPagenums];
             }
-        }else {
-            if((self.minCachedPageNum > 1) && (self.minCachedPageNum >= index -2)) {
-                // add new min
-                [self loadViewControllerAtIndex:self.minCachedPageNum - 1];
-                // remove max
-                NSLog(@"REMOVE SLIDE NUM: %d", self.maxCachedPageNum);
-                [self.cachedViewControllerDic removeObjectForKey:[NSNumber numberWithInt:self.maxCachedPageNum]];
-                self.maxCachedPageNum --;
-                [self logCachedPagenums];
-            }
+            [self logCachedPagenums];
+        }
+        else if(self.maxCachedPageNum > (index + PRE_CACHE_NUM)) {
+            // remove max
+            NSLog(@"REMOVE SLIDE NUM: %d", self.maxCachedPageNum);
+            [self.cachedViewControllerDic removeObjectForKey:[NSNumber numberWithInt:self.maxCachedPageNum]];
+            self.maxCachedPageNum --;
+            [self logCachedPagenums];
         }
     }
     

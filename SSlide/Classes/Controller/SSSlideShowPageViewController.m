@@ -126,13 +126,17 @@
     SSQuestionListViewController *questionViewController = [[SSQuestionListViewController alloc] init];
     [questionViewController setQuestionList:self.streamingManager.questions];
     
-    self.myPopoverController = [[UIPopoverController alloc] initWithContentViewController:questionViewController];
-    questionViewController.tableView.frame = CGRectMake(0, 0, 250, 600);
-    self.myPopoverController.popoverContentSize = CGSizeMake(250, 600);
-    [self.myPopoverController presentPopoverFromRect:[self.myView getQuestionNotificationView].bounds
-                                              inView:[self.myView getQuestionNotificationView]
-                            permittedArrowDirections:UIPopoverArrowDirectionAny
-                                            animated:YES];
+    if(IS_IPAD) {
+        self.myPopoverController = [[UIPopoverController alloc] initWithContentViewController:questionViewController];
+        questionViewController.tableView.frame = CGRectMake(0, 0, 250, 600);
+        self.myPopoverController.popoverContentSize = CGSizeMake(250, 600);
+        [self.myPopoverController presentPopoverFromRect:[self.myView getQuestionNotificationView].bounds
+                                                  inView:[self.myView getQuestionNotificationView]
+                                permittedArrowDirections:UIPopoverArrowDirectionAny
+                                                animated:YES];
+    } else {
+        [SVProgressHUD showErrorWithStatus:@"Only supported on iPad"];
+    }
 }
 
 #pragma mark - SSSlideShowViewControllerDelegate

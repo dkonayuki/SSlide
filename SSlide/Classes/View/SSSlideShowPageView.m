@@ -55,9 +55,9 @@
     self.infoView.alpha = 0.f;
     
     // question view
-    float qw = 50.f;
-    float left_margin = 10.f;
-    float top_margin = 30.f;
+    float qw = IS_IPAD ? 50.f : 25.f;
+    float left_margin = IS_IPAD ? 10.f : 5.f;
+    float top_margin = IS_IPAD ? 30.f : 25.f;
     self.questionNotificationView = [[SSQuestionNotificationView alloc] initWithFrame:CGRectMake(0, 0, qw, qw)
                                                                           andDelegate:self.delegate];
     [self.questionNotificationView setNotificationViewHeight:self.bounds.size.width];
