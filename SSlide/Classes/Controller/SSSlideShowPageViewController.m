@@ -233,9 +233,9 @@
         [self.myView offStreamingBtn];
         return;
     }
-    if ([self.streamingManager isMasterDevice]) {
-        [self.myView showQuestionNotificationView];
-    }
+    //if ([self.streamingManager isMasterDevice]) {
+    [self.myView showQuestionNotificationView];
+    //}
 }
 
 - (void)stopStreamingCurrentSlideDel

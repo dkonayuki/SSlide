@@ -340,6 +340,9 @@
              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                  [SVProgressHUD showErrorWithStatus:@"Error!"];
              }];
+    
+    [self pullQuestions:self.currentSlide.slideId];
+    
     return true;
 }
 
@@ -363,6 +366,39 @@
                            @"messageOwner": curUsername,
                            @"messageExtra": extra};
     return mesg;
+}
+
+- (void)pullQuestions:(NSString *)slideId
+{
+    NSString *requestUrl = [NSString stringWithFormat:@"%@/%@/question/all",
+                            [[SSDB5 theme] stringForKey:@"SS_SERVER_BASE_URL"], slideId];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
+    
+    AFJSONRequestOperation *operation =
+    [AFJSONRequestOperation JSONRequestOperationWithRequest:request
+                                                    success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+                                                        [SVProgressHUD dismiss];
+                                                        
+                                                        NSArray *questionList = (NSArray *)JSON;
+                                                        
+                                                        for (NSDictionary *ques in questionList) {
+                                                            NSUInteger pageNum = [[ques objectForKey:@"pageNum"] integerValue];
+                                                            NSUInteger voteNum = [[ques objectForKey:@"voteNum"] integerValue];
+                                                            SSQuestion *newQues = [[SSQuestion alloc] initWith:[ques objectForKey:@"questionId"]
+                                                                                                       content:[ques objectForKey:@"content"]
+                                                                                                       pagenum:pageNum
+                                                                                                       voteNum:voteNum];
+                                                            [self.questions addObject:newQues];
+                                                        }
+                                                        [self.delegate didHasNewQuestion:@""];
+                                                        
+                                                    }
+                                                    failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+                                                        [SVProgressHUD dismiss];
+                                                        NSLog(@"Fail: %@", error);
+                                                    }];
+    
+    [operation start];
 }
 
 @end

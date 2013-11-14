@@ -40,6 +40,10 @@
 - (void)addNewQuestion:(NSUInteger)quesNum content:(NSString *)question
 {
     [self.badgeButton setTitle:[NSString stringWithFormat:@"%d", quesNum] forState:UIControlStateNormal];
+    if ([question length] <= 0) {
+        return;
+    }
+    
     NSString *title = [NSString stringWithFormat:@"Question #%d", quesNum];
     [CENotifier displayInView:self.quesNotificationView
                      imageurl:nil

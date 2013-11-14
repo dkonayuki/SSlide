@@ -10,9 +10,12 @@
 
 @interface SSQuestion : NSObject
 
+@property (copy, nonatomic) NSString *questionId;
 @property (copy, nonatomic) NSString *content;
 @property (assign, nonatomic) NSUInteger pageNum;
+@property (assign, nonatomic) NSUInteger voteNum;
 
 - (id)initWith:(NSString *)content pagenum:(NSUInteger)pagenum;
+- (id)initWith:(NSString *)quesId content:(NSString *)content pagenum:(NSUInteger)pagenum voteNum:(NSUInteger)voteNum;
 
 @end
