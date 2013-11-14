@@ -150,7 +150,7 @@
     [self.fayeClient sendMessage:mesg onChannel:self.channel];
 }
 
-- (void)sendQuestion:(NSString *)question atPage:(NSUInteger)pagenum
+- (void)sendQuestion:(NSString *)question atPage:(NSUInteger)pagenum slideId:(NSString *)slideId
 {
     if (self.isMaster || !self.isStreaming) {
         return;
@@ -159,6 +159,32 @@
     NSDictionary *mesg = [self createMessageContent:@"question"
                                            andExtra:@{@"content": question, @"pageNum": [NSNumber numberWithInt:pagenum]}];
     [self.fayeClient sendMessage:mesg onChannel:self.channel];
+    
+    [self postQuestion:question atPage:pagenum slideId:slideId];
+}
+
+- (void)postQuestion:(NSString *)question atPage:(NSUInteger)pagenum slideId:(NSString *)slideId
+{
+    // post to server
+    AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[[SSDB5 theme] stringForKey:@"SS_SERVER_BASE_URL"]]];
+    [client registerHTTPOperationClass:[AFJSONRequestOperation class]];
+    [client setDefaultHeader:@"Accept" value:@"application/json"];
+    
+    
+    NSString *url = [NSString stringWithFormat:@"/question/ask_post"];
+    NSDictionary *params = @{@"slide-id": slideId,
+                             @"slide-page-num": [NSNumber numberWithInt:pagenum],
+                             @"question-content": question};
+    
+    [client postPath:url
+          parameters:params
+             success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                 NSLog(@"Post Question OK");
+             }
+             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                 NSLog(@"error: %@", error);
+                 [SVProgressHUD showErrorWithStatus:@"Error!"];
+             }];
 }
 
 - (BOOL)isStreamingAsClient

@@ -267,7 +267,7 @@
 
 - (void)sendQuestion:(NSString *)question
 {
-    [self.streamingManager sendQuestion:question atPage:self.curPageNum];
+    [self.streamingManager sendQuestion:question atPage:self.curPageNum slideId:self.currentSlide.slideId];
 }
 
 #pragma mark - SSStreamingManagerDelegate
