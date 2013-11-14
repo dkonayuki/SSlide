@@ -157,7 +157,7 @@
     }
     
     NSDictionary *mesg = [self createMessageContent:@"question"
-                                           andExtra:@{@"content": question, @"slide-page-num": [NSNumber numberWithInt:pagenum]}];
+                                           andExtra:@{@"content": question, @"pageNum": [NSNumber numberWithInt:pagenum]}];
     [self.fayeClient sendMessage:mesg onChannel:self.channel];
 }
 
@@ -256,7 +256,7 @@
                 return;
             }
             NSString *content = [mesExtra objectForKey:@"content"];
-            NSUInteger page =[((NSNumber *)[mesExtra objectForKey:@"slide-page-num"]) integerValue];
+            NSUInteger page =[((NSNumber *)[mesExtra objectForKey:@"pageNum"]) integerValue];
             SSQuestion *question = [[SSQuestion alloc] initWith:content
                                                         pagenum:page];
             [self.questions addObject:question];
