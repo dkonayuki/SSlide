@@ -65,7 +65,7 @@
 		<key>FAYE_BASE_URL</key>
 		<string>ws://133.242.167.91:9292/faye</string>
 		<key>SS_SERVER_BASE_URL</key>
-		<string>http://133.242.167.91:3000/</string>
+		<string>http://sslide.net</string>
 		<key>API_KEY</key>
 		<string>nzpqg0UU</string>
 		<key>API_SECRET</key>
