@@ -40,6 +40,7 @@
 		43B4726117CF374C00CAD335 /* description.png in Resources */ = {isa = PBXBuildFile; fileRef = 43B4726017CF374C00CAD335 /* description.png */; };
 		43B4726417CF3AB500CAD335 /* SSDescriptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 43B4726317CF3AB500CAD335 /* SSDescriptionViewController.m */; };
 		8686E4B71834F8EB00D90890 /* SSQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 8686E4B61834F8EB00D90890 /* SSQuestion.m */; };
+		869604311835283400ADBF08 /* SSQuestionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 869604301835283400ADBF08 /* SSQuestionViewCell.m */; };
 		DC01E00E17C9CC440096254A /* FayeClient.m in Sources */ = {isa = PBXBuildFile; fileRef = DC01E00517C9CC440096254A /* FayeClient.m */; };
 		DC01E00F17C9CC440096254A /* FayeMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = DC01E00717C9CC440096254A /* FayeMessage.m */; };
 		DC01E01017C9CC440096254A /* NSObject+PropertySupport.m in Sources */ = {isa = PBXBuildFile; fileRef = DC01E00917C9CC440096254A /* NSObject+PropertySupport.m */; };
@@ -171,6 +172,8 @@
 		7E2702BF3BD1401A8049CA77 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8686E4B51834F8EB00D90890 /* SSQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSQuestion.h; path = Classes/Model/SSQuestion.h; sourceTree = "<group>"; };
 		8686E4B61834F8EB00D90890 /* SSQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSQuestion.m; path = Classes/Model/SSQuestion.m; sourceTree = "<group>"; };
+		8696042F1835283400ADBF08 /* SSQuestionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSQuestionViewCell.h; path = Classes/View/SSQuestionViewCell.h; sourceTree = "<group>"; };
+		869604301835283400ADBF08 /* SSQuestionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSQuestionViewCell.m; path = Classes/View/SSQuestionViewCell.m; sourceTree = "<group>"; };
 		DC01E00417C9CC440096254A /* FayeClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FayeClient.h; path = Classes/Utilities/FayeClient.h; sourceTree = "<group>"; };
 		DC01E00517C9CC440096254A /* FayeClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FayeClient.m; path = Classes/Utilities/FayeClient.m; sourceTree = "<group>"; };
 		DC01E00617C9CC440096254A /* FayeMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FayeMessage.h; path = Classes/Utilities/FayeMessage.h; sourceTree = "<group>"; };
@@ -608,6 +611,8 @@
 				DCBE5EB0180AFA0B0050A93F /* SSQuestionInputView.m */,
 				DC2AA39F180C4EC00034FA35 /* SSQuestionNotificationView.h */,
 				DC2AA3A0180C4EC00034FA35 /* SSQuestionNotificationView.m */,
+				8696042F1835283400ADBF08 /* SSQuestionViewCell.h */,
+				869604301835283400ADBF08 /* SSQuestionViewCell.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -961,6 +966,7 @@
 				DCD7D9E017E41D9B00C16A20 /* SSDrawingView.m in Sources */,
 				DC38D0CC17C8ADD10013CAD6 /* SSSlideShowControlView.m in Sources */,
 				DC01E00E17C9CC440096254A /* FayeClient.m in Sources */,
+				869604311835283400ADBF08 /* SSQuestionViewCell.m in Sources */,
 				DC01E00F17C9CC440096254A /* FayeMessage.m in Sources */,
 				DC3120FA1812B97A008491D3 /* SSSlideShowPageView.m in Sources */,
 				DC01E01017C9CC440096254A /* NSObject+PropertySupport.m in Sources */,

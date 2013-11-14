@@ -8,8 +8,9 @@
 
 #import "SSQuestionListViewController.h"
 #import "SSQuestion.h"
+#import <RMSwipeTableViewCell/RMSwipeTableViewCell.h>
 
-@interface SSQuestionListViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface SSQuestionListViewController () <UITableViewDelegate, UITableViewDataSource, RMSwipeTableViewCellDelegate>
 
 @property (strong, nonatomic) NSArray *questions;
 
@@ -44,13 +45,13 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"QuestionCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    RMSwipeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[RMSwipeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
+    cell.delegate = self;
     cell.textLabel.numberOfLines = 0;
-    
     SSQuestion *curQues = [self.questions objectAtIndex:indexPath.row];
     cell.textLabel.text = curQues.content;
     
@@ -61,6 +62,19 @@
 {
     SSQuestion *curQues = [self.questions objectAtIndex:indexPath.row];
     [self.delegate didSelectQuestionAtPage:curQues.pageNum];
+}
+
+#pragma mark - delegate
+-(void)swipeTableViewCellWillResetState:(RMSwipeTableViewCell *)swipeTableViewCell fromPoint:(CGPoint)point animation:(RMSwipeTableViewCellAnimationType)animation velocity:(CGPoint)velocity {
+    
+    if ( point.x >= CGRectGetHeight(swipeTableViewCell.frame) / 2 ) {
+        //NSIndexPath *indexPath = [self.tableView indexPathForCell:swipeTableViewCell];
+        NSLog(@"VOTE DOWN");
+        
+    } else if ( point.x < 0 && -point.x >= CGRectGetHeight(swipeTableViewCell.frame) / 2 ) {
+        NSLog(@"VOTE UP");
+        
+    }
 }
 
 @end

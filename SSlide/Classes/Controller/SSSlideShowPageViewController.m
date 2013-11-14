@@ -130,8 +130,8 @@
     
     if(IS_IPAD) {
         self.myPopoverController = [[UIPopoverController alloc] initWithContentViewController:questionViewController];
-        questionViewController.tableView.frame = CGRectMake(0, 0, 250, 600);
-        self.myPopoverController.popoverContentSize = CGSizeMake(250, 600);
+        questionViewController.tableView.frame = CGRectMake(0, 0, 350, 620);
+        self.myPopoverController.popoverContentSize = CGSizeMake(350, 620);
         [self.myPopoverController presentPopoverFromRect:[self.myView getQuestionNotificationView].bounds
                                                   inView:[self.myView getQuestionNotificationView]
                                 permittedArrowDirections:UIPopoverArrowDirectionAny
