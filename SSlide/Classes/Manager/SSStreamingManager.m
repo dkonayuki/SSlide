@@ -14,6 +14,7 @@
 #import <AFNetworking/AFHTTPClient.h>
 #import <AFJSONRequestOperation.h>
 #import <FlatUIKit.h>
+#import "SSQuestion.h"
 
 @interface SSStreamingManager() <FayeClientDelegate>
 
@@ -149,14 +150,14 @@
     [self.fayeClient sendMessage:mesg onChannel:self.channel];
 }
 
-- (void)sendQuestion:(NSString *)question
+- (void)sendQuestion:(NSString *)question atPage:(NSUInteger)pagenum
 {
     if (self.isMaster || !self.isStreaming) {
         return;
     }
     
     NSDictionary *mesg = [self createMessageContent:@"question"
-                                           andExtra:@{@"content": question}];
+                                           andExtra:@{@"content": question, @"slide-page-num": [NSNumber numberWithInt:pagenum]}];
     [self.fayeClient sendMessage:mesg onChannel:self.channel];
 }
 
@@ -254,9 +255,12 @@
             if (!self.isMaster) {
                 return;
             }
-            NSString *question = [mesExtra objectForKey:@"content"];
+            NSString *content = [mesExtra objectForKey:@"content"];
+            NSUInteger page =[((NSNumber *)[mesExtra objectForKey:@"slide-page-num"]) integerValue];
+            SSQuestion *question = [[SSQuestion alloc] initWith:content
+                                                        pagenum:page];
             [self.questions addObject:question];
-            [self.delegate didHasNewQuestion:question];
+            [self.delegate didHasNewQuestion:content];
         }
             break;
         default:

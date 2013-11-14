@@ -37,6 +37,6 @@
 - (void)didAddPointsInDrawingView:(NSArray *)points;
 - (void)didClearDrawingView;
 - (void)didEndTouchDrawingView;
-- (void)sendQuestion:(NSString *)question;
+- (void)sendQuestion:(NSString *)question atPage:(NSUInteger)pagenum;
 
 @end

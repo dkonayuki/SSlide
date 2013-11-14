@@ -7,6 +7,7 @@
 //
 
 #import "SSQuestionListViewController.h"
+#import "SSQuestion.h"
 
 @interface SSQuestionListViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -49,15 +50,17 @@
     }
     
     cell.textLabel.numberOfLines = 0;
-    cell.textLabel.text = [self.questions objectAtIndex:indexPath.row];
+    
+    SSQuestion *curQues = [self.questions objectAtIndex:indexPath.row];
+    cell.textLabel.text = curQues.content;
     
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //[self.delegate didSelectQuestionAtPage:indexPath.row];
-    NSLog(@"Did selected row at index: %d", indexPath.row);
+    SSQuestion *curQues = [self.questions objectAtIndex:indexPath.row];
+    [self.delegate didSelectQuestionAtPage:curQues.pageNum];
 }
 
 @end

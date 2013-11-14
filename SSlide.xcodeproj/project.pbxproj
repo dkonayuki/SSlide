@@ -39,6 +39,7 @@
 		43B4725E17CF21D900CAD335 /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 43B4725C17CF21D900CAD335 /* delete.png */; };
 		43B4726117CF374C00CAD335 /* description.png in Resources */ = {isa = PBXBuildFile; fileRef = 43B4726017CF374C00CAD335 /* description.png */; };
 		43B4726417CF3AB500CAD335 /* SSDescriptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 43B4726317CF3AB500CAD335 /* SSDescriptionViewController.m */; };
+		8686E4B71834F8EB00D90890 /* SSQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 8686E4B61834F8EB00D90890 /* SSQuestion.m */; };
 		DC01E00E17C9CC440096254A /* FayeClient.m in Sources */ = {isa = PBXBuildFile; fileRef = DC01E00517C9CC440096254A /* FayeClient.m */; };
 		DC01E00F17C9CC440096254A /* FayeMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = DC01E00717C9CC440096254A /* FayeMessage.m */; };
 		DC01E01017C9CC440096254A /* NSObject+PropertySupport.m in Sources */ = {isa = PBXBuildFile; fileRef = DC01E00917C9CC440096254A /* NSObject+PropertySupport.m */; };
@@ -168,6 +169,8 @@
 		43B4726217CF3AB500CAD335 /* SSDescriptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSDescriptionViewController.h; path = Classes/Controller/SSDescriptionViewController.h; sourceTree = "<group>"; };
 		43B4726317CF3AB500CAD335 /* SSDescriptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSDescriptionViewController.m; path = Classes/Controller/SSDescriptionViewController.m; sourceTree = "<group>"; };
 		7E2702BF3BD1401A8049CA77 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		8686E4B51834F8EB00D90890 /* SSQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSQuestion.h; path = Classes/Model/SSQuestion.h; sourceTree = "<group>"; };
+		8686E4B61834F8EB00D90890 /* SSQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSQuestion.m; path = Classes/Model/SSQuestion.m; sourceTree = "<group>"; };
 		DC01E00417C9CC440096254A /* FayeClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FayeClient.h; path = Classes/Utilities/FayeClient.h; sourceTree = "<group>"; };
 		DC01E00517C9CC440096254A /* FayeClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FayeClient.m; path = Classes/Utilities/FayeClient.m; sourceTree = "<group>"; };
 		DC01E00617C9CC440096254A /* FayeMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FayeMessage.h; path = Classes/Utilities/FayeMessage.h; sourceTree = "<group>"; };
@@ -618,6 +621,8 @@
 				DC05A02717C73581000EE26F /* SSUser.m */,
 				DCDDF64617C59CFD0095A299 /* SSSlideshow.h */,
 				DCDDF64717C59CFD0095A299 /* SSSlideshow.m */,
+				8686E4B51834F8EB00D90890 /* SSQuestion.h */,
+				8686E4B61834F8EB00D90890 /* SSQuestion.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -948,6 +953,7 @@
 				DC11050A17C7036E00833997 /* SSSettingsViewController.m in Sources */,
 				DCD300A117C708F600908CC9 /* SSSettingsView.m in Sources */,
 				DC05A02517C73541000EE26F /* SSAppData.m in Sources */,
+				8686E4B71834F8EB00D90890 /* SSQuestion.m in Sources */,
 				DC05A02817C73581000EE26F /* SSUser.m in Sources */,
 				DC2AA39C180C497F0034FA35 /* CENotifyView.m in Sources */,
 				DC0C758717C8907000BD9C58 /* SSRootViewController.m in Sources */,
@@ -1076,12 +1082,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: nghia Le (T3EL86MYRQ)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SSlide/SSlide-Prefix.pch";
 				INFOPLIST_FILE = "SSlide/SSlide-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1093,12 +1101,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: nghia Le (T3EL86MYRQ)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SSlide/SSlide-Prefix.pch";
 				INFOPLIST_FILE = "SSlide/SSlide-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
