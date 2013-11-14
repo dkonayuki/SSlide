@@ -22,7 +22,8 @@
                                             SSSlideShowControlViewDelegate,
                                             SSStreamingManagerDelegate,
                                             SSDrawingViewDelegate,
-                                            SSQuestionNotificationViewDelegate>
+                                            SSQuestionNotificationViewDelegate,
+                                            SSQuestionListViewControllerDelegate>
 
 @property (strong, nonatomic) SSSlideshow *currentSlide;
 @property (assign, nonatomic) NSInteger totalPage;
@@ -125,6 +126,7 @@
 {
     SSQuestionListViewController *questionViewController = [[SSQuestionListViewController alloc] init];
     [questionViewController setQuestionList:self.streamingManager.questions];
+    questionViewController.delegate = self;
     
     if(IS_IPAD) {
         self.myPopoverController = [[UIPopoverController alloc] initWithContentViewController:questionViewController];
@@ -315,6 +317,12 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^(void){
         [self.streamingManager didEndTouchDrawingView];
     });
+}
+
+#pragma mark - SSQuestionListViewController
+- (void)didSelectQuestionAtPage:(int)pagenum
+{
+    [self gotoPage:pagenum];
 }
 
 #pragma mark - UIPageViewControllerDataSource

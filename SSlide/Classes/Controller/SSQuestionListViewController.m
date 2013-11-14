@@ -54,4 +54,10 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //[self.delegate didSelectQuestionAtPage:indexPath.row];
+    NSLog(@"Did selected row at index: %d", indexPath.row);
+}
+
 @end

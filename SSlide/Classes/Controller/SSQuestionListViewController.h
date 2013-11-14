@@ -8,8 +8,15 @@
 
 #import "SSViewController.h"
 
+@protocol SSQuestionListViewControllerDelegate <NSObject>
+
+- (void)didSelectQuestionAtPage:(int)pagenum;
+
+@end
+
 @interface SSQuestionListViewController : SSViewController
 
+@property (weak, nonatomic) id delegate;
 @property (strong, nonatomic) UITableView *tableView;
 
 - (void)setQuestionList:(NSArray *)questions;
