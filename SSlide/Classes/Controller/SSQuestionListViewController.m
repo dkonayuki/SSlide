@@ -8,7 +8,10 @@
 
 #import "SSQuestionListViewController.h"
 #import "SSQuestion.h"
-#import <RMSwipeTableViewCell/RMSwipeTableViewCell.h>
+#import "SSQuestionCellView.h"
+#import <AFNetworking/AFHTTPClient.h>
+#import <AFJSONRequestOperation.h>
+#import "SSAppData.h"
 
 @interface SSQuestionListViewController () <UITableViewDelegate, UITableViewDataSource, RMSwipeTableViewCellDelegate>
 
@@ -45,9 +48,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"QuestionCell";
-    RMSwipeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    SSQuestionCellView *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[RMSwipeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[SSQuestionCellView alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
     cell.delegate = self;
@@ -68,13 +71,42 @@
 -(void)swipeTableViewCellWillResetState:(RMSwipeTableViewCell *)swipeTableViewCell fromPoint:(CGPoint)point animation:(RMSwipeTableViewCellAnimationType)animation velocity:(CGPoint)velocity {
     
     if ( point.x >= CGRectGetHeight(swipeTableViewCell.frame) / 2 ) {
-        //NSIndexPath *indexPath = [self.tableView indexPathForCell:swipeTableViewCell];
         NSLog(@"VOTE DOWN");
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:swipeTableViewCell];
+        SSQuestion *curQues = [self.questions objectAtIndex:indexPath.row];
+        [self voteQuestion:curQues.questionId type:@"down"];
         
     } else if ( point.x < 0 && -point.x >= CGRectGetHeight(swipeTableViewCell.frame) / 2 ) {
         NSLog(@"VOTE UP");
-        
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:swipeTableViewCell];
+        SSQuestion *curQues = [self.questions objectAtIndex:indexPath.row];
+        [self voteQuestion:curQues.questionId type:@"up"];
     }
+}
+
+- (void)voteQuestion:(NSString *)questionId type:(NSString *)type
+{
+    // post to server
+    AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[[SSDB5 theme] stringForKey:@"SS_SERVER_BASE_URL"]]];
+    [client registerHTTPOperationClass:[AFJSONRequestOperation class]];
+    [client setDefaultHeader:@"Accept" value:@"application/json"];
+    
+    NSString *curUsername = [SSAppData sharedInstance].currentUser.username;
+
+    NSString *url = [NSString stringWithFormat:@"/question/vote"];
+    NSDictionary *params = @{@"question_id": questionId,
+                             @"type": type,
+                             @"user_name": curUsername};
+    
+    [client postPath:url
+          parameters:params
+             success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                 NSLog(@"Vote Question OK");
+             }
+             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                 NSLog(@"error: %@", error);
+                 [SVProgressHUD showErrorWithStatus:@"Error!"];
+             }];
 }
 
 @end

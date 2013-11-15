@@ -1,5 +1,5 @@
 //
-//  SSQuestionViewCell.h
+//  SSQuestionCellView.h
 //  SSlide
 //
 //  Created by Le Van Nghia on 11/15/13.
@@ -8,11 +8,9 @@
 
 #import <RMSwipeTableViewCell/RMSwipeTableViewCell.h>
 
-@interface SSQuestionViewCell : RMSwipeTableViewCell
-
+@interface SSQuestionCellView : RMSwipeTableViewCell
 
 @property (strong, nonatomic) UIImageView *voteUpImageView;
 @property (strong, nonatomic) UIImageView *voteDownImageView;
-@property (assign, nonatomic) NSUInteger voteState;
 
 @end
