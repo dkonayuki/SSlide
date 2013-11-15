@@ -8,9 +8,20 @@
 
 #import <RMSwipeTableViewCell/RMSwipeTableViewCell.h>
 
+@protocol SSQuestionCellViewDelegate <NSObject>
+
+- (void)voteUpQuestion:(NSString *)questionId;
+- (void)voteDownQuestion:(NSString *)questionId;
+
+@end
+
 @interface SSQuestionCellView : RMSwipeTableViewCell
 
-@property (strong, nonatomic) UIImageView *voteUpImageView;
-@property (strong, nonatomic) UIImageView *voteDownImageView;
+@property (weak, nonatomic) id delegate;
+
+@property (copy, nonatomic) NSString *questionId;
+@property (assign, nonatomic) NSUInteger voteStatus;
+@property (strong, nonatomic) UIButton *voteUpButton;
+@property (strong, nonatomic) UIButton *voteDownButton;
 
 @end

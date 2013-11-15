@@ -42,6 +42,8 @@
 		865D7AA91836300700E299FD /* vote_down_enable.png in Resources */ = {isa = PBXBuildFile; fileRef = 865D7AA71836300700E299FD /* vote_down_enable.png */; };
 		865D7AAA1836300700E299FD /* vote_up_enable.png in Resources */ = {isa = PBXBuildFile; fileRef = 865D7AA81836300700E299FD /* vote_up_enable.png */; };
 		865D7AAD1836305900E299FD /* SSQuestionCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 865D7AAC1836305900E299FD /* SSQuestionCellView.m */; };
+		865D7AB018363DF600E299FD /* vote_down_disable.png in Resources */ = {isa = PBXBuildFile; fileRef = 865D7AAE18363DF600E299FD /* vote_down_disable.png */; };
+		865D7AB118363DF600E299FD /* vote_up_disable.png in Resources */ = {isa = PBXBuildFile; fileRef = 865D7AAF18363DF600E299FD /* vote_up_disable.png */; };
 		8686E4B71834F8EB00D90890 /* SSQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 8686E4B61834F8EB00D90890 /* SSQuestion.m */; };
 		DC01E00E17C9CC440096254A /* FayeClient.m in Sources */ = {isa = PBXBuildFile; fileRef = DC01E00517C9CC440096254A /* FayeClient.m */; };
 		DC01E00F17C9CC440096254A /* FayeMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = DC01E00717C9CC440096254A /* FayeMessage.m */; };
@@ -176,6 +178,8 @@
 		865D7AA81836300700E299FD /* vote_up_enable.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vote_up_enable.png; sourceTree = "<group>"; };
 		865D7AAB1836305900E299FD /* SSQuestionCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSQuestionCellView.h; path = Classes/View/SSQuestionCellView.h; sourceTree = "<group>"; };
 		865D7AAC1836305900E299FD /* SSQuestionCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSQuestionCellView.m; path = Classes/View/SSQuestionCellView.m; sourceTree = "<group>"; };
+		865D7AAE18363DF600E299FD /* vote_down_disable.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vote_down_disable.png; sourceTree = "<group>"; };
+		865D7AAF18363DF600E299FD /* vote_up_disable.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vote_up_disable.png; sourceTree = "<group>"; };
 		8686E4B51834F8EB00D90890 /* SSQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSQuestion.h; path = Classes/Model/SSQuestion.h; sourceTree = "<group>"; };
 		8686E4B61834F8EB00D90890 /* SSQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSQuestion.m; path = Classes/Model/SSQuestion.m; sourceTree = "<group>"; };
 		DC01E00417C9CC440096254A /* FayeClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FayeClient.h; path = Classes/Utilities/FayeClient.h; sourceTree = "<group>"; };
@@ -428,6 +432,8 @@
 		DC56EECF17CB1DB5005866B2 /* slideshow_screen */ = {
 			isa = PBXGroup;
 			children = (
+				865D7AAE18363DF600E299FD /* vote_down_disable.png */,
+				865D7AAF18363DF600E299FD /* vote_up_disable.png */,
 				865D7AA71836300700E299FD /* vote_down_enable.png */,
 				865D7AA81836300700E299FD /* vote_up_enable.png */,
 				DC2AA39D180C4B880034FA35 /* user_icon.png */,
@@ -849,6 +855,7 @@
 				43357C7B17CC388D007CD24D /* bg@2x.png in Resources */,
 				43357C7D17CC3EEB007CD24D /* bgip5.png in Resources */,
 				43357C8217CC6088007CD24D /* CANDARA.TTF in Resources */,
+				865D7AB118363DF600E299FD /* vote_up_disable.png in Resources */,
 				43357C8317CC6088007CD24D /* Quicksand.otf in Resources */,
 				43357C8417CC6088007CD24D /* VBAMASH.TTF in Resources */,
 				DC4830A717CC776B00193354 /* appname.png in Resources */,
@@ -871,6 +878,7 @@
 				DC53EDFA1816EB3000CB8326 /* Images-2.xcassets in Resources */,
 				43B4725117CEE7A500CAD335 /* streaming_pressed.png in Resources */,
 				43B4725217CEE7A500CAD335 /* streaming.png in Resources */,
+				865D7AB018363DF600E299FD /* vote_down_disable.png in Resources */,
 				DC771A1D17E0656B008EE9CC /* bgip5@2x.png in Resources */,
 				43B4725917CF200000CAD335 /* access_pressed.png in Resources */,
 				43B4725A17CF200000CAD335 /* access.png in Resources */,

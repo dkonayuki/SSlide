@@ -8,6 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+enum {
+    VOTE_UP,
+    VOTE_DOWN,
+    VOTE_NONE,
+};
+
 @interface SSQuestion : NSObject
 
 @property (copy, nonatomic) NSString *questionId;
