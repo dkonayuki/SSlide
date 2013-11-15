@@ -38,5 +38,6 @@
 - (void)didClearDrawingView;
 - (void)didEndTouchDrawingView;
 - (void)sendQuestion:(NSString *)question atPage:(NSUInteger)pagenum slideId:(NSString *)slideId;
+- (void)pullQuestions:(NSString *)slideId;
 
 @end

@@ -381,6 +381,9 @@
                                                         
                                                         NSArray *questionList = (NSArray *)JSON;
                                                         
+                                                        // reset questions
+                                                        self.questions = [[NSMutableArray alloc] init];
+                                                        
                                                         for (NSDictionary *ques in questionList) {
                                                             NSUInteger pageNum = [[ques objectForKey:@"pageNum"] integerValue];
                                                             NSUInteger voteNum = [[ques objectForKey:@"voteNum"] integerValue];

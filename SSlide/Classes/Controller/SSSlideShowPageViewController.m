@@ -119,6 +119,9 @@
     [self.pageController didMoveToParentViewController:self];
     
     [self.myView bringAllSubViewToFront];
+    
+    [self.myView showQuestionNotificationView];
+    [self.streamingManager pullQuestions:self.currentSlide.slideId];
 }
 
 #pragma mark - SSQuestionNotificationViewDelegate
@@ -234,7 +237,7 @@
         return;
     }
     //if ([self.streamingManager isMasterDevice]) {
-    [self.myView showQuestionNotificationView];
+    //[self.myView showQuestionNotificationView];
     //}
 }
 
