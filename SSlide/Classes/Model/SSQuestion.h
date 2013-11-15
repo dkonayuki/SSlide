@@ -9,9 +9,9 @@
 #import <Foundation/Foundation.h>
 
 enum {
-    VOTE_UP,
-    VOTE_DOWN,
-    VOTE_NONE,
+    VOTE_UP = 1,
+    VOTE_DOWN = -1,
+    VOTE_NONE = 0,
 };
 
 @interface SSQuestion : NSObject
@@ -20,8 +20,9 @@ enum {
 @property (copy, nonatomic) NSString *content;
 @property (assign, nonatomic) NSUInteger pageNum;
 @property (assign, nonatomic) NSUInteger voteNum;
+@property (assign, nonatomic) NSUInteger voteStatus;
 
 - (id)initWith:(NSString *)content pagenum:(NSUInteger)pagenum;
-- (id)initWith:(NSString *)quesId content:(NSString *)content pagenum:(NSUInteger)pagenum voteNum:(NSUInteger)voteNum;
+- (id)initWith:(NSString *)quesId content:(NSString *)content pagenum:(NSUInteger)pagenum voteNum:(NSUInteger)voteNum voteStatus:(NSUInteger)status;
 
 @end

@@ -58,7 +58,7 @@
     SSQuestion *curQues = [self.questions objectAtIndex:indexPath.row];
     cell.textLabel.text = curQues.content;
     cell.questionId = curQues.questionId;
-    cell.voteStatus = VOTE_NONE;
+    cell.voteStatus = curQues.voteStatus;
     
     return cell;
 }
@@ -70,21 +70,23 @@
 }
 
 #pragma mark - delegate
-//-(void)swipeTableViewCellWillResetState:(RMSwipeTableViewCell *)swipeTableViewCell fromPoint:(CGPoint)point animation:(RMSwipeTableViewCellAnimationType)animation velocity:(CGPoint)velocity {
-//    
-//    if ( point.x >= CGRectGetHeight(swipeTableViewCell.frame) / 2 ) {
-//        NSLog(@"VOTE DOWN");
-//        NSIndexPath *indexPath = [self.tableView indexPathForCell:swipeTableViewCell];
-//        SSQuestion *curQues = [self.questions objectAtIndex:indexPath.row];
-//        [self voteQuestion:curQues.questionId type:@"down"];
-//        
-//    } else if ( point.x < 0 && -point.x >= CGRectGetHeight(swipeTableViewCell.frame) / 2 ) {
-//        NSLog(@"VOTE UP");
-//        NSIndexPath *indexPath = [self.tableView indexPathForCell:swipeTableViewCell];
-//        SSQuestion *curQues = [self.questions objectAtIndex:indexPath.row];
-//        [self voteQuestion:curQues.questionId type:@"up"];
-//    }
-//}
+/*
+-(void)swipeTableViewCellWillResetState:(RMSwipeTableViewCell *)swipeTableViewCell fromPoint:(CGPoint)point animation:(RMSwipeTableViewCellAnimationType)animation velocity:(CGPoint)velocity {
+    
+    if ( point.x >= CGRectGetHeight(swipeTableViewCell.frame) / 2 ) {
+        NSLog(@"VOTE DOWN");
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:swipeTableViewCell];
+        SSQuestion *curQues = [self.questions objectAtIndex:indexPath.row];
+        [self voteQuestion:curQues.questionId type:@"down"];
+        
+    } else if ( point.x < 0 && -point.x >= CGRectGetHeight(swipeTableViewCell.frame) / 2 ) {
+        NSLog(@"VOTE UP");
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:swipeTableViewCell];
+        SSQuestion *curQues = [self.questions objectAtIndex:indexPath.row];
+        [self voteQuestion:curQues.questionId type:@"up"];
+    }
+}
+ */
 
 - (void)voteUpQuestion:(NSString *)questionId
 {
@@ -119,6 +121,7 @@
                  NSLog(@"error: %@", error);
                  [SVProgressHUD showErrorWithStatus:@"Error!"];
              }];
+    
 }
 
 @end

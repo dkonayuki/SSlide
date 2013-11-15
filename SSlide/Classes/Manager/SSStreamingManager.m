@@ -370,38 +370,42 @@
 
 - (void)pullQuestions:(NSString *)slideId
 {
-    NSString *requestUrl = [NSString stringWithFormat:@"%@/%@/question/all",
-                            [[SSDB5 theme] stringForKey:@"SS_SERVER_BASE_URL"], slideId];
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
+    AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[[SSDB5 theme] stringForKey:@"SS_SERVER_BASE_URL"]]];
+    [client registerHTTPOperationClass:[AFJSONRequestOperation class]];
+    [client setDefaultHeader:@"Accept" value:@"application/json"];
     
-    AFJSONRequestOperation *operation =
-    [AFJSONRequestOperation JSONRequestOperationWithRequest:request
-                                                    success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-                                                        [SVProgressHUD dismiss];
-                                                        
-                                                        NSArray *questionList = (NSArray *)JSON;
-                                                        
-                                                        // reset questions
-                                                        self.questions = [[NSMutableArray alloc] init];
-                                                        
-                                                        for (NSDictionary *ques in questionList) {
-                                                            NSUInteger pageNum = [[ques objectForKey:@"pageNum"] integerValue];
-                                                            NSUInteger voteNum = [[ques objectForKey:@"voteNum"] integerValue];
-                                                            SSQuestion *newQues = [[SSQuestion alloc] initWith:[ques objectForKey:@"questionId"]
-                                                                                                       content:[ques objectForKey:@"content"]
-                                                                                                       pagenum:pageNum
-                                                                                                       voteNum:voteNum];
-                                                            [self.questions addObject:newQues];
-                                                        }
-                                                        [self.delegate didHasNewQuestion:@""];
-                                                        
-                                                    }
-                                                    failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-                                                        [SVProgressHUD dismiss];
-                                                        NSLog(@"Fail: %@", error);
-                                                    }];
+    NSString *curUsername = [SSAppData sharedInstance].currentUser.username;
     
-    [operation start];
+    NSString *url = [NSString stringWithFormat:@"/%@/question/all", slideId];
+    NSDictionary *params = @{@"user_name": curUsername};
+    
+    [client getPath:url
+         parameters:params
+            success:^(AFHTTPRequestOperation *operation, id JSON) {
+                [SVProgressHUD dismiss];
+                
+                NSArray *questionList = (NSArray *)JSON;
+                
+                // reset questions
+                self.questions = [[NSMutableArray alloc] init];
+                
+                for (NSDictionary *ques in questionList) {
+                    NSUInteger pageNum = [[ques objectForKey:@"pageNum"] integerValue];
+                    NSUInteger voteNum = [[ques objectForKey:@"voteNum"] integerValue];
+                    NSUInteger voteStatus = [[ques objectForKey:@"alreadyVoted"] integerValue];
+                    
+                    SSQuestion *newQues = [[SSQuestion alloc] initWith:[ques objectForKey:@"questionId"]
+                                                               content:[ques objectForKey:@"content"]
+                                                               pagenum:pageNum
+                                                               voteNum:voteNum
+                                                            voteStatus:voteStatus];
+                    [self.questions addObject:newQues];
+                }
+                [self.delegate didHasNewQuestion:@""];
+            }
+            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                [SVProgressHUD dismiss];
+            }];
 }
 
 @end

@@ -22,7 +22,7 @@
     return self;
 }
 
-- (id)initWith:(NSString *)quesId content:(NSString *)content pagenum:(NSUInteger)pagenum voteNum:(NSUInteger)voteNum
+- (id)initWith:(NSString *)quesId content:(NSString *)content pagenum:(NSUInteger)pagenum voteNum:(NSUInteger)voteNum voteStatus:(NSUInteger)status
 {
     self = [super init];
     
@@ -31,6 +31,7 @@
         self.content = content;
         self.pageNum = pagenum;
         self.voteNum = voteNum;
+        self.voteStatus = status;
     }
     
     return self;
