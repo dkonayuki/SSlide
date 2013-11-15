@@ -156,9 +156,9 @@
         return;
     }
     
-    NSDictionary *mesg = [self createMessageContent:@"question"
-                                           andExtra:@{@"content": question, @"pageNum": [NSNumber numberWithInt:pagenum]}];
-    [self.fayeClient sendMessage:mesg onChannel:self.channel];
+//    NSDictionary *mesg = [self createMessageContent:@"question"
+//                                           andExtra:@{@"content": question, @"pageNum": [NSNumber numberWithInt:pagenum]}];
+//    [self.fayeClient sendMessage:mesg onChannel:self.channel];
     
     [self postQuestion:question atPage:pagenum slideId:slideId];
 }
@@ -279,13 +279,13 @@
         case 3: // question
         {
             if (!self.isMaster) {
+                [self pullQuestions:self.currentSlide.slideId];
+                [self.delegate didHasNewQuestion:@""];
+                
                 return;
             }
             NSString *content = [mesExtra objectForKey:@"content"];
-            NSUInteger page =[((NSNumber *)[mesExtra objectForKey:@"pageNum"]) integerValue];
-            SSQuestion *question = [[SSQuestion alloc] initWith:content
-                                                        pagenum:page];
-            [self.questions addObject:question];
+            [self pullQuestions:self.currentSlide.slideId];
             [self.delegate didHasNewQuestion:content];
         }
             break;
