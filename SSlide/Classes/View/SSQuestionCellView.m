@@ -92,6 +92,9 @@
     [self.delegate voteUpQuestion:self.questionId];
     [self.voteUpButton setBackgroundImage:[UIImage imageNamed:@"vote_up_enable"] forState:UIControlStateNormal];
     self.voteStatus = VOTE_UP;
+    
+    NSUInteger voteNum = [self.voteNumLabel.text integerValue] + 1;
+    [self setVoteNum:voteNum];
 }
 
 - (void)voteDownBtnPressed:(UIButton *)sender
@@ -103,6 +106,9 @@
     [self.delegate voteDownQuestion:self.questionId];
     [self.voteDownButton setBackgroundImage:[UIImage imageNamed:@"vote_up_enable"] forState:UIControlStateNormal];
     self.voteStatus = VOTE_DOWN;
+    
+    NSUInteger voteNum = [self.voteNumLabel.text integerValue] - 1;
+    [self setVoteNum:voteNum];
 }
 
 - (void)setVoteNum:(NSUInteger)voteNum
