@@ -23,5 +23,9 @@
 @property (assign, nonatomic) NSUInteger voteStatus;
 @property (strong, nonatomic) UIButton *voteUpButton;
 @property (strong, nonatomic) UIButton *voteDownButton;
+@property (strong, nonatomic) UILabel *voteNumLabel;
+@property (strong, nonatomic) UILabel *questionLabel;
+
+- (void)setVoteNum:(NSUInteger)voteNum;
 
 @end

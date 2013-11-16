@@ -15,9 +15,18 @@
 {
     self = [super initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdentifier];
     if (self) {
-        float topMargin = 10.0;
+        float topMargin = 4.0;
+        float labelHeight = 18.f;
         float rightMargin = 30.f;
         float btnWith = 40.f;
+        float cellHeight = 100.f;
+        
+        self.questionLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(self.contentView.frame) + topMargin,
+                                                                      CGRectGetMinY(self.contentView.frame) + topMargin,
+                                                                      CGRectGetWidth(self.contentView.frame) - btnWith,
+                                                                      cellHeight - 2*topMargin)];
+        self.questionLabel.numberOfLines = 0;
+        [self addSubview:self.questionLabel];
         
         // vote up
         self.voteUpButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.contentView.frame) - rightMargin,
@@ -27,9 +36,20 @@
         [self.voteUpButton addTarget:self action:@selector(voteUpBtnPressed:) forControlEvents:UIControlEventTouchDown];
         [self addSubview:self.voteUpButton];
         
+        // vote num lable
+        self.voteNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.contentView.frame) - rightMargin,
+                                                                     topMargin + btnWith,
+                                                                     btnWith,
+                                                                     labelHeight)];
+        self.voteNumLabel.font = [UIFont systemFontOfSize:20.f];
+        self.voteNumLabel.textColor = [UIColor grayColor];
+        [self.voteNumLabel setTextAlignment:NSTextAlignmentCenter];
+        [self.voteNumLabel setText:@"0"];
+        [self addSubview:self.voteNumLabel];
+        
         // vote down
         self.voteDownButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.contentView.frame) - rightMargin,
-                                                                         2*topMargin + btnWith,
+                                                                         topMargin + btnWith + labelHeight,
                                                                          btnWith,
                                                                          btnWith)];
         [self.voteDownButton addTarget:self action:@selector(voteDownBtnPressed:) forControlEvents:UIControlEventTouchDown];
@@ -83,6 +103,11 @@
     [self.delegate voteDownQuestion:self.questionId];
     [self.voteDownButton setBackgroundImage:[UIImage imageNamed:@"vote_up_enable"] forState:UIControlStateNormal];
     self.voteStatus = VOTE_DOWN;
+}
+
+- (void)setVoteNum:(NSUInteger)voteNum
+{
+    [self.voteNumLabel setText:[NSString stringWithFormat:@"%d", voteNum]];
 }
 
 @end

@@ -56,9 +56,10 @@
     cell.delegate = self;
     cell.textLabel.numberOfLines = 0;
     SSQuestion *curQues = [self.questions objectAtIndex:indexPath.row];
-    cell.textLabel.text = curQues.content;
+    cell.questionLabel.text = curQues.content;
     cell.questionId = curQues.questionId;
     cell.voteStatus = curQues.voteStatus;
+    [cell setVoteNum:curQues.voteNum];
     
     return cell;
 }
